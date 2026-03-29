@@ -29,7 +29,7 @@ st.markdown("""
 st.sidebar.markdown("### 🛠️ Configuration")
 bankroll = st.sidebar.number_input("Total Bankroll (CAD)", min_value=100.0, value=5000.0, step=100.0)
 std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, 1.5, 0.1, help="The percentage of your total bankroll you consider one 'unit'. Used as a baseline for flat staking.")
-min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 10.0, 3.0, 0.5, help="Only show bets where our model calculates an edge (profit advantage) higher than this percentage.") / 100
+min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 100.0, 3.0, 0.5, help="Only show bets where our model calculates an edge (profit advantage) higher than this percentage.") / 100
 fractional_kelly = st.sidebar.slider("Fractional Kelly multiplier", 0.1, 1.0, 0.25, 0.05)
 
 st.sidebar.markdown("---")
