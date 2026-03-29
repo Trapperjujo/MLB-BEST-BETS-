@@ -98,3 +98,26 @@ def get_2026_leaders() -> Dict[str, pd.DataFrame]:
         except Exception:
             continue
     return results
+
+def get_pitcher_stats(year: int = 2024) -> pd.DataFrame:
+    """Fetches pitcher season stats from pybaseball."""
+    from pybaseball import pitching_stats
+    try:
+        df = pitching_stats(year)
+        # Select key features for XLS and UI
+        cols = ['Name', 'Team', 'ERA', 'FIP', 'K/9', 'BB/9', 'WAR']
+        return df[cols].copy()
+    except Exception as e:
+        print(f"Error fetching pitching stats: {e}")
+        return pd.DataFrame()
+
+def get_team_hitting_stats(year: int = 2024) -> pd.DataFrame:
+    """Fetches team hitting stats (OPS, ISO, etc.)."""
+    from pybaseball import team_batting
+    try:
+        df = team_batting(year)
+        # Sort or index by Team
+        return df[['Team', 'OPS', 'ISO', 'wRC+']].copy()
+    except Exception as e:
+        print(f"Error fetching team hitting stats: {e}")
+        return pd.DataFrame()
