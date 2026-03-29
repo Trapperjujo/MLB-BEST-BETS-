@@ -532,6 +532,11 @@ elif is_analytics_mode:
             df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
             fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", color_continuous_scale="Plasma", template="plotly_dark")
             st.plotly_chart(fig_h, use_container_width=True)
+            with st.expander("📊 Team Hitting Legend & Key"):
+                st.markdown("""
+                - **📈 OPS (On-Base Plus Slugging)**: Combined measure of a team's ability to reach base and hit for extra bases. **Higher is better.**
+                - **🛰️ wRC+ (Weighted Runs Created Plus)**: The single best hitting metric. It captures total offensive value, adjusted for ballparks. **100 is league average.** (e.g., 115 means the team is 15% above average).
+                """)
         st.markdown("---")
         st.subheader("🔍 Full Professional Benchmarks")
         st.dataframe(df_p.sort_values(by="WAR", ascending=False), use_container_width=True)
@@ -613,6 +618,11 @@ with tab3:
             df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
             fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
             st.plotly_chart(fig_h, use_container_width=True)
+            with st.expander("📊 Team Hitting Key"):
+                st.markdown("""
+                - **📈 OPS**: On-Base % + Slugging %. (Power + Patience).
+                - **🛰️ wRC+**: Adjusted run creation. (**100 = Average**).
+                """)
     else:
         st.info("Statcast benchmarks currently syncing...")
 
@@ -708,11 +718,17 @@ with tab4:
             - *Instruction: These metrics are the primary variable in our scoring engine's "Situational Advantage" modeling.*
 
         ### E. Player Analytics Benchmarks (Statcast)
-        To master pitching-heavy matchups, our engine utilizes advanced Statcast efficiency benchmarks:
-        - **⚾ ERA (Earned Run Average)**: The actual runs allowed per 9 innings. **Lower is better.**
+        To master both mound duels and offensive slugfests, our engine utilizes advanced Statcast efficiency benchmarks:
+
+        #### ⚾ Pitching Metrics
+        - **ERA (Earned Run Average)**: The actual runs allowed per 9 innings. **Lower is better.**
         - **🛰️ FIP (Fielding Independent Pitching)**: Projects what ERA *should* be by removing luck/defense. A FIP lower than ERA suggests the pitcher is pitching better than their results show.
         - **🏆 WAR (Wins Above Replacement)**: The total 'Win Value' a pitcher provides over a standard backup. Larger bubbles on our charts indicate a more valuable season.
         - **🔥 K/9 (Strikeouts per 9)**: How many batters the pitcher fanned per 9 innings—the ultimate indicator of mound dominance.
+
+        #### 💥 Hitting Metrics
+        - **📈 OPS (On-Base Plus Slugging)**: Combined measure of a team's ability to reach base AND hit for extra bases. **Higher is better.**
+        - **🛰️ wRC+ (Weighted Runs Created Plus)**: The single best hitting metric. It captures total offensive value, adjusted for ballparks. **100 is league average.** (e.g., 115 means the team is 15% better than average).
 
         ## 6. Path to Success: How to Use This Dashboard
         **1. Identify Value Alerts**: Look for the **💎 Multi-Source Alpha Yield** badges with a positive EV indicator.
