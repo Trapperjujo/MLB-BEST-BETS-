@@ -196,8 +196,8 @@ with st.status("📡 Synchronizing MLB Schedule & Global Markets...", expanded=F
 if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
-# Navigation Logic
 
+# Navigation Summary
 # Update counts dynamically
 ev_count = 0
 total_count = 0
@@ -206,13 +206,8 @@ if not df_master.empty:
     total_count = len(df_master.drop_duplicates(subset=["game_id"]))
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("### 🗺️ Navigation")
-page = st.sidebar.radio("View Mode", [
-    f"🗓️ Full Predictions ({total_count} Games)", 
-    f"🎯 Intelligence Feed ({ev_count} Alerts)", 
-    "📈 Team Power Rankings", 
-    "🧬 Player WAR Analytics"
-])
+st.sidebar.markdown(f"**📡 Sync Status:** {total_count} Games Active")
+st.sidebar.markdown(f"**🎯 Value Alerts:** {ev_count} detected")
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🔍 Dashboard Sorting")
@@ -233,160 +228,110 @@ with col1:
 with col2:
     st.metric("Base Unit (1.0u)", f"${flat_staking(bankroll, std_bet_size):,.2f}")
 with col3:
-    st.metric("Predictions Source", "MLB Stats API", delta="Live")
+    st.metric("Model Fidelity", "Elo + 4 Regions", delta="High")
 with col4:
-    st.metric("Active Regions", "US, UK, EU, AU", delta="Active")
+    st.metric("Active Regions", "US, UK, EU, AU", delta="Linked")
 
 st.markdown("---")
 
-# Navigation Routing
-if "Intelligence Feed" in page:
-    st.subheader("🎯 Intelligence Feed: +EV Value Alerts")
-    
-    # Filter for games WITH odds and WITH edge
-    df_value = df_master[df_master["odds"].notnull()]
-    df_value = df_value[df_value["ev"] >= min_edge]
-    
-    # Sort based on global selector
-    if sort_mode == "🔥 Highest +EV":
-        df_value = df_value.sort_values(by="ev" if not enable_ss_mode else "ss_ev", ascending=False)
-    elif sort_mode == "🏆 Most Likely to Win":
-        df_value = df_value.sort_values(by="model_prob", ascending=False)
-    else:
-        df_value = df_value.sort_values(by="upset_score", ascending=False)
+# Main Dashboard Routing (Unified Feed)
+st.subheader(f"⚾ MLB Predictions Master Feed ({total_count} Games)")
 
-    if df_value.empty:
-        st.info("No high-value opportunities detected. Try lowering 'Minimum Edge Needed' or check 'Full Predictions'.")
-    else:
-        for idx, row in df_value.iterrows():
-            with st.container():
-                strategy_pills = []
-                if row['is_divisional']: strategy_pills.append("🏷️ Divisional Play")
-                if (row['ss_ev' if enable_ss_mode else 'ev'] > 0.05): strategy_pills.append("🔥 High Value")
-                
-                pills_html = "".join([f"<span style='background: #6366f1; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; margin-right: 5px;'>{p}</span>" for p in strategy_pills])
-                
-                card_html = f"""<div class='bet-card'>
-<div style='display: flex; justify-content: space-between; align-items: center;'>
-<div>
-<div style='color: #818cf8; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 3px;'>🎯 Predicted Winner ({row['outcome']})</div>
-<span style='font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -1px;'>{row['outcome']} {row['odds']}</span>
-<div style='margin-top: 5px;'>{pills_html}</div>
-</div>
-<div style='text-align: right;'>
-<div class='ev-badge'>+{row['ss_ev' if enable_ss_mode else 'ev']*100:.1f}% EV</div>
-<div style='margin-top: 5px; font-size: 0.8rem; color: #64748b;'>{row['formatted_time']} • {row['bookmaker']}</div>
-</div>
-</div>
-<hr style='margin: 15px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.05);'>
-<div style='display: flex; justify-content: space-between; margin-bottom: 15px;'>
-<div style='text-align: center; flex: 1;'>
-<div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>{row['away_team']}</div>
-<div style='font-size: 1.3rem; font-weight: 700; color: #fff;'>{row['away_proj']:.1f}</div>
-<div style='color: #94a3b8; font-size: 0.75rem;'>Elo: {int(row['away_elo'])}</div>
-</div>
-<div style='align-self: center; color: #475569; font-weight: 900; padding: 0 15px;'>VS</div>
-<div style='text-align: center; flex: 1;'>
-<div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>{row['home_team']}</div>
-<div style='font-size: 1.3rem; font-weight: 700; color: #fff;'>{row['home_proj']:.1f}</div>
-<div style='color: #94a3b8; font-size: 0.75rem;'>Elo: {int(row['home_elo'])}</div>
-</div>
-</div>
-<div style='margin-top: 15px; background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.03);'>
-<div style='display: flex; justify-content: space-between;'>
-<div>
-<div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Suggested Wager</div>
-<div style='font-size: 1.25rem; color: #818cf8; font-weight: 700;'>${row['kelly_stake']:,.2f} CAD</div>
-</div>
-<div style='text-align: right;'>
-<div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Est. Profit</div>
-<div style='font-size: 1.25rem; color: #10b981; font-weight: 700;'>+${row['potential_profit']:,.2f} CAD</div>
-</div>
-</div>
-<div style='margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 10px; display: flex; justify-content: space-between;'>
-<div style='color: #94a3b8; font-size: 0.85rem;'>Win Prob: <b>{row['model_prob']*100:.1f}%</b></div>
-<div style='color: #94a3b8; font-size: 0.85rem;'>Starting: <b>{row['away_pitcher']} vs {row['home_pitcher']}</b></div>
-</div>
-</div>
-</div>"""
-                st.markdown(card_html, unsafe_allow_html=True)
+# Sort the master view
+df_sched_view = df_master.drop_duplicates(subset=["game_id"])
+if sort_mode == "🔥 Highest +EV":
+    df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
+elif sort_mode == "🏆 Most Likely to Win":
+    df_sched_view["max_prob"] = df_sched_view[["home_win_prob", "away_win_prob"]].max(axis=1)
+    df_sched_view = df_sched_view.sort_values(by="max_prob", ascending=False)
+else:
+    df_sched_view = df_sched_view.sort_values(by="upset_score", ascending=False)
 
-elif "Full Predictions" in page:
-    st.subheader("🗓️ Full MLB Schedule & Elo Predictions")
-    
-    # Sort the master view
-    df_sched_view = df_master.drop_duplicates(subset=["game_id"])
-    
-    if sort_mode == "🔥 Highest +EV":
-        df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
-    elif sort_mode == "🏆 Most Likely to Win":
-        # Sort by the team with the highest win prob in the matchup
-        df_sched_view["max_prob"] = df_sched_view[["home_win_prob", "away_win_prob"]].max(axis=1)
-        df_sched_view = df_sched_view.sort_values(by="max_prob", ascending=False)
-    else:
-        df_sched_view = df_sched_view.sort_values(by="upset_score", ascending=False)
+st.info(f"📊 Displaying all predictions. Sorted by: {sort_mode}. Simulation Mode (Grey) uses -110 market defaults.")
 
-    st.info(f"Showing {total_count} games sorted by: {sort_mode}. Simulation Mode uses theoretical -110 lines where markets are closed.")
+# Iterate and display cards
+for idx, row in df_sched_view.iterrows():
+    # Find best bet for this game ID
+    game_bets = df_master[df_master["game_id"] == row["game_id"]]
+    best_bet = game_bets.sort_values(by="ev", ascending=False).iloc[0] if not game_bets.empty else row
     
-    for idx, row in df_sched_view.iterrows():
-        # Display Mode Label
-        badge_color = "#818cf8" if row["data_type"] == "💎 Market Alpha" else "#64748b"
-        st.markdown(f"<span style='background: {badge_color}; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; color: #fff; font-weight: 700;'>{row['data_type']}</span>", unsafe_allow_html=True)
+    # Enhanced Label: [Date] [Teams] [Value Badge]
+    display_date = pd.to_datetime(row["commence_time"]).dt.strftime("%a, %b %d").iloc[0] if isinstance(row["commence_time"], pd.Series) else pd.to_datetime(row["commence_time"]).strftime("%a, %b %d")
+    
+    expander_label = f"📅 {display_date} | ⚾ {row['away_team']} @ {row['home_team']}{title_suffix}"
+    
+    with st.expander(expander_label):
+        st.markdown(f"<span style='background: {badge_color}; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; color: #fff; font-weight: 700;'>{best_bet['data_type']}</span>", unsafe_allow_html=True)
         
-        with st.expander(f"{row['away_team']} @ {row['home_team']} | {row['formatted_time']}"):
-            c1, c2, c3 = st.columns([1, 1, 1])
-            with c1:
-                st.write(f"**{row['away_team']}**")
-                st.write(f"Win Prob: {row['away_win_prob']*100:.1f}%")
-                st.write(f"Proj Runs: {row['away_proj']:.1f}")
-                st.write(f"Pitcher: {row['away_pitcher']}")
-            with c2:
-                st.write("**Matchup Info**")
-                st.write(f"Elo Diff: {abs(int(row['home_elo']) - int(row['away_elo']))}")
-                status_color = "#10b981" if row['status'] == "Live" else "#64748b"
-                st.markdown(f"Status: <span style='color:{status_color}'>{row['status']}</span>", unsafe_allow_html=True)
-                if row["data_type"] == "🧪 Simulation Mode":
-                    st.write(f"Sim. EV: {row['ev']*100:+.1f}%")
-            with c3:
-                st.write(f"**{row['home_team']}**")
-                st.write(f"Win Prob: {row['home_win_prob']*100:.1f}%")
-                st.write(f"Proj Runs: {row['home_proj']:.1f}")
-                st.write(f"Pitcher: {row['home_pitcher']}")
-            
-            # Show odds if available
-            game_odds = df_master[df_master["game_id"] == row["game_id"]]
-            game_odds = game_odds[game_odds["odds"].notnull()]
-            if not game_odds.empty:
-                st.markdown("---")
-                st.markdown("**Available Markets**")
-                st.dataframe(game_odds[["bookmaker", "outcome", "odds", "implied_prob", "ev"]], use_container_width=True)
+        c1, c2, c3 = st.columns([1, 1, 1])
+        with c1:
+            st.write(f"**{row['away_team']}**")
+            st.write(f"Elo: **{int(row['away_elo'])}**")
+            st.write(f"Win Prob: {row['away_win_prob']*100:.1f}%")
+            st.write(f"Proj Score: **{row['away_proj']:.1f}**")
+            st.write(f"Pitcher: {row['away_pitcher']}")
+        with c2:
+            st.write("**🤖 Prediction Result**")
+            st.write(f"Winner: **{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}**")
+            st.write(f"Confidence: **{max(row['home_win_prob'], row['away_win_prob'])*100:.1f}%**")
+            st.write(f"Status: {row['status']}")
+            if best_bet["data_type"] == "💎 Market Alpha":
+                st.success(f"Best Odds: {best_bet['odds']} ({best_bet['bookmaker']})")
             else:
-                st.warning("No live market odds found. Displaying Elo-based Simulation data (-110 base).")
+                st.warning("Market Pending (-110 Base)")
+        with c3:
+            st.write(f"**{row['home_team']}**")
+            st.write(f"Elo: **{int(row['home_elo'])}**")
+            st.write(f"Win Prob: {row['home_win_prob']*100:.1f}%")
+            st.write(f"Proj Score: **{row['home_proj']:.1f}**")
+            st.write(f"Pitcher: {row['home_pitcher']}")
+        
+        # Kelly and Value Bets section
+        if best_bet["ev"] >= min_edge and best_bet["data_type"] == "💎 Market Alpha":
+            st.markdown("---")
+            st.subheader(f"🎯 🎯 High Value Alert: {best_bet['outcome']}")
+            v1, v2, v3 = st.columns(3)
+            with v1:
+                st.write(f"**+EV Rating:** {best_bet['ev']*100:+.1f}%")
+                st.write(f"**Marker Alpha:** {best_bet['bookmaker']}")
+            with v2:
+                st.write(f"**Kelly Stake:** {kelly_criterion(best_bet['model_prob'], best_bet['decimal_odds'], fractional_kelly)*100:.2f}%")
+                st.write(f"**CAD Wager:** ${best_bet['kelly_stake']:,.2f}")
+            with v3:
+                st.write(f"**Implied Prob:** {best_bet['implied_prob']*100:.1f}%")
+                st.write(f"**Yield Potential:** ${best_bet['potential_profit']:,.2f}")
+        
+        # Odds market explorer
+        game_odds = df_master[df_master["game_id"] == row["game_id"]]
+        game_odds = game_odds[game_odds["odds"].notnull()]
+        if not game_odds.empty:
+            with st.status(f"🌍 Market Alpha (Scan all {len(game_odds)} lines found)", expanded=False):
+                st.dataframe(game_odds[["bookmaker", "outcome", "odds", "ev", "implied_prob"]], use_container_width=True)
 
-elif "Team Power Rankings" in page:
+# Analytics Modules at the bottom
+st.markdown("---")
+st.subheader("📊 Global Analytics Modules")
+
+tab1, tab2 = st.tabs(["🏆 Team Power Rankings", "🧬 Player WAR Analytics"])
+
+with tab1:
     st.subheader("🏆 Global Leaderboard: Elo Point Scores")
     elo_map = load_elo_ratings()
     elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
     st.dataframe(elo_df.reset_index(drop=True), use_container_width=True)
-    st.markdown("---")
     fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
-    fig.update_traces(texttemplate='%{text}', textposition='outside')
-    fig.update_layout(height=1000, margin=dict(l=20, r=20, t=20, b=20), yaxis={'categoryorder':'total ascending'}, xaxis_title="Elo Points Score", yaxis_title="")
+    fig.update_layout(height=800, margin=dict(l=20, r=20, t=10, b=10))
     st.plotly_chart(fig, use_container_width=True)
 
-elif "Player WAR Analytics" in page:
-    st.subheader("🧬 Player WAR Analytics")
+with tab2:
+    st.subheader("🧬 Player WAR Analytics Treemap")
     if os.path.exists("data/raw/player_war_2024.csv"):
         df_war = pd.read_csv("data/raw/player_war_2024.csv")
         fig_war = px.treemap(df_war, path=['Team', 'Name'], values='WAR', color='WAR', color_continuous_scale='RdYlGn', template='plotly_dark')
-        fig_war.update_layout(margin=dict(t=30, b=10, r=10, l=10))
         st.plotly_chart(fig_war, use_container_width=True)
-        st.dataframe(df_war.sort_values(by='WAR', ascending=False), use_container_width=True)
     else:
-        st.info("Player WAR stats not found. Certification run required.")
+        st.info("Player WAR stats not found.")
 
-else:
-    st.warning("⚠️ Session routing interrupted. Please select a View Mode from the sidebar to begin.")
 st.markdown("---")
 with st.expander("🔍 Market & Elo Depth (Raw Data)"):
     st.dataframe(df_master, use_container_width=True)
@@ -394,7 +339,7 @@ with st.expander("🔍 Market & Elo Depth (Raw Data)"):
 # Footer
 st.markdown("""
     <div style='text-align: center; margin-top: 50px; opacity: 0.6;'>
-        <p>© 2026 BEST BETS Analytics Engine. Data by The Odds API, API-Sports & Balldontlie.</p>
+        <p>© 2026 BEST BETS Analytics Engine. Data by MLB Stats API & The Odds API.</p>
         <p style='font-size: 0.8rem;'>Sports betting involves risk. Wager only what you can afford to lose.</p>
     </div>
 """, unsafe_allow_html=True)
