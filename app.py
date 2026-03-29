@@ -717,6 +717,13 @@ with tab5:
         - **Pitcher Duel (ERA)**: The starting pitchers and their **Statcast Real-time ERA benchmarks**. 
             - *Instruction: These metrics are the primary variable in our scoring engine's "Situational Advantage" modeling.*
 
+        ### E. Player Analytics Benchmarks (Statcast)
+        To master pitching-heavy matchups, our engine utilizes advanced Statcast efficiency benchmarks:
+        - **⚾ ERA (Earned Run Average)**: The actual runs allowed per 9 innings. **Lower is better.**
+        - **🛰️ FIP (Fielding Independent Pitching)**: Projects what ERA *should* be by removing luck/defense. A FIP lower than ERA suggests the pitcher is pitching better than their results show.
+        - **🏆 WAR (Wins Above Replacement)**: The total 'Win Value' a pitcher provides over a standard backup. Larger bubbles on our charts indicate a more valuable season.
+        - **🔥 K/9 (Strikeouts per 9)**: How many batters the pitcher fanned per 9 innings—the ultimate indicator of mound dominance.
+
         ## 6. Path to Success: How to Use This Dashboard
         **1. Identify Value Alerts**: Look for the **💎 Multi-Source Alpha Yield** badges with a positive EV indicator.
         **2. Check the Synergy**: If the **⚡ XGBoost Confidence** badge is visible, our ML and MC models both agree—this is a high-confidence signal.
