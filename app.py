@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
 import os
+import sys
+
+# Ensure the app root is in the python path for modular imports
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 import json
 from dotenv import load_dotenv
 from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP
