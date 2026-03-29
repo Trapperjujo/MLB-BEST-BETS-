@@ -2,6 +2,12 @@ import math
 
 def american_to_decimal(american_odds: int) -> float:
     """Converts American odds to Decimal odds."""
+    try:
+        if isinstance(american_odds, str):
+            american_odds = int(american_odds.replace("+", "").strip())
+    except (ValueError, TypeError):
+        return 1.0 # Return parity odds if error
+
     if american_odds > 0:
         return (american_odds / 100.0) + 1.0
     else:
@@ -9,6 +15,12 @@ def american_to_decimal(american_odds: int) -> float:
 
 def calculate_implied_probability(american_odds: int) -> float:
     """Calculates implied probability from American odds."""
+    try:
+        if isinstance(american_odds, str):
+            american_odds = int(american_odds.replace("+", "").strip())
+    except (ValueError, TypeError):
+        return 0.5 # Default to 50/50 if error
+
     if american_odds > 0:
         return 100.0 / (american_odds + 100.0)
     else:
