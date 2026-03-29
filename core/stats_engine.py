@@ -47,13 +47,16 @@ def get_2026_standings() -> pd.DataFrame:
         data = r.json()
         
         recs = []
-        for league in data.get("records", []):
-            league_name = league.get("league", {}).get("name", "Unknown")
-            for team_rec in league.get("teamRecords", []):
+        for record in data.get("records", []):
+            league_name = record.get("league", {}).get("name", "Unknown")
+            division_name = record.get("division", {}).get("name", "Unknown")
+            
+            for team_rec in record.get("teamRecords", []):
                 full_name = team_rec.get("team", {}).get("name")
                 w = team_rec.get("wins", 0)
                 l = team_rec.get("losses", 0)
                 diff = team_rec.get("runDifferential", 0)
+                gb = team_rec.get("leagueGamesBehind", "-")
                 
                 # Merge with OddsShark data
                 os_data = ODDSSHARK_SNAPSHOT.get(full_name, {"ATS_W": 0, "ATS_L": 0})
@@ -61,15 +64,17 @@ def get_2026_standings() -> pd.DataFrame:
                 recs.append({
                     "Team": full_name,
                     "League": league_name,
+                    "Division": division_name,
                     "W": w,
                     "L": l,
                     "PCT": team_rec.get("winningPercentage", ".000"),
+                    "GB": gb,
                     "DIFF": diff,
                     "ATS_W": os_data["ATS_W"],
                     "ATS_L": os_data["ATS_L"],
                     "STRK": team_rec.get("streak", {}).get("streakCode", "-")
                 })
-        return pd.DataFrame(recs).sort_values(by="W", ascending=False)
+        return pd.DataFrame(recs)
     except Exception as e:
         print(f"Error fetching standings: {e}")
         return pd.DataFrame()
