@@ -112,6 +112,7 @@ df_odds["decimal_odds"] = df_odds["odds"].apply(american_to_decimal)
 df_odds["ev"] = df_odds.apply(lambda row: calculate_ev(row["model_prob"], row["decimal_odds"]), axis=1)
 df_odds["kelly_stake"] = df_odds.apply(lambda row: kelly_criterion(row["model_prob"], row["decimal_odds"], fractional_kelly) * bankroll, axis=1)
 df_odds["potential_profit"] = df_odds["kelly_stake"] * (df_odds["decimal_odds"] - 1.0)
+df_odds["total_payout"] = df_odds["kelly_stake"] * df_odds["decimal_odds"]
 
 # Main Prediction Table
 st.subheader("🎯 Intelligence Feed: +EV Value Alerts")
@@ -134,7 +135,7 @@ else:
             <div class='bet-card'>
                 <div style='display: flex; justify-content: space-between; align-items: center;'>
                     <div>
-                        <span style='font-size: 1.2rem; font-weight: 600; color: #fff;'>{row['outcome']} @ {row['bookmaker']}</span>
+                        <span style='font-size: 1.25rem; font-weight: 700; color: #fff; letter-spacing: -0.5px;'>{row['outcome']} @ {row['bookmaker']}</span>
                         <div style='margin-top: 5px;'>{pills_html}</div>
                     </div>
                     <div style='text-align: right;'>
@@ -142,23 +143,23 @@ else:
                         <div style='margin-top: 5px; font-size: 0.8rem; color: #64748b;'>{row['formatted_time']}</div>
                     </div>
                 </div>
-                <div style='margin-top: 10px; color: #94a3b8; font-size: 0.9rem;'>
+                <div style='margin-top: 10px; color: #94a3b8; font-size: 0.95rem; font-weight: 300;'>
                     {row['away_team']} ({int(row['opp_elo'])}) <b>@</b> {row['home_team']} ({int(row['team_elo'] if row['outcome']==row['home_team'] else row['opp_elo'])}) | Market: {row['market'].upper()} | Odds: {row['odds']}
                 </div>
-                <div style='margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end;'>
-                    <div style='display: flex; gap: 40px;'>
+                <div style='margin-top: 15px; background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.03);'>
+                    <div style='display: flex; justify-content: space-between;'>
                         <div>
-                            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Suggested Risk</div>
-                            <div style='font-size: 1.1rem; color: #ef4444; font-weight: 600;'>-${row['kelly_stake']:,.2f} CAD</div>
+                            <div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Suggested Wager</div>
+                            <div style='font-size: 1.25rem; color: #818cf8; font-weight: 700;'>${row['kelly_stake']:,.2f} CAD</div>
                         </div>
-                        <div>
-                            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Potential Profit</div>
-                            <div style='font-size: 1.1rem; color: #10b981; font-weight: 600;'>+${row['potential_profit']:,.2f} CAD</div>
+                        <div style='text-align: right;'>
+                            <div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Potential Profit</div>
+                            <div style='font-size: 1.25rem; color: #10b981; font-weight: 700;'>+${row['potential_profit']:,.2f} CAD</div>
                         </div>
-                        <div>
-                            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Elo Edge Logic</div>
-                            <div style='font-size: 1.1rem;'><b>{row['model_prob']*100:.1f}%</b> Win Prob</div>
-                        </div>
+                    </div>
+                    <div style='margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 10px; display: flex; justify-content: space-between;'>
+                        <div style='color: #94a3b8; font-size: 0.85rem;'>Total Payout: <b>${row['total_payout']:,.2f} CAD</b></div>
+                        <div style='color: #94a3b8; font-size: 0.85rem;'>Elo Edge Logic: <b>{row['model_prob']*100:.1f}% Win Prob</b></div>
                     </div>
                 </div>
             </div>
