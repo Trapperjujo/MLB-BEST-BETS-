@@ -118,7 +118,7 @@ h1, h2, h3, h4 {
 
 .stTabs [data-baseweb="tab"] {
     min-height: 100px !important;
-    width: 150px !important;
+    width: 170px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -128,12 +128,12 @@ h1, h2, h3, h4 {
     border-radius: 12px !important;
     color: var(--text-secondary) !important;
     font-family: 'Orbitron', sans-serif !important;
-    font-size: 0.7rem !important;
+    font-size: 0.65rem !important;
     font-weight: 700 !important;
-    padding: 12px 6px !important;
+    padding: 10px 5px !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     text-align: center !important;
-    line-height: 1.2 !important;
+    line-height: 1.1 !important;
 }
 
 .stTabs [data-baseweb="tab"]:hover {

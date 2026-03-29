@@ -237,8 +237,8 @@ tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     "🏆 Elo Power Rankings", 
     "🥇 League Leaders", 
     "🧬 Player Research", 
-    "🏛️ Historical Intelligence", 
-    "🛡️ Strategy & Compliance"
+    "🏛️ Historical Audit", 
+    "🛡️ Risk & Strategy"
 ])
 
 # ------------------------------------------------------------------
