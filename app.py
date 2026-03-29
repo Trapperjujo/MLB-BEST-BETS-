@@ -77,7 +77,7 @@ fractional_kelly = KELLY_MODES[kelly_mode]
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### ⚙️ Engine Settings")
-sort_mode = st.sidebar.selectbox("Dashboard Sort Mode", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset"])
+sort_mode = st.sidebar.selectbox("Dashboard Sort Mode", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset", "📅 Earliest Game Time"])
 std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, STD_BET_SIZE_DEFAULT, 0.1)
 min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 10.0, MIN_EDGE_DEFAULT, 0.5) / 100
 cad_rate = st.sidebar.number_input("CAD/USD Rate", value=CAD_USD_XRATE, step=0.01)
@@ -299,8 +299,11 @@ with tab0:
     if sort_mode == "🔥 Highest +EV":
         df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
     elif sort_mode == "🏆 Most Likely to Win":
-        df_sched_view["max_prob"] = df_sched_view[["home_win_prob", "away_win_prob"]].max(axis=1)
-        df_sched_view = df_sched_view.sort_values(by="max_prob", ascending=False)
+        df_sched_view = df_sched_view.sort_values(by="model_prob", ascending=False)
+    elif sort_mode == "⚡ Likely Upset":
+        df_sched_view = df_sched_view.sort_values(by="upset_score", ascending=False)
+    elif sort_mode == "📅 Earliest Game Time":
+        df_sched_view = df_sched_view.sort_values(by="commence_time", ascending=True)
     else:
         df_sched_view = df_sched_view.sort_values(by="upset_score", ascending=False)
     
