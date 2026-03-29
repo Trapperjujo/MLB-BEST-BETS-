@@ -28,7 +28,7 @@ st.markdown("""
 # Sidebar Configuration
 st.sidebar.markdown("### 🛠️ Configuration")
 bankroll = st.sidebar.number_input("Total Bankroll (CAD)", min_value=100.0, value=5000.0, step=100.0)
-unit_size = st.sidebar.slider("Unit Size (%)", 0.5, 5.0, 1.5, 0.1)
+std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, 1.5, 0.1, help="The percentage of your total bankroll you consider one 'unit'. Used as a baseline for flat staking.")
 ev_threshold = st.sidebar.slider("EV Alert Threshold (%)", 0.0, 10.0, 3.0, 0.5) / 100
 fractional_kelly = st.sidebar.slider("Fractional Kelly multiplier", 0.1, 1.0, 0.25, 0.05)
 
@@ -49,7 +49,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric("Total Bankroll", f"${bankroll:,.2f} CAD")
 with col2:
-    st.metric("Unit Size", f"${flat_staking(bankroll, unit_size):,.2f}")
+    st.metric("Base Unit (1.0u)", f"${flat_staking(bankroll, std_bet_size):,.2f}")
 with col3:
     st.metric("Model Confidence", "High", delta="+4.2%")
 with col4:
