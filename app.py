@@ -573,13 +573,13 @@ with tab0:
                 "Matchup": matchup,
                 "Predicted Winner": f"🏆 {winner} ({winner_loc})",
                 "Projected Score": f"{row['home_proj']:.1f} - {row['away_proj']:.1f}",
-                "XGBoost Confidence": f"{row['xg_conf']*100:.1f}%",
-                "Value Edge (EV)": f"{row['ev']*100:.1f}%" if row['ev'] > 0 else "0.0%"
+                "Model Confidence %": f"{row['xg_conf']*100:.1f}%",
+                "+EV Edge %": f"{row['ev']*100:.1f}%" if row['ev'] > 0 else "0.0%"
             })
         df_out_view = pd.DataFrame(outcomes)
         st.dataframe(df_out_view, use_container_width=True, hide_index=True, column_config={
-            "XGBoost Confidence": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
-            "Value Edge (EV)": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
+            "Model Confidence %": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
+            "+EV Edge %": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
         })
     else:
         st.info("No active matchups found.")
