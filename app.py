@@ -518,6 +518,7 @@ elif is_analytics_mode:
         with c1:
             st.markdown("### ⚾ Pitcher Efficiency Matrix")
             fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", text="Name", color_continuous_scale="Viridis", template="plotly_dark")
+            fig_p.update_traces(textposition='top center')
             fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), x1=df_p['FIP'].max(), y1=df_p['FIP'].max(), line=dict(color="Red", width=2, dash="dash"))
             st.plotly_chart(fig_p, use_container_width=True)
         with c2:
@@ -602,7 +603,8 @@ with tab4:
         c1, c2 = st.columns(2)
         with c1:
             st.markdown("### ⚾ Pitcher Matrix")
-            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", template="plotly_dark")
+            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", text="Name", template="plotly_dark")
+            fig_p.update_traces(textposition='top center')
             st.plotly_chart(fig_p, use_container_width=True)
         with c2:
             st.markdown("### 💥 Team Hitting")
