@@ -161,53 +161,50 @@ else:
             home_proj = row['team_proj'] if row['outcome']==row['home_team'] else row['opp_proj']
             away_proj = row['opp_proj'] if row['outcome']==row['home_team'] else row['team_proj']
             
-            st.markdown(f"""
-<div class='bet-card'>
-    <div style='display: flex; justify-content: space-between; align-items: center;'>
-        <div>
-            <div style='color: #818cf8; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 3px;'>🎯 Predicted Winner</div>
-            <span style='font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -1px;'>{predicted_winner}</span>
-            <div style='margin-top: 5px;'>{pills_html}</div>
-        </div>
-        <div style='text-align: right;'>
-            <div class='ev-badge'>+{row['ss_ev' if enable_ss_mode else 'ev']*100:.1f}% EV {'(at SS Odds)' if enable_ss_mode else ''}</div>
-            <div style='margin-top: 5px; font-size: 0.8rem; color: #64748b;'>{row['formatted_time']}</div>
-        </div>
-    </div>
-    <hr style='margin: 15px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.05);'>
-    
-    <div style='display: flex; justify-content: space-between; margin-bottom: 15px;'>
-        <div style='text-align: center; flex: 1;'>
-            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>{row['away_team']}</div>
-            <div style='font-size: 1.3rem; font-weight: 700; color: #fff;'>{away_proj:.1f}</div>
-            <div style='color: #94a3b8; font-size: 0.75rem;'>Elo: {away_elo}</div>
-        </div>
-        <div style='align-self: center; color: #475569; font-weight: 900; padding: 0 15px;'>VS</div>
-        <div style='text-align: center; flex: 1;'>
-            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>{row['home_team']}</div>
-            <div style='font-size: 1.3rem; font-weight: 700; color: #fff;'>{home_proj:.1f}</div>
-            <div style='color: #94a3b8; font-size: 0.75rem;'>Elo: {home_elo}</div>
-        </div>
-    </div>
-
-    <div style='margin-top: 15px; background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.03);'>
-        <div style='display: flex; justify-content: space-between;'>
-            <div>
-                <div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Suggested Wager</div>
-                <div style='font-size: 1.25rem; color: #818cf8; font-weight: 700;'>${row['kelly_stake']:,.2f} CAD</div>
-            </div>
-            <div style='text-align: right;'>
-                <div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Est. Profit {'(SS)' if enable_ss_mode else ''}</div>
-                <div style='font-size: 1.25rem; color: #10b981; font-weight: 700;'>+${row['ss_potential_profit' if enable_ss_mode else 'potential_profit']:,.2f} CAD</div>
-            </div>
-        </div>
-        <div style='margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 10px; display: flex; justify-content: space-between;'>
-            <div style='color: #94a3b8; font-size: 0.85rem;'>Model Confidence: <b>{row['model_prob']*100:.1f}%</b></div>
-            <div style='color: #94a3b8; font-size: 0.85rem;'>Implying: <b>{row['implied_prob']*100:.1f}% Prob</b></div>
-        </div>
-    </div>
+            card_html = f"""<div class='bet-card'>
+<div style='display: flex; justify-content: space-between; align-items: center;'>
+<div>
+<div style='color: #818cf8; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 3px;'>🎯 Predicted Winner</div>
+<span style='font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -1px;'>{predicted_winner}</span>
+<div style='margin-top: 5px;'>{pills_html}</div>
 </div>
-""", unsafe_allow_html=True)
+<div style='text-align: right;'>
+<div class='ev-badge'>+{row['ss_ev' if enable_ss_mode else 'ev']*100:.1f}% EV {'(at SS Odds)' if enable_ss_mode else ''}</div>
+<div style='margin-top: 5px; font-size: 0.8rem; color: #64748b;'>{row['formatted_time']}</div>
+</div>
+</div>
+<hr style='margin: 15px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.05);'>
+<div style='display: flex; justify-content: space-between; margin-bottom: 15px;'>
+<div style='text-align: center; flex: 1;'>
+<div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>{row['away_team']}</div>
+<div style='font-size: 1.3rem; font-weight: 700; color: #fff;'>{away_proj:.1f}</div>
+<div style='color: #94a3b8; font-size: 0.75rem;'>Elo: {away_elo}</div>
+</div>
+<div style='align-self: center; color: #475569; font-weight: 900; padding: 0 15px;'>VS</div>
+<div style='text-align: center; flex: 1;'>
+<div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>{row['home_team']}</div>
+<div style='font-size: 1.3rem; font-weight: 700; color: #fff;'>{home_proj:.1f}</div>
+<div style='color: #94a3b8; font-size: 0.75rem;'>Elo: {home_elo}</div>
+</div>
+</div>
+<div style='margin-top: 15px; background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.03);'>
+<div style='display: flex; justify-content: space-between;'>
+<div>
+<div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Suggested Wager</div>
+<div style='font-size: 1.25rem; color: #818cf8; font-weight: 700;'>${row['kelly_stake']:,.2f} CAD</div>
+</div>
+<div style='text-align: right;'>
+<div style='color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;'>Est. Profit {'(SS)' if enable_ss_mode else ''}</div>
+<div style='font-size: 1.25rem; color: #10b981; font-weight: 700;'>+${row['ss_potential_profit' if enable_ss_mode else 'potential_profit']:,.2f} CAD</div>
+</div>
+</div>
+<div style='margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 10px; display: flex; justify-content: space-between;'>
+<div style='color: #94a3b8; font-size: 0.85rem;'>Model Confidence: <b>{row['model_prob']*100:.1f}%</b></div>
+<div style='color: #94a3b8; font-size: 0.85rem;'>Implying: <b>{row['implied_prob']*100:.1f}% Prob</b></div>
+</div>
+</div>
+</div>"""
+            st.markdown(card_html, unsafe_allow_html=True)
 
 st.markdown("---")
 with st.expander("🔍 Market & Elo Depth (Raw Data)"):
