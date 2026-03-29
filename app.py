@@ -472,6 +472,16 @@ if is_standings_mode:
         st.subheader("📈 Performance Analysis: Wins vs ATS")
         fig_s = px.scatter(df_s_final, x="W", y="ATS_W", text="Team", color="League", title="League-Wide Profitability Analysis (2026)", template="plotly_dark")
         st.plotly_chart(fig_s, use_container_width=True)
+        with st.expander("📈 Performance Legend & Profitability Hub"):
+            st.markdown("""
+            - **🏆 W (Wins)**: Raw regular season victories. Measures overall team strength.
+            - **💎 ATS_W (Against The Spread Wins)**: Frequency that a team 'covered' the sportsbook spread. Measures real-world betting profitability.
+            
+            #### 🚀 Profitability Matrix:
+            *   **Upper-Right**: Elite & Profitable (Consistent winners who beat the spread).
+            *   **Upper-Left**: High-Value Underdogs (Low wins, but highly profitable relative to market expectations).
+            *   **Lower-Right**: Overvalued Giants (High wins, but unprofitable due to inflated market 'hype').
+            """)
     else:
         st.info("Seasonal standings currently syncing. Click 'Refresh Status' in the sidebar to hydrate.")
 
@@ -726,9 +736,14 @@ with tab4:
         - **🏆 WAR (Wins Above Replacement)**: The total 'Win Value' a pitcher provides over a standard backup. Larger bubbles on our charts indicate a more valuable season.
         - **🔥 K/9 (Strikeouts per 9)**: How many batters the pitcher fanned per 9 innings—the ultimate indicator of mound dominance.
 
-        #### 💥 Hitting Metrics
         - **📈 OPS (On-Base Plus Slugging)**: Combined measure of a team's ability to reach base AND hit for extra bases. **Higher is better.**
         - **🛰️ wRC+ (Weighted Runs Created Plus)**: The single best hitting metric. It captures total offensive value, adjusted for ballparks. **100 is league average.** (e.g., 115 means the team is 15% better than average).
+
+        ### F. Betting Performance & ATS Analysis
+        Our terminal benchmarks profitability through the **Wins vs. ATS** matrix:
+        - **🏆 W (Wins)**: Total regular season victories.
+        - **💎 ATS_W (Against The Spread)**: Performance relative to the betting market.
+        - **🎯 Smart Money Alpha**: Teams in the **Upper-Left Quadrant** are "Profitable Underdogs"—teams that the public underestimates, providing superior yield.
 
         ## 6. Path to Success: How to Use This Dashboard
         **1. Identify Value Alerts**: Look for the **💎 Multi-Source Alpha Yield** badges with a positive EV indicator.
