@@ -77,6 +77,7 @@ fractional_kelly = KELLY_MODES[kelly_mode]
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### ⚙️ Engine Settings")
+sort_mode = st.sidebar.selectbox("Dashboard Sort Mode", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset"])
 std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, STD_BET_SIZE_DEFAULT, 0.1)
 min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 10.0, MIN_EDGE_DEFAULT, 0.5) / 100
 cad_rate = st.sidebar.number_input("CAD/USD Rate", value=CAD_USD_XRATE, step=0.01)
