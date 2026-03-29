@@ -520,6 +520,13 @@ elif is_analytics_mode:
             fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", color_continuous_scale="Viridis", template="plotly_dark")
             fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), x1=df_p['FIP'].max(), y1=df_p['FIP'].max(), line=dict(color="Red", width=2, dash="dash"))
             st.plotly_chart(fig_p, use_container_width=True)
+            with st.expander("📚 Pitcher Matrix Legend & Key"):
+                st.markdown("""
+                - **⚾ ERA (Earned Run Average)**: The actual runs allowed per 9 innings. **Lower is better.**
+                - **🛰️ FIP (Fielding Independent Pitching)**: Projects what ERA *should* be by removing luck/defense. A FIP lower than ERA suggests the pitcher is pitching better than their results show.
+                - **🏆 WAR (Wins Above Replacement)**: The total 'Win Value' a pitcher provides over a standard backup. Larger bubbles = More valuable season.
+                - **🔥 K/9 (Strikeouts per 9)**: How many batters the pitcher fanned per 9 innings. Brightness indicates high-strikeout dominance.
+                """)
         with c2:
             st.markdown("### 💥 Team Hitting Strength")
             df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
@@ -604,6 +611,13 @@ with tab4:
             st.markdown("### ⚾ Pitcher Matrix")
             fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", template="plotly_dark")
             st.plotly_chart(fig_p, use_container_width=True)
+            with st.expander("📚 Pitcher Matrix Key"):
+                st.markdown("""
+                - **⚾ ERA**: Earned Runs / 9 Innings.
+                - **🛰️ FIP**: Performance excluding defense/luck. (The 'True' Skill).
+                - **🏆 WAR**: Total team wins added by this player.
+                - **🔥 K/9**: Strikeout rate. (Dominance Indicator).
+                """)
         with c2:
             st.markdown("### 💥 Team Hitting")
             df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
