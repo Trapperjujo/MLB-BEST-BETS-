@@ -86,6 +86,7 @@ df_odds["model_prob"] = df_odds["implied_prob"] + 0.05 # Simulated refinement
 df_odds["decimal_odds"] = df_odds["odds"].apply(american_to_decimal)
 df_odds["ev"] = df_odds.apply(lambda row: calculate_ev(row["model_prob"], row["decimal_odds"]), axis=1)
 df_odds["kelly_stake"] = df_odds.apply(lambda row: kelly_criterion(row["model_prob"], row["decimal_odds"], fractional_kelly) * bankroll, axis=1)
+df_odds["potential_profit"] = df_odds["kelly_stake"] * (df_odds["decimal_odds"] - 1.0)
 
 # Main Prediction Table
 st.subheader("🎯 Intelligence Feed: +EV Value Alerts")
@@ -120,10 +121,14 @@ else:
                     {row['away_team']} <b>@</b> {row['home_team']} | Market: {row['market'].upper()} | Odds: {row['odds']}
                 </div>
                 <div style='margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end;'>
-                    <div style='display: flex; gap: 30px;'>
+                    <div style='display: flex; gap: 40px;'>
                         <div>
-                            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Suggested Stake</div>
-                            <div style='font-size: 1.1rem; color: #10b981; font-weight: 600;'>${row['kelly_stake']:,.2f} CAD</div>
+                            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Suggested Risk</div>
+                            <div style='font-size: 1.1rem; color: #ef4444; font-weight: 600;'>-${row['kelly_stake']:,.2f} CAD</div>
+                        </div>
+                        <div>
+                            <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Potential Profit</div>
+                            <div style='font-size: 1.1rem; color: #10b981; font-weight: 600;'>+${row['potential_profit']:,.2f} CAD</div>
                         </div>
                         <div>
                             <div style='color: #64748b; font-size: 0.7rem; text-transform: uppercase;'>Edge Logic</div>
