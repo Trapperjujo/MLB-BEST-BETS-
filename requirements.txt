@@ -9,3 +9,5 @@ yfinance
 pybaseball
 beautifulsoup4
 lxml
+xgboost
+scikit-learn

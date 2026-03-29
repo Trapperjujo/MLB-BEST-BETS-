@@ -15,6 +15,8 @@ from core.models import american_to_decimal, calculate_ev, calculate_implied_pro
 from core.strategy import is_divisional_matchup
 from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name
 from core.status_fetcher import get_player_injuries, get_fatigue_penalty
+from core.stats_engine import get_2026_standings, get_2026_leaders
+from core.prediction_xgboost import predict_xgboost
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
@@ -66,7 +68,7 @@ cad_rate = st.sidebar.number_input("CAD/USD Rate", value=CAD_USD_XRATE, step=0.0
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🗺️ Navigation")
-page = st.sidebar.radio("View Mode", ["🎯 Intelligence Feed", "🗓️ Full Predictions", "📈 Team Power Rankings", "🧬 Player WAR Analytics"])
+page = st.sidebar.radio("View Mode", ["🎯 Intelligence Feed", "🗓️ Full Predictions", "📈 2026 Standings", "🏆 Team Power Rankings", "🧬 Player Analytics"])
 
 if st.sidebar.button("🔄 Clear Cache & Refresh Data"):
     st.cache_data.clear()
@@ -122,12 +124,14 @@ def get_prediction(row, history_df: pd.DataFrame = None):
     war_diff_adj = calculate_war_elo_adjustment(h_war, a_war)
     
     # RUN MONTE CARLO
-    # We pass the Elo points and situational adjustments
     mc_results = run_monte_carlo_simulation(
         home_elo=int(h_elo), 
         away_elo=int(a_elo), 
         adjustments={'home': -h_fatigue, 'away': -a_fatigue, 'lineup_war_diff': war_diff_adj}
     )
+    
+    # RUN XGBOOST
+    xg_prob, xg_conf = predict_xgboost(h_team, a_team)
     
     return {
         'home_win_prob': mc_results['home_win_prob'],
@@ -137,7 +141,9 @@ def get_prediction(row, history_df: pd.DataFrame = None):
         'home_proj': mc_results['home_avg_runs'],
         'away_proj': mc_results['away_avg_runs'],
         'home_scores_sample': mc_results['home_scores'],
-        'away_scores_sample': mc_results['away_scores']
+        'away_scores_sample': mc_results['away_scores'],
+        'xg_prob': xg_prob,
+        'xg_conf': xg_conf
     }
 
 # Data Fetching
@@ -172,16 +178,24 @@ def fetch_master_data():
         df_odds = process_odds_data(raw_odds) if raw_odds else pd.DataFrame()
         
         # 4. Build Predictions
-        status.write("🤖 Running MLB Monte Carlo Simulations...")
+        status.write("🤖 Running MLB Monte Carlo & XGBoost Hybrid Core...")
         df_sched["h_norm"] = df_sched["home_team"].apply(normalize_team_name)
         df_sched["a_norm"] = df_sched["away_team"].apply(normalize_team_name)
         
         predictions = df_sched.apply(lambda r: pd.Series(get_prediction(r, df_hist)), axis=1)
         df_sched = pd.concat([df_sched, predictions], axis=1)
         
+        # 5. Fetch 2026 Standings
+        status.write("📈 Fetching Live 2026 Standings & ATS Records...")
+        df_standings = get_2026_standings()
+        
         status.update(label="✅ Synchronization Complete", state="complete")
     
     final_rows = []
+    
+    # Store standings globally in state for UI
+    st.session_state["df_standings_2026"] = df_standings
+    st.session_state["df_leaders_2026"] = get_2026_leaders()
     
     for _, game in df_sched.iterrows():
         # Find matching odds
@@ -321,6 +335,19 @@ for idx, row in df_sched_view.iterrows():
     display_date = pd.to_datetime(row["commence_time"]).strftime("%a, %b %d") if not isinstance(row["commence_time"], pd.Series) else pd.to_datetime(row["commence_time"].iloc[0]).strftime("%a, %b %d")
     
     with st.container():
+        # Retrieve 2026 Standings for the teams
+        df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
+        h_rec = df_s[df_s["Team"] == row["home_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["home_team"]].empty else None
+        a_rec = df_s[df_s["Team"] == row["away_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["away_team"]].empty else None
+        
+        h_rec_str = f"{h_rec['W']}-{h_rec['L']} ({h_rec['ATS_W']}-{h_rec['ATS_L']} ATS)" if h_rec is not None else "0-0 (0-0 ATS)"
+        a_rec_str = f"{a_rec['W']}-{a_rec['L']} ({a_rec['ATS_W']}-{a_rec['ATS_L']} ATS)" if a_rec is not None else "0-0 (0-0 ATS)"
+
+        # XGBoost Synergy Check
+        synergy_badge = ""
+        if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5):
+            synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Synergy: {row['xg_conf']*100:.0f}%</span>"
+
         # Build the HTML string for the card
         card_html = f"""
 <div class='neon-card'>
@@ -328,6 +355,7 @@ for idx, row in df_sched_view.iterrows():
 <div style='display: flex; align-items: center; gap: 10px;'>
 <span style='font-size: 1.2rem;'>📅 {display_date}</span>
 <span class='alpha-badge'>{best_bet['data_type']}</span>
+{synergy_badge}
 </div>
 {f"<div class='ev-badge'>+{best_bet['ev']*100:.1f}% EV</div>" if best_bet['ev'] > 0 else ""}
 </div>
@@ -335,17 +363,19 @@ for idx, row in df_sched_view.iterrows():
 <div>
 <div style='color: var(--text-secondary); font-size: 0.8rem;'>AWAY</div>
 <div style='font-size: 1.1rem; font-weight: 700;'>{row['away_team']}</div>
+<div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {a_rec_str}</div>
 <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['away_win_prob']*100:.1f}%</div>
 <div style='font-size: 0.9rem;'>Proj: {row['away_proj']:.1f} runs</div>
 </div>
 <div style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
 <div style='font-size: 0.7rem; color: var(--text-secondary);'>PREDICTED WINNER</div>
 <div style='font-size: 1.2rem; font-weight: 900; color: #fff;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
-<div style='font-size: 0.7rem; color: var(--neon-blue); margin-top: 5px;'>Elo Filter Active</div>
+<div style='font-size: 0.7rem; color: var(--neon-blue); margin-top: 5px;'>ML confidence: {row['xg_conf']*100:.0f}%</div>
 </div>
 <div>
 <div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
 <div style='font-size: 1.1rem; font-weight: 700;'>{row['home_team']}</div>
+<div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {h_rec_str}</div>
 <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['home_win_prob']*100:.1f}%</div>
 <div style='font-size: 0.9rem;'>Proj: {row['home_proj']:.1f} runs</div>
 </div>
@@ -401,7 +431,7 @@ Target: {best_bet['outcome']} @ {best_bet['odds']} ({best_bet['bookmaker']})
 st.markdown("---")
 st.subheader("📊 Global Analytics Modules")
 
-tab1, tab2 = st.tabs(["🏆 Team Power Rankings", "🧬 Player WAR Analytics"])
+tab1, tab2, tab3, tab4 = st.tabs(["🏆 Elo Rankings", "📈 2026 Standings", "🥇 League Leaders", "🧬 Player Analytics"])
 
 with tab1:
     st.subheader("🏆 Global Leaderboard: Elo Point Scores")
@@ -413,7 +443,29 @@ with tab1:
     st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
-    st.subheader("🧬 Player WAR Analytics Treemap")
+    st.subheader("📈 Official 2026 Division Standings & ATS Records")
+    df_s_2026 = st.session_state.get("df_standings_2026", pd.DataFrame())
+    if not df_s_2026.empty:
+        st.dataframe(df_s_2026, use_container_width=True)
+        fig_s = px.scatter(df_s_2026, x="W", y="ATS_W", text="Team", color="League", title="Wins vs Against-The-Spread Wins", template="plotly_dark")
+        st.plotly_chart(fig_s, use_container_width=True)
+    else:
+        st.info("2026 Standing data not fetched yet. Click 'Refresh' to sync.")
+
+with tab3:
+    st.subheader("🥇 2026 Seasonal League Leaders")
+    leaders_map = st.session_state.get("df_leaders_2026", {})
+    if leaders_map:
+        l_tabs = st.tabs(["🔥 Home Runs", "🎯 Batting Avg", "⚾ ERA", "🏆 Wins"])
+        with l_tabs[0]: st.table(leaders_map.get("homeRuns"))
+        with l_tabs[1]: st.table(leaders_map.get("battingAverage"))
+        with l_tabs[2]: st.table(leaders_map.get("earnedRunAverage"))
+        with l_tabs[3]: st.table(leaders_map.get("wins"))
+    else:
+        st.info("Leaderboard data currently unavailable.")
+
+with tab4:
+    st.subheader("🧬 Player Analytics (Baseline WAR)")
     if os.path.exists("data/raw/player_war_2024.csv"):
         df_war = pd.read_csv("data/raw/player_war_2024.csv")
         fig_war = px.treemap(df_war, path=['Team', 'Name'], values='WAR', color='WAR', color_continuous_scale='RdYlGn', template='plotly_dark')
