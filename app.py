@@ -542,7 +542,7 @@ elif is_analytics_mode:
 st.markdown("---")
 st.subheader("📊 Global Analytics Modules")
 
-tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ MLB PREDICTIONS", "🏆 Elo Rankings", "📈 2026 Standings", "🥇 League Leaders", "🧬 Player Analytics", "🛰️ OUR STRATEGY"])
+tab0, tab1, tab2, tab3, tab4 = st.tabs(["🛰️ MLB PREDICTIONS", "🏆 Elo Rankings", "🥇 League Leaders", "🧬 Player Analytics", "🛰️ OUR STRATEGY"])
 
 with tab0:
     st.subheader("🛰️ MLB PREDICTIONS: Matchup Hub")
@@ -578,16 +578,6 @@ with tab1:
     st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
-    st.subheader("📈 Official 2026 Division Standings")
-    df_s_2026 = st.session_state.get("df_standings_2026", pd.DataFrame())
-    if not df_s_2026.empty:
-        st.dataframe(df_s_2026, use_container_width=True)
-        fig_s = px.scatter(df_s_2026, x="W", y="ATS_W", text="Team", color="League", template="plotly_dark")
-        st.plotly_chart(fig_s, use_container_width=True)
-    else:
-        st.info("Standings data not fetched yet.")
-
-with tab3:
     st.subheader("🥇 League Leaders")
     leaders_map = st.session_state.get("df_leaders_2026", {})
     if leaders_map:
@@ -599,7 +589,7 @@ with tab3:
     else:
         st.info("Leaderboard data currently unavailable.")
 
-with tab4:
+with tab3:
     st.subheader("🧬 Player Analytics")
     p_cache = "data/raw/cache_pitchers_2024.csv"
     h_cache = "data/raw/cache_hitting_2024.csv"
@@ -626,7 +616,7 @@ with tab4:
     else:
         st.info("Statcast benchmarks currently syncing...")
 
-with tab5:
+with tab4:
         st.markdown("""
         # 🛰️ OUR STRATEGY: Technical Transparency & Financial Engineering
 
