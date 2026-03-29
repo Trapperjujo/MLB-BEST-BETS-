@@ -421,13 +421,55 @@ with tab2:
 # ------------------------------------------------------------------
 with tab3:
     st.subheader("🥇 2026 MLB League Leaders")
+    st.info("🛰️ **Alpha Leaderboard**: Tracking the 2026 season's elite performers. Each category represents a distinct pillar of professional baseball excellence.")
+    
     leaders = st.session_state.get("df_leaders_2026", {})
     if leaders:
         l_tabs = st.tabs(["🔥 Home Runs", "🎯 Batting Avg", "⚾ ERA", "🏆 Wins"])
-        with l_tabs[0]: st.table(leaders.get("homeRuns"))
-        with l_tabs[1]: st.table(leaders.get("battingAverage"))
-        with l_tabs[2]: st.table(leaders.get("earnedRunAverage"))
-        with l_tabs[3]: st.table(leaders.get("wins"))
+        
+        with l_tabs[0]: 
+            st.info("🔥 **Home Runs (HR)**: The primary indicator of raw offensive power and team run production.")
+            with st.expander("📚 Home Run Key"):
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **Value** | Total Home Runs recorded in the 2026 season. |
+                | **Rank** | League-wide standing compared to all professional rostered athletes. |
+                """)
+            st.table(leaders.get("homeRuns"))
+            
+        with l_tabs[1]: 
+            st.info("🎯 **Batting Average (AVG)**: Calculated as Hits divided by At-Bats. The gold standard for contact consistency.")
+            with st.expander("📚 Batting Average Key"):
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **Value** | Hits per At-Bat (e.g., .300 is considered elite professional-grade). |
+                | **Rank** | Total standing among qualified starters in 2026. |
+                """)
+            st.table(leaders.get("battingAverage"))
+            
+        with l_tabs[2]: 
+            st.info("⚾ **Earned Run Average (ERA)**: Average runs allowed per 9 innings. **Lower is Better.**")
+            with st.expander("📚 ERA Metric Key"):
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **Value** | Efficiency benchmark. Elite starters target < 3.00 for institutional-grade reliability. |
+                | **Rank** | Efficiency standing compared to the league-wide rotation. |
+                """)
+            st.table(leaders.get("earnedRunAverage"))
+            
+        with l_tabs[3]: 
+            st.info("🏆 **Wins (W)**: Credited to the pitcher who is in the game when their team takes the lead for good.")
+            with st.expander("📚 Wins Contribution Key"):
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **Value** | Total outright wins achieved as the pitcher of record in 2026. |
+                | **Rank** | Leaderboard position for team-synergy and win contribution. |
+                """)
+            st.table(leaders.get("wins"))
     else:
         st.info("Leaderboard data currently unavailable.")
 
@@ -461,6 +503,15 @@ with tab4:
                 | **🔥 K/9** | Strikeouts per 9 innings. Primary dominance indicator. |
                 """)
             st.markdown("#### 🏆 Elite Starters Performance Grid")
+            with st.expander("📚 Starter Performance Key"):
+                st.markdown("""
+                | Column | Metric Definition |
+                | :--- | :--- |
+                | **🛰️ ERA** | Earned Run Average. (Lower is Elite). |
+                | **💎 FIP** | Fielding Independent Pitching. Measures true skill by isolating home runs, walks, and strikeouts. |
+                | **🔥 K/9** | Mean Strikeouts per 9 innings. Indicator of pure dominance. |
+                | **🏆 WAR** | Wins Above Replacement. The institutional gold standard for total player value. |
+                """)
             st.dataframe(df_p_view[["Name", "Team", "ERA", "FIP", "K/9", "WAR"]], hide_index=True, width='stretch')
             
         else:
@@ -479,6 +530,17 @@ with tab4:
                 | **🏆 WAR** | Wins Above Replacement. Total contribution. |
                 """)
             st.markdown("#### 🏆 Heavy Hitters: 2026 Offensive Grid")
+            with st.expander("📊 Heavy Hitters Metric Key"):
+                st.markdown("""
+                | Column | Metric Definition |
+                | :--- | :--- |
+                | **📈 PA** | Plate Appearances. Total opportunities to generate offense. |
+                | **🔥 HR** | Home Runs recorded in 2026. raw power benchmark. |
+                | **🎯 AVG** | Batting Average. Hits divided by At-Bats. |
+                | **🧬 OPS** | On-Base Plus Slugging. Total Offensive Strength. |
+                | **🛰️ wRC+** | Weighted Runs Created Plus. Elite production efficiency. |
+                | **🏆 WAR** | Wins Above Replacement. The gold standard for total player contribution. |
+                """)
             st.dataframe(df_h_view[["Name", "Team", "PA", "HR", "AVG", "OPS", "wRC+", "WAR"]], hide_index=True, width='stretch')
     else:
         st.info("Statcast benchmarks currently syncing...")
