@@ -240,7 +240,7 @@ with col4:
 st.markdown("---")
 
 # Navigation Routing
-if page.startswith("🎯 Intelligence Feed"):
+if "Intelligence Feed" in page:
     st.subheader("🎯 Intelligence Feed: +EV Value Alerts")
     
     # Filter for games WITH odds and WITH edge
@@ -311,7 +311,7 @@ if page.startswith("🎯 Intelligence Feed"):
 </div>"""
                 st.markdown(card_html, unsafe_allow_html=True)
 
-elif page.startswith("🗓️ Full Predictions"):
+elif "Full Predictions" in page:
     st.subheader("🗓️ Full MLB Schedule & Elo Predictions")
     
     # Sort the master view
@@ -363,7 +363,7 @@ elif page.startswith("🗓️ Full Predictions"):
             else:
                 st.warning("No live market odds found. Displaying Elo-based Simulation data (-110 base).")
 
-elif page == "📈 Team Power Rankings":
+elif "Team Power Rankings" in page:
     st.subheader("🏆 Global Leaderboard: Elo Point Scores")
     elo_map = load_elo_ratings()
     elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
@@ -374,7 +374,7 @@ elif page == "📈 Team Power Rankings":
     fig.update_layout(height=1000, margin=dict(l=20, r=20, t=20, b=20), yaxis={'categoryorder':'total ascending'}, xaxis_title="Elo Points Score", yaxis_title="")
     st.plotly_chart(fig, use_container_width=True)
 
-elif page == "🧬 Player WAR Analytics":
+elif "Player WAR Analytics" in page:
     st.subheader("🧬 Player WAR Analytics")
     if os.path.exists("data/raw/player_war_2024.csv"):
         df_war = pd.read_csv("data/raw/player_war_2024.csv")
@@ -385,9 +385,10 @@ elif page == "🧬 Player WAR Analytics":
     else:
         st.info("Player WAR stats not found. Certification run required.")
 
+else:
+    st.warning("⚠️ Session routing interrupted. Please select a View Mode from the sidebar to begin.")
 st.markdown("---")
 with st.expander("🔍 Market & Elo Depth (Raw Data)"):
-    # Corrected df_odds to df_master
     st.dataframe(df_master, use_container_width=True)
 
 # Footer
