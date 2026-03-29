@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+styles/monaco-vendor.css
+hero.png
+.ipynb_checkpoints/
+.DS_Store

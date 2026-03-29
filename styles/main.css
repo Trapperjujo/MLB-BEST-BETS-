@@ -1,0 +1,60 @@
+/* Glassmorphism Styling for Streamlit */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@300;600;700&display=swap');
+
+body {
+    background-color: #0f172a; /* Slate 900 */
+    color: #f8fafc;
+    font-family: 'Outfit', sans-serif;
+}
+
+[data-testid="stAppViewContainer"] {
+    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+}
+
+[data-testid="stSidebar"] {
+    background: rgba(15, 23, 42, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stMetric {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.stDataFrame {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+h1, h2, h3 {
+    background: linear-gradient(90.06deg, #818cf8 0.05%, #c084fc 99.95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+/* Custom Card Class */
+.bet-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.ev-badge {
+    background: #10b981;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
