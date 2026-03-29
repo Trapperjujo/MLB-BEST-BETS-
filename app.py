@@ -331,322 +331,122 @@ with col4:
 
 st.markdown("---")
 
-# Main Dashboard Routing (Unified Feed)
-st.subheader(f"⚾ MLB Predictions Master Feed ({total_count} Games)")
+# Dashboard Routing Logic
+is_feed_mode = page in ["🎯 Intelligence Feed", "🗓️ Full Predictions"]
+is_standings_mode = page == "📈 2026 Standings"
+is_ranking_mode = page == "🏆 Team Power Rankings"
+is_analytics_mode = page == "🧬 Player Analytics"
 
-# Sort the master view to favor best bets
-df_master = df_master.sort_values(by="ev", ascending=False)
-df_sched_view = df_master.drop_duplicates(subset=["game_id"])
+# 1. Prediction Feed (Conditional)
+if is_feed_mode:
+    st.subheader(f"⚾ MLB Predictions Master Feed ({total_count} Games)")
 
-if sort_mode == "🔥 Highest +EV":
-    df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
-elif sort_mode == "🏆 Most Likely to Win":
-    df_sched_view["max_prob"] = df_sched_view[["home_win_prob", "away_win_prob"]].max(axis=1)
-    df_sched_view = df_sched_view.sort_values(by="max_prob", ascending=False)
-else:
-    df_sched_view = df_sched_view.sort_values(by="upset_score", ascending=False)
-
-st.info(f"📊 Displaying all predictions. Sorted by: {sort_mode}. 🛰️ Professional Intelligence Feed (Grey) uses -110 baseline market benchmarks.")
-
-# Iterate and display cards
-for idx, row in df_sched_view.iterrows():
-    game_bets = df_master[df_master["game_id"] == row["game_id"]]
-    best_bet = game_bets.sort_values(by="ev", ascending=False).iloc[0] if not game_bets.empty else row
+    # Sort the master view to favor best bets
+    df_master = df_master.sort_values(by="ev", ascending=False)
+    df_sched_view = df_master.drop_duplicates(subset=["game_id"])
     
-    display_date = pd.to_datetime(row["commence_time"]).strftime("%a, %b %d") if not isinstance(row["commence_time"], pd.Series) else pd.to_datetime(row["commence_time"].iloc[0]).strftime("%a, %b %d")
-    
-    with st.container():
-        # Retrieve 2026 Standings for the teams
-        df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
-        h_rec = df_s[df_s["Team"] == row["home_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["home_team"]].empty else None
-        a_rec = df_s[df_s["Team"] == row["away_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["away_team"]].empty else None
-        
-        h_rec_str = f"{h_rec['W']}-{h_rec['L']} (Elo: {int(row['home_elo'])})" if h_rec is not None else f"0-0 (Elo: {int(row['home_elo'])})"
-        a_rec_str = f"{a_rec['W']}-{a_rec['L']} (Elo: {int(row['away_elo'])})" if a_rec is not None else f"0-0 (Elo: {int(row['away_elo'])})"
-
-        # XGBoost Synergy Check
-        synergy_badge = ""
-        if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5):
-            synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Confidence: {row['xg_conf']*100:.0f}%</span>"
-
-        # Build the HTML string for the card
-        card_html = f"""
-<div class='neon-card'>
-<div class='neon-card-header'>
-<div style='display: flex; align-items: center; gap: 10px;'>
-<span style='font-size: 1.2rem;'>📅 {display_date}</span>
-<span class='alpha-badge'>{best_bet['data_type']}</span>
-{synergy_badge}
-</div>
-{f"<div class='ev-badge'>+{best_bet['ev']*100:.1f}% EV</div>" if best_bet['ev'] > 0 else ""}
-</div>
-<div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;'>
-<div>
-<div style='color: var(--text-secondary); font-size: 0.8rem;'>AWAY</div>
-<div style='font-size: 1.1rem; font-weight: 700;'>{row['away_team']}</div>
-<div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {a_rec_str}</div>
-<div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['away_win_prob']*100:.1f}%</div>
-<div style='font-size: 0.9rem;'>Proj: {row['away_proj']:.1f} runs</div>
-</div>
-<div style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
-<div style='font-size: 0.7rem; color: var(--text-secondary);'>PREDICTED WINNER</div>
-<div style='font-size: 1.2rem; font-weight: 900; color: #fff;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
-<div style='font-size: 0.7rem; color: var(--neon-blue); margin-top: 5px;'>ML confidence: {row['xg_conf']*100:.0f}%</div>
-<div style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
-<div style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>
-</div>
-<div>
-<div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
-<div style='font-size: 1.1rem; font-weight: 700;'>{row['home_team']}</div>
-<div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {h_rec_str}</div>
-<div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['home_win_prob']*100:.1f}%</div>
-<div style='font-size: 0.9rem;'>Proj: {row['home_proj']:.1f} runs</div>
-</div>
-</div>
-<div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid #222; text-align: center;'>
-<div style='font-size: 0.8rem; color: var(--text-secondary);'>PITCHER DUEL</div>
-<div style='font-size: 0.9rem; font-weight: 600; color: #fff;'>
-{row.get('away_pitcher', 'TBD')} ({row['a_p_era']:.2f} ERA) vs {row.get('home_pitcher', 'TBD')} ({row['h_p_era']:.2f} ERA)
-</div>
-</div>
-</div>
-"""
-        
-        # Details view in expander
-        
-        # Render the full card
-        st.markdown(card_html, unsafe_allow_html=True)
-        
-        # Details view in expander
-        with st.expander("🔍 Matchup Analysis & Market Depth"):
-            c1, c2 = st.columns(2)
-            with c1:
-                st.write(f"**Elo Spread:** {int(row['home_elo'])} vs {int(row['away_elo'])}")
-                st.write(f"**Status:** {row['status']}")
-            with c2:
-                # Distribution chart using sample scores
-                hist_df = pd.DataFrame({
-                    'Away': row['away_scores_sample'],
-                    'Home': row['home_scores_sample']
-                })
-                fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
-                st.plotly_chart(fig, use_container_width=True)
-                
-            game_odds = df_master[df_master["game_id"] == row["game_id"]]
-            game_odds = game_odds[game_odds["odds"].notnull()]
-            if not game_odds.empty:
-                st.dataframe(game_odds[["bookmaker", "outcome", "odds", "ev", "implied_prob"]], use_container_width=True)
-
-# Analytics Modules at the bottom
-st.markdown("---")
-st.subheader("📊 Global Analytics Modules")
-
-tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ MLB PREDICTIONS", "🏆 Elo Rankings", "📈 2026 Standings", "🥇 League Leaders", "🧬 Player Analytics", "🛰️ OUR STRATEGY"])
-
-with tab0:
-    st.subheader("🛰️ MLB PREDICTIONS: Matchup Hub")
-    st.write("Real-time projections derived from 10,000 Monte Carlo iterations and XGBoost v2.0 situational filtration.")
-    
-    if not df_master.empty:
-        outcomes = []
-        # Group by unique game_id to avoid odds duplication
-        unique_games = df_master.drop_duplicates(subset=['game_id'])
-        for _, row in unique_games.iterrows():
-            # Winner Logic
-            winner = row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']
-            winner_loc = "Home" if row['home_win_prob'] > 0.5 else "Away"
-            
-            # Matchup String
-            matchup = f"{row['away_team']} ({int(row['away_elo'])}) @ {row['home_team']} ({int(row['home_elo'])})"
-            
-            outcomes.append({
-                "Matchup": matchup,
-                "Predicted Winner": f"🏆 {winner} ({winner_loc})",
-                "Projected Score": f"{row['home_proj']:.1f} - {row['away_proj']:.1f}",
-                "XGBoost Confidence": f"{row['xg_conf']*100:.1f}%",
-                "Value Edge (EV)": f"{row['ev']*100:.1f}%" if row['ev'] > 0 else "0.0%"
-            })
-            
-        df_out_view = pd.DataFrame(outcomes)
-        st.dataframe(df_out_view, use_container_width=True, hide_index=True, column_config={
-            "XGBoost Confidence": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
-            "Value Edge (EV)": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
-        })
+    if sort_mode == "🔥 Highest +EV":
+        df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
+    elif sort_mode == "🏆 Most Likely to Win":
+        df_sched_view["max_prob"] = df_sched_view[["home_win_prob", "away_win_prob"]].max(axis=1)
+        df_sched_view = df_sched_view.sort_values(by="max_prob", ascending=False)
     else:
-        st.info("No active matchups found for the selected dashboard parameters.")
-
-with tab1:
-    st.subheader("🏆 Global Leaderboard: Elo Point Scores")
-    elo_map = load_elo_ratings()
-    elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
-    st.dataframe(elo_df.reset_index(drop=True), use_container_width=True)
-    fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
-    fig.update_layout(height=800, margin=dict(l=20, r=20, t=10, b=10))
-    st.plotly_chart(fig, use_container_width=True)
-
-with tab2:
-    st.subheader("📈 Official 2026 Division Standings & ATS Records")
-    df_s_2026 = st.session_state.get("df_standings_2026", pd.DataFrame())
-    if not df_s_2026.empty:
-        st.dataframe(df_s_2026, use_container_width=True)
-        fig_s = px.scatter(df_s_2026, x="W", y="ATS_W", text="Team", color="League", title="Wins vs Against-The-Spread Wins", template="plotly_dark")
-        st.plotly_chart(fig_s, use_container_width=True)
-    else:
-        st.info("2026 Standing data not fetched yet. Click 'Refresh' to sync.")
-
-with tab3:
-    st.subheader("🥇 2026 Seasonal League Leaders")
-    leaders_map = st.session_state.get("df_leaders_2026", {})
-    if leaders_map:
-        l_tabs = st.tabs(["🔥 Home Runs", "🎯 Batting Avg", "⚾ ERA", "🏆 Wins"])
-        with l_tabs[0]: st.table(leaders_map.get("homeRuns"))
-        with l_tabs[1]: st.table(leaders_map.get("battingAverage"))
-        with l_tabs[2]: st.table(leaders_map.get("earnedRunAverage"))
-        with l_tabs[3]: st.table(leaders_map.get("wins"))
-    else:
-        st.info("Leaderboard data currently unavailable.")
-
-with tab4:
-    st.subheader("🧬 Player Analytics: Statcast Benchmarks")
+        df_sched_view = df_sched_view.sort_values(by="upset_score", ascending=False)
     
-    p_cache = "data/raw/cache_pitchers_2024.csv"
-    h_cache = "data/raw/cache_hitting_2024.csv"
+    st.info(f"📊 Displaying all predictions. Sorted by: {sort_mode}. 🛰️ Professional Intelligence Feed (Grey) uses -110 baseline market benchmarks.")
     
-    if os.path.exists(p_cache) and os.path.exists(h_cache):
-        df_p = pd.read_csv(p_cache)
-        df_h = pd.read_csv(h_cache)
+    # Iterate and display cards
+    for idx, row in df_sched_view.iterrows():
+        game_bets = df_master[df_master["game_id"] == row["game_id"]]
+        best_bet = game_bets.sort_values(by="ev", ascending=False).iloc[0] if not game_bets.empty else row
         
-        c1, c2 = st.columns(2)
+        display_date = pd.to_datetime(row["commence_time"]).strftime("%a, %b %d") if not isinstance(row["commence_time"], pd.Series) else pd.to_datetime(row["commence_time"].iloc[0]).strftime("%a, %b %d")
         
-        with c1:
-            st.markdown("### ⚾ Pitcher Efficiency Matrix")
-            st.caption("Lower left is elite (Low ERA, Low FIP). Points above the line indicate possible 'Unlucky' variance.")
-            # Pitching Strategy: ERA vs FIP
-            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", 
-                               hover_name="Name", text="Name",
-                               color_continuous_scale="Viridis", template="plotly_dark")
-            # Add a diagonal line for parity
-            fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), 
-                            x1=df_p['FIP'].max(), y1=df_p['FIP'].max(),
-                            line=dict(color="Red", width=2, dash="dash"))
-            st.plotly_chart(fig_p, use_container_width=True)
+        with st.container():
+            # Retrieve 2026 Standings for the teams
+            df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
+            h_rec = df_s[df_s["Team"] == row["home_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["home_team"]].empty else None
+            a_rec = df_s[df_s["Team"] == row["away_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["away_team"]].empty else None
             
-        with c2:
-            st.markdown("### 💥 Team Hitting Strength")
-            st.caption("Ranked by OPS (On-base Plus Slugging). Core feature for our XGBoost 2.0 engine.")
-            df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
-            fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', 
-                           color="wRC+", color_continuous_scale="Plasma", template="plotly_dark")
-            fig_h.update_layout(yaxis={'categoryorder':'total ascending'})
-            st.plotly_chart(fig_h, use_container_width=True)
+            h_rec_str = f"{h_rec['W']}-{h_rec['L']} (Elo: {int(row['home_elo'])})" if h_rec is not None else f"0-0 (Elo: {int(row['home_elo'])})"
+            a_rec_str = f"{a_rec['W']}-{a_rec['L']} (Elo: {int(row['away_elo'])})" if a_rec is not None else f"0-0 (Elo: {int(row['away_elo'])})"
+    
+            # XGBoost Synergy Check
+            synergy_badge = ""
+            if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5):
+                synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Confidence: {row['xg_conf']*100:.0f}%</span>"
+    
+            # Build the HTML string for the card
+            card_html = f"""
+    <div class='neon-card'>
+    <div class='neon-card-header'>
+    <div style='display: flex; align-items: center; gap: 10px;'>
+    <span style='font-size: 1.2rem;'>📅 {display_date}</span>
+    <span class='alpha-badge'>{best_bet['data_type']}</span>
+    {synergy_badge}
+    </div>
+    {f"<div class='ev-badge'>+{best_bet['ev']*100:.1f}% EV</div>" if best_bet['ev'] > 0 else ""}
+    </div>
+    <div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;'>
+    <div>
+    <div style='color: var(--text-secondary); font-size: 0.8rem;'>AWAY</div>
+    <div style='font-size: 1.1rem; font-weight: 700;'>{row['away_team']}</div>
+    <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {a_rec_str}</div>
+    <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['away_win_prob']*100:.1f}%</div>
+    <div style='font-size: 0.9rem;'>Proj: {row['away_proj']:.1f} runs</div>
+    </div>
+    <div style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
+    <div style='font-size: 0.7rem; color: var(--text-secondary);'>PREDICTED WINNER</div>
+    <div style='font-size: 1.2rem; font-weight: 900; color: #fff;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
+    <div style='font-size: 0.7rem; color: var(--neon-blue); margin-top: 5px;'>ML confidence: {row['xg_conf']*100:.0f}%</div>
+    <div style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
+    <div style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>
+    </div>
+    <div>
+    <div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
+    <div style='font-size: 1.1rem; font-weight: 700;'>{row['home_team']}</div>
+    <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {h_rec_str}</div>
+    <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['home_win_prob']*100:.1f}%</div>
+    <div style='font-size: 0.9rem;'>Proj: {row['home_proj']:.1f} runs</div>
+    </div>
+    </div>
+    <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid #222; text-align: center;'>
+    <div style='font-size: 0.8rem; color: var(--text-secondary);'>PITCHER DUEL</div>
+    <div style='font-size: 0.9rem; font-weight: 600; color: #fff;'>
+    {row.get('away_pitcher', 'TBD')} ({row['a_p_era']:.2f} ERA) vs {row.get('home_pitcher', 'TBD')} ({row['h_p_era']:.2f} ERA)
+    </div>
+    </div>
+    </div>
+    """
             
-        st.markdown("---")
-        st.markdown("### 🔍 Professional Statcast Benchmarks (Full View)")
-        st.write("These are the real-time player benchmarks utilized by the **BEST BETS Intelligence Feed** for situational advantage modeling.")
-        st.dataframe(df_p.sort_values(by="WAR", ascending=False), use_container_width=True)
-    else:
-        st.info("Statcast benchmarks currently syncing. Click 'Refresh' in the sidebar to hydrate the persistence layer.")
+            # Details view in expander
+            
+            # Render the full card
+            st.markdown(card_html, unsafe_allow_html=True)
+            
+            # Details view in expander
+            with st.expander("🔍 Matchup Analysis & Market Depth"):
+                c1, c2 = st.columns(2)
+                with c1:
+                    st.write(f"**Elo Spread:** {int(row['home_elo'])} vs {int(row['away_elo'])}")
+                    st.write(f"**Status:** {row['status']}")
+                with c2:
+                    # Distribution chart using sample scores
+                    hist_df = pd.DataFrame({
+                        'Away': row['away_scores_sample'],
+                        'Home': row['home_scores_sample']
+                    })
+                    fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
+                    st.plotly_chart(fig, use_container_width=True)
+                    
+                game_odds = df_master[df_master["game_id"] == row["game_id"]]
+                game_odds = game_odds[game_odds["odds"].notnull()]
+                if not game_odds.empty:
+                    st.dataframe(game_odds[["bookmaker", "outcome", "odds", "ev", "implied_prob"]], use_container_width=True)
 
-with tab5:
-    st.markdown("""
-    # 🛰️ OUR STRATEGY: Technical Transparency & Financial Engineering
-
-    Welcome to the **BEST BETS** Strategic Whitepaper. This terminal is not a "guessing tool"—it is a multi-layered analytical engine founded on the intersection of professional baseball sabermetrics and high-frequency financial risk management.
-
-    ## 1. The Predictive Hybrid Core
-    Our predictions are generated through the synergy of two distinct mathematical engines:
-
-    ### A. Monte Carlo Simulation Engine
-    For every game, we run **10,000 independent simulations** in a virtual environment. We model run totals using the **Poisson Distribution**, the gold-standard for baseball run-scoring.
-    - We project the average runs per team based on their current **Elo Strength**.
-    - We redistribute extra-inning ties using a win-share probability algorithm to ensure a 100% accurate win/loss signal.
-
-    ### B. XGBoost v2.0 (Neural ML)
-    While Monte Carlo focuses on historical distributions, our **XGBoost 2.0** model identifies non-linear advantages. It factors in:
-    - **Starting Pitcher ERA**: Real-time performance metrics.
-    - **Team OPS**: Hitting strength benchmarks.
-    - **Power Ratings**: Dynamic Elo-derived team strength.
-
-    #### How XGBoost Confidence Aids Decision Making
-    High XGBoost confidence acts as a **"Statistical Filter"** for our primary simulations. While the Monte Carlo engine models the general probability of runs, the XGBoost layer detects non-linear edges—such as when a lower-ranked team starts a dominant pitcher who has a historical advantage over the opponent's specific hitting profile. When the **⚡ XGBoost Confidence** badge is visible, it means multiple independent analytical paths have converged on the same outcome, providing you with a superior "quality signal" and reducing the impact of random variance on your wagers.
-
-    ## 2. Global Data Intelligence (The Alpha Feed)
-    We ingest real-time data from three primary institutional sources to ensure utmost reliability:
-    - **MLB Stats API**: Providing official 2026 schedules, standings, and starters.
-    - **The Odds API**: Syncing live market odds from **30+ global sportsbooks** across US, UK, EU, and AU regions.
-    - **Statcast Analytics**: Mapping individual pitcher performance and team hitting benchmarks directly into our feature vectors.
-
-    ## 3. Run Projection Accuracy & Data Sources
-    Our **Projected Runs** metric is designed to capture the "Most Likely Score" through intensive statistical sampling. 
-
-    ### A. How Accurate is our Scoring Engine?
-    Our 2024 Mathematical Audit confirmed high stability in our scoring projections:
-    - **Home Score RMSE**: **2.92 runs**
-    - **Away Score RMSE**: **3.06 runs**
-    *RMSE (Root Mean Square Error) represents the average deviation from the actual score. In a high-variance sport like baseball, a sub-3.10 RMSE is considered institutional grade.*
-
-    ### B. Data Utilized for Run Totals
-    To build every score projection, the engine analyzes:
-    1.  **League Baseline (4.40 Runs)**: The starting point based on the current 2024/2025 MLB scoring environment.
-    2.  **Team Power-Gap (Elo)**: How much a team's strength exceeds their opponent's.
-    3.  **Pitcher Quality (ERA)**: We adjust the projected total based on the **Starting Pitcher ERA** benchmarks from Statcast.
-    4.  **HFA (Home Field Advantage)**: A 24-point Elo boost for the home side, reflecting historical 2024 home win-rates.
-
-    ## 4. Financial Decision-Making & Wager Guidance
-    Accuracy alone is not enough; professional betting requires **Mathematical Edge (EV)** and precise **Bankroll Management**.
-
-    ### The Expected Value (EV) Formula
-    We compare our model's probability against the market's implied probability:
-    $$EV = (P_{model} \times Odds_{decimal}) - 1$$
-    *Note: We only flag a "+EV" Value Alert if the edge exceeds the minimum threshold specified in your sidebar.*
-
-    ### The Kelly Criterion (Optimal Stakes)
-    To mathematically increase your bankroll while minimizing risk, we use the **Kelly Criterion**:
-    $$f^* = \\frac{bp - q}{b}$$
-    Where:
-    - $f^*$ is the fraction of current bankroll to wager.
-    - $b$ is the net decimal odds ($Odds - 1$).
-    - $p$ is the probability of winning (Our model).
-    - $q$ is the probability of losing ($1 - p$).
-
-    ## 5. 📖 Card Anatomy & User Manual
-    Every prediction card on your dashboard is a high-density data cluster. Here is how to interpret every field for maximum success:
-
-    ### A. The Header (Signal Layer)
-    - **📅 Date**: Official MLB commencement time for the matchup.
-    - **🛰️ Intelligence Feed vs 💎 Alpha Yield**: 
-        - **Intelligence Feed (Grey)**: Our model's internal "fair price" based on 10,000 simulations.
-        - **Alpha Yield (Blue)**: Live market data synced from **30+ global sportsbooks**.
-    - **⚡ XGBoost Confidence**: Our Neural ML's validation of the primary prediction. 
-        - *Instruction: A confidence > 70% acts as a "Secondary Green Light" for a high-quality wager.*
-    - **+XX.X% EV (Value Alert)**: 
-        - *Instruction: A green EV badge indicates that our model has identified a significantly better price than the bookmakers are offering. This is where long-term profit is generated.*
-
-    ### B. Team Analysis (The Wings)
-    - **Elo Rating**: Our historical team-strength metric. 
-    - **Win Probability %**: The exact frequency that a team won in our 10,000 game simulations.
-    - **Proj Score**: The average number of runs generated by our Poisson-distributed scoring engine.
-
-    ### C. Execution Hub (The Core)
-    - **Predicted Winner**: The team with the highest statistical "Alpha" in the current matchup.
-    - **ML Confidence**: XGBoost's qualitative assessment of situational variables (Pitcher ERA, Team OPS).
-    - **Wager (CAD)**: The optimal bet amount calculated by the **Kelly Criterion**.
-        - *Instruction: This amount dynamically adjusts based on your bankroll and chosen risk-mode. Follow this to mathematically ensure growth while protecting against losses.*
-    - **Est. Profit**: Your potential gain—calculated in real-time in Canadian Dollars.
-
-    ### D. Performance Footer
-    - **Pitcher Duel (ERA)**: The starting pitchers and their **Statcast Real-time ERA benchmarks**. 
-        - *Instruction: These metrics are the primary variable in our scoring engine's "Situational Advantage" modeling.*
-
-    ## 6. Path to Success: How to Use This Dashboard
-    **1. Identify Value Alerts**: Look for the **💎 Multi-Source Alpha Yield** badges with a positive EV indicator.
-    **2. Check the Synergy**: If the **⚡ XGBoost Confidence** badge is visible, our ML and MC models both agree—this is a high-confidence signal.
-    **3. Manage Your Stakes**: Follow the **Kelly Wager** suggestion. We use **Fractional Scaling (0.25)** and a **3% Max Cap** to protect you from the natural "luck" factor in baseball.
-    **4. Think Long-Term**: Professional betting is an endurance sport. Trust the math, stay disciplined with the bankroll, and follow the **Multi-Source Alpha.**
-    """)
-
-st.markdown("---")
-with st.expander("📊 OFFICIAL 2026 MLB STANDINGS (Interactive Hub)", expanded=False):
+# 2. Focused Analytics Deep-Dives
+if is_standings_mode:
+    st.subheader("📈 Official 2026 MLB Standings Hub")
     df_s_final = st.session_state.get("df_standings_2026", pd.DataFrame())
     if not df_s_final.empty:
         # Create AL/NL Tabs
@@ -667,8 +467,176 @@ with st.expander("📊 OFFICIAL 2026 MLB STANDINGS (Interactive Hub)", expanded=
                         "Team", "W", "L", "PCT", "GB", "DIFF", "STRK"
                     ]], hide_index=True, use_container_width=True)
                     st.markdown(" <br> ", unsafe_allow_html=True) # Separator
+        
+        st.markdown("---")
+        st.subheader("📈 Performance Analysis: Wins vs ATS")
+        fig_s = px.scatter(df_s_final, x="W", y="ATS_W", text="Team", color="League", title="League-Wide Profitability Analysis (2026)", template="plotly_dark")
+        st.plotly_chart(fig_s, use_container_width=True)
     else:
         st.info("Seasonal standings currently syncing. Click 'Refresh Status' in the sidebar to hydrate.")
+
+elif is_ranking_mode:
+    st.subheader("🏆 MLB Power Rankings & Predictions")
+    # Outcome Table
+    if not df_master.empty:
+        outcomes = []
+        unique_games = df_master.drop_duplicates(subset=['game_id'])
+        for _, row in unique_games.iterrows():
+            winner = row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']
+            winner_loc = "Home" if row['home_win_prob'] > 0.5 else "Away"
+            matchup = f"{row['away_team']} ({int(row['away_elo'])}) @ {row['home_team']} ({int(row['home_elo'])})"
+            outcomes.append({
+                "Matchup": matchup,
+                "Predicted Winner": f"🏆 {winner} ({winner_loc})",
+                "Projected Score": f"{row['home_proj']:.1f} - {row['away_proj']:.1f}",
+                "XGBoost Confidence": f"{row['xg_conf']*100:.1f}%",
+                "Value Edge (EV)": f"{row['ev']*100:.1f}%" if row['ev'] > 0 else "0.0%"
+            })
+        df_out_view = pd.DataFrame(outcomes)
+        st.dataframe(df_out_view, use_container_width=True, hide_index=True, column_config={
+            "XGBoost Confidence": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
+            "Value Edge (EV)": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
+        })
+
+    # Elo Bar Chart
+    st.markdown("---")
+    st.subheader("📊 Global Elo Strength Matrix")
+    elo_map = load_elo_ratings()
+    elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
+    fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
+    fig.update_layout(height=800, margin=dict(l=20, r=20, t=10, b=10))
+    st.plotly_chart(fig, use_container_width=True)
+
+elif is_analytics_mode:
+    st.subheader("🧬 Player Analytics Deep-Dive")
+    p_cache = "data/raw/cache_pitchers_2024.csv"
+    h_cache = "data/raw/cache_hitting_2024.csv"
+    if os.path.exists(p_cache) and os.path.exists(h_cache):
+        df_p = pd.read_csv(p_cache)
+        df_h = pd.read_csv(h_cache)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("### ⚾ Pitcher Efficiency Matrix")
+            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", text="Name", color_continuous_scale="Viridis", template="plotly_dark")
+            fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), x1=df_p['FIP'].max(), y1=df_p['FIP'].max(), line=dict(color="Red", width=2, dash="dash"))
+            st.plotly_chart(fig_p, use_container_width=True)
+        with c2:
+            st.markdown("### 💥 Team Hitting Strength")
+            df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
+            fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", color_continuous_scale="Plasma", template="plotly_dark")
+            st.plotly_chart(fig_h, use_container_width=True)
+        st.markdown("---")
+        st.dataframe(df_p.sort_values(by="WAR", ascending=False), use_container_width=True)
+    else:
+        st.info("Statcast benchmarks currently syncing...")
+
+# 3. Bottom Modules (Only in Feed Mode)
+if is_feed_mode:
+    st.markdown("---")
+    st.subheader("📊 Global Analytics Modules")
+    t0, t1 = st.tabs(["🛰️ OUR STRATEGY", "🏆 Quick Rankings"])
+    with t1:
+        elo_map = load_elo_ratings()
+        elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
+        st.dataframe(elo_df.reset_index(drop=True), use_container_width=True)
+        
+    with t0:
+        st.markdown("""
+        # 🛰️ OUR STRATEGY: Technical Transparency & Financial Engineering
+
+        Welcome to the **BEST BETS** Strategic Whitepaper. This terminal is not a "guessing tool"—it is a multi-layered analytical engine founded on the intersection of professional baseball sabermetrics and high-frequency financial risk management.
+
+        ## 1. The Predictive Hybrid Core
+        Our predictions are generated through the synergy of two distinct mathematical engines:
+
+        ### A. Monte Carlo Simulation Engine
+        For every game, we run **10,000 independent simulations** in a virtual environment. We model run totals using the **Poisson Distribution**, the gold-standard for baseball run-scoring.
+        - We project the average runs per team based on their current **Elo Strength**.
+        - We redistribute extra-inning ties using a win-share probability algorithm to ensure a 100% accurate win/loss signal.
+
+        ### B. XGBoost v2.0 (Neural ML)
+        While Monte Carlo focuses on historical distributions, our **XGBoost 2.0** model identifies non-linear advantages. It factors in:
+        - **Starting Pitcher ERA**: Real-time performance metrics.
+        - **Team OPS**: Hitting strength benchmarks.
+        - **Power Ratings**: Dynamic Elo-derived team strength.
+
+        #### How XGBoost Confidence Aids Decision Making
+        High XGBoost confidence acts as a **"Statistical Filter"** for our primary simulations. While the Monte Carlo engine models the general probability of runs, the XGBoost layer detects non-linear edges—such as when a lower-ranked team starts a dominant pitcher who has a historical advantage over the opponent's specific hitting profile. When the **⚡ XGBoost Confidence** badge is visible, it means multiple independent analytical paths have converged on the same outcome, providing you with a superior "quality signal" and reducing the impact of random variance on your wagers.
+
+        ## 2. Global Data Intelligence (The Alpha Feed)
+        We ingest real-time data from three primary institutional sources to ensure utmost reliability:
+        - **MLB Stats API**: Providing official 2026 schedules, standings, and starters.
+        - **The Odds API**: Syncing live market odds from **30+ global sportsbooks** across US, UK, EU, and AU regions.
+        - **Statcast Analytics**: Mapping individual pitcher performance and team hitting benchmarks directly into our feature vectors.
+
+        ## 3. Run Projection Accuracy & Data Sources
+        Our **Projected Runs** metric is designed to capture the "Most Likely Score" through intensive statistical sampling. 
+
+        ### A. How Accurate is our Scoring Engine?
+        Our 2024 Mathematical Audit confirmed high stability in our scoring projections:
+        - **Home Score RMSE**: **2.92 runs**
+        - **Away Score RMSE**: **3.06 runs**
+        *RMSE (Root Mean Square Error) represents the average deviation from the actual score. In a high-variance sport like baseball, a sub-3.10 RMSE is considered institutional grade.*
+
+        ### B. Data Utilized for Run Totals
+        To build every score projection, the engine analyzes:
+        1.  **League Baseline (4.40 Runs)**: The starting point based on the current 2024/2025 MLB scoring environment.
+        2.  **Team Power-Gap (Elo)**: How much a team's strength exceeds their opponent's.
+        3.  **Pitcher Quality (ERA)**: We adjust the projected total based on the **Starting Pitcher ERA** benchmarks from Statcast.
+        4.  **HFA (Home Field Advantage)**: A 24-point Elo boost for the home side, reflecting historical 2024 home win-rates.
+
+        ## 4. Financial Decision-Making & Wager Guidance
+        Accuracy alone is not enough; professional betting requires **Mathematical Edge (EV)** and precise **Bankroll Management**.
+
+        ### The Expected Value (EV) Formula
+        We compare our model's probability against the market's implied probability:
+        $$EV = (P_{model} \times Odds_{decimal}) - 1$$
+        *Note: We only flag a "+EV" Value Alert if the edge exceeds the minimum threshold specified in your sidebar.*
+
+        ### The Kelly Criterion (Optimal Stakes)
+        To mathematically increase your bankroll while minimizing risk, we use the **Kelly Criterion**:
+        $$f^* = \\frac{bp - q}{b}$$
+        Where:
+        - $f^*$ is the fraction of current bankroll to wager.
+        - $b$ is the net decimal odds ($Odds - 1$).
+        - $p$ is the probability of winning (Our model).
+        - $q$ is the probability of losing ($1 - p$).
+
+        ## 5. 📖 Card Anatomy & User Manual
+        Every prediction card on your dashboard is a high-density data cluster. Here is how to interpret every field for maximum success:
+
+        ### A. The Header (Signal Layer)
+        - **📅 Date**: Official MLB commencement time for the matchup.
+        - **🛰️ Intelligence Feed vs 💎 Alpha Yield**: 
+            - **Intelligence Feed (Grey)**: Our model's internal "fair price" based on 10,000 simulations.
+            - **Alpha Yield (Blue)**: Live market data synced from **30+ global sportsbooks**.
+        - **⚡ XGBoost Confidence**: Our Neural ML's validation of the primary prediction. 
+            - *Instruction: A confidence > 70% acts as a "Secondary Green Light" for a high-quality wager.*
+        - **+XX.X% EV (Value Alert)**: 
+            - *Instruction: A green EV badge indicates that our model has identified a significantly better price than the bookmakers are offering. This is where long-term profit is generated.*
+
+        ### B. Team Analysis (The Wings)
+        - **Elo Rating**: Our historical team-strength metric. 
+        - **Win Probability %**: The exact frequency that a team won in our 10,000 game simulations.
+        - **Proj Score**: The average number of runs generated by our Poisson-distributed scoring engine.
+
+        ### C. Execution Hub (The Core)
+        - **Predicted Winner**: The team with the highest statistical "Alpha" in the current matchup.
+        - **ML Confidence**: XGBoost's qualitative assessment of situational variables (Pitcher ERA, Team OPS).
+        - **Wager (CAD)**: The optimal bet amount calculated by the **Kelly Criterion**.
+            - *Instruction: This amount dynamically adjusts based on your bankroll and chosen risk-mode. Follow this to mathematically ensure growth while protecting against losses.*
+        - **Est. Profit**: Your potential gain—calculated in real-time in Canadian Dollars.
+
+        ### D. Performance Footer
+        - **Pitcher Duel (ERA)**: The starting pitchers and their **Statcast Real-time ERA benchmarks**. 
+            - *Instruction: These metrics are the primary variable in our scoring engine's "Situational Advantage" modeling.*
+
+        ## 6. Path to Success: How to Use This Dashboard
+        **1. Identify Value Alerts**: Look for the **💎 Multi-Source Alpha Yield** badges with a positive EV indicator.
+        **2. Check the Synergy**: If the **⚡ XGBoost Confidence** badge is visible, our ML and MC models both agree—this is a high-confidence signal.
+        **3. Manage Your Stakes**: Follow the **Kelly Wager** suggestion. We use **Fractional Scaling (0.25)** and a **3% Max Cap** to protect you from the natural "luck" factor in baseball.
+        **4. Think Long-Term**: Professional betting is an endurance sport. Trust the math, stay disciplined with the bankroll, and follow the **Multi-Source Alpha.**
+        """)
 
 # Footer
 st.markdown("""
