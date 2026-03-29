@@ -441,15 +441,15 @@ for idx, row in df_sched_view.iterrows():
 st.markdown("---")
 st.subheader("📊 Global Analytics Modules")
 
-tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ Matchup Outcomes", "🏆 Elo Rankings", "📈 2026 Standings", "🥇 League Leaders", "🧬 Player Analytics", "🛰️ OUR STRATEGY"])
+tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ MLB PREDICTIONS", "🏆 Elo Rankings", "📈 2026 Standings", "🥇 League Leaders", "🧬 Player Analytics", "🛰️ OUR STRATEGY"])
 
 with tab0:
-    st.subheader("🛰️ Predicted Matchup Outcome Hub")
+    st.subheader("🛰️ MLB PREDICTIONS: Matchup Hub")
     st.write("Real-time projections derived from 10,000 Monte Carlo iterations and XGBoost v2.0 situational filtration.")
     
     if not df_master.empty:
         outcomes = []
-        # Group by unique game_id to avoid odds duplication in the high-level chart
+        # Group by unique game_id to avoid odds duplication
         unique_games = df_master.drop_duplicates(subset=['game_id'])
         for _, row in unique_games.iterrows():
             # Winner Logic
@@ -476,7 +476,7 @@ with tab0:
         st.info("No active matchups found for the selected dashboard parameters.")
 
 with tab1:
-    st.subheader("🛰️ MLB PREDICTIONS")
+    st.subheader("🏆 Global Leaderboard: Elo Point Scores")
     elo_map = load_elo_ratings()
     elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
     st.dataframe(elo_df.reset_index(drop=True), use_container_width=True)
