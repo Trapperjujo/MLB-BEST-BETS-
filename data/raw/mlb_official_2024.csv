@@ -1,0 +1,2584 @@
+game_id,date,home_team,away_team,home_score,away_score,status
+745444,2024-03-20,San Diego Padres,Los Angeles Dodgers,2,5,Final
+747889,2024-03-20,Minnesota Twins,Detroit Tigers,3,12,Final
+747885,2024-03-20,Atlanta Braves,Toronto Blue Jays,10,9,Final
+747888,2024-03-20,Miami Marlins,New York Mets,3,6,Final
+747882,2024-03-20,Oakland Athletics,Chicago Cubs,3,1,Final
+747878,2024-03-20,Cincinnati Reds,Texas Rangers,1,8,Final
+747879,2024-03-20,Chicago White Sox,Cincinnati Reds,1,3,Final
+747880,2024-03-20,Arizona Diamondbacks,Colorado Rockies,5,1,Final
+747881,2024-03-20,Los Angeles Angels,San Francisco Giants,2,5,Final
+747886,2024-03-20,Washington Nationals,St. Louis Cardinals,4,13,Final
+747884,2024-03-20,Baltimore Orioles,Philadelphia Phillies,13,4,Final
+747887,2024-03-20,New York Yankees,Pittsburgh Pirates,12,0,Final
+747883,2024-03-20,Kansas City Royals,Los Angeles Angels,8,8,Final
+746175,2024-03-21,Los Angeles Dodgers,San Diego Padres,11,15,Final
+747875,2024-03-21,Detroit Tigers,New York Mets,5,10,Final
+747876,2024-03-21,St. Louis Cardinals,Houston Astros,1,9,Final
+747872,2024-03-21,Washington Nationals,Minnesota Twins,9,8,Final
+747874,2024-03-21,Philadelphia Phillies,Tampa Bay Rays,5,6,Final
+747870,2024-03-21,Atlanta Braves,New York Yankees,5,2,Final
+747868,2024-03-21,Cleveland Guardians,Kansas City Royals,8,5,Final
+747865,2024-03-21,Kansas City Royals,Chicago White Sox,3,3,Final
+747869,2024-03-21,Colorado Rockies,Chicago Cubs,2,5,Final
+747877,2024-03-21,Boston Red Sox,Baltimore Orioles,3,2,Final
+747873,2024-03-21,Pittsburgh Pirates,Toronto Blue Jays,2,3,Final
+747867,2024-03-21,Milwaukee Brewers,San Francisco Giants,6,7,Final
+747871,2024-03-21,Seattle Mariners,Cincinnati Reds,7,6,Final
+747864,2024-03-22,Philadelphia Phillies,Detroit Tigers,3,4,Final
+747863,2024-03-22,New York Yankees,New York Mets,5,3,Final
+747866,2024-03-22,Toronto Blue Jays,Boston Red Sox,5,1,Final
+747855,2024-03-22,Oakland Athletics,Cincinnati Reds,8,6,Final
+747852,2024-03-22,Chicago Cubs,San Francisco Giants,3,7,Final
+747857,2024-03-22,San Francisco Giants,Chicago Cubs,13,12,Final
+747849,2024-03-22,Cleveland Guardians,Texas Rangers,10,0,Final
+747856,2024-03-22,Texas Rangers,Colorado Rockies,2,3,Final
+747853,2024-03-22,Chicago White Sox,Oakland Athletics,8,2,Final
+747851,2024-03-22,Arizona Diamondbacks,Seattle Mariners,3,3,Final
+747850,2024-03-22,Los Angeles Angels,Chicago White Sox,2,0,Final
+747854,2024-03-22,Milwaukee Brewers,Kansas City Royals,11,5,Final
+747848,2024-03-22,Seattle Mariners,Milwaukee Brewers,4,4,Final
+747858,2024-03-22,Tampa Bay Rays,Minnesota Twins,0,0,Final
+747859,2024-03-22,Minnesota Twins,Atlanta Braves,0,0,Final
+747862,2024-03-22,Houston Astros,Washington Nationals,0,0,Final
+747860,2024-03-22,Baltimore Orioles,Pittsburgh Pirates,0,0,Final
+747861,2024-03-22,Miami Marlins,St. Louis Cardinals,0,0,Final
+747846,2024-03-23,Pittsburgh Pirates,Boston Red Sox,4,1,Final
+747843,2024-03-23,St. Louis Cardinals,Washington Nationals,2,2,Final
+747847,2024-03-23,Tampa Bay Rays,Baltimore Orioles,4,6,Final
+747842,2024-03-23,Atlanta Braves,Tampa Bay Rays,2,5,Final
+747839,2024-03-23,Detroit Tigers,New York Yankees,11,6,Final
+747837,2024-03-23,New York Yankees,Philadelphia Phillies,6,6,Final
+747845,2024-03-23,Toronto Blue Jays,Detroit Tigers,7,10,Final
+747844,2024-03-23,New York Mets,Houston Astros,5,13,Final
+747836,2024-03-23,Oakland Athletics,Los Angeles Angels,11,5,Final
+747831,2024-03-23,Kansas City Royals,Texas Rangers,1,1,Final
+747834,2024-03-23,Cincinnati Reds,Colorado Rockies,6,2,Final
+747835,2024-03-23,San Francisco Giants,Arizona Diamondbacks,5,11,Final
+747832,2024-03-23,Chicago White Sox,Seattle Mariners,2,8,Final
+747830,2024-03-23,Chicago Cubs,Milwaukee Brewers,4,7,Final
+747833,2024-03-23,Arizona Diamondbacks,Cleveland Guardians,0,5,Final
+747840,2024-03-23,Baltimore Orioles,Toronto Blue Jays,3,2,Final
+747841,2024-03-23,Boston Red Sox,Minnesota Twins,8,6,Final
+747838,2024-03-23,Washington Nationals,Miami Marlins,3,5,Final
+747825,2024-03-24,Houston Astros,St. Louis Cardinals,9,4,Final
+747826,2024-03-24,Detroit Tigers,Tampa Bay Rays,3,2,Final
+747828,2024-03-24,Minnesota Twins,Baltimore Orioles,3,8,Final
+747823,2024-03-24,Philadelphia Phillies,Toronto Blue Jays,2,0,Final
+747824,2024-03-24,Boston Red Sox,Atlanta Braves,5,5,Final
+747821,2024-03-24,Pittsburgh Pirates,New York Yankees,0,1,Final
+747829,2024-03-24,New York Mets,Washington Nationals,10,1,Final
+747827,2024-03-24,Miami Marlins,New York Mets,5,1,Final
+766493,2024-03-24,Diablos Rojos del Mexico,New York Yankees,4,3,Final
+747818,2024-03-24,Cincinnati Reds,Cleveland Guardians,7,10,Final
+747819,2024-03-24,Seattle Mariners,Chicago Cubs,9,9,Final
+747817,2024-03-24,Colorado Rockies,Chicago White Sox,7,3,Final
+747820,2024-03-24,Milwaukee Brewers,Arizona Diamondbacks,14,4,Final
+747822,2024-03-24,Los Angeles Dodgers,Los Angeles Angels,5,3,Final
+764388,2024-03-24,San Francisco Giants,Sacramento River Cats,1,8,Final
+747816,2024-03-25,Philadelphia Phillies,Tampa Bay Rays,3,6,Final
+747815,2024-03-25,Pittsburgh Pirates,Toronto Blue Jays,4,3,Final
+747813,2024-03-25,Atlanta Braves,Minnesota Twins,4,0,Final
+748868,2024-03-25,New York Yankees,New York Mets,3,0,Final
+748338,2024-03-25,Chicago Cubs,St. Louis Cardinals,3,6,Final
+747810,2024-03-25,Milwaukee Brewers,Colorado Rockies,10,1,Final
+764494,2024-03-25,Northwest Arkansas Naturals,Kansas City Royals,1,7,Final
+766494,2024-03-25,Diablos Rojos del Mexico,New York Yankees,8,5,Final
+747812,2024-03-25,Texas Rangers,Boston Red Sox,2,9,Final
+747814,2024-03-25,Houston Astros,Sugar Land Space Cowboys,1,3,Final
+747811,2024-03-25,Los Angeles Dodgers,Los Angeles Angels,0,6,Final
+747809,2024-03-25,Arizona Diamondbacks,Cleveland Guardians,6,0,Final
+747808,2024-03-25,San Diego Padres,Seattle Mariners,1,4,Final
+747807,2024-03-25,Oakland Athletics,San Francisco Giants,1,4,Final
+761424,2024-03-26,Washington Nationals,Washington Nationals Prospects,13,1,Final
+747806,2024-03-26,Tampa Bay Rays,Detroit Tigers,3,3,Final
+747804,2024-03-26,Minnesota Twins,Atlanta Braves,9,6,Final
+747802,2024-03-26,Texas Rangers,Boston Red Sox,1,4,Final
+748339,2024-03-26,Chicago Cubs,St. Louis Cardinals,2,7,Final
+747798,2024-03-26,Colorado Rockies,Milwaukee Brewers,6,1,Final
+747803,2024-03-26,Arizona Diamondbacks,Cleveland Guardians,6,1,Final
+747799,2024-03-26,San Diego Padres,Seattle Mariners,6,7,Final
+747800,2024-03-26,San Francisco Giants,Oakland Athletics,1,3,Final
+747805,2024-03-26,Houston Astros,Sugar Land Space Cowboys,7,3,Final
+747801,2024-03-26,Los Angeles Angels,Los Angeles Dodgers,4,3,Final
+747060,2024-03-28,Baltimore Orioles,Los Angeles Angels,11,3,Final
+746737,2024-03-28,Cincinnati Reds,Washington Nationals,8,2,Final
+745445,2024-03-28,San Diego Padres,San Francisco Giants,6,4,Final
+746165,2024-03-28,Los Angeles Dodgers,St. Louis Cardinals,7,1,Final
+745116,2024-03-28,Tampa Bay Rays,Toronto Blue Jays,2,8,Final
+746335,2024-03-28,Kansas City Royals,Minnesota Twins,1,4,Final
+746821,2024-03-28,Chicago White Sox,Detroit Tigers,0,1,Final
+746089,2024-03-28,Miami Marlins,Pittsburgh Pirates,5,6,Final
+746418,2024-03-28,Houston Astros,New York Yankees,4,5,Final
+745039,2024-03-28,Texas Rangers,Chicago Cubs,4,3,Final
+745687,2024-03-28,Oakland Athletics,Cleveland Guardians,0,8,Final
+747224,2024-03-28,Arizona Diamondbacks,Colorado Rockies,16,1,Final
+745283,2024-03-28,Seattle Mariners,Boston Red Sox,4,6,Final
+745848,2024-03-28,New York Mets,Milwaukee Brewers,0,0,Final
+745604,2024-03-28,Philadelphia Phillies,Atlanta Braves,0,0,Final
+745848,2024-03-29,New York Mets,Milwaukee Brewers,1,3,Final
+745604,2024-03-29,Philadelphia Phillies,Atlanta Braves,3,9,Final
+745117,2024-03-29,Tampa Bay Rays,Toronto Blue Jays,8,2,Final
+746091,2024-03-29,Miami Marlins,Pittsburgh Pirates,2,7,Final
+746412,2024-03-29,Houston Astros,New York Yankees,1,7,Final
+747223,2024-03-29,Arizona Diamondbacks,Colorado Rockies,7,3,Final
+745682,2024-03-29,Oakland Athletics,Cleveland Guardians,4,6,Final
+745276,2024-03-29,Seattle Mariners,Boston Red Sox,1,0,Final
+745435,2024-03-29,San Diego Padres,San Francisco Giants,3,8,Final
+746167,2024-03-29,Los Angeles Dodgers,St. Louis Cardinals,6,3,Final
+745850,2024-03-30,New York Mets,Milwaukee Brewers,6,7,Final
+746818,2024-03-30,Chicago White Sox,Detroit Tigers,6,7,Final
+747063,2024-03-30,Baltimore Orioles,Los Angeles Angels,13,4,Final
+745599,2024-03-30,Philadelphia Phillies,Atlanta Braves,4,12,Final
+745684,2024-03-30,Oakland Athletics,Cleveland Guardians,3,12,Final
+746736,2024-03-30,Cincinnati Reds,Washington Nationals,6,7,Final
+745119,2024-03-30,Tampa Bay Rays,Toronto Blue Jays,5,1,Final
+746333,2024-03-30,Kansas City Royals,Minnesota Twins,1,5,Final
+746087,2024-03-30,Miami Marlins,Pittsburgh Pirates,3,9,Final
+745037,2024-03-30,Texas Rangers,Chicago Cubs,11,2,Final
+745436,2024-03-30,San Diego Padres,San Francisco Giants,6,9,Final
+746410,2024-03-30,Houston Astros,New York Yankees,3,5,Final
+747221,2024-03-30,Arizona Diamondbacks,Colorado Rockies,4,9,Final
+746168,2024-03-30,Los Angeles Dodgers,St. Louis Cardinals,5,6,Final
+745278,2024-03-30,Seattle Mariners,Boston Red Sox,4,3,Final
+747062,2024-03-31,Baltimore Orioles,Los Angeles Angels,1,4,Final
+745602,2024-03-31,Philadelphia Phillies,Atlanta Braves,5,4,Final
+746739,2024-03-31,Cincinnati Reds,Washington Nationals,6,5,Final
+745115,2024-03-31,Tampa Bay Rays,Toronto Blue Jays,2,9,Final
+746090,2024-03-31,Miami Marlins,Pittsburgh Pirates,7,9,Final
+745845,2024-03-31,New York Mets,Milwaukee Brewers,1,4,Final
+746332,2024-03-31,Kansas City Royals,Minnesota Twins,11,0,Final
+746815,2024-03-31,Chicago White Sox,Detroit Tigers,2,3,Final
+746413,2024-03-31,Houston Astros,New York Yankees,3,4,Final
+745035,2024-03-31,Texas Rangers,Chicago Cubs,5,9,Final
+745683,2024-03-31,Oakland Athletics,Cleveland Guardians,4,3,Final
+747222,2024-03-31,Arizona Diamondbacks,Colorado Rockies,5,1,Final
+745279,2024-03-31,Seattle Mariners,Boston Red Sox,1,5,Final
+745438,2024-03-31,San Diego Padres,San Francisco Giants,13,4,Final
+746166,2024-03-31,Los Angeles Dodgers,St. Louis Cardinals,5,4,Final
+746817,2024-04-01,Chicago White Sox,Atlanta Braves,0,9,Final
+746899,2024-04-01,Chicago Cubs,Colorado Rockies,5,0,Final
+744875,2024-04-01,Washington Nationals,Pittsburgh Pirates,4,8,Final
+747058,2024-04-01,Baltimore Orioles,Kansas City Royals,6,4,Final
+745600,2024-04-01,Philadelphia Phillies,Cincinnati Reds,3,6,Final
+746085,2024-04-01,Miami Marlins,Los Angeles Angels,4,7,Final
+745109,2024-04-01,Tampa Bay Rays,Texas Rangers,3,9,Final
+745842,2024-04-01,New York Mets,Detroit Tigers,0,5,Final
+746409,2024-04-01,Houston Astros,Toronto Blue Jays,10,0,Final
+745675,2024-04-01,Oakland Athletics,Boston Red Sox,0,9,Final
+745277,2024-04-01,Seattle Mariners,Cleveland Guardians,5,4,Final
+745437,2024-04-01,San Diego Padres,St. Louis Cardinals,2,6,Final
+747218,2024-04-01,Arizona Diamondbacks,New York Yankees,2,5,Final
+746170,2024-04-01,Los Angeles Dodgers,San Francisco Giants,8,3,Final
+746009,2024-04-02,Milwaukee Brewers,Minnesota Twins,3,2,Final
+747057,2024-04-02,Baltimore Orioles,Kansas City Royals,1,4,Final
+745598,2024-04-02,Philadelphia Phillies,Cincinnati Reds,9,4,Final
+746086,2024-04-02,Miami Marlins,Los Angeles Angels,1,3,Final
+745111,2024-04-02,Tampa Bay Rays,Texas Rangers,5,2,Final
+746898,2024-04-02,Chicago Cubs,Colorado Rockies,12,2,Final
+746814,2024-04-02,Chicago White Sox,Atlanta Braves,3,2,Final
+746411,2024-04-02,Houston Astros,Toronto Blue Jays,1,2,Final
+745680,2024-04-02,Oakland Athletics,Boston Red Sox,4,5,Final
+745273,2024-04-02,Seattle Mariners,Cleveland Guardians,2,5,Final
+745439,2024-04-02,San Diego Padres,St. Louis Cardinals,2,5,Final
+747220,2024-04-02,Arizona Diamondbacks,New York Yankees,7,0,Final
+746169,2024-04-02,Los Angeles Dodgers,San Francisco Giants,5,4,Final
+745844,2024-04-02,New York Mets,Detroit Tigers,0,0,Final
+747059,2024-04-03,Baltimore Orioles,Kansas City Royals,4,3,Final
+745114,2024-04-03,Tampa Bay Rays,Texas Rangers,1,4,Final
+746083,2024-04-03,Miami Marlins,Los Angeles Angels,2,10,Final
+746008,2024-04-03,Milwaukee Brewers,Minnesota Twins,3,7,Final
+745678,2024-04-03,Oakland Athletics,Boston Red Sox,0,1,Final
+747219,2024-04-03,Arizona Diamondbacks,New York Yankees,5,6,Final
+745603,2024-04-03,Philadelphia Phillies,Cincinnati Reds,1,4,Final
+745275,2024-04-03,Seattle Mariners,Cleveland Guardians,0,8,Final
+745440,2024-04-03,San Diego Padres,St. Louis Cardinals,3,2,Final
+744869,2024-04-03,Washington Nationals,Pittsburgh Pirates,5,3,Final
+746900,2024-04-03,Chicago Cubs,Colorado Rockies,9,8,Final
+746407,2024-04-03,Houston Astros,Toronto Blue Jays,8,0,Final
+746163,2024-04-03,Los Angeles Dodgers,San Francisco Giants,5,4,Final
+746816,2024-04-03,Chicago White Sox,Atlanta Braves,0,0,Final
+745843,2024-04-03,New York Mets,Detroit Tigers,0,0,Final
+745844,2024-04-04,New York Mets,Detroit Tigers,3,6,Final
+745843,2024-04-04,New York Mets,Detroit Tigers,2,1,Final
+744870,2024-04-04,Washington Nationals,Pittsburgh Pirates,4,7,Final
+745928,2024-04-04,Minnesota Twins,Cleveland Guardians,2,4,Final
+745200,2024-04-04,St. Louis Cardinals,Miami Marlins,8,5,Final
+746327,2024-04-04,Kansas City Royals,Chicago White Sox,10,1,Final
+745764,2024-04-05,New York Yankees,Toronto Blue Jays,0,3,Final
+746497,2024-04-05,Detroit Tigers,Oakland Athletics,5,4,Final
+746897,2024-04-05,Chicago Cubs,Los Angeles Dodgers,9,7,Final
+746576,2024-04-05,Colorado Rockies,Tampa Bay Rays,10,7,Final
+745524,2024-04-05,Pittsburgh Pirates,Baltimore Orioles,2,5,Final
+745361,2024-04-05,San Francisco Giants,San Diego Padres,3,2,Final
+746733,2024-04-05,Cincinnati Reds,New York Mets,2,3,Final
+744874,2024-04-05,Washington Nationals,Philadelphia Phillies,0,4,Final
+747143,2024-04-05,Atlanta Braves,Arizona Diamondbacks,6,5,Final
+746328,2024-04-05,Kansas City Royals,Chicago White Sox,2,1,Final
+745033,2024-04-05,Texas Rangers,Houston Astros,10,2,Final
+746007,2024-04-05,Milwaukee Brewers,Seattle Mariners,6,5,Final
+746249,2024-04-05,Los Angeles Angels,Boston Red Sox,6,8,Final
+746498,2024-04-06,Detroit Tigers,Oakland Athletics,0,4,Final
+745926,2024-04-06,Minnesota Twins,Cleveland Guardians,1,3,Final
+745197,2024-04-06,St. Louis Cardinals,Miami Marlins,3,1,Final
+746896,2024-04-06,Chicago Cubs,Los Angeles Dodgers,1,4,Final
+745522,2024-04-06,Pittsburgh Pirates,Baltimore Orioles,5,4,Final
+744873,2024-04-06,Washington Nationals,Philadelphia Phillies,2,5,Final
+746731,2024-04-06,Cincinnati Reds,New York Mets,9,6,Final
+745031,2024-04-06,Texas Rangers,Houston Astros,7,2,Final
+745766,2024-04-06,New York Yankees,Toronto Blue Jays,9,8,Final
+746329,2024-04-06,Kansas City Royals,Chicago White Sox,3,0,Final
+746006,2024-04-06,Milwaukee Brewers,Seattle Mariners,3,5,Final
+747140,2024-04-06,Atlanta Braves,Arizona Diamondbacks,9,8,Final
+746575,2024-04-06,Colorado Rockies,Tampa Bay Rays,6,8,Final
+745359,2024-04-06,San Francisco Giants,San Diego Padres,0,4,Final
+746248,2024-04-06,Los Angeles Angels,Boston Red Sox,2,1,Final
+745523,2024-04-07,Pittsburgh Pirates,Baltimore Orioles,3,2,Final
+744871,2024-04-07,Washington Nationals,Philadelphia Phillies,3,2,Final
+747141,2024-04-07,Atlanta Braves,Arizona Diamondbacks,5,2,Final
+745765,2024-04-07,New York Yankees,Toronto Blue Jays,8,3,Final
+746734,2024-04-07,Cincinnati Reds,New York Mets,1,3,Final
+746493,2024-04-07,Detroit Tigers,Oakland Athletics,1,7,Final
+746330,2024-04-07,Kansas City Royals,Chicago White Sox,5,3,Final
+746003,2024-04-07,Milwaukee Brewers,Seattle Mariners,12,4,Final
+745198,2024-04-07,St. Louis Cardinals,Miami Marlins,3,10,Final
+746895,2024-04-07,Chicago Cubs,Los Angeles Dodgers,8,1,Final
+746574,2024-04-07,Colorado Rockies,Tampa Bay Rays,2,3,Final
+745362,2024-04-07,San Francisco Giants,San Diego Padres,3,2,Final
+746251,2024-04-07,Los Angeles Angels,Boston Red Sox,2,12,Final
+745032,2024-04-07,Texas Rangers,Houston Astros,1,3,Final
+745927,2024-04-07,Minnesota Twins,Cleveland Guardians,0,0,Final
+746654,2024-04-08,Cleveland Guardians,Chicago White Sox,4,0,Final
+745761,2024-04-08,New York Yankees,Miami Marlins,7,0,Final
+745520,2024-04-08,Pittsburgh Pirates,Detroit Tigers,7,4,Final
+746735,2024-04-08,Cincinnati Reds,Milwaukee Brewers,10,8,Final
+744956,2024-04-08,Toronto Blue Jays,Seattle Mariners,5,2,Final
+747142,2024-04-08,Atlanta Braves,New York Mets,7,8,Final
+745925,2024-04-08,Minnesota Twins,Los Angeles Dodgers,2,4,Final
+745194,2024-04-08,St. Louis Cardinals,Philadelphia Phillies,3,5,Final
+745034,2024-04-08,Texas Rangers,Houston Astros,5,10,Final
+746569,2024-04-08,Colorado Rockies,Arizona Diamondbacks,7,5,Final
+746252,2024-04-08,Los Angeles Angels,Tampa Bay Rays,7,1,Final
+745432,2024-04-08,San Diego Padres,Chicago Cubs,9,8,Final
+745363,2024-04-08,San Francisco Giants,Washington Nationals,1,8,Final
+745517,2024-04-09,Pittsburgh Pirates,Detroit Tigers,3,5,Final
+746981,2024-04-09,Boston Red Sox,Baltimore Orioles,1,7,Final
+746653,2024-04-09,Cleveland Guardians,Chicago White Sox,5,7,Final
+746732,2024-04-09,Cincinnati Reds,Milwaukee Brewers,5,9,Final
+745762,2024-04-09,New York Yankees,Miami Marlins,3,2,Final
+744957,2024-04-09,Toronto Blue Jays,Seattle Mariners,5,3,Final
+747138,2024-04-09,Atlanta Braves,New York Mets,6,5,Final
+746326,2024-04-09,Kansas City Royals,Houston Astros,4,3,Final
+745924,2024-04-09,Minnesota Twins,Los Angeles Dodgers,3,6,Final
+745195,2024-04-09,St. Louis Cardinals,Philadelphia Phillies,3,0,Final
+745030,2024-04-09,Texas Rangers,Oakland Athletics,3,4,Final
+746571,2024-04-09,Colorado Rockies,Arizona Diamondbacks,2,3,Final
+746250,2024-04-09,Los Angeles Angels,Tampa Bay Rays,4,6,Final
+745357,2024-04-09,San Francisco Giants,Washington Nationals,3,5,Final
+745433,2024-04-09,San Diego Padres,Chicago Cubs,1,5,Final
+745923,2024-04-10,Minnesota Twins,Los Angeles Dodgers,3,2,Final
+745196,2024-04-10,St. Louis Cardinals,Philadelphia Phillies,3,4,Final
+744950,2024-04-10,Toronto Blue Jays,Seattle Mariners,1,6,Final
+746573,2024-04-10,Colorado Rockies,Arizona Diamondbacks,3,5,Final
+745355,2024-04-10,San Francisco Giants,Washington Nationals,7,1,Final
+746247,2024-04-10,Los Angeles Angels,Tampa Bay Rays,2,4,Final
+746655,2024-04-10,Cleveland Guardians,Chicago White Sox,7,6,Final
+745429,2024-04-10,San Diego Padres,Chicago Cubs,10,2,Final
+746728,2024-04-10,Cincinnati Reds,Milwaukee Brewers,2,7,Final
+745763,2024-04-10,New York Yankees,Miami Marlins,2,5,Final
+746980,2024-04-10,Boston Red Sox,Baltimore Orioles,5,7,Final
+746323,2024-04-10,Kansas City Royals,Houston Astros,11,2,Final
+745024,2024-04-10,Texas Rangers,Oakland Athletics,6,2,Final
+747139,2024-04-10,Atlanta Braves,New York Mets,0,0,Final
+747137,2024-04-11,Atlanta Braves,New York Mets,4,16,Final
+746322,2024-04-11,Kansas City Royals,Houston Astros,13,3,Final
+745029,2024-04-11,Texas Rangers,Oakland Athletics,0,1,Final
+745601,2024-04-11,Philadelphia Phillies,Pittsburgh Pirates,5,1,Final
+746977,2024-04-11,Boston Red Sox,Baltimore Orioles,4,9,Final
+746490,2024-04-11,Detroit Tigers,Minnesota Twins,0,0,Final
+746730,2024-04-11,Cincinnati Reds,Milwaukee Brewers,0,0,Final
+746491,2024-04-12,Detroit Tigers,Minnesota Twins,8,2,Final
+745596,2024-04-12,Philadelphia Phillies,Pittsburgh Pirates,2,5,Final
+745112,2024-04-12,Tampa Bay Rays,San Francisco Giants,2,1,Final
+747055,2024-04-12,Baltimore Orioles,Milwaukee Brewers,1,11,Final
+744954,2024-04-12,Toronto Blue Jays,Colorado Rockies,4,12,Final
+746978,2024-04-12,Boston Red Sox,Los Angeles Angels,0,7,Final
+745838,2024-04-12,New York Mets,Kansas City Royals,6,1,Final
+746084,2024-04-12,Miami Marlins,Atlanta Braves,1,8,Final
+746812,2024-04-12,Chicago White Sox,Cincinnati Reds,1,11,Final
+746408,2024-04-12,Houston Astros,Texas Rangers,8,12,Final
+745679,2024-04-12,Oakland Athletics,Washington Nationals,2,1,Final
+745274,2024-04-12,Seattle Mariners,Chicago Cubs,4,2,Final
+747217,2024-04-12,Arizona Diamondbacks,St. Louis Cardinals,6,9,Final
+746162,2024-04-12,Los Angeles Dodgers,San Diego Padres,7,8,Final
+746656,2024-04-12,Cleveland Guardians,New York Yankees,0,0,Final
+746656,2024-04-13,Cleveland Guardians,New York Yankees,2,3,Final
+746658,2024-04-13,Cleveland Guardians,New York Yankees,2,8,Final
+746489,2024-04-13,Detroit Tigers,Minnesota Twins,5,11,Final
+746490,2024-04-13,Detroit Tigers,Minnesota Twins,1,4,Final
+745839,2024-04-13,New York Mets,Kansas City Royals,7,11,Final
+746811,2024-04-13,Chicago White Sox,Cincinnati Reds,0,5,Final
+744953,2024-04-13,Toronto Blue Jays,Colorado Rockies,5,3,Final
+746405,2024-04-13,Houston Astros,Texas Rangers,9,2,Final
+745594,2024-04-13,Philadelphia Phillies,Pittsburgh Pirates,4,3,Final
+747054,2024-04-13,Baltimore Orioles,Milwaukee Brewers,5,11,Final
+745676,2024-04-13,Oakland Athletics,Washington Nationals,1,3,Final
+746979,2024-04-13,Boston Red Sox,Los Angeles Angels,7,2,Final
+745110,2024-04-13,Tampa Bay Rays,San Francisco Giants,2,11,Final
+746082,2024-04-13,Miami Marlins,Atlanta Braves,5,1,Final
+747215,2024-04-13,Arizona Diamondbacks,St. Louis Cardinals,4,2,Final
+746161,2024-04-13,Los Angeles Dodgers,San Diego Padres,5,2,Final
+745272,2024-04-13,Seattle Mariners,Chicago Cubs,1,4,Final
+746975,2024-04-14,Boston Red Sox,Los Angeles Angels,5,4,Final
+745595,2024-04-14,Philadelphia Phillies,Pittsburgh Pirates,2,9,Final
+747056,2024-04-14,Baltimore Orioles,Milwaukee Brewers,6,4,Final
+744952,2024-04-14,Toronto Blue Jays,Colorado Rockies,5,0,Final
+745841,2024-04-14,New York Mets,Kansas City Royals,2,1,Final
+745113,2024-04-14,Tampa Bay Rays,San Francisco Giants,9,4,Final
+746492,2024-04-14,Detroit Tigers,Minnesota Twins,4,3,Final
+746079,2024-04-14,Miami Marlins,Atlanta Braves,7,9,Final
+746648,2024-04-14,Cleveland Guardians,New York Yankees,8,7,Final
+746404,2024-04-14,Houston Astros,Texas Rangers,8,5,Final
+746810,2024-04-14,Chicago White Sox,Cincinnati Reds,4,11,Final
+745681,2024-04-14,Oakland Athletics,Washington Nationals,7,6,Final
+745271,2024-04-14,Seattle Mariners,Chicago Cubs,2,3,Final
+747216,2024-04-14,Arizona Diamondbacks,St. Louis Cardinals,5,0,Final
+746164,2024-04-14,Los Angeles Dodgers,San Diego Padres,3,6,Final
+746974,2024-04-15,Boston Red Sox,Cleveland Guardians,0,6,Final
+747053,2024-04-15,Baltimore Orioles,Minnesota Twins,7,4,Final
+746488,2024-04-15,Detroit Tigers,Texas Rangers,0,1,Final
+745597,2024-04-15,Philadelphia Phillies,Colorado Rockies,2,1,Final
+746080,2024-04-15,Miami Marlins,San Francisco Giants,3,4,Final
+745106,2024-04-15,Tampa Bay Rays,Los Angeles Angels,3,7,Final
+744951,2024-04-15,Toronto Blue Jays,New York Yankees,3,1,Final
+745840,2024-04-15,New York Mets,Pittsburgh Pirates,6,3,Final
+746813,2024-04-15,Chicago White Sox,Kansas City Royals,0,2,Final
+746002,2024-04-15,Milwaukee Brewers,San Diego Padres,3,7,Final
+746406,2024-04-15,Houston Astros,Atlanta Braves,1,6,Final
+747213,2024-04-15,Arizona Diamondbacks,Chicago Cubs,2,3,Final
+745677,2024-04-15,Oakland Athletics,St. Louis Cardinals,1,3,Final
+745268,2024-04-15,Seattle Mariners,Cincinnati Reds,9,3,Final
+746158,2024-04-15,Los Angeles Dodgers,Washington Nationals,4,6,Final
+746486,2024-04-16,Detroit Tigers,Texas Rangers,4,2,Final
+747051,2024-04-16,Baltimore Orioles,Minnesota Twins,11,3,Final
+745593,2024-04-16,Philadelphia Phillies,Colorado Rockies,5,0,Final
+746081,2024-04-16,Miami Marlins,San Francisco Giants,6,3,Final
+745108,2024-04-16,Tampa Bay Rays,Los Angeles Angels,7,6,Final
+744944,2024-04-16,Toronto Blue Jays,New York Yankees,5,4,Final
+746976,2024-04-16,Boston Red Sox,Cleveland Guardians,7,10,Final
+745837,2024-04-16,New York Mets,Pittsburgh Pirates,3,1,Final
+746004,2024-04-16,Milwaukee Brewers,San Diego Padres,3,6,Final
+746400,2024-04-16,Houston Astros,Atlanta Braves,2,6,Final
+747214,2024-04-16,Arizona Diamondbacks,Chicago Cubs,12,11,Final
+745270,2024-04-16,Seattle Mariners,Cincinnati Reds,3,1,Final
+745674,2024-04-16,Oakland Athletics,St. Louis Cardinals,2,3,Final
+746157,2024-04-16,Los Angeles Dodgers,Washington Nationals,6,2,Final
+746809,2024-04-16,Chicago White Sox,Kansas City Royals,0,0,Final
+746076,2024-04-17,Miami Marlins,San Francisco Giants,1,3,Final
+747049,2024-04-17,Baltimore Orioles,Minnesota Twins,4,2,Final
+745836,2024-04-17,New York Mets,Pittsburgh Pirates,9,1,Final
+746487,2024-04-17,Detroit Tigers,Texas Rangers,4,5,Final
+746005,2024-04-17,Milwaukee Brewers,San Diego Padres,1,0,Final
+746401,2024-04-17,Houston Astros,Atlanta Braves,4,5,Final
+746807,2024-04-17,Chicago White Sox,Kansas City Royals,2,4,Final
+746809,2024-04-17,Chicago White Sox,Kansas City Royals,2,1,Final
+744948,2024-04-17,Toronto Blue Jays,New York Yankees,4,6,Final
+746159,2024-04-17,Los Angeles Dodgers,Washington Nationals,0,2,Final
+745671,2024-04-17,Oakland Athletics,St. Louis Cardinals,6,3,Final
+747212,2024-04-17,Arizona Diamondbacks,Chicago Cubs,3,5,Final
+745267,2024-04-17,Seattle Mariners,Cincinnati Reds,5,1,Final
+745591,2024-04-17,Philadelphia Phillies,Colorado Rockies,7,6,Final
+745105,2024-04-17,Tampa Bay Rays,Los Angeles Angels,4,5,Final
+746973,2024-04-17,Boston Red Sox,Cleveland Guardians,2,0,Final
+745104,2024-04-18,Tampa Bay Rays,Los Angeles Angels,2,1,Final
+746485,2024-04-18,Detroit Tigers,Texas Rangers,7,9,Final
+746970,2024-04-18,Boston Red Sox,Cleveland Guardians,4,5,Final
+745356,2024-04-18,San Francisco Giants,Arizona Diamondbacks,5,0,Final
+746891,2024-04-18,Chicago Cubs,Miami Marlins,0,0,Final
+746892,2024-04-19,Chicago Cubs,Miami Marlins,8,3,Final
+746729,2024-04-19,Cincinnati Reds,Los Angeles Angels,7,1,Final
+745518,2024-04-19,Pittsburgh Pirates,Boston Red Sox,1,8,Final
+745592,2024-04-19,Philadelphia Phillies,Chicago White Sox,7,0,Final
+744872,2024-04-19,Washington Nationals,Houston Astros,3,5,Final
+745758,2024-04-19,New York Yankees,Tampa Bay Rays,5,3,Final
+746650,2024-04-19,Cleveland Guardians,Oakland Athletics,10,2,Final
+747136,2024-04-19,Atlanta Braves,Texas Rangers,8,3,Final
+746325,2024-04-19,Kansas City Royals,Baltimore Orioles,9,4,Final
+745922,2024-04-19,Minnesota Twins,Detroit Tigers,4,5,Final
+745189,2024-04-19,St. Louis Cardinals,Milwaukee Brewers,1,2,Final
+745430,2024-04-19,San Diego Padres,Toronto Blue Jays,1,5,Final
+746160,2024-04-19,Los Angeles Dodgers,New York Mets,4,9,Final
+745352,2024-04-19,San Francisco Giants,Arizona Diamondbacks,1,17,Final
+746572,2024-04-19,Colorado Rockies,Seattle Mariners,0,0,Final
+745760,2024-04-20,New York Yankees,Tampa Bay Rays,0,2,Final
+745921,2024-04-20,Minnesota Twins,Detroit Tigers,4,3,Final
+745190,2024-04-20,St. Louis Cardinals,Milwaukee Brewers,5,12,Final
+746893,2024-04-20,Chicago Cubs,Miami Marlins,2,3,Final
+746891,2024-04-20,Chicago Cubs,Miami Marlins,5,3,Final
+744865,2024-04-20,Washington Nationals,Houston Astros,5,4,Final
+746156,2024-04-20,Los Angeles Dodgers,New York Mets,4,6,Final
+745515,2024-04-20,Pittsburgh Pirates,Boston Red Sox,2,4,Final
+745354,2024-04-20,San Francisco Giants,Arizona Diamondbacks,7,3,Final
+745590,2024-04-20,Philadelphia Phillies,Chicago White Sox,9,5,Final
+746651,2024-04-20,Cleveland Guardians,Oakland Athletics,6,3,Final
+746726,2024-04-20,Cincinnati Reds,Los Angeles Angels,7,5,Final
+746324,2024-04-20,Kansas City Royals,Baltimore Orioles,7,9,Final
+747135,2024-04-20,Atlanta Braves,Texas Rangers,5,2,Final
+746570,2024-04-20,Colorado Rockies,Seattle Mariners,0,7,Final
+745431,2024-04-20,San Diego Padres,Toronto Blue Jays,2,5,Final
+744866,2024-04-21,Washington Nationals,Houston Astros,6,0,Final
+745514,2024-04-21,Pittsburgh Pirates,Boston Red Sox,1,6,Final
+745588,2024-04-21,Philadelphia Phillies,Chicago White Sox,8,2,Final
+745759,2024-04-21,New York Yankees,Tampa Bay Rays,5,4,Final
+746727,2024-04-21,Cincinnati Reds,Los Angeles Angels,3,0,Final
+746652,2024-04-21,Cleveland Guardians,Oakland Athletics,6,2,Final
+746316,2024-04-21,Kansas City Royals,Baltimore Orioles,0,5,Final
+745920,2024-04-21,Minnesota Twins,Detroit Tigers,1,6,Final
+745192,2024-04-21,St. Louis Cardinals,Milwaukee Brewers,0,2,Final
+746894,2024-04-21,Chicago Cubs,Miami Marlins,3,6,Final
+746568,2024-04-21,Colorado Rockies,Seattle Mariners,2,1,Final
+746572,2024-04-21,Colorado Rockies,Seattle Mariners,2,10,Final
+745353,2024-04-21,San Francisco Giants,Arizona Diamondbacks,3,5,Final
+746154,2024-04-21,Los Angeles Dodgers,New York Mets,10,0,Final
+745434,2024-04-21,San Diego Padres,Toronto Blue Jays,6,3,Final
+747133,2024-04-21,Atlanta Braves,Texas Rangers,4,6,Final
+745757,2024-04-22,New York Yankees,Oakland Athletics,0,2,Final
+746723,2024-04-22,Cincinnati Reds,Philadelphia Phillies,0,7,Final
+745519,2024-04-22,Pittsburgh Pirates,Milwaukee Brewers,4,2,Final
+745107,2024-04-22,Tampa Bay Rays,Detroit Tigers,1,7,Final
+747134,2024-04-22,Atlanta Braves,Miami Marlins,3,0,Final
+746319,2024-04-22,Kansas City Royals,Toronto Blue Jays,3,5,Final
+745916,2024-04-22,Minnesota Twins,Chicago White Sox,7,0,Final
+745191,2024-04-22,St. Louis Cardinals,Arizona Diamondbacks,5,3,Final
+746565,2024-04-22,Colorado Rockies,San Diego Padres,1,3,Final
+746242,2024-04-22,Los Angeles Angels,Baltimore Orioles,2,4,Final
+745351,2024-04-22,San Francisco Giants,New York Mets,5,2,Final
+746647,2024-04-23,Cleveland Guardians,Boston Red Sox,4,1,Final
+746722,2024-04-23,Cincinnati Reds,Philadelphia Phillies,8,1,Final
+745516,2024-04-23,Pittsburgh Pirates,Milwaukee Brewers,2,1,Final
+744863,2024-04-23,Washington Nationals,Los Angeles Dodgers,1,4,Final
+745102,2024-04-23,Tampa Bay Rays,Detroit Tigers,2,4,Final
+745754,2024-04-23,New York Yankees,Oakland Athletics,4,3,Final
+747130,2024-04-23,Atlanta Braves,Miami Marlins,5,0,Final
+746888,2024-04-23,Chicago Cubs,Houston Astros,7,2,Final
+746321,2024-04-23,Kansas City Royals,Toronto Blue Jays,3,2,Final
+745917,2024-04-23,Minnesota Twins,Chicago White Sox,6,5,Final
+745193,2024-04-23,St. Louis Cardinals,Arizona Diamondbacks,1,14,Final
+745026,2024-04-23,Texas Rangers,Seattle Mariners,0,4,Final
+746566,2024-04-23,Colorado Rockies,San Diego Padres,7,4,Final
+746246,2024-04-23,Los Angeles Angels,Baltimore Orioles,7,4,Final
+745348,2024-04-23,San Francisco Giants,New York Mets,5,1,Final
+745188,2024-04-24,St. Louis Cardinals,Arizona Diamondbacks,5,1,Final
+745346,2024-04-24,San Francisco Giants,New York Mets,2,8,Final
+746244,2024-04-24,Los Angeles Angels,Baltimore Orioles,5,6,Final
+746649,2024-04-24,Cleveland Guardians,Boston Red Sox,0,8,Final
+746725,2024-04-24,Cincinnati Reds,Philadelphia Phillies,7,4,Final
+745513,2024-04-24,Pittsburgh Pirates,Milwaukee Brewers,2,3,Final
+744864,2024-04-24,Washington Nationals,Los Angeles Dodgers,2,11,Final
+745099,2024-04-24,Tampa Bay Rays,Detroit Tigers,7,5,Final
+745753,2024-04-24,New York Yankees,Oakland Athletics,7,3,Final
+747132,2024-04-24,Atlanta Braves,Miami Marlins,4,3,Final
+746889,2024-04-24,Chicago Cubs,Houston Astros,4,3,Final
+746317,2024-04-24,Kansas City Royals,Toronto Blue Jays,3,2,Final
+745919,2024-04-24,Minnesota Twins,Chicago White Sox,6,3,Final
+745028,2024-04-24,Texas Rangers,Seattle Mariners,5,1,Final
+746567,2024-04-24,Colorado Rockies,San Diego Padres,2,5,Final
+745512,2024-04-25,Pittsburgh Pirates,Milwaukee Brewers,5,7,Final
+746646,2024-04-25,Cleveland Guardians,Boston Red Sox,6,4,Final
+746724,2024-04-25,Cincinnati Reds,Philadelphia Phillies,0,5,Final
+745918,2024-04-25,Minnesota Twins,Chicago White Sox,6,3,Final
+746320,2024-04-25,Kansas City Royals,Toronto Blue Jays,2,1,Final
+746887,2024-04-25,Chicago Cubs,Houston Astros,3,1,Final
+745027,2024-04-25,Texas Rangers,Seattle Mariners,3,4,Final
+746564,2024-04-25,Colorado Rockies,San Diego Padres,10,9,Final
+744867,2024-04-25,Washington Nationals,Los Angeles Dodgers,1,2,Final
+745755,2024-04-25,New York Yankees,Oakland Athletics,1,3,Final
+746482,2024-04-26,Detroit Tigers,Kansas City Royals,0,8,Final
+747050,2024-04-26,Baltimore Orioles,Oakland Athletics,2,3,Final
+744949,2024-04-26,Toronto Blue Jays,Los Angeles Dodgers,2,12,Final
+746972,2024-04-26,Boston Red Sox,Chicago Cubs,1,7,Final
+745835,2024-04-26,New York Mets,St. Louis Cardinals,2,4,Final
+746078,2024-04-26,Miami Marlins,Washington Nationals,1,3,Final
+747129,2024-04-26,Atlanta Braves,Cleveland Guardians,6,2,Final
+746808,2024-04-26,Chicago White Sox,Tampa Bay Rays,9,4,Final
+745025,2024-04-26,Texas Rangers,Cincinnati Reds,2,1,Final
+746000,2024-04-26,Milwaukee Brewers,New York Yankees,7,6,Final
+746243,2024-04-26,Los Angeles Angels,Minnesota Twins,3,5,Final
+745269,2024-04-26,Seattle Mariners,Arizona Diamondbacks,6,1,Final
+745424,2024-04-26,San Diego Padres,Philadelphia Phillies,3,9,Final
+745347,2024-04-26,San Francisco Giants,Pittsburgh Pirates,3,0,Final
+744946,2024-04-27,Toronto Blue Jays,Los Angeles Dodgers,2,4,Final
+747052,2024-04-27,Baltimore Orioles,Oakland Athletics,7,0,Final
+745833,2024-04-27,New York Mets,St. Louis Cardinals,4,7,Final
+745020,2024-04-27,Texas Rangers,Cincinnati Reds,4,8,Final
+746971,2024-04-27,Boston Red Sox,Chicago Cubs,17,0,Final
+746075,2024-04-27,Miami Marlins,Washington Nationals,4,11,Final
+746560,2024-04-27,Colorado Rockies,Houston Astros,4,12,Final
+746484,2024-04-27,Detroit Tigers,Kansas City Royals,6,5,Final
+746803,2024-04-27,Chicago White Sox,Tampa Bay Rays,8,7,Final
+745998,2024-04-27,Milwaukee Brewers,New York Yankees,3,15,Final
+747131,2024-04-27,Atlanta Braves,Cleveland Guardians,2,4,Final
+745425,2024-04-27,San Diego Padres,Philadelphia Phillies,1,5,Final
+745350,2024-04-27,San Francisco Giants,Pittsburgh Pirates,3,4,Final
+746245,2024-04-27,Los Angeles Angels,Minnesota Twins,5,16,Final
+745266,2024-04-27,Seattle Mariners,Arizona Diamondbacks,3,1,Final
+747045,2024-04-28,Baltimore Orioles,Oakland Athletics,6,7,Final
+747125,2024-04-28,Atlanta Braves,Cleveland Guardians,4,3,Final
+744947,2024-04-28,Toronto Blue Jays,Los Angeles Dodgers,3,1,Final
+746483,2024-04-28,Detroit Tigers,Kansas City Royals,4,1,Final
+745834,2024-04-28,New York Mets,St. Louis Cardinals,4,2,Final
+746077,2024-04-28,Miami Marlins,Washington Nationals,9,12,Final
+746805,2024-04-28,Chicago White Sox,Tampa Bay Rays,4,2,Final
+746001,2024-04-28,Milwaukee Brewers,New York Yankees,5,15,Final
+745022,2024-04-28,Texas Rangers,Cincinnati Reds,4,3,Final
+746561,2024-04-28,Colorado Rockies,Houston Astros,2,8,Final
+745349,2024-04-28,San Francisco Giants,Pittsburgh Pirates,3,2,Final
+746237,2024-04-28,Los Angeles Angels,Minnesota Twins,5,11,Final
+745265,2024-04-28,Seattle Mariners,Arizona Diamondbacks,2,3,Final
+745428,2024-04-28,San Diego Padres,Philadelphia Phillies,6,8,Final
+746967,2024-04-28,Boston Red Sox,Chicago Cubs,5,4,Final
+747046,2024-04-29,Baltimore Orioles,New York Yankees,2,0,Final
+746074,2024-04-29,Miami Marlins,Washington Nationals,2,7,Final
+744945,2024-04-29,Toronto Blue Jays,Kansas City Royals,6,5,Final
+745832,2024-04-29,New York Mets,Chicago Cubs,1,3,Final
+746804,2024-04-29,Chicago White Sox,Minnesota Twins,2,3,Final
+745999,2024-04-29,Milwaukee Brewers,Tampa Bay Rays,0,1,Final
+746236,2024-04-29,Los Angeles Angels,Philadelphia Phillies,6,5,Final
+747211,2024-04-29,Arizona Diamondbacks,Los Angeles Dodgers,4,8,Final
+745672,2024-04-29,Oakland Athletics,Pittsburgh Pirates,5,1,Final
+745427,2024-04-29,San Diego Padres,Cincinnati Reds,2,5,Final
+745263,2024-04-29,Seattle Mariners,Atlanta Braves,2,1,Final
+746481,2024-04-29,Detroit Tigers,St. Louis Cardinals,0,0,Final
+746477,2024-04-30,Detroit Tigers,St. Louis Cardinals,1,2,Final
+746481,2024-04-30,Detroit Tigers,St. Louis Cardinals,11,6,Final
+747047,2024-04-30,Baltimore Orioles,New York Yankees,4,2,Final
+746073,2024-04-30,Miami Marlins,Colorado Rockies,7,6,Final
+744942,2024-04-30,Toronto Blue Jays,Kansas City Royals,1,4,Final
+745831,2024-04-30,New York Mets,Chicago Cubs,4,2,Final
+746968,2024-04-30,Boston Red Sox,San Francisco Giants,4,0,Final
+746806,2024-04-30,Chicago White Sox,Minnesota Twins,5,6,Final
+745997,2024-04-30,Milwaukee Brewers,Tampa Bay Rays,8,2,Final
+745018,2024-04-30,Texas Rangers,Washington Nationals,7,1,Final
+746398,2024-04-30,Houston Astros,Cleveland Guardians,10,9,Final
+746239,2024-04-30,Los Angeles Angels,Philadelphia Phillies,5,7,Final
+747210,2024-04-30,Arizona Diamondbacks,Los Angeles Dodgers,4,3,Final
+745673,2024-04-30,Oakland Athletics,Pittsburgh Pirates,5,2,Final
+745426,2024-04-30,San Diego Padres,Cincinnati Reds,6,4,Final
+745260,2024-04-30,Seattle Mariners,Atlanta Braves,3,2,Final
+746478,2024-05-01,Detroit Tigers,St. Louis Cardinals,4,1,Final
+745996,2024-05-01,Milwaukee Brewers,Tampa Bay Rays,7,1,Final
+746800,2024-05-01,Chicago White Sox,Minnesota Twins,5,10,Final
+744939,2024-05-01,Toronto Blue Jays,Kansas City Royals,1,6,Final
+745670,2024-05-01,Oakland Athletics,Pittsburgh Pirates,4,0,Final
+745261,2024-05-01,Seattle Mariners,Atlanta Braves,2,5,Final
+746238,2024-05-01,Los Angeles Angels,Philadelphia Phillies,1,2,Final
+745423,2024-05-01,San Diego Padres,Cincinnati Reds,6,2,Final
+747048,2024-05-01,Baltimore Orioles,New York Yankees,0,2,Final
+746072,2024-05-01,Miami Marlins,Colorado Rockies,4,1,Final
+745829,2024-05-01,New York Mets,Chicago Cubs,0,1,Final
+746966,2024-05-01,Boston Red Sox,San Francisco Giants,6,2,Final
+745023,2024-05-01,Texas Rangers,Washington Nationals,0,1,Final
+746399,2024-05-01,Houston Astros,Cleveland Guardians,2,3,Final
+747207,2024-05-01,Arizona Diamondbacks,Los Angeles Dodgers,0,8,Final
+746070,2024-05-02,Miami Marlins,Colorado Rockies,5,4,Final
+747044,2024-05-02,Baltimore Orioles,New York Yankees,7,2,Final
+745830,2024-05-02,New York Mets,Chicago Cubs,7,6,Final
+746969,2024-05-02,Boston Red Sox,San Francisco Giants,1,3,Final
+745021,2024-05-02,Texas Rangers,Washington Nationals,6,0,Final
+746403,2024-05-02,Houston Astros,Cleveland Guardians,8,2,Final
+746890,2024-05-03,Chicago Cubs,Milwaukee Brewers,1,3,Final
+746721,2024-05-03,Cincinnati Reds,Baltimore Orioles,0,3,Final
+745510,2024-05-03,Pittsburgh Pirates,Colorado Rockies,2,3,Final
+745589,2024-05-03,Philadelphia Phillies,San Francisco Giants,4,3,Final
+744868,2024-05-03,Washington Nationals,Toronto Blue Jays,9,3,Final
+745101,2024-05-03,Tampa Bay Rays,New York Mets,10,8,Final
+745756,2024-05-03,New York Yankees,Detroit Tigers,2,1,Final
+746645,2024-05-03,Cleveland Guardians,Los Angeles Angels,0,6,Final
+746318,2024-05-03,Kansas City Royals,Texas Rangers,7,1,Final
+746402,2024-05-03,Houston Astros,Seattle Mariners,5,3,Final
+745914,2024-05-03,Minnesota Twins,Boston Red Sox,5,2,Final
+745187,2024-05-03,St. Louis Cardinals,Chicago White Sox,3,0,Final
+747208,2024-05-03,Arizona Diamondbacks,San Diego Padres,1,7,Final
+745665,2024-05-03,Oakland Athletics,Miami Marlins,3,1,Final
+746152,2024-05-03,Los Angeles Dodgers,Atlanta Braves,4,3,Final
+745750,2024-05-04,New York Yankees,Detroit Tigers,5,3,Final
+745911,2024-05-04,Minnesota Twins,Boston Red Sox,3,1,Final
+745183,2024-05-04,St. Louis Cardinals,Chicago White Sox,5,6,Final
+746884,2024-05-04,Chicago Cubs,Milwaukee Brewers,6,5,Final
+745511,2024-05-04,Pittsburgh Pirates,Colorado Rockies,1,0,Final
+744862,2024-05-04,Washington Nationals,Toronto Blue Jays,3,6,Final
+745666,2024-05-04,Oakland Athletics,Miami Marlins,20,4,Final
+745583,2024-05-04,Philadelphia Phillies,San Francisco Giants,14,3,Final
+746644,2024-05-04,Cleveland Guardians,Los Angeles Angels,7,1,Final
+746720,2024-05-04,Cincinnati Reds,Baltimore Orioles,1,2,Final
+746311,2024-05-04,Kansas City Royals,Texas Rangers,4,15,Final
+746394,2024-05-04,Houston Astros,Seattle Mariners,0,5,Final
+745100,2024-05-04,Tampa Bay Rays,New York Mets,3,1,Final
+747209,2024-05-04,Arizona Diamondbacks,San Diego Padres,1,13,Final
+746155,2024-05-04,Los Angeles Dodgers,Atlanta Braves,11,2,Final
+745504,2024-05-05,Pittsburgh Pirates,Colorado Rockies,5,3,Final
+744861,2024-05-05,Washington Nationals,Toronto Blue Jays,11,8,Final
+745751,2024-05-05,New York Yankees,Detroit Tigers,5,2,Final
+746643,2024-05-05,Cleveland Guardians,Los Angeles Angels,4,1,Final
+745103,2024-05-05,Tampa Bay Rays,New York Mets,7,6,Final
+746395,2024-05-05,Houston Astros,Seattle Mariners,4,5,Final
+746314,2024-05-05,Kansas City Royals,Texas Rangers,2,3,Final
+745913,2024-05-05,Minnesota Twins,Boston Red Sox,2,9,Final
+745185,2024-05-05,St. Louis Cardinals,Chicago White Sox,1,5,Final
+746883,2024-05-05,Chicago Cubs,Milwaukee Brewers,5,0,Final
+745667,2024-05-05,Oakland Athletics,Miami Marlins,3,12,Final
+746719,2024-05-05,Cincinnati Reds,Baltimore Orioles,1,11,Final
+747206,2024-05-05,Arizona Diamondbacks,San Diego Padres,11,4,Final
+746153,2024-05-05,Los Angeles Dodgers,Atlanta Braves,5,1,Final
+745587,2024-05-05,Philadelphia Phillies,San Francisco Giants,5,4,Final
+745585,2024-05-06,Philadelphia Phillies,San Francisco Giants,6,1,Final
+746639,2024-05-06,Cleveland Guardians,Detroit Tigers,2,1,Final
+745509,2024-05-06,Pittsburgh Pirates,Los Angeles Angels,4,1,Final
+745098,2024-05-06,Tampa Bay Rays,Chicago White Sox,8,2,Final
+746313,2024-05-06,Kansas City Royals,Milwaukee Brewers,3,2,Final
+746886,2024-05-06,Chicago Cubs,San Diego Padres,3,6,Final
+745912,2024-05-06,Minnesota Twins,Seattle Mariners,3,1,Final
+745182,2024-05-06,St. Louis Cardinals,New York Mets,3,4,Final
+745669,2024-05-06,Oakland Athletics,Texas Rangers,2,4,Final
+746149,2024-05-06,Los Angeles Dodgers,Miami Marlins,6,3,Final
+745668,2024-05-07,Oakland Athletics,Texas Rangers,8,15,Final
+746638,2024-05-07,Cleveland Guardians,Detroit Tigers,7,11,Final
+746718,2024-05-07,Cincinnati Reds,Arizona Diamondbacks,2,6,Final
+745508,2024-05-07,Pittsburgh Pirates,Los Angeles Angels,0,9,Final
+745586,2024-05-07,Philadelphia Phillies,Toronto Blue Jays,10,1,Final
+744859,2024-05-07,Washington Nationals,Baltimore Orioles,3,0,Final
+745095,2024-05-07,Tampa Bay Rays,Chicago White Sox,5,1,Final
+745752,2024-05-07,New York Yankees,Houston Astros,10,3,Final
+747126,2024-05-07,Atlanta Braves,Boston Red Sox,4,2,Final
+746885,2024-05-07,Chicago Cubs,San Diego Padres,3,2,Final
+745915,2024-05-07,Minnesota Twins,Seattle Mariners,6,10,Final
+746315,2024-05-07,Kansas City Royals,Milwaukee Brewers,5,6,Final
+745186,2024-05-07,St. Louis Cardinals,New York Mets,5,7,Final
+746559,2024-05-07,Colorado Rockies,San Francisco Giants,0,5,Final
+746147,2024-05-07,Los Angeles Dodgers,Miami Marlins,8,2,Final
+745507,2024-05-08,Pittsburgh Pirates,Los Angeles Angels,4,5,Final
+745584,2024-05-08,Philadelphia Phillies,Toronto Blue Jays,3,5,Final
+746640,2024-05-08,Cleveland Guardians,Detroit Tigers,5,4,Final
+746312,2024-05-08,Kansas City Royals,Milwaukee Brewers,6,4,Final
+746879,2024-05-08,Chicago Cubs,San Diego Padres,0,3,Final
+746151,2024-05-08,Los Angeles Dodgers,Miami Marlins,3,1,Final
+745664,2024-05-08,Oakland Athletics,Texas Rangers,9,4,Final
+745659,2024-05-08,Oakland Athletics,Texas Rangers,11,12,Final
+746717,2024-05-08,Cincinnati Reds,Arizona Diamondbacks,3,4,Final
+744858,2024-05-08,Washington Nationals,Baltimore Orioles,6,7,Final
+745097,2024-05-08,Tampa Bay Rays,Chicago White Sox,1,4,Final
+745749,2024-05-08,New York Yankees,Houston Astros,9,4,Final
+747127,2024-05-08,Atlanta Braves,Boston Red Sox,5,0,Final
+745906,2024-05-08,Minnesota Twins,Seattle Mariners,6,3,Final
+746562,2024-05-08,Colorado Rockies,San Francisco Giants,6,8,Final
+745184,2024-05-08,St. Louis Cardinals,New York Mets,0,0,Final
+746715,2024-05-09,Cincinnati Reds,Arizona Diamondbacks,4,5,Final
+745910,2024-05-09,Minnesota Twins,Seattle Mariners,11,1,Final
+746563,2024-05-09,Colorado Rockies,San Francisco Giants,9,1,Final
+745748,2024-05-09,New York Yankees,Houston Astros,3,4,Final
+746802,2024-05-09,Chicago White Sox,Cleveland Guardians,3,2,Final
+745995,2024-05-09,Milwaukee Brewers,St. Louis Cardinals,7,1,Final
+746241,2024-05-09,Los Angeles Angels,Kansas City Royals,4,10,Final
+746479,2024-05-10,Detroit Tigers,Houston Astros,2,5,Final
+745506,2024-05-10,Pittsburgh Pirates,Chicago Cubs,2,7,Final
+745094,2024-05-10,Tampa Bay Rays,New York Yankees,0,2,Final
+747043,2024-05-10,Baltimore Orioles,Arizona Diamondbacks,4,2,Final
+744940,2024-05-10,Toronto Blue Jays,Minnesota Twins,2,3,Final
+746964,2024-05-10,Boston Red Sox,Washington Nationals,1,5,Final
+745827,2024-05-10,New York Mets,Atlanta Braves,2,4,Final
+746071,2024-05-10,Miami Marlins,Philadelphia Phillies,2,8,Final
+746801,2024-05-10,Chicago White Sox,Cleveland Guardians,6,3,Final
+745993,2024-05-10,Milwaukee Brewers,St. Louis Cardinals,11,2,Final
+746553,2024-05-10,Colorado Rockies,Texas Rangers,4,2,Final
+746240,2024-05-10,Los Angeles Angels,Kansas City Royals,1,2,Final
+745421,2024-05-10,San Diego Padres,Los Angeles Dodgers,2,1,Final
+745264,2024-05-10,Seattle Mariners,Oakland Athletics,8,1,Final
+745340,2024-05-10,San Francisco Giants,Cincinnati Reds,2,4,Final
+744943,2024-05-11,Toronto Blue Jays,Minnesota Twins,10,8,Final
+747041,2024-05-11,Baltimore Orioles,Arizona Diamondbacks,5,4,Final
+745505,2024-05-11,Pittsburgh Pirates,Chicago Cubs,10,9,Final
+746963,2024-05-11,Boston Red Sox,Washington Nationals,4,2,Final
+745828,2024-05-11,New York Mets,Atlanta Braves,1,4,Final
+746069,2024-05-11,Miami Marlins,Philadelphia Phillies,3,8,Final
+745096,2024-05-11,Tampa Bay Rays,New York Yankees,7,2,Final
+746480,2024-05-11,Detroit Tigers,Houston Astros,8,2,Final
+746797,2024-05-11,Chicago White Sox,Cleveland Guardians,3,1,Final
+745344,2024-05-11,San Francisco Giants,Cincinnati Reds,5,1,Final
+745994,2024-05-11,Milwaukee Brewers,St. Louis Cardinals,5,3,Final
+746554,2024-05-11,Colorado Rockies,Texas Rangers,8,3,Final
+745422,2024-05-11,San Diego Padres,Los Angeles Dodgers,0,5,Final
+746232,2024-05-11,Los Angeles Angels,Kansas City Royals,9,3,Final
+745262,2024-05-11,Seattle Mariners,Oakland Athletics,1,8,Final
+747042,2024-05-12,Baltimore Orioles,Arizona Diamondbacks,2,9,Final
+746965,2024-05-12,Boston Red Sox,Washington Nationals,3,2,Final
+745499,2024-05-12,Pittsburgh Pirates,Chicago Cubs,4,5,Final
+744941,2024-05-12,Toronto Blue Jays,Minnesota Twins,1,5,Final
+746476,2024-05-12,Detroit Tigers,Houston Astros,3,9,Final
+746068,2024-05-12,Miami Marlins,Philadelphia Phillies,7,6,Final
+745092,2024-05-12,Tampa Bay Rays,New York Yankees,6,10,Final
+746798,2024-05-12,Chicago White Sox,Cleveland Guardians,0,7,Final
+745990,2024-05-12,Milwaukee Brewers,St. Louis Cardinals,3,4,Final
+746555,2024-05-12,Colorado Rockies,Texas Rangers,3,1,Final
+745345,2024-05-12,San Francisco Giants,Cincinnati Reds,6,5,Final
+746234,2024-05-12,Los Angeles Angels,Kansas City Royals,2,4,Final
+745419,2024-05-12,San Diego Padres,Los Angeles Dodgers,4,0,Final
+745255,2024-05-12,Seattle Mariners,Oakland Athletics,8,4,Final
+745825,2024-05-12,New York Mets,Atlanta Braves,4,3,Final
+747040,2024-05-13,Baltimore Orioles,Toronto Blue Jays,2,3,Final
+746471,2024-05-13,Detroit Tigers,Miami Marlins,6,5,Final
+746961,2024-05-13,Boston Red Sox,Tampa Bay Rays,3,5,Final
+745826,2024-05-13,New York Mets,Philadelphia Phillies,4,5,Final
+747128,2024-05-13,Atlanta Braves,Chicago Cubs,2,0,Final
+745991,2024-05-13,Milwaukee Brewers,Pittsburgh Pirates,6,8,Final
+745019,2024-05-13,Texas Rangers,Cleveland Guardians,0,7,Final
+746393,2024-05-13,Houston Astros,Oakland Athletics,9,2,Final
+746233,2024-05-13,Los Angeles Angels,St. Louis Cardinals,5,10,Final
+747204,2024-05-13,Arizona Diamondbacks,Cincinnati Reds,6,5,Final
+745420,2024-05-13,San Diego Padres,Colorado Rockies,4,5,Final
+745256,2024-05-13,Seattle Mariners,Kansas City Royals,6,2,Final
+745343,2024-05-13,San Francisco Giants,Los Angeles Dodgers,4,6,Final
+746799,2024-05-13,Chicago White Sox,Washington Nationals,0,0,Final
+745821,2024-05-14,New York Mets,Philadelphia Phillies,0,4,Final
+746796,2024-05-14,Chicago White Sox,Washington Nationals,3,6,Final
+746799,2024-05-14,Chicago White Sox,Washington Nationals,4,0,Final
+746473,2024-05-14,Detroit Tigers,Miami Marlins,0,1,Final
+746962,2024-05-14,Boston Red Sox,Tampa Bay Rays,5,4,Final
+747124,2024-05-14,Atlanta Braves,Chicago Cubs,7,0,Final
+745909,2024-05-14,Minnesota Twins,New York Yankees,1,5,Final
+745989,2024-05-14,Milwaukee Brewers,Pittsburgh Pirates,4,3,Final
+745014,2024-05-14,Texas Rangers,Cleveland Guardians,4,7,Final
+746396,2024-05-14,Houston Astros,Oakland Athletics,2,1,Final
+746235,2024-05-14,Los Angeles Angels,St. Louis Cardinals,6,7,Final
+747205,2024-05-14,Arizona Diamondbacks,Cincinnati Reds,2,6,Final
+745418,2024-05-14,San Diego Padres,Colorado Rockies,3,6,Final
+745257,2024-05-14,Seattle Mariners,Kansas City Royals,2,4,Final
+745342,2024-05-14,San Francisco Giants,Los Angeles Dodgers,2,10,Final
+747039,2024-05-14,Baltimore Orioles,Toronto Blue Jays,0,0,Final
+747038,2024-05-15,Baltimore Orioles,Toronto Blue Jays,3,2,Final
+746472,2024-05-15,Detroit Tigers,Miami Marlins,0,2,Final
+745992,2024-05-15,Milwaukee Brewers,Pittsburgh Pirates,10,2,Final
+746795,2024-05-15,Chicago White Sox,Washington Nationals,2,0,Final
+747203,2024-05-15,Arizona Diamondbacks,Cincinnati Reds,2,1,Final
+745417,2024-05-15,San Diego Padres,Colorado Rockies,0,8,Final
+745259,2024-05-15,Seattle Mariners,Kansas City Royals,4,2,Final
+745582,2024-05-15,Philadelphia Phillies,New York Mets,10,5,Final
+746960,2024-05-15,Boston Red Sox,Tampa Bay Rays,3,4,Final
+747123,2024-05-15,Atlanta Braves,Chicago Cubs,1,7,Final
+745908,2024-05-15,Minnesota Twins,New York Yankees,0,4,Final
+745015,2024-05-15,Texas Rangers,Cleveland Guardians,4,0,Final
+746397,2024-05-15,Houston Astros,Oakland Athletics,3,0,Final
+746231,2024-05-15,Los Angeles Angels,St. Louis Cardinals,7,2,Final
+745341,2024-05-15,San Francisco Giants,Los Angeles Dodgers,4,1,Final
+745907,2024-05-16,Minnesota Twins,New York Yankees,0,5,Final
+745580,2024-05-16,Philadelphia Phillies,New York Mets,5,6,Final
+746959,2024-05-16,Boston Red Sox,Tampa Bay Rays,5,7,Final
+746881,2024-05-16,Chicago Cubs,Pittsburgh Pirates,4,5,Final
+746391,2024-05-16,Houston Astros,Oakland Athletics,8,1,Final
+746150,2024-05-16,Los Angeles Dodgers,Cincinnati Reds,2,7,Final
+746878,2024-05-17,Chicago Cubs,Pittsburgh Pirates,3,9,Final
+745579,2024-05-17,Philadelphia Phillies,Washington Nationals,4,2,Final
+747037,2024-05-17,Baltimore Orioles,Seattle Mariners,9,2,Final
+745747,2024-05-17,New York Yankees,Chicago White Sox,4,2,Final
+744934,2024-05-17,Toronto Blue Jays,Tampa Bay Rays,3,4,Final
+746641,2024-05-17,Cleveland Guardians,Minnesota Twins,3,2,Final
+746065,2024-05-17,Miami Marlins,New York Mets,8,0,Final
+747122,2024-05-17,Atlanta Braves,San Diego Padres,1,3,Final
+746310,2024-05-17,Kansas City Royals,Oakland Athletics,6,2,Final
+745016,2024-05-17,Texas Rangers,Los Angeles Angels,3,9,Final
+746388,2024-05-17,Houston Astros,Milwaukee Brewers,5,4,Final
+745178,2024-05-17,St. Louis Cardinals,Boston Red Sox,10,6,Final
+747201,2024-05-17,Arizona Diamondbacks,Detroit Tigers,0,13,Final
+746148,2024-05-17,Los Angeles Dodgers,Cincinnati Reds,7,3,Final
+745335,2024-05-17,San Francisco Giants,Colorado Rockies,10,5,Final
+745744,2024-05-18,New York Yankees,Chicago White Sox,6,1,Final
+746882,2024-05-18,Chicago Cubs,Pittsburgh Pirates,1,0,Final
+744938,2024-05-18,Toronto Blue Jays,Tampa Bay Rays,4,5,Final
+747036,2024-05-18,Baltimore Orioles,Seattle Mariners,3,4,Final
+745339,2024-05-18,San Francisco Giants,Colorado Rockies,14,4,Final
+746067,2024-05-18,Miami Marlins,New York Mets,10,9,Final
+745581,2024-05-18,Philadelphia Phillies,Washington Nationals,4,3,Final
+746642,2024-05-18,Cleveland Guardians,Minnesota Twins,11,4,Final
+746308,2024-05-18,Kansas City Royals,Oakland Athletics,5,3,Final
+746389,2024-05-18,Houston Astros,Milwaukee Brewers,2,4,Final
+745177,2024-05-18,St. Louis Cardinals,Boston Red Sox,7,2,Final
+745013,2024-05-18,Texas Rangers,Los Angeles Angels,3,2,Final
+747202,2024-05-18,Arizona Diamondbacks,Detroit Tigers,3,8,Final
+746142,2024-05-18,Los Angeles Dodgers,Cincinnati Reds,4,0,Final
+747121,2024-05-18,Atlanta Braves,San Diego Padres,0,0,Final
+745179,2024-05-19,St. Louis Cardinals,Boston Red Sox,3,11,Final
+747035,2024-05-19,Baltimore Orioles,Seattle Mariners,6,3,Final
+745577,2024-05-19,Philadelphia Phillies,Washington Nationals,11,5,Final
+745745,2024-05-19,New York Yankees,Chicago White Sox,7,2,Final
+744937,2024-05-19,Toronto Blue Jays,Tampa Bay Rays,5,2,Final
+746636,2024-05-19,Cleveland Guardians,Minnesota Twins,5,2,Final
+746064,2024-05-19,Miami Marlins,New York Mets,3,7,Final
+746306,2024-05-19,Kansas City Royals,Oakland Athletics,8,4,Final
+746392,2024-05-19,Houston Astros,Milwaukee Brewers,9,4,Final
+746880,2024-05-19,Chicago Cubs,Pittsburgh Pirates,2,3,Final
+745012,2024-05-19,Texas Rangers,Los Angeles Angels,1,4,Final
+745336,2024-05-19,San Francisco Giants,Colorado Rockies,4,1,Final
+747198,2024-05-19,Arizona Diamondbacks,Detroit Tigers,6,4,Final
+746144,2024-05-19,Los Angeles Dodgers,Cincinnati Reds,3,2,Final
+747120,2024-05-19,Atlanta Braves,San Diego Padres,1,9,Final
+747119,2024-05-20,Atlanta Braves,San Diego Padres,5,6,Final
+747121,2024-05-20,Atlanta Braves,San Diego Padres,3,0,Final
+744935,2024-05-20,Toronto Blue Jays,Chicago White Sox,9,3,Final
+746637,2024-05-20,Cleveland Guardians,New York Mets,3,1,Final
+746066,2024-05-20,Miami Marlins,Milwaukee Brewers,3,2,Final
+744857,2024-05-20,Washington Nationals,Minnesota Twins,12,3,Final
+745093,2024-05-20,Tampa Bay Rays,Boston Red Sox,0,5,Final
+745746,2024-05-20,New York Yankees,Seattle Mariners,4,5,Final
+746307,2024-05-20,Kansas City Royals,Detroit Tigers,8,3,Final
+745181,2024-05-20,St. Louis Cardinals,Baltimore Orioles,6,3,Final
+746390,2024-05-20,Houston Astros,Los Angeles Angels,7,9,Final
+746146,2024-05-20,Los Angeles Dodgers,Arizona Diamondbacks,6,4,Final
+746633,2024-05-21,Cleveland Guardians,New York Mets,7,6,Final
+746716,2024-05-21,Cincinnati Reds,San Diego Padres,2,0,Final
+745503,2024-05-21,Pittsburgh Pirates,San Francisco Giants,7,6,Final
+745578,2024-05-21,Philadelphia Phillies,Texas Rangers,5,2,Final
+746058,2024-05-21,Miami Marlins,Milwaukee Brewers,5,7,Final
+744860,2024-05-21,Washington Nationals,Minnesota Twins,0,10,Final
+745090,2024-05-21,Tampa Bay Rays,Boston Red Sox,2,5,Final
+745742,2024-05-21,New York Yankees,Seattle Mariners,3,6,Final
+744936,2024-05-21,Toronto Blue Jays,Chicago White Sox,0,5,Final
+746309,2024-05-21,Kansas City Royals,Detroit Tigers,10,3,Final
+746875,2024-05-21,Chicago Cubs,Atlanta Braves,4,3,Final
+745180,2024-05-21,St. Louis Cardinals,Baltimore Orioles,3,1,Final
+746385,2024-05-21,Houston Astros,Los Angeles Angels,6,5,Final
+745662,2024-05-21,Oakland Athletics,Colorado Rockies,5,4,Final
+746145,2024-05-21,Los Angeles Dodgers,Arizona Diamondbacks,3,7,Final
+745180,2024-05-22,St. Louis Cardinals,Baltimore Orioles,3,1,Final
+744856,2024-05-22,Washington Nationals,Minnesota Twins,2,3,Final
+746634,2024-05-22,Cleveland Guardians,New York Mets,6,3,Final
+745173,2024-05-22,St. Louis Cardinals,Baltimore Orioles,5,4,Final
+746386,2024-05-22,Houston Astros,Los Angeles Angels,1,2,Final
+746304,2024-05-22,Kansas City Royals,Detroit Tigers,8,3,Final
+746712,2024-05-22,Cincinnati Reds,San Diego Padres,3,7,Final
+745502,2024-05-22,Pittsburgh Pirates,San Francisco Giants,5,9,Final
+745576,2024-05-22,Philadelphia Phillies,Texas Rangers,11,4,Final
+746063,2024-05-22,Miami Marlins,Milwaukee Brewers,1,0,Final
+745089,2024-05-22,Tampa Bay Rays,Boston Red Sox,5,8,Final
+745743,2024-05-22,New York Yankees,Seattle Mariners,7,3,Final
+744933,2024-05-22,Toronto Blue Jays,Chicago White Sox,9,2,Final
+746876,2024-05-22,Chicago Cubs,Atlanta Braves,2,9,Final
+745661,2024-05-22,Oakland Athletics,Colorado Rockies,3,4,Final
+746143,2024-05-22,Los Angeles Dodgers,Arizona Diamondbacks,0,6,Final
+745500,2024-05-23,Pittsburgh Pirates,San Francisco Giants,6,7,Final
+745741,2024-05-23,New York Yankees,Seattle Mariners,5,0,Final
+745573,2024-05-23,Philadelphia Phillies,Texas Rangers,5,2,Final
+746714,2024-05-23,Cincinnati Reds,San Diego Padres,4,6,Final
+746874,2024-05-23,Chicago Cubs,Atlanta Braves,0,3,Final
+745660,2024-05-23,Oakland Athletics,Colorado Rockies,10,9,Final
+746474,2024-05-23,Detroit Tigers,Toronto Blue Jays,1,9,Final
+746792,2024-05-23,Chicago White Sox,Baltimore Orioles,6,8,Final
+746475,2024-05-24,Detroit Tigers,Toronto Blue Jays,6,2,Final
+745501,2024-05-24,Pittsburgh Pirates,Atlanta Braves,11,5,Final
+744853,2024-05-24,Washington Nationals,Seattle Mariners,6,1,Final
+745087,2024-05-24,Tampa Bay Rays,Kansas City Royals,1,8,Final
+746713,2024-05-24,Cincinnati Reds,Los Angeles Dodgers,9,6,Final
+745822,2024-05-24,New York Mets,San Francisco Giants,7,8,Final
+745905,2024-05-24,Minnesota Twins,Texas Rangers,3,2,Final
+746956,2024-05-24,Boston Red Sox,Milwaukee Brewers,2,7,Final
+746793,2024-05-24,Chicago White Sox,Baltimore Orioles,4,6,Final
+746558,2024-05-24,Colorado Rockies,Philadelphia Phillies,3,2,Final
+746227,2024-05-24,Los Angeles Angels,Cleveland Guardians,4,10,Final
+745663,2024-05-24,Oakland Athletics,Houston Astros,3,6,Final
+747200,2024-05-24,Arizona Diamondbacks,Miami Marlins,0,3,Final
+745415,2024-05-24,San Diego Padres,New York Yankees,0,8,Final
+745175,2024-05-24,St. Louis Cardinals,Chicago Cubs,0,0,Final
+746470,2024-05-25,Detroit Tigers,Toronto Blue Jays,2,1,Final
+745823,2024-05-25,New York Mets,San Francisco Giants,2,7,Final
+745901,2024-05-25,Minnesota Twins,Texas Rangers,5,3,Final
+746794,2024-05-25,Chicago White Sox,Baltimore Orioles,3,5,Final
+744851,2024-05-25,Washington Nationals,Seattle Mariners,3,1,Final
+745493,2024-05-25,Pittsburgh Pirates,Atlanta Braves,4,1,Final
+745658,2024-05-25,Oakland Athletics,Houston Astros,3,1,Final
+745086,2024-05-25,Tampa Bay Rays,Kansas City Royals,4,7,Final
+746958,2024-05-25,Boston Red Sox,Milwaukee Brewers,3,6,Final
+746710,2024-05-25,Cincinnati Reds,Los Angeles Dodgers,3,1,Final
+745176,2024-05-25,St. Louis Cardinals,Chicago Cubs,7,6,Final
+746556,2024-05-25,Colorado Rockies,Philadelphia Phillies,4,8,Final
+746226,2024-05-25,Los Angeles Angels,Cleveland Guardians,3,4,Final
+745411,2024-05-25,San Diego Padres,New York Yankees,1,4,Final
+747199,2024-05-25,Arizona Diamondbacks,Miami Marlins,3,2,Final
+746469,2024-05-26,Detroit Tigers,Toronto Blue Jays,14,11,Final
+746711,2024-05-26,Cincinnati Reds,Los Angeles Dodgers,4,1,Final
+744855,2024-05-26,Washington Nationals,Seattle Mariners,5,9,Final
+745498,2024-05-26,Pittsburgh Pirates,Atlanta Braves,1,8,Final
+746957,2024-05-26,Boston Red Sox,Milwaukee Brewers,2,1,Final
+745824,2024-05-26,New York Mets,San Francisco Giants,4,3,Final
+745088,2024-05-26,Tampa Bay Rays,Kansas City Royals,4,1,Final
+745902,2024-05-26,Minnesota Twins,Texas Rangers,2,6,Final
+746789,2024-05-26,Chicago White Sox,Baltimore Orioles,1,4,Final
+746557,2024-05-26,Colorado Rockies,Philadelphia Phillies,5,2,Final
+746230,2024-05-26,Los Angeles Angels,Cleveland Guardians,4,5,Final
+745653,2024-05-26,Oakland Athletics,Houston Astros,2,5,Final
+747197,2024-05-26,Arizona Diamondbacks,Miami Marlins,1,3,Final
+745413,2024-05-26,San Diego Padres,New York Yankees,5,2,Final
+745172,2024-05-26,St. Louis Cardinals,Chicago Cubs,4,3,Final
+747034,2024-05-27,Baltimore Orioles,Boston Red Sox,11,3,Final
+745904,2024-05-27,Minnesota Twins,Kansas City Royals,6,5,Final
+746788,2024-05-27,Chicago White Sox,Toronto Blue Jays,1,5,Final
+746549,2024-05-27,Colorado Rockies,Cleveland Guardians,8,6,Final
+746708,2024-05-27,Cincinnati Reds,St. Louis Cardinals,3,1,Final
+747118,2024-05-27,Atlanta Braves,Washington Nationals,4,8,Final
+745986,2024-05-27,Milwaukee Brewers,Chicago Cubs,5,1,Final
+745338,2024-05-27,San Francisco Giants,Philadelphia Phillies,8,4,Final
+745416,2024-05-27,San Diego Padres,Miami Marlins,2,1,Final
+745254,2024-05-27,Seattle Mariners,Houston Astros,3,2,Final
+745816,2024-05-27,New York Mets,Los Angeles Dodgers,0,0,Final
+745818,2024-05-28,New York Mets,Los Angeles Dodgers,2,5,Final
+745816,2024-05-28,New York Mets,Los Angeles Dodgers,0,3,Final
+747033,2024-05-28,Baltimore Orioles,Boston Red Sox,3,8,Final
+746709,2024-05-28,Cincinnati Reds,St. Louis Cardinals,1,7,Final
+745091,2024-05-28,Tampa Bay Rays,Oakland Athletics,0,3,Final
+747115,2024-05-28,Atlanta Braves,Washington Nationals,2,0,Final
+745903,2024-05-28,Minnesota Twins,Kansas City Royals,4,2,Final
+746791,2024-05-28,Chicago White Sox,Toronto Blue Jays,2,7,Final
+745987,2024-05-28,Milwaukee Brewers,Chicago Cubs,3,6,Final
+745017,2024-05-28,Texas Rangers,Arizona Diamondbacks,4,2,Final
+746552,2024-05-28,Colorado Rockies,Cleveland Guardians,7,13,Final
+746229,2024-05-28,Los Angeles Angels,New York Yankees,4,3,Final
+745258,2024-05-28,Seattle Mariners,Houston Astros,4,2,Final
+745412,2024-05-28,San Diego Padres,Miami Marlins,4,0,Final
+745337,2024-05-28,San Francisco Giants,Philadelphia Phillies,1,0,Final
+746468,2024-05-28,Detroit Tigers,Pittsburgh Pirates,0,0,Final
+746467,2024-05-29,Detroit Tigers,Pittsburgh Pirates,8,0,Final
+746468,2024-05-29,Detroit Tigers,Pittsburgh Pirates,2,10,Final
+746706,2024-05-29,Cincinnati Reds,St. Louis Cardinals,3,5,Final
+745011,2024-05-29,Texas Rangers,Arizona Diamondbacks,6,1,Final
+745333,2024-05-29,San Francisco Giants,Philadelphia Phillies,1,6,Final
+745817,2024-05-29,New York Mets,Los Angeles Dodgers,3,10,Final
+745414,2024-05-29,San Diego Padres,Miami Marlins,1,9,Final
+747031,2024-05-29,Baltimore Orioles,Boston Red Sox,6,1,Final
+745084,2024-05-29,Tampa Bay Rays,Oakland Athletics,4,3,Final
+747117,2024-05-29,Atlanta Braves,Washington Nationals,2,7,Final
+745900,2024-05-29,Minnesota Twins,Kansas City Royals,1,6,Final
+746790,2024-05-29,Chicago White Sox,Toronto Blue Jays,1,3,Final
+745988,2024-05-29,Milwaukee Brewers,Chicago Cubs,10,6,Final
+746551,2024-05-29,Colorado Rockies,Cleveland Guardians,7,4,Final
+746228,2024-05-29,Los Angeles Angels,New York Yankees,1,2,Final
+745250,2024-05-29,Seattle Mariners,Houston Astros,2,1,Final
+745081,2024-05-30,Tampa Bay Rays,Oakland Athletics,6,5,Final
+745898,2024-05-30,Minnesota Twins,Kansas City Royals,7,6,Final
+745985,2024-05-30,Milwaukee Brewers,Chicago Cubs,6,4,Final
+745249,2024-05-30,Seattle Mariners,Houston Astros,0,4,Final
+746954,2024-05-30,Boston Red Sox,Detroit Tigers,0,5,Final
+745819,2024-05-30,New York Mets,Arizona Diamondbacks,3,2,Final
+747114,2024-05-30,Atlanta Braves,Washington Nationals,1,3,Final
+746225,2024-05-30,Los Angeles Angels,New York Yankees,3,8,Final
+746877,2024-05-31,Chicago Cubs,Cincinnati Reds,4,5,Final
+745574,2024-05-31,Philadelphia Phillies,St. Louis Cardinals,4,2,Final
+747032,2024-05-31,Baltimore Orioles,Tampa Bay Rays,3,1,Final
+744928,2024-05-31,Toronto Blue Jays,Pittsburgh Pirates,5,3,Final
+746955,2024-05-31,Boston Red Sox,Detroit Tigers,7,3,Final
+746635,2024-05-31,Cleveland Guardians,Washington Nationals,7,1,Final
+745820,2024-05-31,New York Mets,Arizona Diamondbacks,10,9,Final
+746059,2024-05-31,Miami Marlins,Texas Rangers,8,2,Final
+747116,2024-05-31,Atlanta Braves,Oakland Athletics,4,2,Final
+746303,2024-05-31,Kansas City Royals,San Diego Padres,8,11,Final
+746387,2024-05-31,Houston Astros,Minnesota Twins,1,6,Final
+745983,2024-05-31,Milwaukee Brewers,Chicago White Sox,12,5,Final
+746140,2024-05-31,Los Angeles Dodgers,Colorado Rockies,1,4,Final
+745253,2024-05-31,Seattle Mariners,Los Angeles Angels,5,4,Final
+745331,2024-05-31,San Francisco Giants,New York Yankees,2,6,Final
+744932,2024-06-01,Toronto Blue Jays,Pittsburgh Pirates,1,8,Final
+747029,2024-06-01,Baltimore Orioles,Tampa Bay Rays,9,5,Final
+746952,2024-06-01,Boston Red Sox,Detroit Tigers,6,3,Final
+746629,2024-06-01,Cleveland Guardians,Washington Nationals,3,2,Final
+745812,2024-06-01,New York Mets,Arizona Diamondbacks,5,10,Final
+746305,2024-06-01,Kansas City Royals,San Diego Padres,3,7,Final
+746384,2024-06-01,Houston Astros,Minnesota Twins,5,2,Final
+747111,2024-06-01,Atlanta Braves,Oakland Athletics,9,11,Final
+746062,2024-06-01,Miami Marlins,Texas Rangers,0,7,Final
+745980,2024-06-01,Milwaukee Brewers,Chicago White Sox,4,3,Final
+746870,2024-06-01,Chicago Cubs,Cincinnati Reds,7,5,Final
+745251,2024-06-01,Seattle Mariners,Los Angeles Angels,9,0,Final
+745575,2024-06-01,Philadelphia Phillies,St. Louis Cardinals,6,1,Final
+745332,2024-06-01,San Francisco Giants,New York Yankees,3,7,Final
+746138,2024-06-01,Los Angeles Dodgers,Colorado Rockies,4,1,Final
+746383,2024-06-02,Houston Astros,Minnesota Twins,3,4,Final
+746953,2024-06-02,Boston Red Sox,Detroit Tigers,4,8,Final
+747030,2024-06-02,Baltimore Orioles,Tampa Bay Rays,3,4,Final
+747110,2024-06-02,Atlanta Braves,Oakland Athletics,3,1,Final
+744929,2024-06-02,Toronto Blue Jays,Pittsburgh Pirates,5,4,Final
+746632,2024-06-02,Cleveland Guardians,Washington Nationals,2,5,Final
+745813,2024-06-02,New York Mets,Arizona Diamondbacks,4,5,Final
+746061,2024-06-02,Miami Marlins,Texas Rangers,0,6,Final
+746301,2024-06-02,Kansas City Royals,San Diego Padres,4,3,Final
+745984,2024-06-02,Milwaukee Brewers,Chicago White Sox,6,3,Final
+746871,2024-06-02,Chicago Cubs,Cincinnati Reds,2,5,Final
+745330,2024-06-02,San Francisco Giants,New York Yankees,5,7,Final
+746141,2024-06-02,Los Angeles Dodgers,Colorado Rockies,4,0,Final
+745252,2024-06-02,Seattle Mariners,Los Angeles Angels,5,1,Final
+745572,2024-06-02,Philadelphia Phillies,St. Louis Cardinals,4,5,Final
+745569,2024-06-03,Philadelphia Phillies,Milwaukee Brewers,3,1,Final
+744854,2024-06-03,Washington Nationals,New York Mets,7,8,Final
+744930,2024-06-03,Toronto Blue Jays,Baltimore Orioles,2,7,Final
+745009,2024-06-03,Texas Rangers,Detroit Tigers,1,2,Final
+746382,2024-06-03,Houston Astros,St. Louis Cardinals,7,4,Final
+746548,2024-06-03,Colorado Rockies,Cincinnati Reds,3,13,Final
+746224,2024-06-03,Los Angeles Angels,San Diego Padres,2,1,Final
+747194,2024-06-03,Arizona Diamondbacks,San Francisco Giants,4,2,Final
+746630,2024-06-04,Cleveland Guardians,Kansas City Royals,8,5,Final
+745497,2024-06-04,Pittsburgh Pirates,Los Angeles Dodgers,1,0,Final
+746060,2024-06-04,Miami Marlins,Tampa Bay Rays,5,9,Final
+745568,2024-06-04,Philadelphia Phillies,Milwaukee Brewers,2,1,Final
+744850,2024-06-04,Washington Nationals,New York Mets,3,6,Final
+745739,2024-06-04,New York Yankees,Minnesota Twins,5,1,Final
+744931,2024-06-04,Toronto Blue Jays,Baltimore Orioles,1,10,Final
+746949,2024-06-04,Boston Red Sox,Atlanta Braves,3,8,Final
+745010,2024-06-04,Texas Rangers,Detroit Tigers,1,3,Final
+746872,2024-06-04,Chicago Cubs,Chicago White Sox,7,6,Final
+746380,2024-06-04,Houston Astros,St. Louis Cardinals,8,5,Final
+746550,2024-06-04,Colorado Rockies,Cincinnati Reds,1,4,Final
+746222,2024-06-04,Los Angeles Angels,San Diego Padres,4,2,Final
+745656,2024-06-04,Oakland Athletics,Seattle Mariners,3,4,Final
+747196,2024-06-04,Arizona Diamondbacks,San Francisco Giants,8,5,Final
+746950,2024-06-05,Boston Red Sox,Atlanta Braves,9,0,Final
+746379,2024-06-05,Houston Astros,St. Louis Cardinals,2,4,Final
+746544,2024-06-05,Colorado Rockies,Cincinnati Reds,7,12,Final
+747195,2024-06-05,Arizona Diamondbacks,San Francisco Giants,3,9,Final
+744852,2024-06-05,Washington Nationals,New York Mets,1,9,Final
+745570,2024-06-05,Philadelphia Phillies,Milwaukee Brewers,2,0,Final
+745494,2024-06-05,Pittsburgh Pirates,Los Angeles Dodgers,10,6,Final
+746056,2024-06-05,Miami Marlins,Tampa Bay Rays,3,5,Final
+745740,2024-06-05,New York Yankees,Minnesota Twins,9,5,Final
+744927,2024-06-05,Toronto Blue Jays,Baltimore Orioles,3,2,Final
+745007,2024-06-05,Texas Rangers,Detroit Tigers,9,1,Final
+746873,2024-06-05,Chicago Cubs,Chicago White Sox,7,6,Final
+746221,2024-06-05,Los Angeles Angels,San Diego Padres,3,2,Final
+745654,2024-06-05,Oakland Athletics,Seattle Mariners,2,1,Final
+746628,2024-06-05,Cleveland Guardians,Kansas City Royals,0,0,Final
+744923,2024-06-06,Toronto Blue Jays,Baltimore Orioles,6,5,Final
+746631,2024-06-06,Cleveland Guardians,Kansas City Royals,3,4,Final
+745657,2024-06-06,Oakland Athletics,Seattle Mariners,0,3,Final
+745495,2024-06-06,Pittsburgh Pirates,Los Angeles Dodgers,7,11,Final
+744844,2024-06-06,Washington Nationals,Atlanta Braves,2,5,Final
+745738,2024-06-06,New York Yankees,Minnesota Twins,8,5,Final
+746707,2024-06-06,Cincinnati Reds,Chicago Cubs,8,4,Final
+745174,2024-06-06,St. Louis Cardinals,Colorado Rockies,2,3,Final
+746784,2024-06-06,Chicago White Sox,Boston Red Sox,2,14,Final
+745408,2024-06-06,San Diego Padres,Arizona Diamondbacks,3,4,Final
+745169,2024-06-07,St. Louis Cardinals,Colorado Rockies,8,5,Final
+745496,2024-06-07,Pittsburgh Pirates,Minnesota Twins,3,0,Final
+746466,2024-06-07,Detroit Tigers,Milwaukee Brewers,0,10,Final
+744845,2024-06-07,Washington Nationals,Atlanta Braves,2,1,Final
+745083,2024-06-07,Tampa Bay Rays,Baltimore Orioles,3,6,Final
+745737,2024-06-07,New York Yankees,Los Angeles Dodgers,1,2,Final
+746704,2024-06-07,Cincinnati Reds,Chicago Cubs,3,2,Final
+746053,2024-06-07,Miami Marlins,Cleveland Guardians,3,2,Final
+745008,2024-06-07,Texas Rangers,San Francisco Giants,2,5,Final
+746302,2024-06-07,Kansas City Royals,Seattle Mariners,10,9,Final
+746785,2024-06-07,Chicago White Sox,Boston Red Sox,7,2,Final
+746220,2024-06-07,Los Angeles Angels,Houston Astros,1,7,Final
+745406,2024-06-07,San Diego Padres,Arizona Diamondbacks,10,3,Final
+745655,2024-06-07,Oakland Athletics,Toronto Blue Jays,2,1,Final
+745814,2024-06-08,New York Mets,Philadelphia Phillies,2,7,Final
+745001,2024-06-08,Texas Rangers,San Francisco Giants,1,3,Final
+745492,2024-06-08,Pittsburgh Pirates,Minnesota Twins,4,0,Final
+744848,2024-06-08,Washington Nationals,Atlanta Braves,7,3,Final
+745652,2024-06-08,Oakland Athletics,Toronto Blue Jays,0,7,Final
+746703,2024-06-08,Cincinnati Reds,Chicago Cubs,4,3,Final
+746300,2024-06-08,Kansas City Royals,Seattle Mariners,8,4,Final
+745082,2024-06-08,Tampa Bay Rays,Baltimore Orioles,0,5,Final
+746786,2024-06-08,Chicago White Sox,Boston Red Sox,6,1,Final
+746461,2024-06-08,Detroit Tigers,Milwaukee Brewers,4,5,Final
+745166,2024-06-08,St. Louis Cardinals,Colorado Rockies,5,6,Final
+746057,2024-06-08,Miami Marlins,Cleveland Guardians,0,8,Final
+745735,2024-06-08,New York Yankees,Los Angeles Dodgers,3,11,Final
+745410,2024-06-08,San Diego Padres,Arizona Diamondbacks,13,1,Final
+746223,2024-06-08,Los Angeles Angels,Houston Astros,1,6,Final
+745571,2024-06-09,Philadelphia Phillies,New York Mets,5,6,Final
+745003,2024-06-09,Texas Rangers,San Francisco Giants,7,2,Final
+745491,2024-06-09,Pittsburgh Pirates,Minnesota Twins,5,11,Final
+744849,2024-06-09,Washington Nationals,Atlanta Braves,8,5,Final
+746705,2024-06-09,Cincinnati Reds,Chicago Cubs,2,4,Final
+745085,2024-06-09,Tampa Bay Rays,Baltimore Orioles,2,9,Final
+746054,2024-06-09,Miami Marlins,Cleveland Guardians,3,6,Final
+746463,2024-06-09,Detroit Tigers,Milwaukee Brewers,10,2,Final
+746297,2024-06-09,Kansas City Royals,Seattle Mariners,5,6,Final
+746787,2024-06-09,Chicago White Sox,Boston Red Sox,4,6,Final
+745167,2024-06-09,St. Louis Cardinals,Colorado Rockies,5,1,Final
+746216,2024-06-09,Los Angeles Angels,Houston Astros,9,7,Final
+745651,2024-06-09,Oakland Athletics,Toronto Blue Jays,4,6,Final
+745407,2024-06-09,San Diego Padres,Arizona Diamondbacks,3,9,Final
+745736,2024-06-09,New York Yankees,Los Angeles Dodgers,6,4,Final
+745080,2024-06-10,Tampa Bay Rays,Baltimore Orioles,2,5,Final
+745897,2024-06-10,Minnesota Twins,Colorado Rockies,5,0,Final
+746295,2024-06-10,Kansas City Royals,New York Yankees,2,4,Final
+745982,2024-06-10,Milwaukee Brewers,Toronto Blue Jays,3,1,Final
+745409,2024-06-10,San Diego Padres,Oakland Athletics,6,1,Final
+745248,2024-06-10,Seattle Mariners,Chicago White Sox,8,4,Final
+745334,2024-06-10,San Francisco Giants,Houston Astros,4,3,Final
+747027,2024-06-11,Baltimore Orioles,Atlanta Braves,4,0,Final
+746464,2024-06-11,Detroit Tigers,Washington Nationals,4,5,Final
+745077,2024-06-11,Tampa Bay Rays,Chicago Cubs,5,2,Final
+746702,2024-06-11,Cincinnati Reds,Cleveland Guardians,3,5,Final
+746951,2024-06-11,Boston Red Sox,Philadelphia Phillies,1,4,Final
+745815,2024-06-11,New York Mets,Miami Marlins,2,4,Final
+745899,2024-06-11,Minnesota Twins,Colorado Rockies,4,5,Final
+745170,2024-06-11,St. Louis Cardinals,Pittsburgh Pirates,1,2,Final
+746296,2024-06-11,Kansas City Royals,New York Yankees,1,10,Final
+745981,2024-06-11,Milwaukee Brewers,Toronto Blue Jays,0,3,Final
+747190,2024-06-11,Arizona Diamondbacks,Los Angeles Angels,9,4,Final
+745404,2024-06-11,San Diego Padres,Oakland Athletics,4,3,Final
+745244,2024-06-11,Seattle Mariners,Chicago White Sox,4,3,Final
+745327,2024-06-11,San Francisco Giants,Houston Astros,1,3,Final
+746139,2024-06-11,Los Angeles Dodgers,Texas Rangers,15,2,Final
+745896,2024-06-12,Minnesota Twins,Colorado Rockies,17,9,Final
+745978,2024-06-12,Milwaukee Brewers,Toronto Blue Jays,5,4,Final
+745328,2024-06-12,San Francisco Giants,Houston Astros,5,3,Final
+745405,2024-06-12,San Diego Padres,Oakland Athletics,5,4,Final
+747028,2024-06-12,Baltimore Orioles,Atlanta Braves,4,2,Final
+746462,2024-06-12,Detroit Tigers,Washington Nationals,5,7,Final
+745079,2024-06-12,Tampa Bay Rays,Chicago Cubs,3,4,Final
+746701,2024-06-12,Cincinnati Reds,Cleveland Guardians,4,2,Final
+746948,2024-06-12,Boston Red Sox,Philadelphia Phillies,8,6,Final
+745811,2024-06-12,New York Mets,Miami Marlins,10,4,Final
+745171,2024-06-12,St. Louis Cardinals,Pittsburgh Pirates,4,2,Final
+746294,2024-06-12,Kansas City Royals,New York Yankees,5,11,Final
+747193,2024-06-12,Arizona Diamondbacks,Los Angeles Angels,3,8,Final
+745246,2024-06-12,Seattle Mariners,Chicago White Sox,2,1,Final
+746137,2024-06-12,Los Angeles Dodgers,Texas Rangers,2,3,Final
+747026,2024-06-13,Baltimore Orioles,Atlanta Braves,3,6,Final
+746465,2024-06-13,Detroit Tigers,Washington Nationals,7,2,Final
+746299,2024-06-13,Kansas City Royals,New York Yankees,4,3,Final
+745168,2024-06-13,St. Louis Cardinals,Pittsburgh Pirates,4,3,Final
+745075,2024-06-13,Tampa Bay Rays,Chicago Cubs,3,2,Final
+746944,2024-06-13,Boston Red Sox,Philadelphia Phillies,9,3,Final
+745809,2024-06-13,New York Mets,Miami Marlins,3,2,Final
+745894,2024-06-13,Minnesota Twins,Oakland Athletics,6,2,Final
+747192,2024-06-13,Arizona Diamondbacks,Los Angeles Angels,11,1,Final
+745245,2024-06-13,Seattle Mariners,Chicago White Sox,2,3,Final
+746136,2024-06-13,Los Angeles Dodgers,Texas Rangers,1,3,Final
+746869,2024-06-14,Chicago Cubs,St. Louis Cardinals,0,3,Final
+746947,2024-06-14,Boston Red Sox,New York Yankees,1,8,Final
+744847,2024-06-14,Washington Nationals,Miami Marlins,8,1,Final
+747025,2024-06-14,Baltimore Orioles,Philadelphia Phillies,3,5,Final
+744924,2024-06-14,Toronto Blue Jays,Cleveland Guardians,1,3,Final
+745810,2024-06-14,New York Mets,San Diego Padres,2,1,Final
+747112,2024-06-14,Atlanta Braves,Tampa Bay Rays,7,3,Final
+746378,2024-06-14,Houston Astros,Detroit Tigers,4,0,Final
+745892,2024-06-14,Minnesota Twins,Oakland Athletics,6,5,Final
+745979,2024-06-14,Milwaukee Brewers,Cincinnati Reds,5,6,Final
+746545,2024-06-14,Colorado Rockies,Pittsburgh Pirates,2,5,Final
+747191,2024-06-14,Arizona Diamondbacks,Chicago White Sox,7,1,Final
+746134,2024-06-14,Los Angeles Dodgers,Kansas City Royals,4,3,Final
+745247,2024-06-14,Seattle Mariners,Texas Rangers,3,2,Final
+745326,2024-06-14,San Francisco Giants,Los Angeles Angels,6,8,Final
+746865,2024-06-15,Chicago Cubs,St. Louis Cardinals,5,1,Final
+744925,2024-06-15,Toronto Blue Jays,Cleveland Guardians,5,0,Final
+745329,2024-06-15,San Francisco Giants,Los Angeles Angels,3,4,Final
+747024,2024-06-15,Baltimore Orioles,Philadelphia Phillies,6,2,Final
+744846,2024-06-15,Washington Nationals,Miami Marlins,4,0,Final
+746381,2024-06-15,Houston Astros,Detroit Tigers,5,13,Final
+745805,2024-06-15,New York Mets,San Diego Padres,5,1,Final
+747113,2024-06-15,Atlanta Braves,Tampa Bay Rays,9,2,Final
+745976,2024-06-15,Milwaukee Brewers,Cincinnati Reds,3,1,Final
+745241,2024-06-15,Seattle Mariners,Texas Rangers,7,5,Final
+746946,2024-06-15,Boston Red Sox,New York Yankees,8,4,Final
+746135,2024-06-15,Los Angeles Dodgers,Kansas City Royals,2,7,Final
+746547,2024-06-15,Colorado Rockies,Pittsburgh Pirates,16,4,Final
+747187,2024-06-15,Arizona Diamondbacks,Chicago White Sox,2,9,Final
+745891,2024-06-15,Minnesota Twins,Oakland Athletics,0,0,Final
+746866,2024-06-16,Chicago Cubs,St. Louis Cardinals,1,2,Final
+747023,2024-06-16,Baltimore Orioles,Philadelphia Phillies,8,3,Final
+747109,2024-06-16,Atlanta Braves,Tampa Bay Rays,6,8,Final
+744839,2024-06-16,Washington Nationals,Miami Marlins,3,1,Final
+744926,2024-06-16,Toronto Blue Jays,Cleveland Guardians,7,6,Final
+745807,2024-06-16,New York Mets,San Diego Padres,11,6,Final
+746377,2024-06-16,Houston Astros,Detroit Tigers,4,1,Final
+745895,2024-06-16,Minnesota Twins,Oakland Athletics,6,2,Final
+745891,2024-06-16,Minnesota Twins,Oakland Athletics,8,7,Final
+745977,2024-06-16,Milwaukee Brewers,Cincinnati Reds,5,4,Final
+746546,2024-06-16,Colorado Rockies,Pittsburgh Pirates,2,8,Final
+745321,2024-06-16,San Francisco Giants,Los Angeles Angels,13,6,Final
+746130,2024-06-16,Los Angeles Dodgers,Kansas City Royals,3,0,Final
+745242,2024-06-16,Seattle Mariners,Texas Rangers,5,0,Final
+747189,2024-06-16,Arizona Diamondbacks,Chicago White Sox,12,5,Final
+746945,2024-06-16,Boston Red Sox,New York Yankees,9,3,Final
+745490,2024-06-17,Pittsburgh Pirates,Cincinnati Reds,4,1,Final
+745567,2024-06-17,Philadelphia Phillies,San Diego Padres,9,2,Final
+746055,2024-06-17,Miami Marlins,St. Louis Cardinals,6,7,Final
+744918,2024-06-17,Toronto Blue Jays,Boston Red Sox,3,7,Final
+747108,2024-06-17,Atlanta Braves,Detroit Tigers,2,1,Final
+746868,2024-06-17,Chicago Cubs,San Francisco Giants,6,7,Final
+745005,2024-06-17,Texas Rangers,New York Mets,2,14,Final
+746543,2024-06-17,Colorado Rockies,Los Angeles Dodgers,5,9,Final
+746215,2024-06-17,Los Angeles Angels,Milwaukee Brewers,5,3,Final
+746049,2024-06-18,Miami Marlins,St. Louis Cardinals,9,8,Final
+745488,2024-06-18,Pittsburgh Pirates,Cincinnati Reds,1,2,Final
+746627,2024-06-18,Cleveland Guardians,Seattle Mariners,5,8,Final
+745563,2024-06-18,Philadelphia Phillies,San Diego Padres,4,3,Final
+744843,2024-06-18,Washington Nationals,Arizona Diamondbacks,0,5,Final
+745733,2024-06-18,New York Yankees,Baltimore Orioles,4,2,Final
+744917,2024-06-18,Toronto Blue Jays,Boston Red Sox,3,4,Final
+747107,2024-06-18,Atlanta Braves,Detroit Tigers,2,1,Final
+745893,2024-06-18,Minnesota Twins,Tampa Bay Rays,7,6,Final
+746867,2024-06-18,Chicago Cubs,San Francisco Giants,5,2,Final
+745004,2024-06-18,Texas Rangers,New York Mets,6,7,Final
+746783,2024-06-18,Chicago White Sox,Houston Astros,2,0,Final
+746542,2024-06-18,Colorado Rockies,Los Angeles Dodgers,9,11,Final
+746217,2024-06-18,Los Angeles Angels,Milwaukee Brewers,3,6,Final
+745650,2024-06-18,Oakland Athletics,Kansas City Royals,7,5,Final
+747106,2024-06-19,Atlanta Braves,Detroit Tigers,7,0,Final
+745489,2024-06-19,Pittsburgh Pirates,Cincinnati Reds,1,0,Final
+746050,2024-06-19,Miami Marlins,St. Louis Cardinals,4,3,Final
+745561,2024-06-19,Philadelphia Phillies,San Diego Padres,2,5,Final
+746864,2024-06-19,Chicago Cubs,San Francisco Giants,6,5,Final
+744842,2024-06-19,Washington Nationals,Arizona Diamondbacks,3,1,Final
+746625,2024-06-19,Cleveland Guardians,Seattle Mariners,8,0,Final
+745732,2024-06-19,New York Yankees,Baltimore Orioles,6,7,Final
+744920,2024-06-19,Toronto Blue Jays,Boston Red Sox,3,7,Final
+745887,2024-06-19,Minnesota Twins,Tampa Bay Rays,2,3,Final
+745002,2024-06-19,Texas Rangers,New York Mets,5,3,Final
+746781,2024-06-19,Chicago White Sox,Houston Astros,1,4,Final
+746538,2024-06-19,Colorado Rockies,Los Angeles Dodgers,7,6,Final
+746219,2024-06-19,Los Angeles Angels,Milwaukee Brewers,0,2,Final
+745646,2024-06-19,Oakland Athletics,Kansas City Royals,5,1,Final
+744841,2024-06-20,Washington Nationals,Arizona Diamondbacks,2,5,Final
+746626,2024-06-20,Cleveland Guardians,Seattle Mariners,6,3,Final
+745889,2024-06-20,Minnesota Twins,Tampa Bay Rays,6,7,Final
+746782,2024-06-20,Chicago White Sox,Houston Astros,3,5,Final
+746539,2024-06-20,Colorado Rockies,Los Angeles Dodgers,3,5,Final
+745645,2024-06-20,Oakland Athletics,Kansas City Royals,2,3,Final
+745734,2024-06-20,New York Yankees,Baltimore Orioles,5,17,Final
+745164,2024-06-20,St. Louis Cardinals,San Francisco Giants,6,5,Final
+745401,2024-06-20,San Diego Padres,Milwaukee Brewers,7,6,Final
+746861,2024-06-21,Chicago Cubs,New York Mets,1,11,Final
+745483,2024-06-21,Pittsburgh Pirates,Tampa Bay Rays,3,10,Final
+745562,2024-06-21,Philadelphia Phillies,Arizona Diamondbacks,4,5,Final
+746460,2024-06-21,Detroit Tigers,Chicago White Sox,2,1,Final
+745729,2024-06-21,New York Yankees,Atlanta Braves,1,8,Final
+746698,2024-06-21,Cincinnati Reds,Boston Red Sox,5,2,Final
+746624,2024-06-21,Cleveland Guardians,Toronto Blue Jays,7,1,Final
+746052,2024-06-21,Miami Marlins,Seattle Mariners,3,2,Final
+745006,2024-06-21,Texas Rangers,Kansas City Royals,6,2,Final
+746375,2024-06-21,Houston Astros,Baltimore Orioles,14,11,Final
+746540,2024-06-21,Colorado Rockies,Washington Nationals,5,11,Final
+745649,2024-06-21,Oakland Athletics,Minnesota Twins,6,5,Final
+745403,2024-06-21,San Diego Padres,Milwaukee Brewers,9,5,Final
+746131,2024-06-21,Los Angeles Dodgers,Los Angeles Angels,2,3,Final
+746459,2024-06-22,Detroit Tigers,Chicago White Sox,1,5,Final
+745163,2024-06-22,St. Louis Cardinals,San Francisco Giants,9,4,Final
+746863,2024-06-22,Chicago Cubs,New York Mets,8,1,Final
+745486,2024-06-22,Pittsburgh Pirates,Tampa Bay Rays,4,3,Final
+744997,2024-06-22,Texas Rangers,Kansas City Royals,6,0,Final
+745564,2024-06-22,Philadelphia Phillies,Arizona Diamondbacks,12,1,Final
+745644,2024-06-22,Oakland Athletics,Minnesota Twins,2,10,Final
+746700,2024-06-22,Cincinnati Reds,Boston Red Sox,3,4,Final
+746376,2024-06-22,Houston Astros,Baltimore Orioles,5,1,Final
+746622,2024-06-22,Cleveland Guardians,Toronto Blue Jays,6,3,Final
+746048,2024-06-22,Miami Marlins,Seattle Mariners,0,9,Final
+745731,2024-06-22,New York Yankees,Atlanta Braves,8,3,Final
+745402,2024-06-22,San Diego Padres,Milwaukee Brewers,6,4,Final
+746541,2024-06-22,Colorado Rockies,Washington Nationals,8,7,Final
+746132,2024-06-22,Los Angeles Dodgers,Los Angeles Angels,7,2,Final
+745566,2024-06-23,Philadelphia Phillies,Arizona Diamondbacks,4,1,Final
+745485,2024-06-23,Pittsburgh Pirates,Tampa Bay Rays,1,3,Final
+745727,2024-06-23,New York Yankees,Atlanta Braves,1,3,Final
+746699,2024-06-23,Cincinnati Reds,Boston Red Sox,4,7,Final
+746621,2024-06-23,Cleveland Guardians,Toronto Blue Jays,6,5,Final
+746457,2024-06-23,Detroit Tigers,Chicago White Sox,11,2,Final
+746051,2024-06-23,Miami Marlins,Seattle Mariners,6,4,Final
+746373,2024-06-23,Houston Astros,Baltimore Orioles,8,1,Final
+745165,2024-06-23,St. Louis Cardinals,San Francisco Giants,5,3,Final
+745000,2024-06-23,Texas Rangers,Kansas City Royals,4,0,Final
+746536,2024-06-23,Colorado Rockies,Washington Nationals,1,2,Final
+745648,2024-06-23,Oakland Athletics,Minnesota Twins,0,3,Final
+745396,2024-06-23,San Diego Padres,Milwaukee Brewers,2,6,Final
+746862,2024-06-23,Chicago Cubs,New York Mets,2,5,Final
+747021,2024-06-24,Baltimore Orioles,Cleveland Guardians,2,3,Final
+746458,2024-06-24,Detroit Tigers,Philadelphia Phillies,1,8,Final
+745078,2024-06-24,Tampa Bay Rays,Seattle Mariners,4,3,Final
+746696,2024-06-24,Cincinnati Reds,Pittsburgh Pirates,11,5,Final
+746941,2024-06-24,Boston Red Sox,Toronto Blue Jays,7,6,Final
+745160,2024-06-24,St. Louis Cardinals,Atlanta Braves,4,3,Final
+746780,2024-06-24,Chicago White Sox,Los Angeles Dodgers,0,3,Final
+746298,2024-06-24,Kansas City Royals,Miami Marlins,4,1,Final
+745974,2024-06-24,Milwaukee Brewers,Texas Rangers,6,3,Final
+746218,2024-06-24,Los Angeles Angels,Oakland Athletics,5,1,Final
+745397,2024-06-24,San Diego Padres,Washington Nationals,7,6,Final
+745323,2024-06-24,San Francisco Giants,Chicago Cubs,5,4,Final
+747022,2024-06-25,Baltimore Orioles,Cleveland Guardians,8,10,Final
+746454,2024-06-25,Detroit Tigers,Philadelphia Phillies,4,1,Final
+745076,2024-06-25,Tampa Bay Rays,Seattle Mariners,11,3,Final
+746697,2024-06-25,Cincinnati Reds,Pittsburgh Pirates,5,9,Final
+746943,2024-06-25,Boston Red Sox,Toronto Blue Jays,4,9,Final
+745806,2024-06-25,New York Mets,New York Yankees,9,7,Final
+746372,2024-06-25,Houston Astros,Colorado Rockies,5,2,Final
+746775,2024-06-25,Chicago White Sox,Los Angeles Dodgers,3,4,Final
+746293,2024-06-25,Kansas City Royals,Miami Marlins,1,2,Final
+745973,2024-06-25,Milwaukee Brewers,Texas Rangers,3,1,Final
+746213,2024-06-25,Los Angeles Angels,Oakland Athletics,7,5,Final
+745399,2024-06-25,San Diego Padres,Washington Nationals,9,7,Final
+747188,2024-06-25,Arizona Diamondbacks,Minnesota Twins,5,4,Final
+745322,2024-06-25,San Francisco Giants,Chicago Cubs,5,1,Final
+745157,2024-06-25,St. Louis Cardinals,Atlanta Braves,0,0,Final
+745073,2024-06-26,Tampa Bay Rays,Seattle Mariners,2,5,Final
+746695,2024-06-26,Cincinnati Reds,Pittsburgh Pirates,1,6,Final
+746456,2024-06-26,Detroit Tigers,Philadelphia Phillies,2,6,Final
+745157,2024-06-26,St. Louis Cardinals,Atlanta Braves,2,6,Final
+745158,2024-06-26,St. Louis Cardinals,Atlanta Braves,4,1,Final
+746374,2024-06-26,Houston Astros,Colorado Rockies,7,1,Final
+746291,2024-06-26,Kansas City Royals,Miami Marlins,5,1,Final
+745975,2024-06-26,Milwaukee Brewers,Texas Rangers,6,5,Final
+746212,2024-06-26,Los Angeles Angels,Oakland Athletics,5,2,Final
+745400,2024-06-26,San Diego Padres,Washington Nationals,8,5,Final
+747019,2024-06-26,Baltimore Orioles,Cleveland Guardians,4,2,Final
+746942,2024-06-26,Boston Red Sox,Toronto Blue Jays,1,4,Final
+745808,2024-06-26,New York Mets,New York Yankees,12,2,Final
+746777,2024-06-26,Chicago White Sox,Los Angeles Dodgers,0,4,Final
+747184,2024-06-26,Arizona Diamondbacks,Minnesota Twins,3,8,Final
+745325,2024-06-26,San Francisco Giants,Chicago Cubs,4,3,Final
+747185,2024-06-27,Arizona Diamondbacks,Minnesota Twins,6,13,Final
+745324,2024-06-27,San Francisco Giants,Chicago Cubs,3,5,Final
+746816,2024-06-27,Chicago White Sox,Atlanta Braves,1,0,Final
+745565,2024-06-27,Philadelphia Phillies,Miami Marlins,4,7,Final
+747020,2024-06-27,Baltimore Orioles,Texas Rangers,11,2,Final
+744919,2024-06-27,Toronto Blue Jays,New York Yankees,9,2,Final
+745162,2024-06-27,St. Louis Cardinals,Cincinnati Reds,4,11,Final
+746288,2024-06-27,Kansas City Royals,Cleveland Guardians,2,1,Final
+746210,2024-06-27,Los Angeles Angels,Detroit Tigers,5,0,Final
+745560,2024-06-28,Philadelphia Phillies,Miami Marlins,2,0,Final
+745070,2024-06-28,Tampa Bay Rays,Washington Nationals,3,1,Final
+747017,2024-06-28,Baltimore Orioles,Texas Rangers,2,1,Final
+744922,2024-06-28,Toronto Blue Jays,New York Yankees,5,16,Final
+745804,2024-06-28,New York Mets,Houston Astros,7,2,Final
+746939,2024-06-28,Boston Red Sox,San Diego Padres,2,9,Final
+746776,2024-06-28,Chicago White Sox,Colorado Rockies,5,3,Final
+747105,2024-06-28,Atlanta Braves,Pittsburgh Pirates,6,1,Final
+746292,2024-06-28,Kansas City Royals,Cleveland Guardians,10,3,Final
+745970,2024-06-28,Milwaukee Brewers,Chicago Cubs,4,2,Final
+745161,2024-06-28,St. Louis Cardinals,Cincinnati Reds,1,0,Final
+746214,2024-06-28,Los Angeles Angels,Detroit Tigers,5,2,Final
+747183,2024-06-28,Arizona Diamondbacks,Oakland Athletics,4,9,Final
+745238,2024-06-28,Seattle Mariners,Minnesota Twins,3,2,Final
+745319,2024-06-28,San Francisco Giants,Los Angeles Dodgers,5,3,Final
+746778,2024-06-29,Chicago White Sox,Colorado Rockies,11,3,Final
+745159,2024-06-29,St. Louis Cardinals,Cincinnati Reds,4,9,Final
+744921,2024-06-29,Toronto Blue Jays,New York Yankees,9,3,Final
+745559,2024-06-29,Philadelphia Phillies,Miami Marlins,2,3,Final
+746289,2024-06-29,Kansas City Royals,Cleveland Guardians,2,7,Final
+745801,2024-06-29,New York Mets,Houston Astros,6,9,Final
+747186,2024-06-29,Arizona Diamondbacks,Oakland Athletics,3,0,Final
+746940,2024-06-29,Boston Red Sox,San Diego Padres,1,11,Final
+745071,2024-06-29,Tampa Bay Rays,Washington Nationals,1,8,Final
+747104,2024-06-29,Atlanta Braves,Pittsburgh Pirates,2,1,Final
+745972,2024-06-29,Milwaukee Brewers,Chicago Cubs,3,5,Final
+745317,2024-06-29,San Francisco Giants,Los Angeles Dodgers,7,14,Final
+747018,2024-06-29,Baltimore Orioles,Texas Rangers,6,5,Final
+746211,2024-06-29,Los Angeles Angels,Detroit Tigers,6,5,Final
+745239,2024-06-29,Seattle Mariners,Minnesota Twins,1,5,Final
+747101,2024-06-30,Atlanta Braves,Pittsburgh Pirates,2,4,Final
+746938,2024-06-30,Boston Red Sox,San Diego Padres,4,1,Final
+745555,2024-06-30,Philadelphia Phillies,Miami Marlins,7,6,Final
+744916,2024-06-30,Toronto Blue Jays,New York Yankees,1,8,Final
+745802,2024-06-30,New York Mets,Houston Astros,5,10,Final
+745072,2024-06-30,Tampa Bay Rays,Washington Nationals,5,0,Final
+746290,2024-06-30,Kansas City Royals,Cleveland Guardians,6,2,Final
+746779,2024-06-30,Chicago White Sox,Colorado Rockies,4,5,Final
+745971,2024-06-30,Milwaukee Brewers,Chicago Cubs,7,1,Final
+745154,2024-06-30,St. Louis Cardinals,Cincinnati Reds,2,0,Final
+745320,2024-06-30,San Francisco Giants,Los Angeles Dodgers,10,4,Final
+746209,2024-06-30,Los Angeles Angels,Detroit Tigers,6,7,Final
+747182,2024-06-30,Arizona Diamondbacks,Oakland Athletics,5,1,Final
+745243,2024-06-30,Seattle Mariners,Minnesota Twins,3,5,Final
+747016,2024-06-30,Baltimore Orioles,Texas Rangers,2,11,Final
+744914,2024-07-01,Toronto Blue Jays,Houston Astros,1,3,Final
+744840,2024-07-01,Washington Nationals,New York Mets,7,9,Final
+746535,2024-07-01,Colorado Rockies,Milwaukee Brewers,8,7,Final
+745482,2024-07-02,Pittsburgh Pirates,St. Louis Cardinals,4,7,Final
+746623,2024-07-02,Cleveland Guardians,Chicago White Sox,7,6,Final
+746047,2024-07-02,Miami Marlins,Boston Red Sox,3,8,Final
+744838,2024-07-02,Washington Nationals,New York Mets,2,7,Final
+745730,2024-07-02,New York Yankees,Cincinnati Reds,4,5,Final
+744913,2024-07-02,Toronto Blue Jays,Houston Astros,7,6,Final
+747102,2024-07-02,Atlanta Braves,San Francisco Giants,3,5,Final
+745886,2024-07-02,Minnesota Twins,Detroit Tigers,5,3,Final
+744999,2024-07-02,Texas Rangers,San Diego Padres,7,0,Final
+746860,2024-07-02,Chicago Cubs,Philadelphia Phillies,4,6,Final
+746282,2024-07-02,Kansas City Royals,Tampa Bay Rays,1,5,Final
+746537,2024-07-02,Colorado Rockies,Milwaukee Brewers,3,4,Final
+745647,2024-07-02,Oakland Athletics,Los Angeles Angels,7,5,Final
+745240,2024-07-02,Seattle Mariners,Baltimore Orioles,0,2,Final
+746133,2024-07-02,Los Angeles Dodgers,Arizona Diamondbacks,6,5,Final
+745487,2024-07-03,Pittsburgh Pirates,St. Louis Cardinals,5,4,Final
+746617,2024-07-03,Cleveland Guardians,Chicago White Sox,2,8,Final
+746045,2024-07-03,Miami Marlins,Boston Red Sox,2,7,Final
+744837,2024-07-03,Washington Nationals,New York Mets,7,5,Final
+745728,2024-07-03,New York Yankees,Cincinnati Reds,2,3,Final
+744915,2024-07-03,Toronto Blue Jays,Houston Astros,2,9,Final
+747100,2024-07-03,Atlanta Braves,San Francisco Giants,3,1,Final
+744998,2024-07-03,Texas Rangers,San Diego Padres,4,6,Final
+746858,2024-07-03,Chicago Cubs,Philadelphia Phillies,3,5,Final
+746283,2024-07-03,Kansas City Royals,Tampa Bay Rays,4,2,Final
+745888,2024-07-03,Minnesota Twins,Detroit Tigers,2,9,Final
+746534,2024-07-03,Colorado Rockies,Milwaukee Brewers,0,3,Final
+745643,2024-07-03,Oakland Athletics,Los Angeles Angels,5,0,Final
+746128,2024-07-03,Los Angeles Dodgers,Arizona Diamondbacks,4,12,Final
+745234,2024-07-03,Seattle Mariners,Baltimore Orioles,1,4,Final
+744834,2024-07-04,Washington Nationals,New York Mets,1,0,Final
+745484,2024-07-04,Pittsburgh Pirates,St. Louis Cardinals,2,3,Final
+745726,2024-07-04,New York Yankees,Cincinnati Reds,4,8,Final
+744912,2024-07-04,Toronto Blue Jays,Houston Astros,3,5,Final
+745890,2024-07-04,Minnesota Twins,Detroit Tigers,12,3,Final
+746619,2024-07-04,Cleveland Guardians,Chicago White Sox,8,4,Final
+746043,2024-07-04,Miami Marlins,Boston Red Sox,5,6,Final
+746857,2024-07-04,Chicago Cubs,Philadelphia Phillies,10,2,Final
+744996,2024-07-04,Texas Rangers,San Diego Padres,1,3,Final
+745641,2024-07-04,Oakland Athletics,Los Angeles Angels,5,0,Final
+745236,2024-07-04,Seattle Mariners,Baltimore Orioles,7,3,Final
+747103,2024-07-04,Atlanta Braves,San Francisco Giants,2,4,Final
+746285,2024-07-04,Kansas City Royals,Tampa Bay Rays,8,10,Final
+746532,2024-07-04,Colorado Rockies,Milwaukee Brewers,4,3,Final
+746126,2024-07-04,Los Angeles Dodgers,Arizona Diamondbacks,3,9,Final
+746859,2024-07-05,Chicago Cubs,Los Angeles Angels,5,1,Final
+745479,2024-07-05,Pittsburgh Pirates,New York Mets,14,2,Final
+744836,2024-07-05,Washington Nationals,St. Louis Cardinals,6,7,Final
+745725,2024-07-05,New York Yankees,Boston Red Sox,3,5,Final
+746693,2024-07-05,Cincinnati Reds,Detroit Tigers,4,5,Final
+746620,2024-07-05,Cleveland Guardians,San Francisco Giants,2,4,Final
+746046,2024-07-05,Miami Marlins,Chicago White Sox,2,3,Final
+747097,2024-07-05,Atlanta Braves,Philadelphia Phillies,6,8,Final
+744992,2024-07-05,Texas Rangers,Tampa Bay Rays,3,0,Final
+746533,2024-07-05,Colorado Rockies,Kansas City Royals,4,2,Final
+745884,2024-07-05,Minnesota Twins,Houston Astros,12,13,Final
+745639,2024-07-05,Oakland Athletics,Baltimore Orioles,2,3,Final
+745398,2024-07-05,San Diego Padres,Arizona Diamondbacks,10,8,Final
+745237,2024-07-05,Seattle Mariners,Toronto Blue Jays,2,1,Final
+746127,2024-07-05,Los Angeles Dodgers,Milwaukee Brewers,8,5,Final
+745724,2024-07-06,New York Yankees,Boston Red Sox,14,4,Final
+745885,2024-07-06,Minnesota Twins,Houston Astros,9,3,Final
+746856,2024-07-06,Chicago Cubs,Los Angeles Angels,0,7,Final
+745476,2024-07-06,Pittsburgh Pirates,New York Mets,2,5,Final
+744835,2024-07-06,Washington Nationals,St. Louis Cardinals,14,6,Final
+744995,2024-07-06,Texas Rangers,Tampa Bay Rays,4,3,Final
+745642,2024-07-06,Oakland Athletics,Baltimore Orioles,19,8,Final
+746694,2024-07-06,Cincinnati Reds,Detroit Tigers,3,5,Final
+746615,2024-07-06,Cleveland Guardians,San Francisco Giants,5,4,Final
+745235,2024-07-06,Seattle Mariners,Toronto Blue Jays,4,5,Final
+746044,2024-07-06,Miami Marlins,Chicago White Sox,4,3,Final
+747099,2024-07-06,Atlanta Braves,Philadelphia Phillies,5,1,Final
+746129,2024-07-06,Los Angeles Dodgers,Milwaukee Brewers,5,3,Final
+746529,2024-07-06,Colorado Rockies,Kansas City Royals,3,1,Final
+745395,2024-07-06,San Diego Padres,Arizona Diamondbacks,5,7,Final
+745477,2024-07-07,Pittsburgh Pirates,New York Mets,2,3,Final
+744832,2024-07-07,Washington Nationals,St. Louis Cardinals,3,8,Final
+747098,2024-07-07,Atlanta Braves,Philadelphia Phillies,6,0,Final
+746691,2024-07-07,Cincinnati Reds,Detroit Tigers,1,5,Final
+746616,2024-07-07,Cleveland Guardians,San Francisco Giants,5,4,Final
+746039,2024-07-07,Miami Marlins,Chicago White Sox,7,4,Final
+745883,2024-07-07,Minnesota Twins,Houston Astros,3,2,Final
+746855,2024-07-07,Chicago Cubs,Los Angeles Angels,5,0,Final
+744993,2024-07-07,Texas Rangers,Tampa Bay Rays,13,2,Final
+746530,2024-07-07,Colorado Rockies,Kansas City Royals,1,10,Final
+745637,2024-07-07,Oakland Athletics,Baltimore Orioles,3,6,Final
+745391,2024-07-07,San Diego Padres,Arizona Diamondbacks,1,9,Final
+745233,2024-07-07,Seattle Mariners,Toronto Blue Jays,4,5,Final
+746122,2024-07-07,Los Angeles Dodgers,Milwaukee Brewers,2,9,Final
+745723,2024-07-07,New York Yankees,Boston Red Sox,0,3,Final
+745480,2024-07-08,Pittsburgh Pirates,New York Mets,8,2,Final
+744833,2024-07-08,Washington Nationals,St. Louis Cardinals,0,6,Final
+746455,2024-07-08,Detroit Tigers,Cleveland Guardians,1,0,Final
+746692,2024-07-08,Cincinnati Reds,Colorado Rockies,6,0,Final
+746771,2024-07-08,Chicago White Sox,Minnesota Twins,6,8,Final
+746208,2024-07-08,Los Angeles Angels,Texas Rangers,4,9,Final
+747181,2024-07-08,Arizona Diamondbacks,Atlanta Braves,4,5,Final
+747014,2024-07-09,Baltimore Orioles,Chicago Cubs,2,9,Final
+746451,2024-07-09,Detroit Tigers,Cleveland Guardians,8,9,Final
+745557,2024-07-09,Philadelphia Phillies,Los Angeles Dodgers,10,1,Final
+745074,2024-07-09,Tampa Bay Rays,New York Yankees,5,3,Final
+746690,2024-07-09,Cincinnati Reds,Colorado Rockies,12,6,Final
+745803,2024-07-09,New York Mets,Washington Nationals,7,5,Final
+746937,2024-07-09,Boston Red Sox,Oakland Athletics,12,9,Final
+746368,2024-07-09,Houston Astros,Miami Marlins,4,3,Final
+745968,2024-07-09,Milwaukee Brewers,Pittsburgh Pirates,2,12,Final
+746206,2024-07-09,Los Angeles Angels,Texas Rangers,4,5,Final
+745393,2024-07-09,San Diego Padres,Seattle Mariners,3,8,Final
+747180,2024-07-09,Arizona Diamondbacks,Atlanta Braves,2,6,Final
+745316,2024-07-09,San Francisco Giants,Toronto Blue Jays,4,3,Final
+745155,2024-07-09,St. Louis Cardinals,Kansas City Royals,0,0,Final
+746773,2024-07-09,Chicago White Sox,Minnesota Twins,0,0,Final
+745155,2024-07-10,St. Louis Cardinals,Kansas City Royals,4,6,Final
+745156,2024-07-10,St. Louis Cardinals,Kansas City Royals,5,8,Final
+746772,2024-07-10,Chicago White Sox,Minnesota Twins,3,1,Final
+746773,2024-07-10,Chicago White Sox,Minnesota Twins,2,3,Final
+747015,2024-07-10,Baltimore Orioles,Chicago Cubs,0,4,Final
+746453,2024-07-10,Detroit Tigers,Cleveland Guardians,5,4,Final
+745394,2024-07-10,San Diego Padres,Seattle Mariners,0,2,Final
+745069,2024-07-10,Tampa Bay Rays,New York Yankees,1,2,Final
+745556,2024-07-10,Philadelphia Phillies,Los Angeles Dodgers,4,3,Final
+746689,2024-07-10,Cincinnati Reds,Colorado Rockies,5,6,Final
+745796,2024-07-10,New York Mets,Washington Nationals,6,2,Final
+746934,2024-07-10,Boston Red Sox,Oakland Athletics,2,5,Final
+746366,2024-07-10,Houston Astros,Miami Marlins,9,1,Final
+745969,2024-07-10,Milwaukee Brewers,Pittsburgh Pirates,9,0,Final
+746205,2024-07-10,Los Angeles Angels,Texas Rangers,7,2,Final
+747179,2024-07-10,Arizona Diamondbacks,Atlanta Braves,7,5,Final
+745318,2024-07-10,San Francisco Giants,Toronto Blue Jays,6,10,Final
+746688,2024-07-11,Cincinnati Reds,Colorado Rockies,8,1,Final
+746452,2024-07-11,Detroit Tigers,Cleveland Guardians,10,1,Final
+745799,2024-07-11,New York Mets,Washington Nationals,7,0,Final
+745967,2024-07-11,Milwaukee Brewers,Pittsburgh Pirates,0,1,Final
+745313,2024-07-11,San Francisco Giants,Toronto Blue Jays,3,5,Final
+745558,2024-07-11,Philadelphia Phillies,Los Angeles Dodgers,5,1,Final
+747011,2024-07-11,Baltimore Orioles,Chicago Cubs,0,8,Final
+745065,2024-07-11,Tampa Bay Rays,New York Yankees,5,4,Final
+746935,2024-07-11,Boston Red Sox,Oakland Athletics,7,0,Final
+746367,2024-07-11,Houston Astros,Miami Marlins,6,3,Final
+746204,2024-07-11,Los Angeles Angels,Seattle Mariners,0,11,Final
+747178,2024-07-11,Arizona Diamondbacks,Atlanta Braves,1,0,Final
+746450,2024-07-12,Detroit Tigers,Los Angeles Dodgers,3,4,Final
+745552,2024-07-12,Philadelphia Phillies,Oakland Athletics,2,6,Final
+745064,2024-07-12,Tampa Bay Rays,Cleveland Guardians,2,0,Final
+747012,2024-07-12,Baltimore Orioles,New York Yankees,1,4,Final
+746936,2024-07-12,Boston Red Sox,Kansas City Royals,1,6,Final
+745800,2024-07-12,New York Mets,Colorado Rockies,7,6,Final
+746685,2024-07-12,Cincinnati Reds,Miami Marlins,7,4,Final
+746371,2024-07-12,Houston Astros,Texas Rangers,6,3,Final
+746774,2024-07-12,Chicago White Sox,Pittsburgh Pirates,1,4,Final
+745965,2024-07-12,Milwaukee Brewers,Washington Nationals,2,5,Final
+745153,2024-07-12,St. Louis Cardinals,Chicago Cubs,1,5,Final
+746207,2024-07-12,Los Angeles Angels,Seattle Mariners,6,5,Final
+747175,2024-07-12,Arizona Diamondbacks,Toronto Blue Jays,5,4,Final
+745390,2024-07-12,San Diego Padres,Atlanta Braves,1,6,Final
+745312,2024-07-12,San Francisco Giants,Minnesota Twins,7,1,Final
+746447,2024-07-13,Detroit Tigers,Los Angeles Dodgers,11,9,Final
+746766,2024-07-13,Chicago White Sox,Pittsburgh Pirates,2,6,Final
+745152,2024-07-13,St. Louis Cardinals,Chicago Cubs,11,3,Final
+745175,2024-07-13,St. Louis Cardinals,Chicago Cubs,5,4,Final
+745549,2024-07-13,Philadelphia Phillies,Oakland Athletics,11,5,Final
+747013,2024-07-13,Baltimore Orioles,New York Yankees,1,6,Final
+746930,2024-07-13,Boston Red Sox,Kansas City Royals,5,0,Final
+745798,2024-07-13,New York Mets,Colorado Rockies,7,3,Final
+745067,2024-07-13,Tampa Bay Rays,Cleveland Guardians,2,4,Final
+746369,2024-07-13,Houston Astros,Texas Rangers,1,2,Final
+746687,2024-07-13,Cincinnati Reds,Miami Marlins,10,6,Final
+745963,2024-07-13,Milwaukee Brewers,Washington Nationals,5,6,Final
+745311,2024-07-13,San Francisco Giants,Minnesota Twins,2,4,Final
+745392,2024-07-13,San Diego Padres,Atlanta Braves,4,0,Final
+746202,2024-07-13,Los Angeles Angels,Seattle Mariners,2,1,Final
+747177,2024-07-13,Arizona Diamondbacks,Toronto Blue Jays,12,1,Final
+747009,2024-07-14,Baltimore Orioles,New York Yankees,6,5,Final
+746932,2024-07-14,Boston Red Sox,Kansas City Royals,5,4,Final
+745551,2024-07-14,Philadelphia Phillies,Oakland Athletics,3,18,Final
+746449,2024-07-14,Detroit Tigers,Los Angeles Dodgers,4,3,Final
+745797,2024-07-14,New York Mets,Colorado Rockies,5,8,Final
+745066,2024-07-14,Tampa Bay Rays,Cleveland Guardians,2,0,Final
+746686,2024-07-14,Cincinnati Reds,Miami Marlins,2,3,Final
+746370,2024-07-14,Houston Astros,Texas Rangers,2,4,Final
+746769,2024-07-14,Chicago White Sox,Pittsburgh Pirates,4,9,Final
+745962,2024-07-14,Milwaukee Brewers,Washington Nationals,9,3,Final
+745151,2024-07-14,St. Louis Cardinals,Chicago Cubs,3,8,Final
+745314,2024-07-14,San Francisco Giants,Minnesota Twins,3,2,Final
+746201,2024-07-14,Los Angeles Angels,Seattle Mariners,3,2,Final
+747176,2024-07-14,Arizona Diamondbacks,Toronto Blue Jays,7,8,Final
+745385,2024-07-14,San Diego Padres,Atlanta Braves,3,6,Final
+747298,2024-07-16,American League All-Stars,National League All-Stars,5,3,Final
+746854,2024-07-19,Chicago Cubs,Arizona Diamondbacks,2,5,Final
+745481,2024-07-19,Pittsburgh Pirates,Philadelphia Phillies,8,7,Final
+744829,2024-07-19,Washington Nationals,Cincinnati Reds,8,5,Final
+745721,2024-07-19,New York Yankees,Tampa Bay Rays,6,1,Final
+744911,2024-07-19,Toronto Blue Jays,Detroit Tigers,4,5,Final
+746618,2024-07-19,Cleveland Guardians,San Diego Padres,7,0,Final
+746040,2024-07-19,Miami Marlins,New York Mets,6,4,Final
+744990,2024-07-19,Texas Rangers,Baltimore Orioles,1,9,Final
+746284,2024-07-19,Kansas City Royals,Chicago White Sox,7,1,Final
+746531,2024-07-19,Colorado Rockies,San Francisco Giants,7,3,Final
+745640,2024-07-19,Oakland Athletics,Los Angeles Angels,13,3,Final
+746123,2024-07-19,Los Angeles Dodgers,Boston Red Sox,4,1,Final
+745228,2024-07-19,Seattle Mariners,Houston Astros,0,3,Final
+747093,2024-07-19,Atlanta Braves,St. Louis Cardinals,0,0,Final
+745720,2024-07-20,New York Yankees,Tampa Bay Rays,1,9,Final
+747093,2024-07-20,Atlanta Braves,St. Louis Cardinals,3,2,Final
+747096,2024-07-20,Atlanta Braves,St. Louis Cardinals,5,9,Final
+744910,2024-07-20,Toronto Blue Jays,Detroit Tigers,3,7,Final
+745638,2024-07-20,Oakland Athletics,Los Angeles Angels,8,2,Final
+746041,2024-07-20,Miami Marlins,New York Mets,0,1,Final
+745478,2024-07-20,Pittsburgh Pirates,Philadelphia Phillies,4,1,Final
+744830,2024-07-20,Washington Nationals,Cincinnati Reds,5,4,Final
+744994,2024-07-20,Texas Rangers,Baltimore Orioles,4,8,Final
+746613,2024-07-20,Cleveland Guardians,San Diego Padres,0,7,Final
+746286,2024-07-20,Kansas City Royals,Chicago White Sox,6,1,Final
+745880,2024-07-20,Minnesota Twins,Milwaukee Brewers,4,8,Final
+746852,2024-07-20,Chicago Cubs,Arizona Diamondbacks,0,3,Final
+746121,2024-07-20,Los Angeles Dodgers,Boston Red Sox,7,6,Final
+746527,2024-07-20,Colorado Rockies,San Francisco Giants,4,3,Final
+745229,2024-07-20,Seattle Mariners,Houston Astros,2,4,Final
+745882,2024-07-21,Minnesota Twins,Milwaukee Brewers,7,8,Final
+744831,2024-07-21,Washington Nationals,Cincinnati Reds,5,2,Final
+745470,2024-07-21,Pittsburgh Pirates,Philadelphia Phillies,0,6,Final
+747094,2024-07-21,Atlanta Braves,St. Louis Cardinals,2,6,Final
+745722,2024-07-21,New York Yankees,Tampa Bay Rays,4,6,Final
+744909,2024-07-21,Toronto Blue Jays,Detroit Tigers,5,4,Final
+746610,2024-07-21,Cleveland Guardians,San Diego Padres,1,2,Final
+746042,2024-07-21,Miami Marlins,New York Mets,4,2,Final
+746287,2024-07-21,Kansas City Royals,Chicago White Sox,4,1,Final
+746853,2024-07-21,Chicago Cubs,Arizona Diamondbacks,2,1,Final
+744991,2024-07-21,Texas Rangers,Baltimore Orioles,3,2,Final
+746528,2024-07-21,Colorado Rockies,San Francisco Giants,2,3,Final
+745633,2024-07-21,Oakland Athletics,Los Angeles Angels,5,8,Final
+745230,2024-07-21,Seattle Mariners,Houston Astros,6,4,Final
+746125,2024-07-21,Los Angeles Dodgers,Boston Red Sox,9,6,Final
+745717,2024-07-22,New York Yankees,Tampa Bay Rays,9,1,Final
+746612,2024-07-22,Cleveland Guardians,Detroit Tigers,2,8,Final
+745473,2024-07-22,Pittsburgh Pirates,St. Louis Cardinals,2,1,Final
+746034,2024-07-22,Miami Marlins,New York Mets,4,6,Final
+747095,2024-07-22,Atlanta Braves,Cincinnati Reds,1,4,Final
+745881,2024-07-22,Minnesota Twins,Philadelphia Phillies,7,2,Final
+744988,2024-07-22,Texas Rangers,Chicago White Sox,4,3,Final
+746850,2024-07-22,Chicago Cubs,Milwaukee Brewers,3,1,Final
+746280,2024-07-22,Kansas City Royals,Arizona Diamondbacks,10,4,Final
+746526,2024-07-22,Colorado Rockies,Boston Red Sox,9,8,Final
+745635,2024-07-22,Oakland Athletics,Houston Astros,4,0,Final
+745232,2024-07-22,Seattle Mariners,Los Angeles Angels,1,3,Final
+746124,2024-07-22,Los Angeles Dodgers,San Francisco Giants,3,2,Final
+746614,2024-07-23,Cleveland Guardians,Detroit Tigers,5,4,Final
+745475,2024-07-23,Pittsburgh Pirates,St. Louis Cardinals,1,2,Final
+746036,2024-07-23,Miami Marlins,Baltimore Orioles,6,3,Final
+744828,2024-07-23,Washington Nationals,San Diego Padres,0,4,Final
+745715,2024-07-23,New York Yankees,New York Mets,2,3,Final
+744904,2024-07-23,Toronto Blue Jays,Tampa Bay Rays,2,4,Final
+745878,2024-07-23,Minnesota Twins,Philadelphia Phillies,0,3,Final
+744985,2024-07-23,Texas Rangers,Chicago White Sox,3,2,Final
+746848,2024-07-23,Chicago Cubs,Milwaukee Brewers,0,1,Final
+746281,2024-07-23,Kansas City Royals,Arizona Diamondbacks,2,6,Final
+746524,2024-07-23,Colorado Rockies,Boston Red Sox,0,6,Final
+745632,2024-07-23,Oakland Athletics,Houston Astros,8,2,Final
+745227,2024-07-23,Seattle Mariners,Los Angeles Angels,1,5,Final
+746118,2024-07-23,Los Angeles Dodgers,San Francisco Giants,5,2,Final
+747090,2024-07-23,Atlanta Braves,Cincinnati Reds,0,0,Final
+747091,2024-07-24,Atlanta Braves,Cincinnati Reds,4,9,Final
+745472,2024-07-24,Pittsburgh Pirates,St. Louis Cardinals,5,0,Final
+745877,2024-07-24,Minnesota Twins,Philadelphia Phillies,5,4,Final
+746851,2024-07-24,Chicago Cubs,Milwaukee Brewers,2,3,Final
+746525,2024-07-24,Colorado Rockies,Boston Red Sox,20,7,Final
+745634,2024-07-24,Oakland Athletics,Houston Astros,1,8,Final
+745231,2024-07-24,Seattle Mariners,Los Angeles Angels,1,2,Final
+746611,2024-07-24,Cleveland Guardians,Detroit Tigers,2,1,Final
+746035,2024-07-24,Miami Marlins,Baltimore Orioles,6,3,Final
+744824,2024-07-24,Washington Nationals,San Diego Padres,3,12,Final
+745716,2024-07-24,New York Yankees,New York Mets,3,12,Final
+744905,2024-07-24,Toronto Blue Jays,Tampa Bay Rays,6,3,Final
+744989,2024-07-24,Texas Rangers,Chicago White Sox,10,2,Final
+746279,2024-07-24,Kansas City Royals,Arizona Diamondbacks,6,8,Final
+746119,2024-07-24,Los Angeles Dodgers,San Francisco Giants,3,8,Final
+747090,2024-07-24,Atlanta Braves,Cincinnati Reds,0,0,Final
+744827,2024-07-25,Washington Nationals,San Diego Padres,0,3,Final
+746037,2024-07-25,Miami Marlins,Baltimore Orioles,6,7,Final
+746609,2024-07-25,Cleveland Guardians,Detroit Tigers,0,3,Final
+744984,2024-07-25,Texas Rangers,Chicago White Sox,2,1,Final
+744907,2024-07-25,Toronto Blue Jays,Tampa Bay Rays,0,13,Final
+746117,2024-07-25,Los Angeles Dodgers,San Francisco Giants,6,4,Final
+745794,2024-07-25,New York Mets,Atlanta Braves,3,2,Final
+746199,2024-07-25,Los Angeles Angels,Oakland Athletics,5,6,Final
+746448,2024-07-26,Detroit Tigers,Minnesota Twins,3,9,Final
+745554,2024-07-26,Philadelphia Phillies,Cleveland Guardians,1,3,Final
+745068,2024-07-26,Tampa Bay Rays,Cincinnati Reds,2,3,Final
+747010,2024-07-26,Baltimore Orioles,San Diego Padres,4,6,Final
+744906,2024-07-26,Toronto Blue Jays,Texas Rangers,6,5,Final
+745792,2024-07-26,New York Mets,Atlanta Braves,8,4,Final
+746933,2024-07-26,Boston Red Sox,New York Yankees,9,7,Final
+746277,2024-07-26,Kansas City Royals,Chicago Cubs,6,0,Final
+746361,2024-07-26,Houston Astros,Los Angeles Dodgers,5,0,Final
+746767,2024-07-26,Chicago White Sox,Seattle Mariners,0,10,Final
+745964,2024-07-26,Milwaukee Brewers,Miami Marlins,2,6,Final
+745146,2024-07-26,St. Louis Cardinals,Washington Nationals,8,10,Final
+746200,2024-07-26,Los Angeles Angels,Oakland Athletics,4,5,Final
+747174,2024-07-26,Arizona Diamondbacks,Pittsburgh Pirates,4,3,Final
+745315,2024-07-26,San Francisco Giants,Colorado Rockies,11,4,Final
+744908,2024-07-27,Toronto Blue Jays,Texas Rangers,7,3,Final
+747006,2024-07-27,Baltimore Orioles,San Diego Padres,4,9,Final
+745059,2024-07-27,Tampa Bay Rays,Cincinnati Reds,4,0,Final
+745793,2024-07-27,New York Mets,Atlanta Braves,0,4,Final
+745553,2024-07-27,Philadelphia Phillies,Cleveland Guardians,8,0,Final
+746446,2024-07-27,Detroit Tigers,Minnesota Twins,7,2,Final
+745307,2024-07-27,San Francisco Giants,Colorado Rockies,4,1,Final
+745310,2024-07-27,San Francisco Giants,Colorado Rockies,5,0,Final
+746278,2024-07-27,Kansas City Royals,Chicago Cubs,4,9,Final
+746362,2024-07-27,Houston Astros,Los Angeles Dodgers,7,6,Final
+745966,2024-07-27,Milwaukee Brewers,Miami Marlins,3,7,Final
+745150,2024-07-27,St. Louis Cardinals,Washington Nationals,3,14,Final
+746768,2024-07-27,Chicago White Sox,Seattle Mariners,3,6,Final
+746931,2024-07-27,Boston Red Sox,New York Yankees,8,11,Final
+747171,2024-07-27,Arizona Diamondbacks,Pittsburgh Pirates,9,5,Final
+746203,2024-07-27,Los Angeles Angels,Oakland Athletics,1,3,Final
+745063,2024-07-28,Tampa Bay Rays,Cincinnati Reds,2,1,Final
+747008,2024-07-28,Baltimore Orioles,San Diego Padres,8,6,Final
+745550,2024-07-28,Philadelphia Phillies,Cleveland Guardians,3,4,Final
+744902,2024-07-28,Toronto Blue Jays,Texas Rangers,7,3,Final
+746445,2024-07-28,Detroit Tigers,Minnesota Twins,0,5,Final
+745795,2024-07-28,New York Mets,Atlanta Braves,2,9,Final
+746274,2024-07-28,Kansas City Royals,Chicago Cubs,3,7,Final
+746364,2024-07-28,Houston Astros,Los Angeles Dodgers,2,6,Final
+746770,2024-07-28,Chicago White Sox,Seattle Mariners,3,6,Final
+745961,2024-07-28,Milwaukee Brewers,Miami Marlins,6,2,Final
+745145,2024-07-28,St. Louis Cardinals,Washington Nationals,4,3,Final
+745305,2024-07-28,San Francisco Giants,Colorado Rockies,5,4,Final
+746195,2024-07-28,Los Angeles Angels,Oakland Athletics,8,6,Final
+747173,2024-07-28,Arizona Diamondbacks,Pittsburgh Pirates,5,6,Final
+746929,2024-07-28,Boston Red Sox,New York Yankees,2,8,Final
+747007,2024-07-29,Baltimore Orioles,Toronto Blue Jays,11,5,Final
+747039,2024-07-29,Baltimore Orioles,Toronto Blue Jays,4,8,Final
+746444,2024-07-29,Detroit Tigers,Cleveland Guardians,4,8,Final
+745547,2024-07-29,Philadelphia Phillies,New York Yankees,4,14,Final
+746684,2024-07-29,Cincinnati Reds,Chicago Cubs,7,1,Final
+746928,2024-07-29,Boston Red Sox,Seattle Mariners,14,7,Final
+745791,2024-07-29,New York Mets,Minnesota Twins,15,2,Final
+745147,2024-07-29,St. Louis Cardinals,Texas Rangers,3,6,Final
+746360,2024-07-29,Houston Astros,Pittsburgh Pirates,3,5,Final
+746765,2024-07-29,Chicago White Sox,Kansas City Royals,5,8,Final
+745959,2024-07-29,Milwaukee Brewers,Atlanta Braves,8,3,Final
+747172,2024-07-29,Arizona Diamondbacks,Washington Nationals,9,8,Final
+746441,2024-07-30,Detroit Tigers,Cleveland Guardians,0,5,Final
+747005,2024-07-30,Baltimore Orioles,Toronto Blue Jays,6,2,Final
+745546,2024-07-30,Philadelphia Phillies,New York Yankees,6,7,Final
+745060,2024-07-30,Tampa Bay Rays,Miami Marlins,9,3,Final
+746683,2024-07-30,Cincinnati Reds,Chicago Cubs,6,3,Final
+746926,2024-07-30,Boston Red Sox,Seattle Mariners,6,10,Final
+745787,2024-07-30,New York Mets,Minnesota Twins,2,0,Final
+745149,2024-07-30,St. Louis Cardinals,Texas Rangers,8,1,Final
+746365,2024-07-30,Houston Astros,Pittsburgh Pirates,2,6,Final
+746763,2024-07-30,Chicago White Sox,Kansas City Royals,3,4,Final
+745958,2024-07-30,Milwaukee Brewers,Atlanta Braves,1,5,Final
+746197,2024-07-30,Los Angeles Angels,Colorado Rockies,10,7,Final
+747167,2024-07-30,Arizona Diamondbacks,Washington Nationals,17,0,Final
+745389,2024-07-30,San Diego Padres,Los Angeles Dodgers,6,5,Final
+745309,2024-07-30,San Francisco Giants,Oakland Athletics,2,5,Final
+745061,2024-07-31,Tampa Bay Rays,Miami Marlins,2,6,Final
+747003,2024-07-31,Baltimore Orioles,Toronto Blue Jays,10,4,Final
+745543,2024-07-31,Philadelphia Phillies,New York Yankees,5,6,Final
+745789,2024-07-31,New York Mets,Minnesota Twins,3,8,Final
+746764,2024-07-31,Chicago White Sox,Kansas City Royals,3,10,Final
+745960,2024-07-31,Milwaukee Brewers,Atlanta Braves,2,6,Final
+745148,2024-07-31,St. Louis Cardinals,Texas Rangers,10,1,Final
+747170,2024-07-31,Arizona Diamondbacks,Washington Nationals,5,4,Final
+746925,2024-07-31,Boston Red Sox,Seattle Mariners,3,2,Final
+746678,2024-07-31,Cincinnati Reds,Chicago Cubs,4,13,Final
+746363,2024-07-31,Houston Astros,Pittsburgh Pirates,5,4,Final
+745386,2024-07-31,San Diego Padres,Los Angeles Dodgers,8,1,Final
+746198,2024-07-31,Los Angeles Angels,Colorado Rockies,1,2,Final
+745306,2024-07-31,San Francisco Giants,Oakland Athletics,1,0,Final
+746607,2024-08-01,Cleveland Guardians,Baltimore Orioles,10,3,Final
+746442,2024-08-01,Detroit Tigers,Kansas City Royals,1,7,Final
+747092,2024-08-01,Atlanta Braves,Miami Marlins,4,2,Final
+746849,2024-08-01,Chicago Cubs,St. Louis Cardinals,5,4,Final
+746196,2024-08-01,Los Angeles Angels,Colorado Rockies,4,5,Final
+746845,2024-08-02,Chicago Cubs,St. Louis Cardinals,6,3,Final
+746443,2024-08-02,Detroit Tigers,Kansas City Royals,2,9,Final
+745471,2024-08-02,Pittsburgh Pirates,Arizona Diamondbacks,8,9,Final
+744825,2024-08-02,Washington Nationals,Milwaukee Brewers,3,8,Final
+745719,2024-08-02,New York Yankees,Toronto Blue Jays,5,8,Final
+746605,2024-08-02,Cleveland Guardians,Baltimore Orioles,8,4,Final
+746679,2024-08-02,Cincinnati Reds,San Francisco Giants,0,3,Final
+747089,2024-08-02,Atlanta Braves,Miami Marlins,5,3,Final
+744986,2024-08-02,Texas Rangers,Boston Red Sox,6,11,Final
+746354,2024-08-02,Houston Astros,Tampa Bay Rays,3,2,Final
+745875,2024-08-02,Minnesota Twins,Chicago White Sox,10,2,Final
+746193,2024-08-02,Los Angeles Angels,New York Mets,1,5,Final
+745631,2024-08-02,Oakland Athletics,Los Angeles Dodgers,6,5,Final
+745387,2024-08-02,San Diego Padres,Colorado Rockies,2,5,Final
+745224,2024-08-02,Seattle Mariners,Philadelphia Phillies,10,2,Final
+745714,2024-08-03,New York Yankees,Toronto Blue Jays,8,3,Final
+746846,2024-08-03,Chicago Cubs,St. Louis Cardinals,4,5,Final
+744823,2024-08-03,Washington Nationals,Milwaukee Brewers,6,4,Final
+746440,2024-08-03,Detroit Tigers,Kansas City Royals,6,5,Final
+745474,2024-08-03,Pittsburgh Pirates,Arizona Diamondbacks,4,2,Final
+744987,2024-08-03,Texas Rangers,Boston Red Sox,7,4,Final
+745876,2024-08-03,Minnesota Twins,Chicago White Sox,6,2,Final
+746608,2024-08-03,Cleveland Guardians,Baltimore Orioles,4,7,Final
+746681,2024-08-03,Cincinnati Reds,San Francisco Giants,6,4,Final
+746358,2024-08-03,Houston Astros,Tampa Bay Rays,1,6,Final
+747087,2024-08-03,Atlanta Braves,Miami Marlins,3,4,Final
+745388,2024-08-03,San Diego Padres,Colorado Rockies,3,2,Final
+745636,2024-08-03,Oakland Athletics,Los Angeles Dodgers,0,10,Final
+746194,2024-08-03,Los Angeles Angels,New York Mets,5,4,Final
+745225,2024-08-03,Seattle Mariners,Philadelphia Phillies,6,5,Final
+746680,2024-08-04,Cincinnati Reds,San Francisco Giants,2,8,Final
+745468,2024-08-04,Pittsburgh Pirates,Arizona Diamondbacks,5,6,Final
+747088,2024-08-04,Atlanta Braves,Miami Marlins,0,7,Final
+745718,2024-08-04,New York Yankees,Toronto Blue Jays,4,3,Final
+744826,2024-08-04,Washington Nationals,Milwaukee Brewers,4,3,Final
+746606,2024-08-04,Cleveland Guardians,Baltimore Orioles,5,9,Final
+746439,2024-08-04,Detroit Tigers,Kansas City Royals,2,3,Final
+746356,2024-08-04,Houston Astros,Tampa Bay Rays,0,1,Final
+745879,2024-08-04,Minnesota Twins,Chicago White Sox,13,7,Final
+744979,2024-08-04,Texas Rangers,Boston Red Sox,2,7,Final
+746191,2024-08-04,Los Angeles Angels,New York Mets,3,2,Final
+745627,2024-08-04,Oakland Athletics,Los Angeles Dodgers,2,3,Final
+745384,2024-08-04,San Diego Padres,Colorado Rockies,10,2,Final
+745222,2024-08-04,Seattle Mariners,Philadelphia Phillies,0,6,Final
+746844,2024-08-04,Chicago Cubs,St. Louis Cardinals,6,2,Final
+745184,2024-08-05,St. Louis Cardinals,New York Mets,0,6,Final
+746600,2024-08-05,Cleveland Guardians,Arizona Diamondbacks,6,7,Final
+746038,2024-08-05,Miami Marlins,Cincinnati Reds,3,10,Final
+744821,2024-08-05,Washington Nationals,San Francisco Giants,1,4,Final
+744982,2024-08-05,Texas Rangers,Houston Astros,4,3,Final
+746847,2024-08-05,Chicago Cubs,Minnesota Twins,0,3,Final
+746276,2024-08-05,Kansas City Royals,Boston Red Sox,5,9,Final
+745628,2024-08-05,Oakland Athletics,Chicago White Sox,5,1,Final
+746116,2024-08-05,Los Angeles Dodgers,Philadelphia Phillies,5,3,Final
+745467,2024-08-06,Pittsburgh Pirates,San Diego Padres,0,6,Final
+746033,2024-08-06,Miami Marlins,Cincinnati Reds,2,8,Final
+744817,2024-08-06,Washington Nationals,San Francisco Giants,11,5,Final
+744901,2024-08-06,Toronto Blue Jays,Baltimore Orioles,5,2,Final
+747086,2024-08-06,Atlanta Braves,Milwaukee Brewers,0,10,Final
+745141,2024-08-06,St. Louis Cardinals,Tampa Bay Rays,4,3,Final
+744983,2024-08-06,Texas Rangers,Houston Astros,2,4,Final
+746840,2024-08-06,Chicago Cubs,Minnesota Twins,7,3,Final
+746273,2024-08-06,Kansas City Royals,Boston Red Sox,5,6,Final
+746519,2024-08-06,Colorado Rockies,New York Mets,6,3,Final
+745221,2024-08-06,Seattle Mariners,Detroit Tigers,2,4,Final
+745629,2024-08-06,Oakland Athletics,Chicago White Sox,1,5,Final
+746120,2024-08-06,Los Angeles Dodgers,Philadelphia Phillies,2,6,Final
+746602,2024-08-06,Cleveland Guardians,Arizona Diamondbacks,0,0,Final
+745713,2024-08-06,New York Yankees,Los Angeles Angels,0,0,Final
+746604,2024-08-07,Cleveland Guardians,Arizona Diamondbacks,3,7,Final
+746602,2024-08-07,Cleveland Guardians,Arizona Diamondbacks,3,5,Final
+746842,2024-08-07,Chicago Cubs,Minnesota Twins,8,2,Final
+744981,2024-08-07,Texas Rangers,Houston Astros,4,6,Final
+745630,2024-08-07,Oakland Athletics,Chicago White Sox,3,2,Final
+745709,2024-08-07,New York Yankees,Los Angeles Angels,5,2,Final
+745713,2024-08-07,New York Yankees,Los Angeles Angels,2,8,Final
+745469,2024-08-07,Pittsburgh Pirates,San Diego Padres,8,9,Final
+746031,2024-08-07,Miami Marlins,Cincinnati Reds,6,4,Final
+744822,2024-08-07,Washington Nationals,San Francisco Giants,4,7,Final
+744903,2024-08-07,Toronto Blue Jays,Baltimore Orioles,3,7,Final
+747085,2024-08-07,Atlanta Braves,Milwaukee Brewers,5,8,Final
+745142,2024-08-07,St. Louis Cardinals,Tampa Bay Rays,5,2,Final
+746272,2024-08-07,Kansas City Royals,Boston Red Sox,8,4,Final
+746521,2024-08-07,Colorado Rockies,New York Mets,3,5,Final
+745223,2024-08-07,Seattle Mariners,Detroit Tigers,2,6,Final
+746115,2024-08-07,Los Angeles Dodgers,Philadelphia Phillies,4,9,Final
+744819,2024-08-08,Washington Nationals,San Francisco Giants,5,9,Final
+747081,2024-08-08,Atlanta Braves,Milwaukee Brewers,7,16,Final
+745466,2024-08-08,Pittsburgh Pirates,San Diego Padres,6,7,Final
+746522,2024-08-08,Colorado Rockies,New York Mets,1,9,Final
+746030,2024-08-08,Miami Marlins,Cincinnati Reds,4,10,Final
+745710,2024-08-08,New York Yankees,Los Angeles Angels,4,9,Final
+744899,2024-08-08,Toronto Blue Jays,Baltimore Orioles,7,6,Final
+745143,2024-08-08,St. Louis Cardinals,Tampa Bay Rays,4,6,Final
+745226,2024-08-08,Seattle Mariners,Detroit Tigers,4,3,Final
+747169,2024-08-08,Arizona Diamondbacks,Philadelphia Phillies,4,6,Final
+745927,2024-08-09,Minnesota Twins,Cleveland Guardians,4,2,Final
+745871,2024-08-09,Minnesota Twins,Cleveland Guardians,6,3,Final
+744818,2024-08-09,Washington Nationals,Los Angeles Angels,3,2,Final
+745062,2024-08-09,Tampa Bay Rays,Baltimore Orioles,1,4,Final
+744900,2024-08-09,Toronto Blue Jays,Oakland Athletics,3,1,Final
+746927,2024-08-09,Boston Red Sox,Houston Astros,4,8,Final
+746032,2024-08-09,Miami Marlins,San Diego Padres,2,6,Final
+746275,2024-08-09,Kansas City Royals,St. Louis Cardinals,5,8,Final
+746760,2024-08-09,Chicago White Sox,Chicago Cubs,6,7,Final
+745957,2024-08-09,Milwaukee Brewers,Cincinnati Reds,8,3,Final
+746523,2024-08-09,Colorado Rockies,Atlanta Braves,6,5,Final
+747168,2024-08-09,Arizona Diamondbacks,Philadelphia Phillies,3,2,Final
+746113,2024-08-09,Los Angeles Dodgers,Pittsburgh Pirates,9,5,Final
+745220,2024-08-09,Seattle Mariners,New York Mets,6,0,Final
+745308,2024-08-09,San Francisco Giants,Detroit Tigers,3,2,Final
+745708,2024-08-09,New York Yankees,Texas Rangers,0,0,Final
+745712,2024-08-10,New York Yankees,Texas Rangers,8,0,Final
+745708,2024-08-10,New York Yankees,Texas Rangers,4,9,Final
+744897,2024-08-10,Toronto Blue Jays,Oakland Athletics,0,1,Final
+745304,2024-08-10,San Francisco Giants,Detroit Tigers,3,1,Final
+746922,2024-08-10,Boston Red Sox,Houston Astros,4,5,Final
+746026,2024-08-10,Miami Marlins,San Diego Padres,8,9,Final
+744820,2024-08-10,Washington Nationals,Los Angeles Angels,5,4,Final
+746269,2024-08-10,Kansas City Royals,St. Louis Cardinals,8,3,Final
+745873,2024-08-10,Minnesota Twins,Cleveland Guardians,1,2,Final
+745955,2024-08-10,Milwaukee Brewers,Cincinnati Reds,1,0,Final
+745056,2024-08-10,Tampa Bay Rays,Baltimore Orioles,5,7,Final
+746761,2024-08-10,Chicago White Sox,Chicago Cubs,1,3,Final
+747164,2024-08-10,Arizona Diamondbacks,Philadelphia Phillies,11,1,Final
+746520,2024-08-10,Colorado Rockies,Atlanta Braves,8,11,Final
+746112,2024-08-10,Los Angeles Dodgers,Pittsburgh Pirates,4,1,Final
+745219,2024-08-10,Seattle Mariners,New York Mets,4,0,Final
+744816,2024-08-11,Washington Nationals,Los Angeles Angels,4,6,Final
+746923,2024-08-11,Boston Red Sox,Houston Astros,2,10,Final
+745711,2024-08-11,New York Yankees,Texas Rangers,8,7,Final
+744895,2024-08-11,Toronto Blue Jays,Oakland Athletics,4,8,Final
+745057,2024-08-11,Tampa Bay Rays,Baltimore Orioles,2,1,Final
+746025,2024-08-11,Miami Marlins,San Diego Padres,7,6,Final
+745872,2024-08-11,Minnesota Twins,Cleveland Guardians,3,5,Final
+745956,2024-08-11,Milwaukee Brewers,Cincinnati Reds,3,4,Final
+746517,2024-08-11,Colorado Rockies,Atlanta Braves,9,8,Final
+745303,2024-08-11,San Francisco Giants,Detroit Tigers,4,5,Final
+746114,2024-08-11,Los Angeles Dodgers,Pittsburgh Pirates,6,5,Final
+747166,2024-08-11,Arizona Diamondbacks,Philadelphia Phillies,12,5,Final
+745216,2024-08-11,Seattle Mariners,New York Mets,12,1,Final
+746603,2024-08-12,Cleveland Guardians,Chicago Cubs,9,8,Final
+746682,2024-08-12,Cincinnati Reds,St. Louis Cardinals,6,1,Final
+745058,2024-08-12,Tampa Bay Rays,Houston Astros,1,6,Final
+746921,2024-08-12,Boston Red Sox,Texas Rangers,5,4,Final
+745874,2024-08-12,Minnesota Twins,Kansas City Royals,8,3,Final
+746762,2024-08-12,Chicago White Sox,New York Yankees,12,2,Final
+745953,2024-08-12,Milwaukee Brewers,Los Angeles Dodgers,2,5,Final
+746192,2024-08-12,Los Angeles Angels,Toronto Blue Jays,2,4,Final
+747165,2024-08-12,Arizona Diamondbacks,Colorado Rockies,5,4,Final
+745383,2024-08-12,San Diego Padres,Pittsburgh Pirates,2,1,Final
+745300,2024-08-12,San Francisco Giants,Atlanta Braves,0,1,Final
+747004,2024-08-13,Baltimore Orioles,Washington Nationals,3,9,Final
+746601,2024-08-13,Cleveland Guardians,Chicago Cubs,2,1,Final
+746435,2024-08-13,Detroit Tigers,Seattle Mariners,15,1,Final
+746673,2024-08-13,Cincinnati Reds,St. Louis Cardinals,4,1,Final
+745548,2024-08-13,Philadelphia Phillies,Miami Marlins,0,5,Final
+745055,2024-08-13,Tampa Bay Rays,Houston Astros,2,3,Final
+745788,2024-08-13,New York Mets,Oakland Athletics,4,9,Final
+746924,2024-08-13,Boston Red Sox,Texas Rangers,9,4,Final
+745867,2024-08-13,Minnesota Twins,Kansas City Royals,13,3,Final
+746757,2024-08-13,Chicago White Sox,New York Yankees,1,4,Final
+745954,2024-08-13,Milwaukee Brewers,Los Angeles Dodgers,2,7,Final
+746187,2024-08-13,Los Angeles Angels,Toronto Blue Jays,1,6,Final
+747160,2024-08-13,Arizona Diamondbacks,Colorado Rockies,4,3,Final
+745382,2024-08-13,San Diego Padres,Pittsburgh Pirates,3,0,Final
+745302,2024-08-13,San Francisco Giants,Atlanta Braves,3,4,Final
+745869,2024-08-14,Minnesota Twins,Kansas City Royals,1,4,Final
+747163,2024-08-14,Arizona Diamondbacks,Colorado Rockies,11,4,Final
+745381,2024-08-14,San Diego Padres,Pittsburgh Pirates,8,2,Final
+746919,2024-08-14,Boston Red Sox,Texas Rangers,7,9,Final
+747000,2024-08-14,Baltimore Orioles,Washington Nationals,4,1,Final
+746598,2024-08-14,Cleveland Guardians,Chicago Cubs,6,1,Final
+746436,2024-08-14,Detroit Tigers,Seattle Mariners,3,2,Final
+746677,2024-08-14,Cincinnati Reds,St. Louis Cardinals,9,2,Final
+745544,2024-08-14,Philadelphia Phillies,Miami Marlins,9,5,Final
+745053,2024-08-14,Tampa Bay Rays,Houston Astros,1,2,Final
+745790,2024-08-14,New York Mets,Oakland Athletics,9,1,Final
+746759,2024-08-14,Chicago White Sox,New York Yankees,2,10,Final
+745951,2024-08-14,Milwaukee Brewers,Los Angeles Dodgers,5,4,Final
+746188,2024-08-14,Los Angeles Angels,Toronto Blue Jays,2,9,Final
+745301,2024-08-14,San Francisco Giants,Atlanta Braves,2,13,Final
+745783,2024-08-15,New York Mets,Oakland Athletics,6,7,Final
+746437,2024-08-15,Detroit Tigers,Seattle Mariners,2,1,Final
+745950,2024-08-15,Milwaukee Brewers,Los Angeles Dodgers,6,4,Final
+745298,2024-08-15,San Francisco Giants,Atlanta Braves,6,0,Final
+747002,2024-08-15,Baltimore Orioles,Boston Red Sox,5,1,Final
+745545,2024-08-15,Philadelphia Phillies,Washington Nationals,13,3,Final
+744980,2024-08-15,Texas Rangers,Minnesota Twins,2,3,Final
+746843,2024-08-16,Chicago Cubs,Toronto Blue Jays,6,5,Final
+746674,2024-08-16,Cincinnati Reds,Kansas City Royals,1,7,Final
+745462,2024-08-16,Pittsburgh Pirates,Seattle Mariners,5,3,Final
+745542,2024-08-16,Philadelphia Phillies,Washington Nationals,3,2,Final
+746438,2024-08-16,Detroit Tigers,New York Yankees,0,3,Final
+745054,2024-08-16,Tampa Bay Rays,Arizona Diamondbacks,5,4,Final
+747001,2024-08-16,Baltimore Orioles,Boston Red Sox,10,12,Final
+745784,2024-08-16,New York Mets,Miami Marlins,7,3,Final
+744974,2024-08-16,Texas Rangers,Minnesota Twins,3,4,Final
+746357,2024-08-16,Houston Astros,Chicago White Sox,4,5,Final
+745949,2024-08-16,Milwaukee Brewers,Cleveland Guardians,5,3,Final
+745144,2024-08-16,St. Louis Cardinals,Los Angeles Dodgers,6,7,Final
+746518,2024-08-16,Colorado Rockies,San Diego Padres,7,3,Final
+746189,2024-08-16,Los Angeles Angels,Atlanta Braves,3,2,Final
+745463,2024-08-17,Pittsburgh Pirates,Seattle Mariners,7,2,Final
+746434,2024-08-17,Detroit Tigers,New York Yankees,4,0,Final
+746841,2024-08-17,Chicago Cubs,Toronto Blue Jays,3,2,Final
+745049,2024-08-17,Tampa Bay Rays,Arizona Diamondbacks,6,1,Final
+745785,2024-08-17,New York Mets,Miami Marlins,4,0,Final
+745537,2024-08-17,Philadelphia Phillies,Washington Nationals,5,1,Final
+746675,2024-08-17,Cincinnati Reds,Kansas City Royals,1,13,Final
+746997,2024-08-17,Baltimore Orioles,Boston Red Sox,1,5,Final
+744977,2024-08-17,Texas Rangers,Minnesota Twins,2,5,Final
+745626,2024-08-17,Oakland Athletics,San Francisco Giants,2,0,Final
+746355,2024-08-17,Houston Astros,Chicago White Sox,6,1,Final
+745140,2024-08-17,St. Louis Cardinals,Los Angeles Dodgers,5,2,Final
+745952,2024-08-17,Milwaukee Brewers,Cleveland Guardians,2,1,Final
+746515,2024-08-17,Colorado Rockies,San Diego Padres,3,8,Final
+746190,2024-08-17,Los Angeles Angels,Atlanta Braves,3,11,Final
+745786,2024-08-18,New York Mets,Miami Marlins,2,3,Final
+746999,2024-08-18,Baltimore Orioles,Boston Red Sox,4,2,Final
+745464,2024-08-18,Pittsburgh Pirates,Seattle Mariners,3,10,Final
+745539,2024-08-18,Philadelphia Phillies,Washington Nationals,4,6,Final
+746676,2024-08-18,Cincinnati Reds,Kansas City Royals,1,8,Final
+745051,2024-08-18,Tampa Bay Rays,Arizona Diamondbacks,8,7,Final
+746359,2024-08-18,Houston Astros,Chicago White Sox,2,0,Final
+745948,2024-08-18,Milwaukee Brewers,Cleveland Guardians,2,0,Final
+745139,2024-08-18,St. Louis Cardinals,Los Angeles Dodgers,1,2,Final
+746838,2024-08-18,Chicago Cubs,Toronto Blue Jays,0,1,Final
+744975,2024-08-18,Texas Rangers,Minnesota Twins,6,5,Final
+746516,2024-08-18,Colorado Rockies,San Diego Padres,3,2,Final
+745621,2024-08-18,Oakland Athletics,San Francisco Giants,2,4,Final
+746186,2024-08-18,Los Angeles Angels,Atlanta Braves,1,3,Final
+746431,2024-08-18,Detroit Tigers,New York Yankees,3,2,Final
+746027,2024-08-19,Miami Marlins,Arizona Diamondbacks,6,9,Final
+744898,2024-08-19,Toronto Blue Jays,Cincinnati Reds,3,6,Final
+745780,2024-08-19,New York Mets,Baltimore Orioles,4,3,Final
+744976,2024-08-19,Texas Rangers,Pittsburgh Pirates,4,3,Final
+746351,2024-08-19,Houston Astros,Boston Red Sox,5,4,Final
+746270,2024-08-19,Kansas City Royals,Los Angeles Angels,5,3,Final
+745620,2024-08-19,Oakland Athletics,Tampa Bay Rays,3,0,Final
+745380,2024-08-19,San Diego Padres,Minnesota Twins,5,3,Final
+745294,2024-08-19,San Francisco Giants,Chicago White Sox,5,3,Final
+746109,2024-08-19,Los Angeles Dodgers,Seattle Mariners,3,0,Final
+746029,2024-08-20,Miami Marlins,Arizona Diamondbacks,1,3,Final
+744814,2024-08-20,Washington Nationals,Colorado Rockies,1,3,Final
+745707,2024-08-20,New York Yankees,Cleveland Guardians,5,9,Final
+744896,2024-08-20,Toronto Blue Jays,Cincinnati Reds,10,3,Final
+745782,2024-08-20,New York Mets,Baltimore Orioles,5,9,Final
+747083,2024-08-20,Atlanta Braves,Philadelphia Phillies,3,1,Final
+745136,2024-08-20,St. Louis Cardinals,Milwaukee Brewers,2,3,Final
+746839,2024-08-20,Chicago Cubs,Detroit Tigers,3,1,Final
+744978,2024-08-20,Texas Rangers,Pittsburgh Pirates,0,4,Final
+746349,2024-08-20,Houston Astros,Boston Red Sox,5,6,Final
+746266,2024-08-20,Kansas City Royals,Los Angeles Angels,5,9,Final
+745624,2024-08-20,Oakland Athletics,Tampa Bay Rays,0,1,Final
+745374,2024-08-20,San Diego Padres,Minnesota Twins,7,5,Final
+745295,2024-08-20,San Francisco Giants,Chicago White Sox,4,1,Final
+746107,2024-08-20,Los Angeles Dodgers,Seattle Mariners,6,3,Final
+745781,2024-08-21,New York Mets,Baltimore Orioles,4,3,Final
+746350,2024-08-21,Houston Astros,Boston Red Sox,1,4,Final
+744973,2024-08-21,Texas Rangers,Pittsburgh Pirates,1,0,Final
+745297,2024-08-21,San Francisco Giants,Chicago White Sox,2,6,Final
+745375,2024-08-21,San Diego Padres,Minnesota Twins,4,11,Final
+746028,2024-08-21,Miami Marlins,Arizona Diamondbacks,8,10,Final
+744812,2024-08-21,Washington Nationals,Colorado Rockies,6,1,Final
+745704,2024-08-21,New York Yankees,Cleveland Guardians,8,1,Final
+744893,2024-08-21,Toronto Blue Jays,Cincinnati Reds,7,11,Final
+747084,2024-08-21,Atlanta Braves,Philadelphia Phillies,2,3,Final
+745138,2024-08-21,St. Louis Cardinals,Milwaukee Brewers,10,6,Final
+746837,2024-08-21,Chicago Cubs,Detroit Tigers,2,8,Final
+746267,2024-08-21,Kansas City Royals,Los Angeles Angels,3,0,Final
+745622,2024-08-21,Oakland Athletics,Tampa Bay Rays,2,4,Final
+746110,2024-08-21,Los Angeles Dodgers,Seattle Mariners,8,4,Final
+744815,2024-08-22,Washington Nationals,Colorado Rockies,8,3,Final
+745705,2024-08-22,New York Yankees,Cleveland Guardians,6,0,Final
+745137,2024-08-22,St. Louis Cardinals,Milwaukee Brewers,3,0,Final
+746836,2024-08-22,Chicago Cubs,Detroit Tigers,10,2,Final
+745623,2024-08-22,Oakland Athletics,Tampa Bay Rays,3,1,Final
+745465,2024-08-22,Pittsburgh Pirates,Cincinnati Reds,7,0,Final
+744894,2024-08-22,Toronto Blue Jays,Los Angeles Angels,5,3,Final
+746998,2024-08-22,Baltimore Orioles,Houston Astros,0,6,Final
+747082,2024-08-22,Atlanta Braves,Philadelphia Phillies,3,2,Final
+745379,2024-08-22,San Diego Padres,New York Mets,3,8,Final
+745460,2024-08-23,Pittsburgh Pirates,Cincinnati Reds,6,5,Final
+746995,2024-08-23,Baltimore Orioles,Houston Astros,7,5,Final
+745702,2024-08-23,New York Yankees,Colorado Rockies,3,0,Final
+744889,2024-08-23,Toronto Blue Jays,Los Angeles Angels,5,4,Final
+746920,2024-08-23,Boston Red Sox,Arizona Diamondbacks,2,12,Final
+746597,2024-08-23,Cleveland Guardians,Texas Rangers,3,5,Final
+746024,2024-08-23,Miami Marlins,Chicago Cubs,3,6,Final
+747080,2024-08-23,Atlanta Braves,Washington Nationals,3,2,Final
+745870,2024-08-23,Minnesota Twins,St. Louis Cardinals,1,6,Final
+746268,2024-08-23,Kansas City Royals,Philadelphia Phillies,7,4,Final
+746758,2024-08-23,Chicago White Sox,Detroit Tigers,2,5,Final
+745378,2024-08-23,San Diego Padres,New York Mets,7,0,Final
+745625,2024-08-23,Oakland Athletics,Milwaukee Brewers,3,11,Final
+745217,2024-08-23,Seattle Mariners,San Francisco Giants,6,5,Final
+746111,2024-08-23,Los Angeles Dodgers,Tampa Bay Rays,7,3,Final
+745703,2024-08-24,New York Yankees,Colorado Rockies,2,9,Final
+744890,2024-08-24,Toronto Blue Jays,Los Angeles Angels,3,1,Final
+746996,2024-08-24,Baltimore Orioles,Houston Astros,3,2,Final
+745617,2024-08-24,Oakland Athletics,Milwaukee Brewers,5,9,Final
+746917,2024-08-24,Boston Red Sox,Arizona Diamondbacks,1,4,Final
+745218,2024-08-24,Seattle Mariners,San Francisco Giants,3,4,Final
+746022,2024-08-24,Miami Marlins,Chicago Cubs,2,14,Final
+745457,2024-08-24,Pittsburgh Pirates,Cincinnati Reds,2,10,Final
+746599,2024-08-24,Cleveland Guardians,Texas Rangers,13,5,Final
+745868,2024-08-24,Minnesota Twins,St. Louis Cardinals,6,0,Final
+746271,2024-08-24,Kansas City Royals,Philadelphia Phillies,2,11,Final
+746756,2024-08-24,Chicago White Sox,Detroit Tigers,4,13,Final
+747077,2024-08-24,Atlanta Braves,Washington Nationals,4,2,Final
+745377,2024-08-24,San Diego Padres,New York Mets,1,7,Final
+746108,2024-08-24,Los Angeles Dodgers,Tampa Bay Rays,8,9,Final
+747078,2024-08-25,Atlanta Braves,Washington Nationals,1,5,Final
+746918,2024-08-25,Boston Red Sox,Arizona Diamondbacks,5,7,Final
+745459,2024-08-25,Pittsburgh Pirates,Cincinnati Reds,4,3,Final
+745706,2024-08-25,New York Yankees,Colorado Rockies,10,3,Final
+744892,2024-08-25,Toronto Blue Jays,Los Angeles Angels,8,2,Final
+746595,2024-08-25,Cleveland Guardians,Texas Rangers,4,2,Final
+746023,2024-08-25,Miami Marlins,Chicago Cubs,7,2,Final
+745863,2024-08-25,Minnesota Twins,St. Louis Cardinals,2,3,Final
+746263,2024-08-25,Kansas City Royals,Philadelphia Phillies,3,11,Final
+746754,2024-08-25,Chicago White Sox,Detroit Tigers,4,9,Final
+745618,2024-08-25,Oakland Athletics,Milwaukee Brewers,4,3,Final
+745376,2024-08-25,San Diego Padres,New York Mets,3,2,Final
+745212,2024-08-25,Seattle Mariners,San Francisco Giants,4,3,Final
+746106,2024-08-25,Los Angeles Dodgers,Tampa Bay Rays,3,1,Final
+746994,2024-08-25,Baltimore Orioles,Houston Astros,3,6,Final
+746628,2024-08-26,Cleveland Guardians,Kansas City Royals,3,4,Final
+746596,2024-08-26,Cleveland Guardians,Kansas City Royals,4,9,Final
+746942,2024-08-26,Boston Red Sox,Toronto Blue Jays,1,4,Final
+745458,2024-08-26,Pittsburgh Pirates,Chicago Cubs,8,18,Final
+745538,2024-08-26,Philadelphia Phillies,Houston Astros,3,2,Final
+744813,2024-08-26,Washington Nationals,New York Yankees,2,5,Final
+746915,2024-08-26,Boston Red Sox,Toronto Blue Jays,3,7,Final
+745865,2024-08-26,Minnesota Twins,Atlanta Braves,6,10,Final
+745133,2024-08-26,St. Louis Cardinals,San Diego Padres,4,7,Final
+746753,2024-08-26,Chicago White Sox,Detroit Tigers,3,6,Final
+746513,2024-08-26,Colorado Rockies,Miami Marlins,3,2,Final
+745215,2024-08-26,Seattle Mariners,Tampa Bay Rays,5,1,Final
+746429,2024-08-27,Detroit Tigers,Los Angeles Angels,6,2,Final
+746594,2024-08-27,Cleveland Guardians,Kansas City Royals,1,6,Final
+746671,2024-08-27,Cincinnati Reds,Oakland Athletics,4,5,Final
+745461,2024-08-27,Pittsburgh Pirates,Chicago Cubs,5,9,Final
+745540,2024-08-27,Philadelphia Phillies,Houston Astros,5,0,Final
+744811,2024-08-27,Washington Nationals,New York Yankees,4,2,Final
+746916,2024-08-27,Boston Red Sox,Toronto Blue Jays,6,3,Final
+745864,2024-08-27,Minnesota Twins,Atlanta Braves,6,8,Final
+745132,2024-08-27,St. Louis Cardinals,San Diego Padres,5,7,Final
+746755,2024-08-27,Chicago White Sox,Texas Rangers,1,3,Final
+745946,2024-08-27,Milwaukee Brewers,San Francisco Giants,4,5,Final
+746510,2024-08-27,Colorado Rockies,Miami Marlins,8,9,Final
+747162,2024-08-27,Arizona Diamondbacks,New York Mets,3,8,Final
+745213,2024-08-27,Seattle Mariners,Tampa Bay Rays,2,3,Final
+746105,2024-08-27,Los Angeles Dodgers,Baltimore Orioles,2,3,Final
+745452,2024-08-28,Pittsburgh Pirates,Chicago Cubs,10,14,Final
+746589,2024-08-28,Cleveland Guardians,Kansas City Royals,7,5,Final
+745541,2024-08-28,Philadelphia Phillies,Houston Astros,0,10,Final
+745211,2024-08-28,Seattle Mariners,Tampa Bay Rays,6,2,Final
+746755,2024-08-28,Chicago White Sox,Texas Rangers,1,3,Final
+746430,2024-08-28,Detroit Tigers,Los Angeles Angels,3,2,Final
+746672,2024-08-28,Cincinnati Reds,Oakland Athletics,6,9,Final
+744809,2024-08-28,Washington Nationals,New York Yankees,5,2,Final
+746913,2024-08-28,Boston Red Sox,Toronto Blue Jays,3,0,Final
+745866,2024-08-28,Minnesota Twins,Atlanta Braves,1,5,Final
+745134,2024-08-28,St. Louis Cardinals,San Diego Padres,4,3,Final
+746752,2024-08-28,Chicago White Sox,Texas Rangers,3,4,Final
+745943,2024-08-28,Milwaukee Brewers,San Francisco Giants,5,3,Final
+746512,2024-08-28,Colorado Rockies,Miami Marlins,8,2,Final
+747161,2024-08-28,Arizona Diamondbacks,New York Mets,8,5,Final
+746103,2024-08-28,Los Angeles Dodgers,Baltimore Orioles,6,4,Final
+746432,2024-08-29,Detroit Tigers,Los Angeles Angels,0,3,Final
+746748,2024-08-29,Chicago White Sox,Texas Rangers,1,2,Final
+745945,2024-08-29,Milwaukee Brewers,San Francisco Giants,6,0,Final
+745135,2024-08-29,St. Louis Cardinals,San Diego Padres,4,1,Final
+746514,2024-08-29,Colorado Rockies,Miami Marlins,8,12,Final
+747159,2024-08-29,Arizona Diamondbacks,New York Mets,2,3,Final
+746670,2024-08-29,Cincinnati Reds,Oakland Athletics,10,9,Final
+745531,2024-08-29,Philadelphia Phillies,Atlanta Braves,5,4,Final
+746914,2024-08-29,Boston Red Sox,Toronto Blue Jays,0,2,Final
+746352,2024-08-29,Houston Astros,Kansas City Royals,6,3,Final
+746102,2024-08-29,Los Angeles Dodgers,Baltimore Orioles,6,3,Final
+746730,2024-08-30,Cincinnati Reds,Milwaukee Brewers,4,5,Final
+746665,2024-08-30,Cincinnati Reds,Milwaukee Brewers,0,14,Final
+746433,2024-08-30,Detroit Tigers,Boston Red Sox,5,7,Final
+745533,2024-08-30,Philadelphia Phillies,Atlanta Braves,2,7,Final
+744810,2024-08-30,Washington Nationals,Chicago Cubs,6,7,Final
+745052,2024-08-30,Tampa Bay Rays,San Diego Padres,5,13,Final
+745700,2024-08-30,New York Yankees,St. Louis Cardinals,6,3,Final
+746593,2024-08-30,Cleveland Guardians,Pittsburgh Pirates,10,8,Final
+744969,2024-08-30,Texas Rangers,Oakland Athletics,2,9,Final
+746353,2024-08-30,Houston Astros,Kansas City Royals,3,2,Final
+745862,2024-08-30,Minnesota Twins,Toronto Blue Jays,2,0,Final
+746749,2024-08-30,Chicago White Sox,New York Mets,1,5,Final
+746511,2024-08-30,Colorado Rockies,Baltimore Orioles,3,5,Final
+746184,2024-08-30,Los Angeles Angels,Seattle Mariners,5,9,Final
+747156,2024-08-30,Arizona Diamondbacks,Los Angeles Dodgers,9,10,Final
+745299,2024-08-30,San Francisco Giants,Miami Marlins,3,1,Final
+745699,2024-08-31,New York Yankees,St. Louis Cardinals,5,6,Final
+744808,2024-08-31,Washington Nationals,Chicago Cubs,3,5,Final
+745050,2024-08-31,Tampa Bay Rays,San Diego Padres,11,4,Final
+746424,2024-08-31,Detroit Tigers,Boston Red Sox,2,1,Final
+746590,2024-08-31,Cleveland Guardians,Pittsburgh Pirates,0,3,Final
+744971,2024-08-31,Texas Rangers,Oakland Athletics,3,2,Final
+746348,2024-08-31,Houston Astros,Kansas City Royals,5,2,Final
+745859,2024-08-31,Minnesota Twins,Toronto Blue Jays,0,15,Final
+746751,2024-08-31,Chicago White Sox,New York Mets,3,5,Final
+745532,2024-08-31,Philadelphia Phillies,Atlanta Braves,3,0,Final
+746667,2024-08-31,Cincinnati Reds,Milwaukee Brewers,4,5,Final
+746507,2024-08-31,Colorado Rockies,Baltimore Orioles,7,5,Final
+747158,2024-08-31,Arizona Diamondbacks,Los Angeles Dodgers,6,8,Final
+745296,2024-08-31,San Francisco Giants,Miami Marlins,3,4,Final
+746182,2024-08-31,Los Angeles Angels,Seattle Mariners,5,4,Final
+746669,2024-09-01,Cincinnati Reds,Milwaukee Brewers,4,3,Final
+744806,2024-09-01,Washington Nationals,Chicago Cubs,1,14,Final
+745701,2024-09-01,New York Yankees,St. Louis Cardinals,7,14,Final
+746426,2024-09-01,Detroit Tigers,Boston Red Sox,4,1,Final
+746592,2024-09-01,Cleveland Guardians,Pittsburgh Pirates,6,1,Final
+745048,2024-09-01,Tampa Bay Rays,San Diego Padres,3,4,Final
+746347,2024-09-01,Houston Astros,Kansas City Royals,7,2,Final
+745861,2024-09-01,Minnesota Twins,Toronto Blue Jays,4,3,Final
+746750,2024-09-01,Chicago White Sox,New York Mets,0,2,Final
+744970,2024-09-01,Texas Rangers,Oakland Athletics,6,4,Final
+746505,2024-09-01,Colorado Rockies,Baltimore Orioles,1,6,Final
+745292,2024-09-01,San Francisco Giants,Miami Marlins,5,7,Final
+746183,2024-09-01,Los Angeles Angels,Seattle Mariners,3,2,Final
+747157,2024-09-01,Arizona Diamondbacks,Los Angeles Dodgers,14,3,Final
+745536,2024-09-01,Philadelphia Phillies,Atlanta Braves,3,2,Final
+745947,2024-09-02,Milwaukee Brewers,St. Louis Cardinals,9,3,Final
+746992,2024-09-02,Baltimore Orioles,Chicago White Sox,13,3,Final
+746668,2024-09-02,Cincinnati Reds,Houston Astros,5,3,Final
+746265,2024-09-02,Kansas City Royals,Cleveland Guardians,2,4,Final
+747155,2024-09-02,Arizona Diamondbacks,Los Angeles Dodgers,6,11,Final
+745373,2024-09-02,San Diego Padres,Detroit Tigers,3,0,Final
+745046,2024-09-02,Tampa Bay Rays,Minnesota Twins,4,5,Final
+745619,2024-09-02,Oakland Athletics,Seattle Mariners,5,4,Final
+745779,2024-09-02,New York Mets,Boston Red Sox,4,1,Final
+746833,2024-09-02,Chicago Cubs,Pittsburgh Pirates,3,5,Final
+744972,2024-09-02,Texas Rangers,New York Yankees,4,8,Final
+746991,2024-09-03,Baltimore Orioles,Chicago White Sox,9,0,Final
+746020,2024-09-03,Miami Marlins,Washington Nationals,2,6,Final
+745047,2024-09-03,Tampa Bay Rays,Minnesota Twins,2,1,Final
+744891,2024-09-03,Toronto Blue Jays,Philadelphia Phillies,9,10,Final
+745778,2024-09-03,New York Mets,Boston Red Sox,7,2,Final
+747079,2024-09-03,Atlanta Braves,Colorado Rockies,3,0,Final
+746264,2024-09-03,Kansas City Royals,Cleveland Guardians,1,7,Final
+746834,2024-09-03,Chicago Cubs,Pittsburgh Pirates,0,5,Final
+745944,2024-09-03,Milwaukee Brewers,St. Louis Cardinals,4,7,Final
+744968,2024-09-03,Texas Rangers,New York Yankees,7,4,Final
+746185,2024-09-03,Los Angeles Angels,Los Angeles Dodgers,2,6,Final
+745615,2024-09-03,Oakland Athletics,Seattle Mariners,3,2,Final
+745293,2024-09-03,San Francisco Giants,Arizona Diamondbacks,7,8,Final
+744887,2024-09-04,Toronto Blue Jays,Philadelphia Phillies,2,4,Final
+746990,2024-09-04,Baltimore Orioles,Chicago White Sox,1,8,Final
+746666,2024-09-04,Cincinnati Reds,Houston Astros,12,5,Final
+746019,2024-09-04,Miami Marlins,Washington Nationals,4,3,Final
+745045,2024-09-04,Tampa Bay Rays,Minnesota Twins,9,4,Final
+745776,2024-09-04,New York Mets,Boston Red Sox,8,3,Final
+747075,2024-09-04,Atlanta Braves,Colorado Rockies,5,2,Final
+746262,2024-09-04,Kansas City Royals,Cleveland Guardians,4,1,Final
+746835,2024-09-04,Chicago Cubs,Pittsburgh Pirates,12,0,Final
+745938,2024-09-04,Milwaukee Brewers,St. Louis Cardinals,2,3,Final
+744964,2024-09-04,Texas Rangers,New York Yankees,10,6,Final
+746178,2024-09-04,Los Angeles Angels,Los Angeles Dodgers,10,1,Final
+745370,2024-09-04,San Diego Padres,Detroit Tigers,6,5,Final
+745614,2024-09-04,Oakland Athletics,Seattle Mariners,3,16,Final
+745290,2024-09-04,San Francisco Giants,Arizona Diamondbacks,4,6,Final
+746664,2024-09-05,Cincinnati Reds,Houston Astros,1,0,Final
+745042,2024-09-05,Tampa Bay Rays,Minnesota Twins,3,4,Final
+745612,2024-09-05,Oakland Athletics,Seattle Mariners,4,6,Final
+745289,2024-09-05,San Francisco Giants,Arizona Diamondbacks,3,2,Final
+745451,2024-09-05,Pittsburgh Pirates,Washington Nationals,9,4,Final
+746021,2024-09-05,Miami Marlins,Philadelphia Phillies,2,5,Final
+747073,2024-09-05,Atlanta Braves,Colorado Rockies,1,3,Final
+744966,2024-09-05,Texas Rangers,Los Angeles Angels,3,1,Final
+745369,2024-09-05,San Diego Padres,Detroit Tigers,3,4,Final
+746832,2024-09-06,Chicago Cubs,New York Yankees,0,3,Final
+745941,2024-09-06,Milwaukee Brewers,Colorado Rockies,2,3,Final
+746993,2024-09-06,Baltimore Orioles,Tampa Bay Rays,2,0,Final
+745777,2024-09-06,New York Mets,Cincinnati Reds,6,4,Final
+746912,2024-09-06,Boston Red Sox,Chicago White Sox,3,1,Final
+746016,2024-09-06,Miami Marlins,Philadelphia Phillies,2,16,Final
+747074,2024-09-06,Atlanta Braves,Toronto Blue Jays,3,1,Final
+744967,2024-09-06,Texas Rangers,Los Angeles Angels,1,5,Final
+746343,2024-09-06,Houston Astros,Arizona Diamondbacks,8,0,Final
+746257,2024-09-06,Kansas City Royals,Minnesota Twins,5,0,Final
+745131,2024-09-06,St. Louis Cardinals,Seattle Mariners,1,6,Final
+745611,2024-09-06,Oakland Athletics,Detroit Tigers,7,6,Final
+745371,2024-09-06,San Diego Padres,San Francisco Giants,5,1,Final
+746104,2024-09-06,Los Angeles Dodgers,Cleveland Guardians,1,3,Final
+745455,2024-09-06,Pittsburgh Pirates,Washington Nationals,0,0,Final
+745455,2024-09-07,Pittsburgh Pirates,Washington Nationals,3,5,Final
+745456,2024-09-07,Pittsburgh Pirates,Washington Nationals,6,8,Final
+746829,2024-09-07,Chicago Cubs,New York Yankees,0,2,Final
+746986,2024-09-07,Baltimore Orioles,Tampa Bay Rays,1,7,Final
+745613,2024-09-07,Oakland Athletics,Detroit Tigers,1,2,Final
+746344,2024-09-07,Houston Astros,Arizona Diamondbacks,11,5,Final
+745775,2024-09-07,New York Mets,Cincinnati Reds,4,0,Final
+746018,2024-09-07,Miami Marlins,Philadelphia Phillies,9,5,Final
+744963,2024-09-07,Texas Rangers,Los Angeles Angels,6,4,Final
+745942,2024-09-07,Milwaukee Brewers,Colorado Rockies,5,2,Final
+745125,2024-09-07,St. Louis Cardinals,Seattle Mariners,2,0,Final
+746259,2024-09-07,Kansas City Royals,Minnesota Twins,4,2,Final
+746911,2024-09-07,Boston Red Sox,Chicago White Sox,7,5,Final
+747076,2024-09-07,Atlanta Braves,Toronto Blue Jays,5,9,Final
+745372,2024-09-07,San Diego Padres,San Francisco Giants,3,6,Final
+746099,2024-09-07,Los Angeles Dodgers,Cleveland Guardians,7,2,Final
+746989,2024-09-08,Baltimore Orioles,Tampa Bay Rays,0,2,Final
+745453,2024-09-08,Pittsburgh Pirates,Washington Nationals,7,3,Final
+747072,2024-09-08,Atlanta Braves,Toronto Blue Jays,4,3,Final
+746910,2024-09-08,Boston Red Sox,Chicago White Sox,2,7,Final
+745774,2024-09-08,New York Mets,Cincinnati Reds,1,3,Final
+746017,2024-09-08,Miami Marlins,Philadelphia Phillies,10,1,Final
+746258,2024-09-08,Kansas City Royals,Minnesota Twins,2,0,Final
+745940,2024-09-08,Milwaukee Brewers,Colorado Rockies,1,4,Final
+745128,2024-09-08,St. Louis Cardinals,Seattle Mariners,4,10,Final
+746827,2024-09-08,Chicago Cubs,New York Yankees,2,1,Final
+744965,2024-09-08,Texas Rangers,Los Angeles Angels,7,4,Final
+745616,2024-09-08,Oakland Athletics,Detroit Tigers,1,9,Final
+746098,2024-09-08,Los Angeles Dodgers,Cleveland Guardians,4,0,Final
+745368,2024-09-08,San Diego Padres,San Francisco Giants,6,7,Final
+746345,2024-09-08,Houston Astros,Arizona Diamondbacks,6,12,Final
+745534,2024-09-09,Philadelphia Phillies,Tampa Bay Rays,2,1,Final
+747090,2024-09-09,Atlanta Braves,Cincinnati Reds,0,1,Final
+745454,2024-09-09,Pittsburgh Pirates,Miami Marlins,3,2,Final
+745698,2024-09-09,New York Yankees,Kansas City Royals,10,4,Final
+744888,2024-09-09,Toronto Blue Jays,New York Mets,2,3,Final
+746909,2024-09-09,Boston Red Sox,Baltimore Orioles,12,3,Final
+745860,2024-09-09,Minnesota Twins,Los Angeles Angels,2,6,Final
+746746,2024-09-09,Chicago White Sox,Cleveland Guardians,3,5,Final
+746101,2024-09-09,Los Angeles Dodgers,Chicago Cubs,4,10,Final
+746428,2024-09-10,Detroit Tigers,Colorado Rockies,11,0,Final
+745535,2024-09-10,Philadelphia Phillies,Tampa Bay Rays,9,4,Final
+745446,2024-09-10,Pittsburgh Pirates,Miami Marlins,6,4,Final
+744807,2024-09-10,Washington Nationals,Atlanta Braves,0,12,Final
+745694,2024-09-10,New York Yankees,Kansas City Royals,0,5,Final
+744886,2024-09-10,Toronto Blue Jays,New York Mets,6,2,Final
+746907,2024-09-10,Boston Red Sox,Baltimore Orioles,3,5,Final
+745856,2024-09-10,Minnesota Twins,Los Angeles Angels,10,5,Final
+746747,2024-09-10,Chicago White Sox,Cleveland Guardians,0,5,Final
+745126,2024-09-10,St. Louis Cardinals,Cincinnati Reds,0,3,Final
+746346,2024-09-10,Houston Astros,Oakland Athletics,3,4,Final
+745210,2024-09-10,Seattle Mariners,San Diego Padres,3,7,Final
+747152,2024-09-10,Arizona Diamondbacks,Texas Rangers,6,0,Final
+745291,2024-09-10,San Francisco Giants,Milwaukee Brewers,2,3,Final
+746097,2024-09-10,Los Angeles Dodgers,Chicago Cubs,3,6,Final
+745450,2024-09-11,Pittsburgh Pirates,Miami Marlins,3,1,Final
+746745,2024-09-11,Chicago White Sox,Cleveland Guardians,4,6,Final
+744881,2024-09-11,Toronto Blue Jays,New York Mets,2,6,Final
+747154,2024-09-11,Arizona Diamondbacks,Texas Rangers,14,4,Final
+746425,2024-09-11,Detroit Tigers,Colorado Rockies,7,4,Final
+745525,2024-09-11,Philadelphia Phillies,Tampa Bay Rays,3,2,Final
+744804,2024-09-11,Washington Nationals,Atlanta Braves,5,1,Final
+745697,2024-09-11,New York Yankees,Kansas City Royals,4,3,Final
+746908,2024-09-11,Boston Red Sox,Baltimore Orioles,5,3,Final
+745857,2024-09-11,Minnesota Twins,Los Angeles Angels,6,4,Final
+745127,2024-09-11,St. Louis Cardinals,Cincinnati Reds,2,1,Final
+746342,2024-09-11,Houston Astros,Oakland Athletics,4,5,Final
+745214,2024-09-11,Seattle Mariners,San Diego Padres,5,2,Final
+745285,2024-09-11,San Francisco Giants,Milwaukee Brewers,13,2,Final
+746100,2024-09-11,Los Angeles Dodgers,Chicago Cubs,10,8,Final
+746427,2024-09-12,Detroit Tigers,Colorado Rockies,2,4,Final
+745129,2024-09-12,St. Louis Cardinals,Cincinnati Reds,6,1,Final
+746337,2024-09-12,Houston Astros,Oakland Athletics,6,3,Final
+744805,2024-09-12,Washington Nationals,Miami Marlins,3,6,Final
+746591,2024-09-12,Cleveland Guardians,Tampa Bay Rays,2,5,Final
+745695,2024-09-12,New York Yankees,Boston Red Sox,2,1,Final
+745208,2024-09-12,Seattle Mariners,Texas Rangers,4,5,Final
+745288,2024-09-12,San Francisco Giants,Milwaukee Brewers,0,3,Final
+746423,2024-09-13,Detroit Tigers,Baltimore Orioles,1,0,Final
+745447,2024-09-13,Pittsburgh Pirates,Kansas City Royals,3,8,Final
+745529,2024-09-13,Philadelphia Phillies,New York Mets,3,11,Final
+744800,2024-09-13,Washington Nationals,Miami Marlins,4,1,Final
+745696,2024-09-13,New York Yankees,Boston Red Sox,5,4,Final
+744882,2024-09-13,Toronto Blue Jays,St. Louis Cardinals,4,3,Final
+746586,2024-09-13,Cleveland Guardians,Tampa Bay Rays,1,3,Final
+747069,2024-09-13,Atlanta Braves,Los Angeles Dodgers,6,2,Final
+746744,2024-09-13,Chicago White Sox,Oakland Athletics,0,2,Final
+745855,2024-09-13,Minnesota Twins,Cincinnati Reds,4,8,Final
+746509,2024-09-13,Colorado Rockies,Chicago Cubs,9,5,Final
+746181,2024-09-13,Los Angeles Angels,Houston Astros,3,5,Final
+747153,2024-09-13,Arizona Diamondbacks,Milwaukee Brewers,1,2,Final
+745207,2024-09-13,Seattle Mariners,Texas Rangers,5,4,Final
+745286,2024-09-13,San Francisco Giants,San Diego Padres,0,5,Final
+745448,2024-09-14,Pittsburgh Pirates,Kansas City Royals,1,5,Final
+745689,2024-09-14,New York Yankees,Boston Red Sox,1,7,Final
+744884,2024-09-14,Toronto Blue Jays,St. Louis Cardinals,7,2,Final
+745528,2024-09-14,Philadelphia Phillies,New York Mets,6,4,Final
+744803,2024-09-14,Washington Nationals,Miami Marlins,4,1,Final
+746422,2024-09-14,Detroit Tigers,Baltimore Orioles,2,4,Final
+746584,2024-09-14,Cleveland Guardians,Tampa Bay Rays,6,1,Final
+745858,2024-09-14,Minnesota Twins,Cincinnati Reds,1,11,Final
+746740,2024-09-14,Chicago White Sox,Oakland Athletics,7,6,Final
+747070,2024-09-14,Atlanta Braves,Los Angeles Dodgers,10,1,Final
+746508,2024-09-14,Colorado Rockies,Chicago Cubs,6,5,Final
+747148,2024-09-14,Arizona Diamondbacks,Milwaukee Brewers,8,15,Final
+745284,2024-09-14,San Francisco Giants,San Diego Padres,0,8,Final
+746177,2024-09-14,Los Angeles Angels,Houston Astros,3,5,Final
+745209,2024-09-14,Seattle Mariners,Texas Rangers,5,4,Final
+746419,2024-09-15,Detroit Tigers,Baltimore Orioles,4,2,Final
+745852,2024-09-15,Minnesota Twins,Cincinnati Reds,9,2,Final
+745449,2024-09-15,Pittsburgh Pirates,Kansas City Royals,4,3,Final
+745530,2024-09-15,Philadelphia Phillies,New York Mets,2,1,Final
+744801,2024-09-15,Washington Nationals,Miami Marlins,4,3,Final
+745693,2024-09-15,New York Yankees,Boston Red Sox,5,2,Final
+744883,2024-09-15,Toronto Blue Jays,St. Louis Cardinals,3,2,Final
+746585,2024-09-15,Cleveland Guardians,Tampa Bay Rays,2,0,Final
+746741,2024-09-15,Chicago White Sox,Oakland Athletics,4,3,Final
+746506,2024-09-15,Colorado Rockies,Chicago Cubs,2,6,Final
+745287,2024-09-15,San Francisco Giants,San Diego Padres,3,4,Final
+746180,2024-09-15,Los Angeles Angels,Houston Astros,4,6,Final
+745206,2024-09-15,Seattle Mariners,Texas Rangers,7,0,Final
+747151,2024-09-15,Arizona Diamondbacks,Milwaukee Brewers,11,10,Final
+747071,2024-09-15,Atlanta Braves,Los Angeles Dodgers,2,9,Final
+746588,2024-09-16,Cleveland Guardians,Minnesota Twins,4,3,Final
+745773,2024-09-16,New York Mets,Washington Nationals,2,1,Final
+747067,2024-09-16,Atlanta Braves,Los Angeles Dodgers,0,9,Final
+746260,2024-09-16,Kansas City Royals,Detroit Tigers,6,7,Final
+746828,2024-09-16,Chicago Cubs,Oakland Athletics,9,2,Final
+745939,2024-09-16,Milwaukee Brewers,Philadelphia Phillies,6,2,Final
+745130,2024-09-16,St. Louis Cardinals,Pittsburgh Pirates,4,0,Final
+746502,2024-09-16,Colorado Rockies,Arizona Diamondbacks,3,2,Final
+746179,2024-09-16,Los Angeles Angels,Chicago White Sox,4,8,Final
+745367,2024-09-16,San Diego Padres,Houston Astros,3,1,Final
+746987,2024-09-17,Baltimore Orioles,San Francisco Giants,0,10,Final
+746587,2024-09-17,Cleveland Guardians,Minnesota Twins,1,4,Final
+746659,2024-09-17,Cincinnati Reds,Atlanta Braves,6,5,Final
+746015,2024-09-17,Miami Marlins,Los Angeles Dodgers,11,9,Final
+745044,2024-09-17,Tampa Bay Rays,Boston Red Sox,8,3,Final
+745772,2024-09-17,New York Mets,Washington Nationals,10,1,Final
+746261,2024-09-17,Kansas City Royals,Detroit Tigers,1,3,Final
+746830,2024-09-17,Chicago Cubs,Oakland Athletics,3,4,Final
+745935,2024-09-17,Milwaukee Brewers,Philadelphia Phillies,1,5,Final
+745122,2024-09-17,St. Louis Cardinals,Pittsburgh Pirates,3,1,Final
+744961,2024-09-17,Texas Rangers,Toronto Blue Jays,13,8,Final
+746503,2024-09-17,Colorado Rockies,Arizona Diamondbacks,8,2,Final
+746176,2024-09-17,Los Angeles Angels,Chicago White Sox,5,0,Final
+745366,2024-09-17,San Diego Padres,Houston Astros,3,4,Final
+745205,2024-09-17,Seattle Mariners,New York Yankees,2,11,Final
+746831,2024-09-18,Chicago Cubs,Oakland Athletics,3,5,Final
+746500,2024-09-18,Colorado Rockies,Arizona Diamondbacks,4,9,Final
+746172,2024-09-18,Los Angeles Angels,Chicago White Sox,4,3,Final
+746988,2024-09-18,Baltimore Orioles,San Francisco Giants,3,5,Final
+745365,2024-09-18,San Diego Padres,Houston Astros,4,0,Final
+746582,2024-09-18,Cleveland Guardians,Minnesota Twins,5,4,Final
+746662,2024-09-18,Cincinnati Reds,Atlanta Braves,1,7,Final
+746014,2024-09-18,Miami Marlins,Los Angeles Dodgers,4,8,Final
+745040,2024-09-18,Tampa Bay Rays,Boston Red Sox,1,2,Final
+745771,2024-09-18,New York Mets,Washington Nationals,10,0,Final
+746254,2024-09-18,Kansas City Royals,Detroit Tigers,2,4,Final
+745933,2024-09-18,Milwaukee Brewers,Philadelphia Phillies,2,1,Final
+745121,2024-09-18,St. Louis Cardinals,Pittsburgh Pirates,10,5,Final
+744959,2024-09-18,Texas Rangers,Toronto Blue Jays,2,0,Final
+745199,2024-09-18,Seattle Mariners,New York Yankees,1,2,Final
+746985,2024-09-19,Baltimore Orioles,San Francisco Giants,5,3,Final
+746579,2024-09-19,Cleveland Guardians,Minnesota Twins,3,2,Final
+746663,2024-09-19,Cincinnati Reds,Atlanta Braves,3,15,Final
+744962,2024-09-19,Texas Rangers,Toronto Blue Jays,0,4,Final
+745204,2024-09-19,Seattle Mariners,New York Yankees,3,2,Final
+746011,2024-09-19,Miami Marlins,Los Angeles Dodgers,4,20,Final
+745041,2024-09-19,Tampa Bay Rays,Boston Red Sox,2,0,Final
+745120,2024-09-19,St. Louis Cardinals,Pittsburgh Pirates,2,3,Final
+745769,2024-09-19,New York Mets,Philadelphia Phillies,10,6,Final
+745937,2024-09-19,Milwaukee Brewers,Arizona Diamondbacks,1,5,Final
+746823,2024-09-19,Chicago Cubs,Washington Nationals,7,6,Final
+746341,2024-09-19,Houston Astros,Los Angeles Angels,3,1,Final
+746824,2024-09-20,Chicago Cubs,Washington Nationals,3,1,Final
+746661,2024-09-20,Cincinnati Reds,Pittsburgh Pirates,8,3,Final
+745043,2024-09-20,Tampa Bay Rays,Toronto Blue Jays,1,0,Final
+746984,2024-09-20,Baltimore Orioles,Detroit Tigers,7,1,Final
+746905,2024-09-20,Boston Red Sox,Minnesota Twins,2,4,Final
+745770,2024-09-20,New York Mets,Philadelphia Phillies,2,12,Final
+746013,2024-09-20,Miami Marlins,Atlanta Braves,4,3,Final
+744960,2024-09-20,Texas Rangers,Seattle Mariners,2,8,Final
+746340,2024-09-20,Houston Astros,Los Angeles Angels,9,7,Final
+746256,2024-09-20,Kansas City Royals,San Francisco Giants,1,2,Final
+745934,2024-09-20,Milwaukee Brewers,Arizona Diamondbacks,4,7,Final
+745123,2024-09-20,St. Louis Cardinals,Cleveland Guardians,1,5,Final
+745364,2024-09-20,San Diego Padres,Chicago White Sox,3,2,Final
+745606,2024-09-20,Oakland Athletics,New York Yankees,2,4,Final
+746094,2024-09-20,Los Angeles Dodgers,Colorado Rockies,6,4,Final
+746660,2024-09-21,Cincinnati Reds,Pittsburgh Pirates,7,1,Final
+746826,2024-09-21,Chicago Cubs,Washington Nationals,1,5,Final
+746983,2024-09-21,Baltimore Orioles,Detroit Tigers,4,6,Final
+745038,2024-09-21,Tampa Bay Rays,Toronto Blue Jays,3,2,Final
+745768,2024-09-21,New York Mets,Philadelphia Phillies,6,3,Final
+746012,2024-09-21,Miami Marlins,Atlanta Braves,2,6,Final
+746255,2024-09-21,Kansas City Royals,San Francisco Giants,0,9,Final
+744958,2024-09-21,Texas Rangers,Seattle Mariners,4,8,Final
+746338,2024-09-21,Houston Astros,Los Angeles Angels,10,4,Final
+745936,2024-09-21,Milwaukee Brewers,Arizona Diamondbacks,0,5,Final
+745124,2024-09-21,St. Louis Cardinals,Cleveland Guardians,6,5,Final
+745360,2024-09-21,San Diego Padres,Chicago White Sox,6,2,Final
+745610,2024-09-21,Oakland Athletics,New York Yankees,0,10,Final
+746096,2024-09-21,Los Angeles Dodgers,Colorado Rockies,3,6,Final
+746906,2024-09-21,Boston Red Sox,Minnesota Twins,0,0,Final
+746903,2024-09-22,Boston Red Sox,Minnesota Twins,8,1,Final
+746906,2024-09-22,Boston Red Sox,Minnesota Twins,9,3,Final
+746657,2024-09-22,Cincinnati Reds,Pittsburgh Pirates,0,2,Final
+746982,2024-09-22,Baltimore Orioles,Detroit Tigers,3,4,Final
+745036,2024-09-22,Tampa Bay Rays,Toronto Blue Jays,4,3,Final
+746010,2024-09-22,Miami Marlins,Atlanta Braves,4,5,Final
+746339,2024-09-22,Houston Astros,Los Angeles Angels,8,9,Final
+746253,2024-09-22,Kansas City Royals,San Francisco Giants,0,2,Final
+745929,2024-09-22,Milwaukee Brewers,Arizona Diamondbacks,10,9,Final
+745118,2024-09-22,St. Louis Cardinals,Cleveland Guardians,2,1,Final
+746825,2024-09-22,Chicago Cubs,Washington Nationals,5,0,Final
+744955,2024-09-22,Texas Rangers,Seattle Mariners,6,5,Final
+745608,2024-09-22,Oakland Athletics,New York Yankees,4,7,Final
+746092,2024-09-22,Los Angeles Dodgers,Colorado Rockies,6,5,Final
+745358,2024-09-22,San Diego Padres,Chicago White Sox,4,2,Final
+745767,2024-09-22,New York Mets,Philadelphia Phillies,2,1,Final
+745527,2024-09-23,Philadelphia Phillies,Chicago Cubs,6,2,Final
+744885,2024-09-23,Toronto Blue Jays,Boston Red Sox,1,4,Final
+746334,2024-09-23,Houston Astros,Seattle Mariners,1,6,Final
+747150,2024-09-23,Arizona Diamondbacks,San Francisco Giants,3,6,Final
+746421,2024-09-24,Detroit Tigers,Tampa Bay Rays,2,1,Final
+746581,2024-09-24,Cleveland Guardians,Cincinnati Reds,6,1,Final
+745526,2024-09-24,Philadelphia Phillies,Chicago Cubs,4,10,Final
+745441,2024-09-24,Pittsburgh Pirates,Milwaukee Brewers,2,7,Final
+744802,2024-09-24,Washington Nationals,Kansas City Royals,0,1,Final
+745688,2024-09-24,New York Yankees,Baltimore Orioles,3,5,Final
+744876,2024-09-24,Toronto Blue Jays,Boston Red Sox,5,6,Final
+747068,2024-09-24,Atlanta Braves,New York Mets,5,1,Final
+746743,2024-09-24,Chicago White Sox,Los Angeles Angels,3,2,Final
+745851,2024-09-24,Minnesota Twins,Miami Marlins,1,4,Final
+746336,2024-09-24,Houston Astros,Seattle Mariners,4,3,Final
+746504,2024-09-24,Colorado Rockies,St. Louis Cardinals,3,7,Final
+747149,2024-09-24,Arizona Diamondbacks,San Francisco Giants,0,11,Final
+745605,2024-09-24,Oakland Athletics,Texas Rangers,5,4,Final
+746093,2024-09-24,Los Angeles Dodgers,San Diego Padres,2,4,Final
+746331,2024-09-25,Houston Astros,Seattle Mariners,1,8,Final
+745521,2024-09-25,Philadelphia Phillies,Chicago Cubs,9,6,Final
+746583,2024-09-25,Cleveland Guardians,Cincinnati Reds,5,2,Final
+746420,2024-09-25,Detroit Tigers,Tampa Bay Rays,7,1,Final
+745442,2024-09-25,Pittsburgh Pirates,Milwaukee Brewers,2,1,Final
+744795,2024-09-25,Washington Nationals,Kansas City Royals,0,3,Final
+745690,2024-09-25,New York Yankees,Baltimore Orioles,7,9,Final
+744877,2024-09-25,Toronto Blue Jays,Boston Red Sox,6,1,Final
+746742,2024-09-25,Chicago White Sox,Los Angeles Angels,4,3,Final
+745854,2024-09-25,Minnesota Twins,Miami Marlins,8,3,Final
+746501,2024-09-25,Colorado Rockies,St. Louis Cardinals,2,5,Final
+747144,2024-09-25,Arizona Diamondbacks,San Francisco Giants,8,2,Final
+745607,2024-09-25,Oakland Athletics,Texas Rangers,1,5,Final
+746095,2024-09-25,Los Angeles Dodgers,San Diego Padres,4,3,Final
+747064,2024-09-25,Atlanta Braves,New York Mets,0,0,Final
+745443,2024-09-26,Pittsburgh Pirates,Milwaukee Brewers,2,5,Final
+744796,2024-09-26,Washington Nationals,Kansas City Royals,4,7,Final
+746415,2024-09-26,Detroit Tigers,Tampa Bay Rays,4,3,Final
+746738,2024-09-26,Chicago White Sox,Los Angeles Angels,7,0,Final
+746495,2024-09-26,Colorado Rockies,St. Louis Cardinals,10,8,Final
+745609,2024-09-26,Oakland Athletics,Texas Rangers,3,2,Final
+745691,2024-09-26,New York Yankees,Baltimore Orioles,10,1,Final
+745853,2024-09-26,Minnesota Twins,Miami Marlins,6,8,Final
+746088,2024-09-26,Los Angeles Dodgers,San Diego Padres,7,2,Final
+747139,2024-09-26,Atlanta Braves,New York Mets,0,0,Final
+746822,2024-09-27,Chicago Cubs,Cincinnati Reds,1,0,Final
+746417,2024-09-27,Detroit Tigers,Chicago White Sox,4,1,Final
+744797,2024-09-27,Washington Nationals,Philadelphia Phillies,9,1,Final
+745692,2024-09-27,New York Yankees,Pittsburgh Pirates,2,4,Final
+744879,2024-09-27,Toronto Blue Jays,Miami Marlins,5,15,Final
+746580,2024-09-27,Cleveland Guardians,Houston Astros,2,5,Final
+746904,2024-09-27,Boston Red Sox,Tampa Bay Rays,1,2,Final
+747065,2024-09-27,Atlanta Braves,Kansas City Royals,3,0,Final
+746494,2024-09-27,Colorado Rockies,Los Angeles Dodgers,4,11,Final
+745847,2024-09-27,Minnesota Twins,Baltimore Orioles,2,7,Final
+745930,2024-09-27,Milwaukee Brewers,New York Mets,8,4,Final
+746173,2024-09-27,Los Angeles Angels,Texas Rangers,2,5,Final
+747145,2024-09-27,Arizona Diamondbacks,San Diego Padres,3,5,Final
+745202,2024-09-27,Seattle Mariners,Oakland Athletics,2,0,Final
+745280,2024-09-27,San Francisco Giants,St. Louis Cardinals,3,6,Final
+745685,2024-09-28,New York Yankees,Pittsburgh Pirates,4,9,Final
+746414,2024-09-28,Detroit Tigers,Chicago White Sox,0,4,Final
+746819,2024-09-28,Chicago Cubs,Cincinnati Reds,3,0,Final
+744878,2024-09-28,Toronto Blue Jays,Miami Marlins,1,8,Final
+745281,2024-09-28,San Francisco Giants,St. Louis Cardinals,6,5,Final
+744799,2024-09-28,Washington Nationals,Philadelphia Phillies,6,3,Final
+746902,2024-09-28,Boston Red Sox,Tampa Bay Rays,2,7,Final
+746578,2024-09-28,Cleveland Guardians,Houston Astros,3,4,Final
+745849,2024-09-28,Minnesota Twins,Baltimore Orioles,2,9,Final
+745931,2024-09-28,Milwaukee Brewers,New York Mets,6,0,Final
+747066,2024-09-28,Atlanta Braves,Kansas City Royals,2,1,Final
+746499,2024-09-28,Colorado Rockies,Los Angeles Dodgers,2,13,Final
+747146,2024-09-28,Arizona Diamondbacks,San Diego Padres,0,5,Final
+746171,2024-09-28,Los Angeles Angels,Texas Rangers,8,9,Final
+745203,2024-09-28,Seattle Mariners,Oakland Athletics,7,6,Final
+745282,2024-09-29,San Francisco Giants,St. Louis Cardinals,1,6,Final
+746901,2024-09-29,Boston Red Sox,Tampa Bay Rays,3,1,Final
+744798,2024-09-29,Washington Nationals,Philadelphia Phillies,3,6,Final
+745686,2024-09-29,New York Yankees,Pittsburgh Pirates,6,4,Final
+746174,2024-09-29,Los Angeles Angels,Texas Rangers,0,8,Final
+744880,2024-09-29,Toronto Blue Jays,Miami Marlins,1,3,Final
+746496,2024-09-29,Colorado Rockies,Los Angeles Dodgers,1,2,Final
+747147,2024-09-29,Arizona Diamondbacks,San Diego Padres,11,2,Final
+745201,2024-09-29,Seattle Mariners,Oakland Athletics,6,4,Final
+745846,2024-09-29,Minnesota Twins,Baltimore Orioles,2,6,Final
+746416,2024-09-29,Detroit Tigers,Chicago White Sox,5,9,Final
+745932,2024-09-29,Milwaukee Brewers,New York Mets,0,5,Final
+746820,2024-09-29,Chicago Cubs,Cincinnati Reds,0,3,Final
+747061,2024-09-29,Atlanta Braves,Kansas City Royals,2,4,Final
+746577,2024-09-29,Cleveland Guardians,Houston Astros,0,0,Final
+747139,2024-09-30,Atlanta Braves,New York Mets,7,8,Final
+747064,2024-09-30,Atlanta Braves,New York Mets,3,0,Final
+775345,2024-10-01,Houston Astros,Detroit Tigers,1,3,Final
+775343,2024-10-01,Baltimore Orioles,Kansas City Royals,0,1,Final
+775340,2024-10-01,Milwaukee Brewers,New York Mets,4,8,Final
+775333,2024-10-01,San Diego Padres,Atlanta Braves,4,0,Final
+775344,2024-10-02,Houston Astros,Detroit Tigers,2,5,Final
+775341,2024-10-02,Baltimore Orioles,Kansas City Royals,1,2,Final
+775339,2024-10-02,Milwaukee Brewers,New York Mets,5,3,Final
+775336,2024-10-02,San Diego Padres,Atlanta Braves,5,4,Final
+775337,2024-10-03,Milwaukee Brewers,New York Mets,2,4,Final
+775324,2024-10-05,Cleveland Guardians,Detroit Tigers,7,0,Final
+775318,2024-10-05,Philadelphia Phillies,New York Mets,2,6,Final
+775334,2024-10-05,New York Yankees,Kansas City Royals,6,5,Final
+775323,2024-10-05,Los Angeles Dodgers,San Diego Padres,7,5,Final

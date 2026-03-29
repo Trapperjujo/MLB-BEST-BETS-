@@ -30,14 +30,25 @@ def calculate_elo_probability(home_elo: int, away_elo: int, hfa: int = 24, adjus
     """
     Calculates the home win probability with adjustments:
     - hfa: Home Field Advantage constant.
-    - adjustments: dict like {'home': -20, 'away': -5} for injuries/fatigue.
+    - adjustments: dict like {'home': -20, 'away': -5} for injuries/fatigue,
+      and NEW: 'lineup_war_diff' for player-level strength.
     """
     h_adj = adjustments.get('home', 0) if adjustments else 0
     a_adj = adjustments.get('away', 0) if adjustments else 0
+    war_diff_adj = adjustments.get('lineup_war_diff', 0) if adjustments else 0
     
-    elo_diff = (away_elo + a_adj) - (home_elo + h_adj + hfa)
+    # 1 WAR is roughly equivalent to 6.25 Elo points in a 162-game season
+    elo_diff = (away_elo + a_adj) - (home_elo + h_adj + hfa + war_diff_adj)
     probability = 1.0 / (1.0 + math.pow(10.0, elo_diff / 400.0))
     return probability
+
+def calculate_war_elo_adjustment(team_war: float, opp_war: float) -> float:
+    """
+    Converts a WAR differential into an Elo-equivalent adjustment.
+    Standard: 1 WAR = ~6.25 Elo points.
+    """
+    war_diff = team_war - opp_war
+    return war_diff * 6.25
 
 def calculate_sport_select_ev(model_prob: float, market_decimal_odds: float, reduction: float = 0.91) -> float:
     """

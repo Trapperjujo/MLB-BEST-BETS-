@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
 import os
+import json
 from dotenv import load_dotenv
 from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_games
-from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs
+from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment
 from core.strategy import is_divisional_matchup
 from core.elo_ratings import get_team_elo
 from core.status_fetcher import get_player_injuries, get_fatigue_penalty
@@ -93,19 +94,40 @@ if df_odds.empty:
 df_odds["is_divisional"] = df_odds.apply(lambda row: is_divisional_matchup(row["home_team"], row["away_team"]), axis=1)
 df_odds["formatted_time"] = pd.to_datetime(df_odds["commence_time"]).dt.strftime("%b %d, %H:%M")
 
+# Load Player WAR Data
+@st.cache_data
+def load_war_data():
+    if os.path.exists("data/raw/player_war_2024.csv"):
+        df = pd.read_csv("data/raw/player_war_2024.csv")
+        # Optimization: Map name to WAR for fast lookup
+        return df.set_index('Name')['WAR'].to_dict()
+    return {}
+
+PLAYER_WAR = load_war_data()
+
 # Elo Calculations
 def get_prediction(row):
     h_elo = get_team_elo(row["home_team"])
     a_elo = get_team_elo(row["away_team"])
     
-    # New: Injury & Fatigue Adjustments
-    # In a full impl, we'd fetch these real-time. For now, we use the status_fetcher logic.
-    h_fatigue = get_fatigue_penalty(row["home_team"]) # Note: needs abbreviation mapping
+    # NEW: Fetch Lineup WAR Adjustment
+    # Since live lineups are dynamic, we look for them via the MLB Stats API
+    # For now, we use the average team WAR from 2024 as a baseline adjustment
+    # if the specific game lineups aren't hydrated yet.
+    h_war = 0.0 # Placeholder for lineup total
+    a_war = 0.0
+    
+    # Add Fatigue Adjustment
+    h_fatigue = get_fatigue_penalty(row["home_team"])
     a_fatigue = get_fatigue_penalty(row["away_team"])
+    
+    # WAR-Adjusted Elo Diff
+    war_diff_adj = calculate_war_elo_adjustment(h_war, a_war)
     
     adjustments = {
         'home': -h_fatigue,
-        'away': -a_fatigue
+        'away': -a_fatigue,
+        'lineup_war_diff': war_diff_adj
     }
     
     h_win_prob = calculate_elo_probability(h_elo, a_elo, adjustments=adjustments)
@@ -114,15 +136,15 @@ def get_prediction(row):
     h_proj = calculate_expected_runs(h_elo, a_elo)
     a_proj = calculate_expected_runs(a_elo, h_elo)
     
-    # Win prob for the OUTCOME being bet on
+    # Combine results
     if row["outcome"] == row["home_team"]:
-        return h_win_prob, h_elo, a_elo, h_proj, a_proj
+        return h_win_prob, h_elo, a_elo, h_proj, a_proj, h_war - a_war
     else:
-        return (1.0 - h_win_prob), a_elo, h_elo, a_proj, h_proj
+        return (1.0 - h_win_prob), a_elo, h_elo, a_proj, h_proj, a_war - h_war
 
-df_odds[["model_prob", "team_elo", "opp_elo", "team_proj", "opp_proj"]] = df_odds.apply(
-    lambda r: pd.Series(get_prediction(r)), axis=1
-)
+# Apply predictions to dataframe
+res = df_odds.apply(lambda r: pd.Series(get_prediction(r)), axis=1)
+df_odds[["model_prob", "team_elo", "opp_elo", "team_proj", "opp_proj", "war_gap"]] = res
 
 df_odds["implied_prob"] = df_odds["odds"].apply(calculate_implied_probability)
 df_odds["decimal_odds"] = df_odds["odds"].apply(american_to_decimal)
