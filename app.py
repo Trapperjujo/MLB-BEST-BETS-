@@ -108,6 +108,8 @@ def get_prediction(row):
         'away': -a_fatigue
     }
     
+    h_win_prob = calculate_elo_probability(h_elo, a_elo, adjustments=adjustments)
+    
     # Projected Scores
     h_proj = calculate_expected_runs(h_elo, a_elo)
     a_proj = calculate_expected_runs(a_elo, h_elo)
