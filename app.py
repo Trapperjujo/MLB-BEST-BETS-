@@ -652,10 +652,53 @@ with tab2:
     leaders_map = st.session_state.get("df_leaders_2026", {})
     if leaders_map:
         l_tabs = st.tabs(["🔥 Home Runs", "🎯 Batting Avg", "⚾ ERA", "🏆 Wins"])
-        with l_tabs[0]: st.table(leaders_map.get("homeRuns"))
-        with l_tabs[1]: st.table(leaders_map.get("battingAverage"))
-        with l_tabs[2]: st.table(leaders_map.get("earnedRunAverage"))
-        with l_tabs[3]: st.table(leaders_map.get("wins"))
+        with l_tabs[0]:
+            st.info("🔥 **Home Runs (HR)**: The total number of times a batter hits the ball and circles all bases without an error. A primary measure of raw power.")
+            st.markdown("""
+            | Column | Definition |
+            | :--- | :--- |
+            | **Rank** | Player's standing compared to the rest of the league. |
+            | **Name** | Professional athlete's identity. |
+            | **Team** | Current MLB franchise affiliation. |
+            | **Value** | Total Home Runs recorded in the 2026 season. |
+            """)
+            st.table(leaders_map.get("homeRuns"))
+            
+        with l_tabs[1]:
+            st.info("🎯 **Batting Average (AVG)**: Calculated by dividing hits by at-bats. It measures a player's ability to safely reach base via a hit.")
+            st.markdown("""
+            | Column | Definition |
+            | :--- | :--- |
+            | **Rank** | Player's standing compared to the rest of the league. |
+            | **Name** | Professional athlete's identity. |
+            | **Team** | Current MLB franchise affiliation. |
+            | **Value** | Hits per At-Bat (e.g., .300 means a 30% success rate). |
+            """)
+            st.table(leaders_map.get("battingAverage"))
+            
+        with l_tabs[2]:
+            st.info("⚾ **Earned Run Average (ERA)**: The average number of earned runs a pitcher allows per nine innings pitched. **Lower is better.**")
+            st.markdown("""
+            | Column | Definition |
+            | :--- | :--- |
+            | **Rank** | Pitcher's standing compared to the rest of the league. |
+            | **Name** | Professional athlete's identity. |
+            | **Team** | Current MLB franchise affiliation. |
+            | **Value** | Average runs allowed per 9 innings (e.g., 2.50 is elite). |
+            """)
+            st.table(leaders_map.get("earnedRunAverage"))
+            
+        with l_tabs[3]:
+            st.info("🏆 **Pitching Wins (W)**: Credited to the pitcher who is in the game when their team takes the lead for good. Measures overall team success while that pitcher is on the mound.")
+            st.markdown("""
+            | Column | Definition |
+            | :--- | :--- |
+            | **Rank** | Pitcher's standing compared to the rest of the league. |
+            | **Name** | Professional athlete's identity. |
+            | **Team** | Current MLB franchise affiliation. |
+            | **Value** | Total games won as the pitcher of record in 2026. |
+            """)
+            st.table(leaders_map.get("wins"))
     else:
         st.info("Leaderboard data currently unavailable.")
 
