@@ -258,14 +258,14 @@ def fetch_master_data():
         df_final["ev"] = df_final.apply(lambda row: calculate_ev(row["model_prob"], row["decimal_odds"]), axis=1)
         df_final["ss_ev"] = df_final.apply(lambda row: calculate_sport_select_ev(row["model_prob"], row["decimal_odds"], reduction_factor), axis=1)
         
-        # Kelly only for real odds or for high-confidence simulations
-        df_final.loc[has_odds, "kelly_stake"] = df_final[has_odds].apply(lambda row: kelly_criterion(row["model_prob"], row["decimal_odds"], fractional_kelly) * bankroll, axis=1)
+        # Kelly for all rows (Real Odds vs Simulation)
+        df_final["kelly_stake"] = df_final.apply(lambda row: kelly_criterion(row["model_prob"], row["decimal_odds"], fractional_kelly) * bankroll, axis=1)
         
         # Apply Max Stake Cap (3% as per Qwen strategy)
         cap_val = bankroll * MAX_STAKE_CAP
-        df_final.loc[has_odds, "kelly_stake"] = df_final.loc[has_odds, "kelly_stake"].clip(upper=cap_val)
+        df_final["kelly_stake"] = df_final["kelly_stake"].clip(lower=0, upper=cap_val)
         
-        df_final.loc[has_odds, "potential_profit"] = df_final["kelly_stake"] * (df_final["decimal_odds"] - 1.0)
+        df_final["potential_profit"] = df_final["kelly_stake"] * (df_final["decimal_odds"] - 1.0)
         
         # Upset Score: High model prob for teams with low implied prob (underdogs)
         # For simulation mode (no odds), we use Elo proximity as proxy
@@ -371,6 +371,8 @@ for idx, row in df_sched_view.iterrows():
 <div style='font-size: 0.7rem; color: var(--text-secondary);'>PREDICTED WINNER</div>
 <div style='font-size: 1.2rem; font-weight: 900; color: #fff;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
 <div style='font-size: 0.7rem; color: var(--neon-blue); margin-top: 5px;'>ML confidence: {row['xg_conf']*100:.0f}%</div>
+<div style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
+<div style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>
 </div>
 <div>
 <div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
@@ -380,29 +382,10 @@ for idx, row in df_sched_view.iterrows():
 <div style='font-size: 0.9rem;'>Proj: {row['home_proj']:.1f} runs</div>
 </div>
 </div>
-"""
-        # Append Risk Guidance if applicable
-        if best_bet["ev"] >= min_edge and best_bet["data_type"] == "💎 Market Alpha":
-            card_html += f"""
-<div style='margin-top: 20px; padding: 15px; background: rgba(57, 255, 20, 0.05); border-left: 4px solid var(--neon-green); border-radius: 4px;'>
-<div style='display: flex; justify-content: space-between;'>
-<div>
-<div style='font-size: 0.7rem; color: var(--text-secondary);'>SUGGESTED WAGER ({kelly_mode})</div>
-<div style='font-size: 1.3rem; font-weight: 800; color: var(--neon-green);'>${best_bet['kelly_stake']:,.2f} CAD</div>
-</div>
-<div style='text-align: right;'>
-<div style='font-size: 0.7rem; color: var(--text-secondary);'>EST. PROFIT</div>
-<div style='font-size: 1.3rem; font-weight: 800; color: #fff;'>+${best_bet['potential_profit']:,.2f}</div>
-</div>
-</div>
-<div style='font-size: 0.7rem; color: var(--text-secondary); margin-top: 10px;'>
-Target: {best_bet['outcome']} @ {best_bet['odds']} ({best_bet['bookmaker']})
-</div>
 </div>
 """
         
-        # Close the neon-card div
-        card_html += "</div>"
+        # Details view in expander
         
         # Render the full card
         st.markdown(card_html, unsafe_allow_html=True)
