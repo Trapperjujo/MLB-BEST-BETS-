@@ -26,14 +26,38 @@ def calculate_implied_probability(american_odds: int) -> float:
     else:
         return abs(american_odds) / (abs(american_odds) + 100.0)
 
-def calculate_elo_probability(home_elo: int, away_elo: int, hfa: int = 24) -> float:
+def calculate_elo_probability(home_elo: int, away_elo: int, hfa: int = 24, adjustments: dict = None) -> float:
     """
-    Calculates the home win probability using the Elo formula.
-    P(Home Win) = 1 / (1 + 10^((AwayElo - (HomeElo + HFA)) / 400))
+    Calculates the home win probability with adjustments:
+    - hfa: Home Field Advantage constant.
+    - adjustments: dict like {'home': -20, 'away': -5} for injuries/fatigue.
     """
-    elo_diff = away_elo - (home_elo + hfa)
+    h_adj = adjustments.get('home', 0) if adjustments else 0
+    a_adj = adjustments.get('away', 0) if adjustments else 0
+    
+    elo_diff = (away_elo + a_adj) - (home_elo + h_adj + hfa)
     probability = 1.0 / (1.0 + math.pow(10.0, elo_diff / 400.0))
     return probability
+
+def calculate_sport_select_ev(model_prob: float, market_decimal_odds: float, reduction: float = 0.91) -> float:
+    """
+    Calculates EV Specifically for Sport Select (WCLC).
+    Sport Select Odds = Market Odds * Reduction
+    """
+    # Note: If the user is using PROLINE 3-way, this would need adjusting.
+    # For now, we use the 0.91 derived factor for Point Spreads.
+    ss_odds = market_decimal_odds * reduction
+    return (model_prob * ss_odds) - 1.0
+
+def calculate_expected_runs(elo: int, opp_elo: int, base_runs: float = 4.48) -> float:
+    """
+    Predicts expected runs for a team based on Elo ratings.
+    Uses the 1500 baseline (average) as base_runs.
+    """
+    elo_diff = elo - opp_elo
+    # Every 100 Elo points ~ 10-15% run variation
+    run_multiplier = 10**(elo_diff / 800.0)
+    return base_runs * run_multiplier
 
 def calculate_ev(model_prob: float, decimal_odds: float) -> float:
     """Calculates Expected Value (EV) percentage."""

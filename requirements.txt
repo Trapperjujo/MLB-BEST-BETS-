@@ -6,5 +6,6 @@ plotly
 numpy
 scipy
 yfinance
+pybaseball
 beautifulsoup4
 lxml
