@@ -1,0 +1,485 @@
+{
+    "metadata": {
+        "total_games": 5321,
+        "last_updated": "2026-03-29",
+        "seasons": [
+            2024,
+            2025,
+            2026
+        ]
+    },
+    "team_matrix": {
+        "American League All-Stars": {
+            "overall_win_rate": 0.5,
+            "home_advantage": 0.5,
+            "avg_runs_scored": 5.5
+        },
+        "Arizona Diamondbacks": {
+            "overall_win_rate": 0.5142691990090834,
+            "home_advantage": 0.03142857142857147,
+            "avg_runs_scored": 5.183253509496284
+        },
+        "Athletics": {
+            "overall_win_rate": 0.4656311962987442,
+            "home_advantage": -0.02941176470588236,
+            "avg_runs_scored": 4.59960343688037
+        },
+        "Atlanta Braves": {
+            "overall_win_rate": 0.4930171884591774,
+            "home_advantage": 0.013812154696132617,
+            "avg_runs_scored": 4.266820135052179
+        },
+        "Baltimore Orioles": {
+            "overall_win_rate": 0.5,
+            "home_advantage": 0.0,
+            "avg_runs_scored": 4.3914503422446085
+        },
+        "Boston Red Sox": {
+            "overall_win_rate": 0.50991937531742,
+            "home_advantage": 0.017045454545454586,
+            "avg_runs_scored": 4.616635982732351
+        },
+        "Chicago Cubs": {
+            "overall_win_rate": 0.5184529828109201,
+            "home_advantage": 0.05434782608695654,
+            "avg_runs_scored": 4.679726996966632
+        },
+        "Chicago White Sox": {
+            "overall_win_rate": 0.3003875968992248,
+            "home_advantage": -0.16666666666666669,
+            "avg_runs_scored": 3.5056332939166994
+        },
+        "Cincinnati Reds": {
+            "overall_win_rate": 0.4786691063174114,
+            "home_advantage": 0.008474576271186418,
+            "avg_runs_scored": 4.333862994350282
+        },
+        "Cleveland Guardians": {
+            "overall_win_rate": 0.5387992831541218,
+            "home_advantage": 0.07222222222222219,
+            "avg_runs_scored": 4.147222222222222
+        },
+        "Colorado Rockies": {
+            "overall_win_rate": 0.32608411703239293,
+            "home_advantage": -0.10919540229885055,
+            "avg_runs_scored": 3.9328957680250785
+        },
+        "Dayton Dragons": {
+            "overall_win_rate": 0.75,
+            "home_advantage": 0.0,
+            "avg_runs_scored": NaN
+        },
+        "Detroit Tigers": {
+            "overall_win_rate": 0.5194634247345224,
+            "home_advantage": 0.031073446327683607,
+            "avg_runs_scored": 4.327180761380779
+        },
+        "Diablos Rojos del Mexico": {
+            "overall_win_rate": 0.75,
+            "home_advantage": 0.5,
+            "avg_runs_scored": NaN
+        },
+        "Houston Astros": {
+            "overall_win_rate": 0.5401618512573569,
+            "home_advantage": 0.050561797752809,
+            "avg_runs_scored": 4.487459871589085
+        },
+        "Kansas City Royals": {
+            "overall_win_rate": 0.5022883295194508,
+            "home_advantage": 0.02631578947368418,
+            "avg_runs_scored": 4.174882405288583
+        },
+        "Los Angeles Angels": {
+            "overall_win_rate": 0.4148739495798319,
+            "home_advantage": -0.05882352941176472,
+            "avg_runs_scored": 4.02672268907563
+        },
+        "Los Angeles Dodgers": {
+            "overall_win_rate": 0.5937010434217138,
+            "home_advantage": 0.14550264550264547,
+            "avg_runs_scored": 5.118323431172593
+        },
+        "Memphis Redbirds": {
+            "overall_win_rate": 0.25,
+            "home_advantage": -0.5,
+            "avg_runs_scored": NaN
+        },
+        "Miami Marlins": {
+            "overall_win_rate": 0.44323359401564094,
+            "home_advantage": -0.06647398843930635,
+            "avg_runs_scored": 4.102992179530772
+        },
+        "Milwaukee Brewers": {
+            "overall_win_rate": 0.5691688015062193,
+            "home_advantage": 0.1187845303867403,
+            "avg_runs_scored": 4.852850396617179
+        },
+        "Minnesota Twins": {
+            "overall_win_rate": 0.4576271186440678,
+            "home_advantage": -0.002824858757062121,
+            "avg_runs_scored": 4.307909604519773
+        },
+        "National League All-Stars": {
+            "overall_win_rate": 0.5,
+            "home_advantage": 0.5,
+            "avg_runs_scored": 5.0
+        },
+        "New York Mets": {
+            "overall_win_rate": 0.5096816345925398,
+            "home_advantage": 0.06284153005464477,
+            "avg_runs_scored": 4.624420883820385
+        },
+        "New York Yankees": {
+            "overall_win_rate": 0.5672351495880907,
+            "home_advantage": 0.072972972972973,
+            "avg_runs_scored": 5.026044226044226
+        },
+        "Northwest Arkansas Naturals": {
+            "overall_win_rate": 0.25,
+            "home_advantage": -0.5,
+            "avg_runs_scored": NaN
+        },
+        "Oakland Athletics": {
+            "overall_win_rate": 0.4316526610644258,
+            "home_advantage": -0.017647058823529405,
+            "avg_runs_scored": 3.969817927170868
+        },
+        "Philadelphia Phillies": {
+            "overall_win_rate": 0.5587086324080544,
+            "home_advantage": 0.13186813186813184,
+            "avg_runs_scored": 4.700279489296831
+        },
+        "Pittsburgh Pirates": {
+            "overall_win_rate": 0.4393232599803941,
+            "home_advantage": 0.0029239766081871066,
+            "avg_runs_scored": 3.7455295270932627
+        },
+        "Sacramento River Cats": {
+            "overall_win_rate": 1.0,
+            "home_advantage": 0.5,
+            "avg_runs_scored": 4.0
+        },
+        "San Diego Padres": {
+            "overall_win_rate": 0.5480710250201776,
+            "home_advantage": 0.08757062146892658,
+            "avg_runs_scored": 4.432090395480226
+        },
+        "San Francisco Giants": {
+            "overall_win_rate": 0.4994983948635634,
+            "home_advantage": 0.016853932584269704,
+            "avg_runs_scored": 4.356574371321562
+        },
+        "Seattle Mariners": {
+            "overall_win_rate": 0.5340718997569674,
+            "home_advantage": 0.09887005649717517,
+            "avg_runs_scored": 4.536849414512515
+        },
+        "Springfield Cardinals": {
+            "overall_win_rate": 0.25,
+            "home_advantage": -0.5,
+            "avg_runs_scored": NaN
+        },
+        "St. Louis Cardinals": {
+            "overall_win_rate": 0.48762061960385983,
+            "home_advantage": 0.022727272727272707,
+            "avg_runs_scored": 4.073149441340782
+        },
+        "Sugar Land Space Cowboys": {
+            "overall_win_rate": 0.41666666666666663,
+            "home_advantage": 0.0,
+            "avg_runs_scored": NaN
+        },
+        "Sultanes de Monterrey": {
+            "overall_win_rate": 0.0,
+            "home_advantage": -0.5,
+            "avg_runs_scored": 2.5
+        },
+        "Tampa Bay Rays": {
+            "overall_win_rate": 0.478575800856968,
+            "home_advantage": 0.00887573964497046,
+            "avg_runs_scored": 4.077263143576141
+        },
+        "Texas Rangers": {
+            "overall_win_rate": 0.4842720795805888,
+            "home_advantage": 0.05813953488372092,
+            "avg_runs_scored": 4.164891114397096
+        },
+        "Toronto Blue Jays": {
+            "overall_win_rate": 0.5268586162440911,
+            "home_advantage": 0.09217877094972071,
+            "avg_runs_scored": 4.5896463871324205
+        },
+        "Washington Nationals": {
+            "overall_win_rate": 0.4085714285714286,
+            "home_advantage": -0.08285714285714285,
+            "avg_runs_scored": 4.054285714285714
+        },
+        "Washington Nationals Prospects": {
+            "overall_win_rate": 0.25,
+            "home_advantage": 0.0,
+            "avg_runs_scored": NaN
+        }
+    },
+    "elite_pitchers": [
+        {
+            "pitcher": "Brandon Woodruff",
+            "games": 12.0,
+            "win_rate": 0.8333333333333334
+        },
+        {
+            "pitcher": "Eric Lauer",
+            "games": 16.0,
+            "win_rate": 0.8125
+        },
+        {
+            "pitcher": "Shane Bieber",
+            "games": 14.0,
+            "win_rate": 0.7857142857142857
+        },
+        {
+            "pitcher": "Jason Alexander",
+            "games": 13.0,
+            "win_rate": 0.7692307692307693
+        },
+        {
+            "pitcher": "Jackson Jobe",
+            "games": 12.0,
+            "win_rate": 0.75
+        },
+        {
+            "pitcher": "Cade Cavalli",
+            "games": 12.0,
+            "win_rate": 0.75
+        },
+        {
+            "pitcher": "DL Hall",
+            "games": 11.0,
+            "win_rate": 0.7272727272727273
+        },
+        {
+            "pitcher": "Hunter Dobbins",
+            "games": 11.0,
+            "win_rate": 0.7272727272727273
+        },
+        {
+            "pitcher": "Grayson Rodriguez",
+            "games": 21.0,
+            "win_rate": 0.7142857142857143
+        },
+        {
+            "pitcher": "Clayton Kershaw",
+            "games": 29.0,
+            "win_rate": 0.6896551724137931
+        },
+        {
+            "pitcher": "Michael McGreevy",
+            "games": 22.0,
+            "win_rate": 0.6818181818181818
+        },
+        {
+            "pitcher": "James Paxton",
+            "games": 22.0,
+            "win_rate": 0.6818181818181818
+        },
+        {
+            "pitcher": "Ronel Blanco",
+            "games": 40.0,
+            "win_rate": 0.675
+        },
+        {
+            "pitcher": "Luis Gil",
+            "games": 46.0,
+            "win_rate": 0.6739130434782609
+        },
+        {
+            "pitcher": "Cooper Criswell",
+            "games": 21.0,
+            "win_rate": 0.6666666666666666
+        },
+        {
+            "pitcher": "Jos\u00e9 Berr\u00edos",
+            "games": 63.0,
+            "win_rate": 0.6666666666666666
+        },
+        {
+            "pitcher": "Blake Snell",
+            "games": 36.0,
+            "win_rate": 0.6666666666666666
+        },
+        {
+            "pitcher": "Robbie Ray",
+            "games": 42.0,
+            "win_rate": 0.6666666666666666
+        },
+        {
+            "pitcher": "Chris Sale",
+            "games": 56.0,
+            "win_rate": 0.6607142857142857
+        },
+        {
+            "pitcher": "Kodai Senga",
+            "games": 26.0,
+            "win_rate": 0.6538461538461539
+        },
+        {
+            "pitcher": "Tanner Bibee",
+            "games": 71.0,
+            "win_rate": 0.647887323943662
+        },
+        {
+            "pitcher": "Colin Rea",
+            "games": 56.0,
+            "win_rate": 0.6428571428571429
+        },
+        {
+            "pitcher": "Lucas Giolito",
+            "games": 28.0,
+            "win_rate": 0.6428571428571429
+        },
+        {
+            "pitcher": "Lance Lynn",
+            "games": 25.0,
+            "win_rate": 0.64
+        },
+        {
+            "pitcher": "Cade Horton",
+            "games": 25.0,
+            "win_rate": 0.64
+        },
+        {
+            "pitcher": "Shota Imanaga",
+            "games": 58.0,
+            "win_rate": 0.6379310344827587
+        },
+        {
+            "pitcher": "Hurston Waldrep",
+            "games": 11.0,
+            "win_rate": 0.6363636363636364
+        },
+        {
+            "pitcher": "Keider Montero",
+            "games": 30.0,
+            "win_rate": 0.6333333333333333
+        },
+        {
+            "pitcher": "Tarik Skubal",
+            "games": 76.0,
+            "win_rate": 0.631578947368421
+        },
+        {
+            "pitcher": "Yoshinobu Yamamoto",
+            "games": 57.0,
+            "win_rate": 0.631578947368421
+        },
+        {
+            "pitcher": "Tyler Glasnow",
+            "games": 46.0,
+            "win_rate": 0.6304347826086957
+        },
+        {
+            "pitcher": "Gavin Stone",
+            "games": 27.0,
+            "win_rate": 0.6296296296296297
+        },
+        {
+            "pitcher": "Yu Darvish",
+            "games": 35.0,
+            "win_rate": 0.6285714285714286
+        },
+        {
+            "pitcher": "Cole Irvin",
+            "games": 16.0,
+            "win_rate": 0.625
+        },
+        {
+            "pitcher": "Alec Marsh",
+            "games": 26.0,
+            "win_rate": 0.6153846153846154
+        },
+        {
+            "pitcher": "Steven Matz",
+            "games": 13.0,
+            "win_rate": 0.6153846153846154
+        },
+        {
+            "pitcher": "Cristopher S\u00e1nchez",
+            "games": 70.0,
+            "win_rate": 0.6142857142857143
+        },
+        {
+            "pitcher": "Kyle Harrison",
+            "games": 31.0,
+            "win_rate": 0.6129032258064516
+        },
+        {
+            "pitcher": "Triston McKenzie",
+            "games": 18.0,
+            "win_rate": 0.6111111111111112
+        },
+        {
+            "pitcher": "Ben Lively",
+            "games": 41.0,
+            "win_rate": 0.6097560975609756
+        },
+        {
+            "pitcher": "Framber Valdez",
+            "games": 64.0,
+            "win_rate": 0.609375
+        },
+        {
+            "pitcher": "Gerrit Cole",
+            "games": 23.0,
+            "win_rate": 0.6086956521739131
+        },
+        {
+            "pitcher": "Corbin Burnes",
+            "games": 48.0,
+            "win_rate": 0.6041666666666666
+        },
+        {
+            "pitcher": "Nathan Eovaldi",
+            "games": 55.0,
+            "win_rate": 0.6
+        },
+        {
+            "pitcher": "Osvaldo Bido",
+            "games": 20.0,
+            "win_rate": 0.6
+        },
+        {
+            "pitcher": "Paul Blackburn",
+            "games": 20.0,
+            "win_rate": 0.6
+        },
+        {
+            "pitcher": "Erik Miller",
+            "games": 10.0,
+            "win_rate": 0.6
+        },
+        {
+            "pitcher": "Joe Musgrove",
+            "games": 20.0,
+            "win_rate": 0.6
+        },
+        {
+            "pitcher": "Cody Bradford",
+            "games": 15.0,
+            "win_rate": 0.6
+        },
+        {
+            "pitcher": "Marcus Stroman",
+            "games": 40.0,
+            "win_rate": 0.6
+        }
+    ],
+    "seasonal_scoring": {
+        "3": 9.311750599520384,
+        "4": 8.409429280397022,
+        "5": 8.36948748510131,
+        "6": 8.845869297163995,
+        "7": 8.966666666666667,
+        "8": 9.10688836104513,
+        "9": 8.534370946822309,
+        "10": 8.411764705882353
+    }
+}
