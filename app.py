@@ -367,7 +367,7 @@ for idx, row in df_sched_view.iterrows():
         # XGBoost Synergy Check
         synergy_badge = ""
         if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5):
-            synergy_badge = f"<span class='synergy-badge'>⚡ Hybrid Synergy: {row['xg_conf']*100:.0f}%</span>"
+            synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost: {row['xg_conf']*100:.0f}%</span>"
 
         # Build the HTML string for the card
         card_html = f"""
