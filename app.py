@@ -31,7 +31,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Page Configuration
-st.set_page_config(page_title="BEST BETS | MLB Analytics", page_icon="⚾", layout="wide")
+st.set_page_config(page_title="PRO BASEBALL PREDICT | Professional Baseball Analytics", page_icon="⚾", layout="wide")
 
 # Load CSS
 def load_css(file_path):
@@ -49,8 +49,8 @@ if os.path.exists("hero.png"):
 # App Title
 st.markdown("""
     <div style='text-align: center; padding: 20px;'>
-        <h1 style='font-size: 3.5rem; margin-bottom: 5px; letter-spacing: -2px;'>BEST BETS</h1>
-        <p style='color: #94a3b8; font-size: 1.4rem; font-weight: 300;'>Professional MLB Predictive Terminal</p>
+        <h1 style='font-size: 3.5rem; margin-bottom: 5px; letter-spacing: -2px;'>PRO BASEBALL PREDICT</h1>
+        <p style='color: #94a3b8; font-size: 1.4rem; font-weight: 300;'>Professional Baseball Predictive Terminal</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -586,7 +586,7 @@ if not df_master.empty:
 
 st.subheader("📊 Global Analytics Modules")
 
-tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ MLB PREDICTIONS", "🏆 Elo Rankings", "🥇 League Leaders", "🧬 Player Analytics", "🏛️ Historical Intelligence", "🛰️ OUR STRATEGY"])
+tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ PRO BASEBALL PREDICTIONS", "🏆 Elo Rankings", "🥇 League Leaders", "🧬 Player Analytics", "🏛️ Historical Intelligence", "🛰️ OUR STRATEGY"])
 
 with tab0:
     # 🕵️ Accuracy Audit Component (Digital Clock Aesthetic) - Localized Hub Positioning
@@ -611,7 +611,7 @@ with tab0:
         </div>
         """, unsafe_allow_html=True)
 
-    st.subheader("🛰️ MLB PREDICTIONS: Matchup Hub")
+    st.subheader("🛰️ PRO BASEBALL PREDICTIONS: Matchup Hub")
     st.write("Real-time projections derived from 10,000 Monte Carlo iterations and XGBoost v3.0 Longitudinal Elite filtration.")
     
     if not df_master.empty:
@@ -655,7 +655,7 @@ with tab4:
                 st.markdown("""
                 | Column | Definition |
                 | :--- | :--- |
-                | **Team** | Professional MLB franchise identity. |
+                | **Team** | Professional baseball franchise identity. |
                 | **overall_win_rate** | Total Win % across 3 full seasons (2024-2026). |
                 | **home_advantage** | The % increase in win probability when playing in their home stadium. |
                 | **avg_runs_scored** | Longitudinal average of runs scored per game. |
@@ -686,7 +686,7 @@ with tab1:
         st.markdown("""
         | Metric | Definition |
         | :--- | :--- |
-        | **Team** | Professional MLB franchise identity. |
+        | **Team** | Professional baseball franchise identity. |
         | **Elo (Points)** | Current point total. **1500 = League Average**. |
         | **Alpha Gap** | The point difference between two teams, used to calculate base win probability. |
         | **Volatility** | Teams gain significantly more points for defeating high-Elo opponents than for defeating low-Elo ones. |
@@ -710,7 +710,7 @@ with tab2:
                 | :--- | :--- |
                 | **Rank** | Player's standing compared to the rest of the league. |
                 | **Name** | Professional athlete's identity. |
-                | **Team** | Current MLB franchise affiliation. |
+                | **Team** | Current professional franchise affiliation. |
                 | **Value** | Total Home Runs recorded in the 2026 season. |
                 """)
             st.table(leaders_map.get("homeRuns"))
@@ -723,7 +723,7 @@ with tab2:
                 | :--- | :--- |
                 | **Rank** | Player's standing compared to the rest of the league. |
                 | **Name** | Professional athlete's identity. |
-                | **Team** | Current MLB franchise affiliation. |
+                | **Team** | Current professional franchise affiliation. |
                 | **Value** | Hits per At-Bat (e.g., .300 means a 30% success rate). |
                 """)
             st.table(leaders_map.get("battingAverage"))
@@ -736,7 +736,7 @@ with tab2:
                 | :--- | :--- |
                 | **Rank** | Pitcher's standing compared to the rest of the league. |
                 | **Name** | Professional athlete's identity. |
-                | **Team** | Current MLB franchise affiliation. |
+                | **Team** | Current professional franchise affiliation. |
                 | **Value** | Average runs allowed per 9 innings (e.g., 2.50 is elite). |
                 """)
             st.table(leaders_map.get("earnedRunAverage"))
@@ -749,7 +749,7 @@ with tab2:
                 | :--- | :--- |
                 | **Rank** | Pitcher's standing compared to the rest of the league. |
                 | **Name** | Professional athlete's identity. |
-                | **Team** | Current MLB franchise affiliation. |
+                | **Team** | Current professional franchise affiliation. |
                 | **Value** | Total games won as the pitcher of record in 2026. |
                 """)
             st.table(leaders_map.get("wins"))
@@ -798,7 +798,7 @@ with tab5:
         st.markdown("""
         # 🛰️ OUR STRATEGY: Technical Transparency & Financial Engineering
 
-        Welcome to the **BEST BETS** Strategic Whitepaper. This terminal is a multi-layered analytical engine founded on the intersection of professional baseball sabermetrics and high-frequency financial risk management.
+        Welcome to the **PRO BASEBALL PREDICT** Strategic Whitepaper. This terminal is a multi-layered analytical engine founded on the intersection of professional baseball sabermetrics and high-frequency financial risk management.
 
         ## 1. Longitudinal Elite Core: XGBoost v3.0
         In our latest strategic cycle, we transitioned from situational snapshots to a **Longitudinal Elite** architecture. 
@@ -826,7 +826,7 @@ with tab5:
 
         ## 3. Global Data Intelligence (The Alpha Feed)
         We ingest real-time data from institutional sources:
-        - **MLB Stats API**: Official 2026 schedules, standings, and starters.
+        - **Pro Baseball Stats API**: Official 2026 schedules, standings, and starters.
         - **The Odds API**: Live market data from **30+ global sportsbooks**.
         - **Statcast Analytics**: Individual pitcher FIP, K/9, and Team wRC+ benchmarks.
 
@@ -856,7 +856,7 @@ with tab5:
         Every prediction card on your dashboard is a high-density data cluster. Here is how to interpret every field for maximum success:
 
         ### A. The Header (Signal Layer)
-        - **📅 Date**: Official MLB commencement time for the matchup.
+        - **📅 Date**: Official commencement time for the matchup.
         - **🛰️ Intelligence Feed vs 💎 Alpha Yield**: 
             - **Intelligence Feed (Grey)**: Our model's internal "fair price" based on 10,000 simulations.
             - **Alpha Yield (Blue)**: Live market data synced from **30+ global sportsbooks**.
@@ -909,7 +909,7 @@ with tab5:
 # Footer
 st.markdown("""
     <div style='text-align: center; margin-top: 50px; opacity: 0.6;'>
-        <p>© 2026 BEST BETS Analytics Engine. Data by MLB Stats API & The Odds API.</p>
+        <p>© 2026 PRO BASEBALL PREDICT Analytics Engine. Data by Pro Baseball Stats API & The Odds API.</p>
         <p style='font-size: 0.8rem;'>Sports betting involves risk. Wager only what you can afford to lose.</p>
     </div>
 """, unsafe_allow_html=True)
