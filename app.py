@@ -515,9 +515,6 @@ with tab4:
             st.dataframe(df_p_view[["Name", "Team", "ERA", "FIP", "K/9", "WAR"]], hide_index=True, width='stretch')
             
         else:
-            search_h = st.text_input("🔍 Search 2026 Batters (e.g. Judge, Soto, Ohtani)", "")
-            df_h_view = df_h[df_h['Name'].str.contains(search_h, case=False)] if search_h else df_h.sort_values(by="OPS", ascending=False).head(50)
-            
             st.markdown("### 💥 Team Offensive Power Table")
             fig_h = px.bar(df_h.sort_values(by="OPS", ascending=False), x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
             st.plotly_chart(fig_h, width='stretch')
@@ -527,21 +524,10 @@ with tab4:
                 | :--- | :--- |
                 | **📈 OPS** | On-Base Plus Slugging. High-density power/OBP metric. |
                 | **🛰️ wRC+** | Weighted Runs Created Plus. Institutional gold standard. **100 is Average.** |
-                | **🏆 WAR** | Wins Above Replacement. Total contribution. |
+                | **🔥 ISO** | Isolated Power. Measures a team's raw ability to hit for extra bases. |
                 """)
-            st.markdown("#### 🏆 Heavy Hitters: 2026 Offensive Grid")
-            with st.expander("📊 Heavy Hitters Metric Key"):
-                st.markdown("""
-                | Column | Metric Definition |
-                | :--- | :--- |
-                | **📈 PA** | Plate Appearances. Total opportunities to generate offense. |
-                | **🔥 HR** | Home Runs recorded in 2026. raw power benchmark. |
-                | **🎯 AVG** | Batting Average. Hits divided by At-Bats. |
-                | **🧬 OPS** | On-Base Plus Slugging. Total Offensive Strength. |
-                | **🛰️ wRC+** | Weighted Runs Created Plus. Elite production efficiency. |
-                | **🏆 WAR** | Wins Above Replacement. The gold standard for total player contribution. |
-                """)
-            st.dataframe(df_h_view[["Name", "Team", "PA", "HR", "AVG", "OPS", "wRC+", "WAR"]], hide_index=True, width='stretch')
+            st.markdown("#### 🏆 Team Offensive Alpha Grid")
+            st.dataframe(df_h.sort_values(by="OPS", ascending=False)[["Team", "OPS", "ISO", "wRC+"]], hide_index=True, width='stretch')
     else:
         st.info("Statcast benchmarks currently syncing...")
 
