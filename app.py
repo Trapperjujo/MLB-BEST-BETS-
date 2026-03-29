@@ -534,13 +534,85 @@ elif is_analytics_mode:
 if is_feed_mode:
     st.markdown("---")
     st.subheader("📊 Global Analytics Modules")
-    t0, t1 = st.tabs(["🛰️ OUR STRATEGY", "🏆 Quick Rankings"])
-    with t1:
+    
+    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ MLB PREDICTIONS", "🏆 Elo Rankings", "📈 2026 Standings", "🥇 League Leaders", "🧬 Player Analytics", "🛰️ OUR STRATEGY"])
+    
+    with tab0:
+        st.subheader("🛰️ MLB PREDICTIONS: Matchup Hub")
+        st.write("Real-time projections derived from 10,000 Monte Carlo iterations and XGBoost v2.0 situational filtration.")
+        if not df_master.empty:
+            outcomes = []
+            unique_games = df_master.drop_duplicates(subset=['game_id'])
+            for _, row in unique_games.iterrows():
+                winner = row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']
+                winner_loc = "Home" if row['home_win_prob'] > 0.5 else "Away"
+                matchup = f"{row['away_team']} ({int(row['away_elo'])}) @ {row['home_team']} ({int(row['home_elo'])})"
+                outcomes.append({
+                    "Matchup": matchup,
+                    "Predicted Winner": f"🏆 {winner} ({winner_loc})",
+                    "Projected Score": f"{row['home_proj']:.1f} - {row['away_proj']:.1f}",
+                    "XGBoost Confidence": f"{row['xg_conf']*100:.1f}%",
+                    "Value Edge (EV)": f"{row['ev']*100:.1f}%" if row['ev'] > 0 else "0.0%"
+                })
+            df_out_view = pd.DataFrame(outcomes)
+            st.dataframe(df_out_view, use_container_width=True, hide_index=True, column_config={
+                "XGBoost Confidence": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
+                "Value Edge (EV)": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
+            })
+        else:
+            st.info("No active matchups found.")
+
+    with tab1:
+        st.subheader("🏆 Global Leaderboard: Elo Point Scores")
         elo_map = load_elo_ratings()
         elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
         st.dataframe(elo_df.reset_index(drop=True), use_container_width=True)
-        
-    with t0:
+        fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
+        st.plotly_chart(fig, use_container_width=True)
+
+    with tab2:
+        st.subheader("📈 Official 2026 Division Standings")
+        df_s_2026 = st.session_state.get("df_standings_2026", pd.DataFrame())
+        if not df_s_2026.empty:
+            st.dataframe(df_s_2026, use_container_width=True)
+            fig_s = px.scatter(df_s_2026, x="W", y="ATS_W", text="Team", color="League", template="plotly_dark")
+            st.plotly_chart(fig_s, use_container_width=True)
+        else:
+            st.info("Standings data not fetched yet.")
+
+    with tab3:
+        st.subheader("🥇 League Leaders")
+        leaders_map = st.session_state.get("df_leaders_2026", {})
+        if leaders_map:
+            l_tabs = st.tabs(["🔥 Home Runs", "🎯 Batting Avg", "⚾ ERA", "🏆 Wins"])
+            with l_tabs[0]: st.table(leaders_map.get("homeRuns"))
+            with l_tabs[1]: st.table(leaders_map.get("battingAverage"))
+            with l_tabs[2]: st.table(leaders_map.get("earnedRunAverage"))
+            with l_tabs[3]: st.table(leaders_map.get("wins"))
+        else:
+            st.info("Leaderboard data currently unavailable.")
+
+    with tab4:
+        st.subheader("🧬 Player Analytics")
+        p_cache = "data/raw/cache_pitchers_2024.csv"
+        h_cache = "data/raw/cache_hitting_2024.csv"
+        if os.path.exists(p_cache) and os.path.exists(h_cache):
+            df_p = pd.read_csv(p_cache)
+            df_h = pd.read_csv(h_cache)
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown("### ⚾ Pitcher Matrix")
+                fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", template="plotly_dark")
+                st.plotly_chart(fig_p, use_container_width=True)
+            with c2:
+                st.markdown("### 💥 Team Hitting")
+                df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
+                fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
+                st.plotly_chart(fig_h, use_container_width=True)
+        else:
+            st.info("Statcast benchmarks currently syncing...")
+
+    with tab5:
         st.markdown("""
         # 🛰️ OUR STRATEGY: Technical Transparency & Financial Engineering
 
