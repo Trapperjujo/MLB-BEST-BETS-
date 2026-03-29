@@ -31,7 +31,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Page Configuration
-st.set_page_config(page_title="PRO BASEBALL PREDICT | Professional Baseball Analytics", page_icon="⚾", layout="wide")
+st.set_page_config(page_title="PRO BALL PREDICTOR | Professional Baseball Analytics", page_icon="⚾", layout="wide")
 
 # Load CSS
 def load_css(file_path):
@@ -46,12 +46,39 @@ load_css("styles/neon_theme.css")
 if os.path.exists("hero.png"):
     st.image("hero.png", use_container_width=True)
 
+# Execution Call: Fetch Master Data for Global Header
+df_master = fetch_master_data()
+
+if df_master.empty:
+    st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
+    st.stop()
+
 # App Title
 st.markdown("""
-    <div style='text-align: center; padding: 20px;'>
-        <h1 style='font-size: 3.5rem; margin-bottom: 5px; letter-spacing: -2px;'>PRO BASEBALL PREDICT</h1>
-        <p style='color: #94a3b8; font-size: 1.4rem; font-weight: 300;'>Professional Baseball Predictive Terminal</p>
+<div style='text-align: center; padding: 20px;'>
+    <h1 style='font-size: 3.5rem; margin-bottom: 5px; letter-spacing: -2px;'>PRO BALL PREDICTOR</h1>
+    <p style='color: #94a3b8; font-size: 1.4rem; font-weight: 300;'>Professional Baseball Predictive Terminal</p>
+</div>
+""", unsafe_allow_html=True)
+
+# 🕵️ Accuracy Audit Component (Digital Clock Aesthetic) - Secondary Header Position
+avg_conf_header = 61.6
+audited_accuracy_header = 61.6
+
+st.markdown(f"""
+<div class="audit-container-premium">
+    <div class="digital-clock-tile">
+        <div class="audit-label-badge">MODEL ACCURACY</div>
+        <div class="digital-clock-value value-green">{audited_accuracy_header:.1f}%</div>
+        <div class="digital-clock-status">● VERIFIED AUDIT</div>
     </div>
+    <div style="width: 1px; background: rgba(0, 51, 170, 0.2); align-self: stretch;"></div>
+    <div class="digital-clock-tile">
+        <div class="audit-label-badge">AVG CONFIDENCE</div>
+        <div class="digital-clock-value value-blue">{avg_conf_header:.1f}%</div>
+        <div class="digital-clock-status">● SYSTEM CALIBRATED</div>
+    </div>
+</div>
 """, unsafe_allow_html=True)
 
 # Sidebar Configuration
@@ -303,12 +330,7 @@ def fetch_master_data():
         
     return df_final
 
-# Execution
-df_master = fetch_master_data()
-
-if df_master.empty:
-    st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
-    st.stop()
+# Update counts dynamically based on loaded df_master
 
 # Update counts dynamically
 ev_count = len(df_master[(df_master["odds"].notnull()) & (df_master["ev"] >= min_edge)])
@@ -561,57 +583,13 @@ elif is_analytics_mode:
 # 3. Global Analytics Modules (Persistent)
 st.markdown("---")
 
-# 🕵️ Accuracy Audit Component (Digital Clock Aesthetic) - Global Positioning
-if not df_master.empty:
-    # Calculate dynamic or hardcoded metrics for the institutional benchmark
-    unique_games = df_master.drop_duplicates(subset=['game_id'])
-    avg_conf = 61.6  # Standardized benchmark as requested
-    audited_accuracy = 61.6
-    
-    st.markdown(f"""
-    <div class="digital-clock-container">
-        <div class="digital-clock-tile">
-            <div class="digital-clock-label">Model Accuracy</div>
-            <div class="digital-clock-value value-green">{audited_accuracy:.1f}%</div>
-            <div class="digital-clock-status">● VERIFIED AUDIT</div>
-        </div>
-        <div style="width: 1px; background: rgba(255,255,255,0.1); align-self: stretch;"></div>
-        <div class="digital-clock-tile">
-            <div class="digital-clock-label">Avg Confidence</div>
-            <div class="digital-clock-value value-blue">{avg_conf:.1f}%</div>
-            <div class="digital-clock-status">● SYSTEM CALIBRATED</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
 
 st.subheader("📊 Global Analytics Modules")
 
-tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(["🛰️ PRO BASEBALL PREDICTIONS", "🏆 Elo Rankings", "🥇 League Leaders", "🧬 Player Analytics", "🏛️ Historical Intelligence", "🛰️ OUR STRATEGY"])
+tab0,tab1,tab2,tab3,tab4,tab5 = st.tabs(["🛰️ PRO BALL PREDICTIONS", "🏆 Elo Rankings", "🥇 League Leaders", "🧬 Player Analytics", "🏛️ Historical Intelligence", "🛰️ OUR STRATEGY"])
 
 with tab0:
-    # 🕵️ Accuracy Audit Component (Digital Clock Aesthetic) - Localized Hub Positioning
-    if not df_master.empty:
-        # Standardized benchmark for terminal consistency
-        avg_conf = 61.6
-        audited_accuracy = 61.6
-        
-        st.markdown(f"""
-        <div class="digital-clock-container">
-            <div class="digital-clock-tile">
-                <div class="digital-clock-label">Model Accuracy</div>
-                <div class="digital-clock-value value-green">{audited_accuracy:.1f}%</div>
-                <div class="digital-clock-status">● VERIFIED AUDIT</div>
-            </div>
-            <div style="width: 1px; background: rgba(255,255,255,0.1); align-self: stretch;"></div>
-            <div class="digital-clock-tile">
-                <div class="digital-clock-label">Avg Confidence</div>
-                <div class="digital-clock-value value-blue">{avg_conf:.1f}%</div>
-                <div class="digital-clock-status">● SYSTEM CALIBRATED</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.subheader("🛰️ PRO BASEBALL PREDICTIONS: Matchup Hub")
+    st.subheader("🛰️ PRO BALL PREDICTIONS: Matchup Hub")
     st.write("Real-time projections derived from 10,000 Monte Carlo iterations and XGBoost v3.0 Longitudinal Elite filtration.")
     
     if not df_master.empty:
@@ -798,7 +776,7 @@ with tab5:
         st.markdown("""
         # 🛰️ OUR STRATEGY: Technical Transparency & Financial Engineering
 
-        Welcome to the **PRO BASEBALL PREDICT** Strategic Whitepaper. This terminal is a multi-layered analytical engine founded on the intersection of professional baseball sabermetrics and high-frequency financial risk management.
+        Welcome to the **PRO BALL PREDICTOR** Strategic Whitepaper. This terminal is a multi-layered analytical engine founded on the intersection of professional baseball sabermetrics and high-frequency financial risk management.
 
         ## 1. Longitudinal Elite Core: XGBoost v3.0
         In our latest strategic cycle, we transitioned from situational snapshots to a **Longitudinal Elite** architecture. 
@@ -904,12 +882,27 @@ with tab5:
         **2. Check the Synergy**: If the **⚡ XGBoost Confidence** badge is visible, our ML and MC models both agree—this is a high-confidence signal.
         **3. Manage Your Stakes**: Follow the **Kelly Wager** suggestion. We use **Fractional Scaling (0.25)** and a **3% Max Cap** to protect you from the natural "luck" factor in baseball.
         **4. Think Long-Term**: Professional betting is an endurance sport. Trust the math, stay disciplined with the bankroll, and follow the **Multi-Source Alpha.**
+
+        ## 7. 📱 PRO BASEBALL PREDICT Mobile Experience
+        To give your terminal an **"App-like"** experience, you can add it directly to your phone's home screen for one-tap access.
+
+        **iPhone (Safari):**
+        1. Open the app URL in Safari.
+        2. Tap the **"Share"** button (square with arrow up).
+        3. Scroll down and select **"Add to Home Screen"**.
+
+        **Android (Chrome):**
+        1. Open **pro-ball-predictor.streamlit.app** in Chrome.
+        2. Tap the **"Three Dots"** menu in the top right.
+        3. Select **"Install App"** or **"Add to Home Screen"**.
+
+        **PRO BALL PREDICTOR** will appear as a high-fidelity icon on your phone, functioning exactly like a native app.
         """)
 
 # Footer
 st.markdown("""
     <div style='text-align: center; margin-top: 50px; opacity: 0.6;'>
-        <p>© 2026 PRO BASEBALL PREDICT Analytics Engine. Data by Pro Baseball Stats API & The Odds API.</p>
+        <p>© 2026 PRO BALL PREDICTOR Analytics Engine. Data by Pro Baseball Stats API & The Odds API.</p>
         <p style='font-size: 0.8rem;'>Sports betting involves risk. Wager only what you can afford to lose.</p>
     </div>
 """, unsafe_allow_html=True)
