@@ -434,6 +434,28 @@ with tab1:
         fig_s.update_layout(height=700, margin=dict(l=20, r=20, t=60, b=20))
         
         st.plotly_chart(fig_s, use_container_width=True)
+
+        with st.expander("🛠️ STRATEGIC GUIDE: HOW TO PROFIT (Matrix Analysis)"):
+            st.markdown("""
+            ### 🎯 1. Identify the 'Smart Money Alpha' [💎 Upper-Left]
+            **Strategy:** **Value/Underdog Betting.**
+            - **Why:** Teams in this quadrant win against the spread (ATS) more often than they win outright. 
+            - **Action:** These are your primary "+EV" targets. When these teams are underdogs, they have a high probability of covering the spread or winning as an upset.
+            
+            ### 👑 2. Identify 'Elite Dominance' [👑 Upper-Right]
+            **Strategy:** **Moneyline/Parlay Anchors.**
+            - **Why:** These teams win both outright and against the market. They are fundamentally superior.
+            - **Action:** Use these teams as reliable anchors for multi-game parlays. The odds will be shorter, but the risk is institutionally minimized.
+            
+            ### ⚠️ 3. Identify the 'Market Trap' [⚠️ Lower-Right]
+            **Strategy:** **Fading (Betting Against).**
+            - **Why:** These teams have a high outright win record but **fail to cover the spread.** They are overvalued by the public/market.
+            - **Action:** Be extremely cautious betting on these teams with high spreads. In many cases, betting *against* them at +1.5 or +2.5 is the smarter play.
+            
+            ### 📉 4. The Alpha Diagonal (y=x)
+            - **Above the Line:** Teams performing **better** for bettors than their record suggests (Undervalued).
+            - **Below the Line:** Teams performing **worse** for bettors than their record suggests (Overvalued).
+            """)
     else:
         st.info("Seasonal standings currently syncing. Refresh to hydrate.")
 
