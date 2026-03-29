@@ -475,13 +475,45 @@ with tab3:
         st.info("Leaderboard data currently unavailable.")
 
 with tab4:
-    st.subheader("🧬 Player Analytics (Baseline WAR)")
-    if os.path.exists("data/raw/player_war_2024.csv"):
-        df_war = pd.read_csv("data/raw/player_war_2024.csv")
-        fig_war = px.treemap(df_war, path=['Team', 'Name'], values='WAR', color='WAR', color_continuous_scale='RdYlGn', template='plotly_dark')
-        st.plotly_chart(fig_war, use_container_width=True)
+    st.subheader("🧬 Player Analytics: Statcast Benchmarks")
+    
+    p_cache = "data/raw/cache_pitchers_2024.csv"
+    h_cache = "data/raw/cache_hitting_2024.csv"
+    
+    if os.path.exists(p_cache) and os.path.exists(h_cache):
+        df_p = pd.read_csv(p_cache)
+        df_h = pd.read_csv(h_cache)
+        
+        c1, c2 = st.columns(2)
+        
+        with c1:
+            st.markdown("### ⚾ Pitcher Efficiency Matrix")
+            st.caption("Lower left is elite (Low ERA, Low FIP). Points above the line indicate possible 'Unlucky' variance.")
+            # Pitching Strategy: ERA vs FIP
+            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", 
+                               hover_name="Name", text="Name",
+                               color_continuous_scale="Viridis", template="plotly_dark")
+            # Add a diagonal line for parity
+            fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), 
+                            x1=df_p['FIP'].max(), y1=df_p['FIP'].max(),
+                            line=dict(color="Red", width=2, dash="dash"))
+            st.plotly_chart(fig_p, use_container_width=True)
+            
+        with c2:
+            st.markdown("### 💥 Team Hitting Strength")
+            st.caption("Ranked by OPS (On-base Plus Slugging). Core feature for our XGBoost 2.0 engine.")
+            df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
+            fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', 
+                           color="wRC+", color_continuous_scale="Plasma", template="plotly_dark")
+            fig_h.update_layout(yaxis={'categoryorder':'total ascending'})
+            st.plotly_chart(fig_h, use_container_width=True)
+            
+        st.markdown("---")
+        st.markdown("### 🔍 Professional Statcast Benchmarks (Full View)")
+        st.write("These are the real-time player benchmarks utilized by the **BEST BETS Intelligence Feed** for situational advantage modeling.")
+        st.dataframe(df_p.sort_values(by="WAR", ascending=False), use_container_width=True)
     else:
-        st.info("Player WAR stats not found.")
+        st.info("Statcast benchmarks currently syncing. Click 'Refresh' in the sidebar to hydrate the persistence layer.")
 
 with tab5:
     st.markdown("""
