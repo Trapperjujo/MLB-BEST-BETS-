@@ -32,21 +32,27 @@ def get_mlb_odds(regions: str = "us,uk,eu,au", markets: str = "h2h") -> List[Dic
         print(f"Error fetching odds: {e}")
         return []
 
-def get_mlb_schedule(date_str: str) -> List[Dict[str, Any]]:
-    """Fetches official MLB schedule and probable pitchers from Stats API."""
-    url = f"https://statsapi.mlb.com/api/v1/schedule?sportId=1&date={date_str}&hydrate=probablePitcher"
+def get_mlb_schedule(date_str: Optional[str] = None, start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Fetches official MLB schedule and probable pitchers from Stats API for a date or range."""
+    if start_date and end_date:
+        url = f"https://statsapi.mlb.com/api/v1/schedule?sportId=1&startDate={start_date}&endDate={end_date}&hydrate=probablePitcher"
+    else:
+        url = f"https://statsapi.mlb.com/api/v1/schedule?sportId=1&date={date_str}&hydrate=probablePitcher"
+    
     try:
         r = requests.get(url)
         r.raise_for_status()
         data = r.json()
         games = []
         for date_info in data.get("dates", []):
+            game_date = date_info.get("date")
             for game in date_info.get("games", []):
                 games.append({
                     "game_id": game.get("gamePk"),
                     "home_team": game.get("teams", {}).get("home", {}).get("team", {}).get("name"),
                     "away_team": game.get("teams", {}).get("away", {}).get("team", {}).get("name"),
                     "commence_time": game.get("gameDate"),
+                    "game_day": game_date,
                     "home_pitcher": game.get("teams", {}).get("home", {}).get("probablePitcher", {}).get("fullName", "TBD"),
                     "away_pitcher": game.get("teams", {}).get("away", {}).get("probablePitcher", {}).get("fullName", "TBD"),
                     "status": game.get("status", {}).get("abstractGameState")

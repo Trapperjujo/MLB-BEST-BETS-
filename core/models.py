@@ -1,4 +1,6 @@
 import math
+import random
+import numpy as np
 
 def american_to_decimal(american_odds: int) -> float:
     """Converts American odds to Decimal odds."""
@@ -77,7 +79,7 @@ def calculate_ev(model_prob: float, decimal_odds: float) -> float:
 
 def kelly_criterion(model_prob: float, decimal_odds: float, fractional: float = 0.25) -> float:
     """Calculates the optimal bet size using the Kelly Criterion (Fractional)."""
-    if decimal_odds <= 1.0:
+    if decimal_odds <= 1.0 or model_prob <= 0.0:
         return 0.0
     
     # b = Net odds received (Decimal Odds - 1)
@@ -86,13 +88,61 @@ def kelly_criterion(model_prob: float, decimal_odds: float, fractional: float = 
     q = 1.0 - p
     
     # f = (bp - q) / b
-    if b == 0:
-        return 0.0
-        
     f = (b * p - q) / b
     
     # Scale by fractional Kelly to reduce variance
     return max(0.0, f * fractional)
+
+def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 10000, adjustments: dict = None) -> dict:
+    """
+    Runs a Monte Carlo simulation for an MLB game.
+    Returns: {
+        'home_win_prob': float,
+        'away_win_prob': float,
+        'home_avg_runs': float,
+        'away_avg_runs': float,
+        'over_total_prob': dict # (e.g. {7.5: 0.55})
+    }
+    """
+    h_proj = calculate_expected_runs(home_elo, away_elo)
+    a_proj = calculate_expected_runs(away_elo, home_elo)
+    
+    # Apply adjustments to the base projections if provided
+    if adjustments:
+        h_proj += adjustments.get('home_runs_adj', 0)
+        a_proj += adjustments.get('away_runs_adj', 0)
+
+    # Simulate scores using Poisson distribution (standard for baseball runs)
+    home_scores = np.random.poisson(h_proj, iterations)
+    away_scores = np.random.poisson(a_proj, iterations)
+    
+    # Calculate wins (handling ties as push/half-win depending on model, 
+    # but in MLB games don't end in ties, so we simulate until a winner)
+    # For simulation purposes, if tied, we give 0.5 to each or re-simulate.
+    # Here we use the direct comparison:
+    home_wins = np.sum(home_scores > away_scores)
+    away_wins = np.sum(away_scores > home_scores)
+    ties = np.sum(home_scores == away_scores)
+    
+    # Resolve ties by distributing based on win probability (simulating extra innings)
+    total_non_ties = home_wins + away_wins
+    if total_non_ties > 0:
+        h_win_share = home_wins / total_non_ties
+        home_wins += ties * h_win_share
+        away_wins += ties * (1 - h_win_share)
+    else:
+        # Extreme edge case: project 50/50
+        home_wins += ties * 0.5
+        away_wins += ties * 0.5
+
+    return {
+        'home_win_prob': float(home_wins / iterations),
+        'away_win_prob': float(away_wins / iterations),
+        'home_avg_runs': float(np.mean(home_scores)),
+        'away_avg_runs': float(np.mean(away_scores)),
+        'home_scores': home_scores.tolist()[:100], # Sample for visualization
+        'away_scores': away_scores.tolist()[:100]
+    }
 
 def flat_staking(bankroll: float, unit_percent: float = 1.5) -> float:
     """Calculates the stake for a flat betting strategy."""

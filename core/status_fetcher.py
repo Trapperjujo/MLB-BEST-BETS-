@@ -2,64 +2,30 @@ import pandas as pd
 import requests
 import os
 from dotenv import load_dotenv
-from pybaseball import schedule_and_record, team_ids
-from datetime import datetime, timedelta
+from typing import Optional
 
-load_dotenv()
-BALLDONTLIE_API_KEY = os.getenv("BALLDONTLIE_API_KEY")
-
-def get_player_injuries():
-    """
-    Fetches real-time MLB injury reports from balldontlie.io.
-    """
-    url = "https://api.balldontlie.io/mlb/v1/player_injuries"
-    headers = {"Authorization": BALLDONTLIE_API_KEY}
-    
-    try:
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            return response.json().get("data", [])
-        else:
-            print(f"Error fetching injuries: {response.status_code}")
-            return []
-    except Exception as e:
-        print(f"Error: {e}")
-        return []
-
-from core.elo_ratings import ABBR_MAP
-
-def get_fatigue_penalty(team_name, current_date=None):
+def get_player_injuries() -> list:
+    """Placeholder for player injuries. Integration with API stats."""
+    return []
+def get_fatigue_penalty(team_name: str, history_df: Optional[pd.DataFrame] = None) -> int:
     """
     Calculates fatigue penalty based on recent (last 3 days) schedule.
+    Uses a pre-fetched DataFrame for high-speed lookups.
     """
-    # Map full name to abbreviation
-    team_abbr = None
-    for abbr, full in ABBR_MAP.items():
-        if full == team_name:
-            team_abbr = abbr
-            break
-            
-    if not team_abbr:
+    if history_df is None or history_df.empty:
         return 0
-
-    if current_date is None:
-        current_date = datetime.now()
-        
-    start_date = current_date - timedelta(days=3)
     
-    try:
-        # Use pybaseball to get recent games
-        sched = schedule_and_record(current_date.year, team_abbr)
-        # Simplified: check the last 3 entries in the schedule
-        # In a real scenario, we'd check dates.
-        recent_games = sched.tail(3)
-        played_count = len(recent_games)
-        
-        penalty = played_count * 5 # -5 per game
-        
-        return penalty
-    except:
-        return 0
+    # Count occurrences of team_name in home or away slots across the history window
+    team_games = history_df[
+        (history_df["home_team"] == team_name) | 
+        (history_df["away_team"] == team_name)
+    ]
+    
+    # Each game played in the last 3 days counts as a -4 Elo penalty (adjustable)
+    played_count = len(team_games)
+    penalty = played_count * 4 
+    
+    return penalty
 
 def calculate_injury_impact(team_name, injuries):
     """
