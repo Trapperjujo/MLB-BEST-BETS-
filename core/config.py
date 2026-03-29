@@ -12,3 +12,4 @@ FRACTIONAL_KELLY = 0.25 # Risk reduction factor for Kelly Criterion
 MIN_EDGE_DEFAULT = 3.0 # % Edge needed for Intelligence Feed flags
 BANKROLL_DEFAULT = 5000.0 # CAD Baseline
 STD_BET_SIZE_DEFAULT = 1.5 # % of bankroll per unit
+MAX_STAKE_CAP = 0.03 # 3% Maximum bankroll allocation per bet
