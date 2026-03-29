@@ -201,7 +201,7 @@ def fetch_master_data():
         nr = g.to_dict(); nr.update({"bookmaker": "Pending", "outcome": g["home_team"], "odds": None, "market": "h2h", "model_prob": g["home_win_prob"], "team_elo": g["home_elo"], "opp_elo": g["away_elo"], "team_proj": g["home_proj"], "opp_proj": g["away_proj"]}); final.append(nr)
     df_f = pd.DataFrame(final)
     if not df_f.empty:
-        df_f["is_divisional"], df_f["formatted_time"] = df_f.apply(lambda r: is_divisional_matchup(r["home_team"], r["away_team"]), axis=1), pd.to_datetime(df_f["commence_time"]).dt.strftime("%b %d, %H:%M")
+        df_f["is_divisional"], df_f["formatted_time"] = df_f.apply(lambda r: is_divisional_matchup(r["home_team"], r["away_team"]), axis=1), pd.to_datetime(df_f["commence_time"]).dt.strftime("%a, %b %d @ %I:%M %p")
         ho = df_f["odds"].notnull()
         df_f.loc[ho, "implied_prob"], df_f.loc[ho, "decimal_odds"], df_f.loc[ho, "data_type"] = df_f.loc[ho, "odds"].apply(calculate_implied_probability), df_f.loc[ho, "odds"].apply(american_to_decimal), "💎 Multi-Source Alpha Yield"
         no = df_f["odds"].isnull(); df_f.loc[no, "decimal_odds"], df_f.loc[no, "implied_prob"], df_f.loc[no, "data_type"] = 1.91, 0.523, "🛰️ Professional Intelligence Feed"
