@@ -73,13 +73,14 @@ if df_odds.empty:
     st.warning("No live MLB data found. Note: Season must be active for real stats.")
     # Show dummy data for UI preview
     dummy_data = [
-        {"outcome": "Toronto Blue Jays", "bookmaker": "DraftKings", "away_team": "NY Yankees", "home_team": "Toronto Blue Jays", "market": "h2h", "odds": "+135", "is_divisional": True},
-        {"outcome": "LA Dodgers", "bookmaker": "FanDuel", "away_team": "LA Dodgers", "home_team": "SF Giants", "market": "h2h", "odds": "-115", "is_divisional": True}
+        {"outcome": "Toronto Blue Jays", "bookmaker": "DraftKings", "away_team": "NY Yankees", "home_team": "Toronto Blue Jays", "market": "h2h", "odds": "+135", "is_divisional": True, "commence_time": "2026-03-30T23:07:00Z"},
+        {"outcome": "LA Dodgers", "bookmaker": "FanDuel", "away_team": "LA Dodgers", "home_team": "SF Giants", "market": "h2h", "odds": "-115", "is_divisional": True, "commence_time": "2026-03-31T01:45:00Z"}
     ]
     df_odds = pd.DataFrame(dummy_data)
 
 # Adding Calculated Fields
 df_odds["is_divisional"] = df_odds.apply(lambda row: is_divisional_matchup(row["home_team"], row["away_team"]), axis=1)
+df_odds["formatted_time"] = pd.to_datetime(df_odds["commence_time"]).dt.strftime("%b %d, %H:%M")
 df_odds["implied_prob"] = df_odds["odds"].apply(calculate_implied_probability)
 df_odds["model_prob"] = df_odds["implied_prob"] + 0.05 # Simulated refinement
 df_odds["decimal_odds"] = df_odds["odds"].apply(american_to_decimal)
@@ -110,7 +111,10 @@ else:
                         <span style='font-size: 1.2rem; font-weight: 600; color: #fff;'>{row['outcome']} @ {row['bookmaker']}</span>
                         <div style='margin-top: 5px;'>{pills_html}</div>
                     </div>
-                    <span class='ev-badge'>+{row['ev']*100:.1f}% Expected Value</span>
+                    <div style='text-align: right;'>
+                        <div class='ev-badge'>+{row['ev']*100:.1f}% Expected Value</div>
+                        <div style='margin-top: 5px; font-size: 0.8rem; color: #64748b;'>{row['formatted_time']}</div>
+                    </div>
                 </div>
                 <div style='margin-top: 10px; color: #94a3b8; font-size: 0.9rem;'>
                     {row['away_team']} <b>@</b> {row['home_team']} | Market: {row['market'].upper()} | Odds: {row['odds']}
