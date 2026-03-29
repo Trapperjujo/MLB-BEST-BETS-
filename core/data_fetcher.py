@@ -13,8 +13,8 @@ ODDS_BASE_URL = "https://api.the-odds-api.com/v4"
 BDL_BASE_URL = "https://api.balldontlie.io/v1/mlb"
 SPORTS_BASE_URL = "https://v1.baseball.api-sports.io"
 
-def get_mlb_odds(regions="us", markets="h2h,spreads,totals"):
-    """Fetches real-time MLB odds from The Odds API."""
+def get_mlb_odds(regions="us,uk,eu,au", markets="h2h"):
+    """Fetches real-time MLB odds from The Odds API across multiple regions."""
     url = f"{ODDS_BASE_URL}/sports/baseball_mlb/odds/"
     params = {
         "apiKey": ODDS_API_KEY,
@@ -27,6 +27,30 @@ def get_mlb_odds(regions="us", markets="h2h,spreads,totals"):
         return response.json()
     else:
         print(f"Error fetching odds: {response.status_code}")
+        return []
+
+def get_mlb_schedule(date_str):
+    """Fetches official MLB schedule and probable pitchers from Stats API."""
+    url = f"https://statsapi.mlb.com/api/v1/schedule?sportId=1&date={date_str}&hydrate=probablePitcher"
+    try:
+        r = requests.get(url)
+        r.raise_for_status()
+        data = r.json()
+        games = []
+        for date_info in data.get("dates", []):
+            for game in date_info.get("games", []):
+                games.append({
+                    "game_id": game.get("gamePk"),
+                    "home_team": game.get("teams", {}).get("home", {}).get("team", {}).get("name"),
+                    "away_team": game.get("teams", {}).get("away", {}).get("team", {}).get("name"),
+                    "commence_time": game.get("gameDate"),
+                    "home_pitcher": game.get("teams", {}).get("home", {}).get("probablePitcher", {}).get("fullName", "TBD"),
+                    "away_pitcher": game.get("teams", {}).get("away", {}).get("probablePitcher", {}).get("fullName", "TBD"),
+                    "status": game.get("status", {}).get("abstractGameState")
+                })
+        return games
+    except Exception as e:
+        print(f"Error fetching schedule: {e}")
         return []
 
 def get_mlb_games(date=None):
