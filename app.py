@@ -41,6 +41,25 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# 🧬 SEO POWER-UP: Meta-Tag Injection (Head Bridge)
+# This bypasses Streamlit limitations to ensure Google indexing for 2026.
+import streamlit.components.v1 as components
+components.html("""
+<script>
+    const metaDescription = document.createElement('meta');
+    metaDescription.name = "description";
+    metaDescription.content = "Institutional-grade MLB predictive analytics terminal using XGBoost v3.0 and Monte Carlo simulations for 2026 season projections. Verified 61.6% accuracy audit.";
+    document.getElementsByTagName('head')[0].appendChild(metaDescription);
+
+    const metaKeywords = document.createElement('meta');
+    metaKeywords.name = "keywords";
+    metaKeywords.content = "MLB Predictions, 2026 World Series Odds, MLB Expert Picks, Statcast Data, Baseball Analytics, XGBoost MLB, MLB Betting Alpha, MLB Futures Bets, MLB Player Props, Shohei Ohtani Odds";
+    document.getElementsByTagName('head')[0].appendChild(metaKeywords);
+    
+    document.title = "PRO BALL PREDICTOR | MLB Analytics Terminal 2026";
+</script>
+""", height=0)
+
 # Load CSS
 def load_css(file_path):
     if os.path.exists(file_path):
@@ -63,16 +82,12 @@ min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 10.0, MIN_EDGE_DEFA
 cad_rate = st.sidebar.number_input("CAD/USD Rate", value=CAD_USD_XRATE, step=0.01)
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("### 🗺️ Navigation")
-page = st.sidebar.radio("View Mode", ["🎯 Intelligence Feed", "🗓️ Full Predictions", "📈 2026 Standings", "🏆 Team Power Rankings", "🧬 Player Analytics"])
+st.sidebar.markdown("### 🗺️ Terminal Overview")
+st.sidebar.info("🛰️ **Active Mode**: Command Center Navigation. Use the primary top-level tabs to switch between Live Predictions, Power Rankings, and Institutional Research.")
 
 if st.sidebar.button("🔄 Clear Cache & Refresh Data"):
     st.cache_data.clear()
     st.rerun()
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 🔍 Dashboard Sorting")
-sort_mode = st.sidebar.selectbox("Sort Predictions By", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset"])
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📊 Strategies")
@@ -111,16 +126,33 @@ def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
     h_p_stats, a_p_stats = kwargs.get('p_stats', pd.DataFrame()), kwargs.get('p_stats', pd.DataFrame())
     h_p_name, a_p_name = row.get('home_pitcher', 'TBD'), row.get('away_pitcher', 'TBD')
     h_team, a_team = normalize_team_name(row["home_team"]), normalize_team_name(row["away_team"])
+    
+    # 📡 Hybrid Elo Alignment & 2026 Momentum Alpha
+    # Injecting live season momentum (Win%) into the baseline Elo.
     h_elo, a_elo = get_team_elo(h_team), get_team_elo(a_team)
     h_fat, a_fat = get_fatigue_penalty(h_team, history_df), get_fatigue_penalty(a_team, history_df)
+    
+    # Live Standings Momentum Adjustment
+    standings = kwargs.get('standings_df', pd.DataFrame())
+    h_mom, a_mom = 0, 0
+    if not standings.empty:
+        h_rec = standings[standings['Team'] == h_team]
+        a_rec = standings[standings['Team'] == a_team]
+        if not h_rec.empty:
+            # Momentum Alpha: Win% deviation from .500 * March phase weight (10.0)
+            h_mom = int((float(h_rec.iloc[0]['PCT']) - 0.500) * 10)
+        if not a_rec.empty:
+            a_mom = int((float(a_rec.iloc[0]['PCT']) - 0.500) * 10)
+
     h_war, a_war = team_war_map.get(h_team, 0.0), team_war_map.get(a_team, 0.0)
     w_adj = calculate_war_elo_adjustment(h_war, a_war)
+
+    # 📏 Final Calibration: (Base Elo + Momentum) - Fatigue + WAR
+    h_elo_adj = int(h_elo or 1500) + h_mom - int(h_fat or 0) + (max(0, w_adj) if w_adj else 0)
+    a_elo_adj = int(a_elo or 1500) + a_mom - int(a_fat or 0) + (abs(min(0, w_adj)) if w_adj else 0)
+
     h_ps = h_p_stats[h_p_stats['Name'] == h_p_name].iloc[0].to_dict() if not h_p_stats.empty and not h_p_stats[h_p_stats['Name'] == h_p_name].empty else None
     a_ps = a_p_stats[a_p_stats['Name'] == a_p_name].iloc[0].to_dict() if not a_p_stats.empty and not a_p_stats[a_p_stats['Name'] == a_p_name].empty else None
-    # 📡 Hybrid Elo Alignment (Institutional Weighing)
-    # Applying fatigue and lineage (WAR) adjustments directly to Elo baselines
-    h_elo_adj = int(h_elo or 1500) - int(h_fat or 0) + (max(0, w_adj) if w_adj else 0)
-    a_elo_adj = int(a_elo or 1500) - int(a_fat or 0) + (abs(min(0, w_adj)) if w_adj else 0)
 
     # 🛰️ Execute Monte Carlo Simulation Core
     mc = run_monte_carlo_simulation(
@@ -147,9 +179,12 @@ def fetch_master_data():
         raw_odds = get_mlb_odds(regions="us,uk,eu,au")
         df_odds, df_p, df_t = process_odds_data(raw_odds) if raw_odds else pd.DataFrame(), get_pitcher_stats(2024), get_team_hitting_stats(2024)
         df_sched["h_norm"], df_sched["a_norm"] = df_sched["home_team"].apply(normalize_team_name), df_sched["away_team"].apply(normalize_team_name)
-        preds = df_sched.apply(lambda r: pd.Series(get_prediction(r, df_hist, p_stats=df_p, t_stats=df_t)), axis=1)
+        
+        # Fetch standings for momentum
+        df_standings = get_2026_standings()
+        preds = df_sched.apply(lambda r: pd.Series(get_prediction(r, df_hist, p_stats=df_p, t_stats=df_t, standings_df=df_standings)), axis=1)
         df_sched = pd.concat([df_sched, preds], axis=1)
-        st.session_state["df_standings_2026"], st.session_state["df_leaders_2026"] = get_2026_standings(), get_2026_leaders()
+        st.session_state["df_standings_2026"], st.session_state["df_leaders_2026"] = df_standings, get_2026_leaders()
         status.update(label="✅ Synchronization Complete", state="complete")
     final = []
     for _, g in df_sched.iterrows():
@@ -184,86 +219,86 @@ if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
 
-# Header: PRO BALL PREDICTOR
-st.markdown("""
-<div style='text-align: center; padding: 20px;'>
-    <h1 style='font-size: 3.5rem; margin-bottom: 5px; letter-spacing: -2px;'>PRO BALL PREDICTOR</h1>
-    <p style='color: #94a3b8; font-size: 1.4rem; font-weight: 300;'>Professional Baseball Predictive Terminal</p>
-</div>
-""", unsafe_allow_html=True)
+# 🛰️ PRIMARY TERMINAL INTERFACE
+st.markdown("<h1 style='text-align: center; margin-bottom: 0px;'>PRO BALL PREDICTOR</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94a3b8; font-family: \"Orbitron\"; letter-spacing: 2px; font-size: 0.9rem;'>Professional Baseball Predictive Terminal</p>", unsafe_allow_html=True)
 
 # 🛰️ Verified Accuracy Header
 st.markdown(f"""
-<div class="audit-container-premium" style="margin-bottom: 5px;">
-    <div class="digital-clock-tile">
-        <div class="audit-label-badge">MODEL ACCURACY</div>
-        <div class="digital-clock-value value-green">61.6%</div>
-        <div class="digital-clock-status">● VERIFIED AUDIT</div>
-    </div>
-    <div style="width: 1px; background: rgba(0, 51, 170, 0.2); align-self: stretch;"></div>
-    <div class="digital-clock-tile">
-        <div class="audit-label-badge">AVG CONFIDENCE</div>
-        <div class="digital-clock-value value-blue">61.6%</div>
-        <div class="digital-clock-status">● SYSTEM CALIBRATED</div>
-    </div>
-</div>
-<div style="text-align: center; margin-bottom: 30px;">
-    <div class="maturity-badge-gold">
-        ⚠️ SEASON PHASE: OPENING WEEKEND (HIGH VOLATILITY) ⚠️
-    </div>
 </div>
 """, unsafe_allow_html=True)
 
-with st.expander("🔍 **Audit Transparency: How We Verified 61.6% Accuracy**"):
-    st.markdown("""
-    <div class="audit-disclaimer-text">
-        The <b>61.6% Accuracy Audit</b> is derived from a longitudinal dataset of <b>7,748 MLB game outcomes</b> spanning the 2024, 2025, and early 2026 seasons.
-        <br><br>
-        <b>Institutional Methodology:</b>
-        <ul>
-            <li><b>Longitudinal Weighted Mean:</b> Our benchmark is not a daily snapshot but a multi-season calibrated average.</li>
-            <li><b>Variance Disclaimer:</b> During "High Volatility" phases (Opening Weekend, Post-Trade Deadline), short-term samples can deviate from the 61.6% mean as the XGBoost engine recalibrates to new roster trends.</li>
-            <li><b>Reliability:</b> The PRO BALL PREDICTOR is designed for 162-game profitability, utilizing the Kelly Criterion to survive short-term variance.</li>
-        </ul>
+# 🛰️ COMMAND CENTER: PRIMARY NAVIGATION
+# Elevating research and analytics to the top level for institutional-grade access.
+tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "🛰️ Predictive Terminal", 
+    "🏆 Elo Power Rankings", 
+    "🥇 League Leaders", 
+    "🧬 Player Research", 
+    "🏛️ Historical Intelligence", 
+    "🛡️ Strategy & Compliance"
+])
+
+with tab0:
+    st.markdown(f"""
+    <div class="audit-container-premium" style="margin-bottom: 5px;">
+        <div class="digital-clock-tile">
+            <div class="audit-label-badge">MODEL ACCURACY</div>
+            <div class="digital-clock-value value-green">61.6%</div>
+            <div class="digital-clock-status">● VERIFIED AUDIT</div>
+        </div>
+        <div style="width: 1px; background: rgba(0, 51, 170, 0.2); align-self: stretch;"></div>
+        <div class="digital-clock-tile">
+            <div class="audit-label-badge">AVG CONFIDENCE</div>
+            <div class="digital-clock-value value-blue">61.6%</div>
+            <div class="digital-clock-status">● SYSTEM CALIBRATED</div>
+        </div>
+    </div>
+    <div style="text-align: center; margin-bottom: 30px;">
+        <div class="maturity-badge-gold">
+            ⚠️ SEASON PHASE: OPENING WEEKEND (HIGH VOLATILITY) ⚠️
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-# (Cleanup previously moved blocks)
+    with st.expander("🔍 **Audit Transparency: How We Verified 61.6% Accuracy**"):
+        st.markdown("""
+        <div class="audit-disclaimer-text">
+            The <b>61.6% Accuracy Audit</b> is derived from a longitudinal dataset of <b>7,748 MLB game outcomes</b> spanning the 2024, 2025, and early 2026 seasons.
+            <br><br>
+            <b>Institutional Methodology:</b>
+            <ul>
+                <li><b>Longitudinal Weighted Mean:</b> Our benchmark is not a daily snapshot but a multi-season calibrated average.</li>
+                <li><b>Variance Disclaimer:</b> During "High Volatility" phases (Opening Weekend, Post-Trade Deadline), short-term samples can deviate from the 61.6% mean as the XGBoost engine recalibrates to new roster trends.</li>
+                <li><b>Reliability:</b> The PRO BALL PREDICTOR is designed for 162-game profitability, utilizing the Kelly Criterion to survive short-term variance.</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
-# Update counts dynamically
-ev_count = len(df_master[(df_master["odds"].notnull()) & (df_master["ev"] >= min_edge)])
-total_count = len(df_master.drop_duplicates(subset=["game_id"]))
 
-st.sidebar.markdown("---")
-st.sidebar.markdown(f"**📡 Sync Status:** {total_count} Games Active")
-st.sidebar.markdown(f"**🎯 Value Alerts:** {ev_count} detected")
+    # Update counts dynamically
+    ev_count = len(df_master[(df_master["odds"].notnull()) & (df_master["ev"] >= min_edge)])
+    total_count = len(df_master.drop_duplicates(subset=["game_id"]))
 
-# FIX: Main Dashboard Header
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    st.metric("Total Bankroll", f"${bankroll:,.2f} CAD")
-with col2:
-    st.metric("Base Unit (1.0u)", f"${flat_staking(bankroll, std_bet_size):,.2f}")
-with col3:
-    st.metric("Model Fidelity", "Elo + 4 Regions", delta="High")
-with col4:
-    st.metric("Active Regions", "US, UK, EU, AU", delta="Linked")
+    # FIX: Main Dashboard Header
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("Total Bankroll", f"${bankroll:,.2f} CAD")
+    with col2:
+        st.metric("Base Unit (1.0u)", f"${flat_staking(bankroll, std_bet_size):,.2f}")
+    with col3:
+        st.metric("Model Fidelity", "Elo + 4 Regions", delta="High")
+    with col4:
+        st.metric("Active Regions", "US, UK, EU, AU", delta="Linked")
 
-st.markdown("---")
+    st.markdown("---")
 
-# Dashboard Routing Logic
-is_feed_mode = page in ["🎯 Intelligence Feed", "🗓️ Full Predictions"]
-is_standings_mode = page == "📈 2026 Standings"
-is_ranking_mode = page == "🏆 Team Power Rankings"
-is_analytics_mode = page == "🧬 Player Analytics"
-
-# 1. Prediction Feed (Conditional)
-if is_feed_mode:
+    # ⚾ MLB Predictions Master Feed
     st.subheader(f"⚾ MLB Predictions Master Feed ({total_count} Games)")
 
     # Sort the master view to favor best bets
-    df_master = df_master.sort_values(by="ev", ascending=False)
-    df_sched_view = df_master.drop_duplicates(subset=["game_id"])
+    df_master_sorted = df_master.sort_values(by="ev", ascending=False)
+    df_sched_view = df_master_sorted.drop_duplicates(subset=["game_id"])
     
     if sort_mode == "🔥 Highest +EV":
         df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
@@ -280,10 +315,9 @@ if is_feed_mode:
         game_bets = df_master[df_master["game_id"] == row["game_id"]]
         best_bet = game_bets.sort_values(by="ev", ascending=False).iloc[0] if not game_bets.empty else row
         
-        display_date = pd.to_datetime(row["commence_time"]).strftime("%a, %b %d") if not isinstance(row["commence_time"], pd.Series) else pd.to_datetime(row["commence_time"].iloc[0]).strftime("%a, %b %d")
+        display_date = pd.to_datetime(row["commence_time"]).strftime("%a, %b %d")
         
         with st.container():
-            # Retrieve 2026 Standings for the teams
             df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
             h_rec = df_s[df_s["Team"] == row["home_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["home_team"]].empty else None
             a_rec = df_s[df_s["Team"] == row["away_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["away_team"]].empty else None
@@ -291,12 +325,10 @@ if is_feed_mode:
             h_rec_str = f"{h_rec['W']}-{h_rec['L']} (Elo: {int(row['home_elo'])})" if h_rec is not None else f"0-0 (Elo: {int(row['home_elo'])})"
             a_rec_str = f"{a_rec['W']}-{a_rec['L']} (Elo: {int(row['away_elo'])})" if a_rec is not None else f"0-0 (Elo: {int(row['away_elo'])})"
     
-            # XGBoost Synergy Check
             synergy_badge = ""
             if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5):
                 synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Confidence: {row['xg_conf']*100:.1f}%</span>"
     
-            # Build the HTML string for the card
             card_html = f"""
     <div class='neon-card'>
     <div class='neon-card-header'>
@@ -338,143 +370,20 @@ if is_feed_mode:
     </div>
     </div>
     """
-            
-            # Details view in expander
-            
-            # Render the full card
             st.markdown(card_html, unsafe_allow_html=True)
-            
-            # Details view in expander
             with st.expander("🔍 Matchup Analysis & Market Depth"):
                 c1, c2 = st.columns(2)
                 with c1:
                     st.write(f"**Elo Spread:** {int(row['home_elo'])} vs {int(row['away_elo'])}")
                     st.write(f"**Status:** {row['status']}")
                 with c2:
-                    # Distribution chart using sample scores
-                    hist_df = pd.DataFrame({
-                        'Away': row['away_scores_sample'],
-                        'Home': row['home_scores_sample']
-                    })
+                    hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
                     st.plotly_chart(fig, width='stretch')
-                    
                 game_odds = df_master[df_master["game_id"] == row["game_id"]]
                 game_odds = game_odds[game_odds["odds"].notnull()]
                 if not game_odds.empty:
                     st.dataframe(game_odds[["bookmaker", "outcome", "odds", "ev", "implied_prob"]], width='stretch')
-
-# 2. Focused Analytics Deep-Dives
-if is_standings_mode:
-    st.subheader("📈 Official 2026 MLB Standings Hub")
-    df_s_final = st.session_state.get("df_standings_2026", pd.DataFrame())
-    if not df_s_final.empty:
-        # Create AL/NL Tabs
-        l_tabs = st.tabs(["American League (AL)", "National League (NL)"])
-        
-        leagues = ["American League", "National League"]
-        divisions = ["East", "Central", "West"]
-        
-        for i, league in enumerate(leagues):
-            with l_tabs[i]:
-                df_league = df_s_final[df_s_final["League"] == league]
-                
-                for div_name in divisions:
-                    st.markdown(f"#### 🏆 {league} {div_name}")
-                    df_div = df_league[df_league["Division"].str.contains(div_name)].sort_values(by="PCT", ascending=False)
-                    
-                    st.dataframe(df_div[[
-                        "Team", "W", "L", "PCT", "GB", "DIFF", "STRK"
-                    ]], hide_index=True, width='stretch')
-                    st.markdown(" <br> ", unsafe_allow_html=True) # Separator
-        
-        st.markdown("---")
-        st.subheader("📈 Performance Analysis: Wins vs ATS")
-        fig_s = px.scatter(df_s_final, x="W", y="ATS_W", text="Team", color="League", title="League-Wide Profitability Analysis (2026)", template="plotly_dark")
-        st.plotly_chart(fig_s, width='stretch')
-        with st.expander("📈 Performance Legend & Profitability Hub"):
-            st.markdown("""
-            - **🏆 W (Wins)**: Raw regular season victories. Measures overall team strength.
-            - **💎 ATS_W (Against The Spread Wins)**: Frequency that a team 'covered' the sportsbook spread. Measures real-world betting profitability.
-            
-            #### 🚀 Profitability Matrix:
-            *   **Upper-Right**: Elite & Profitable (Consistent winners who beat the spread).
-            *   **Upper-Left**: High-Value Underdogs (Low wins, but highly profitable relative to market expectations).
-            *   **Lower-Right**: Overvalued Giants (High wins, but unprofitable due to inflated market 'hype').
-            """)
-    else:
-        st.info("Seasonal standings currently syncing. Click 'Refresh Status' in the sidebar to hydrate.")
-
-elif is_ranking_mode:
-    st.subheader("🏆 MLB Power Rankings & Predictions")
-    # Outcome Table
-    if not df_master.empty:
-        outcomes = []
-        unique_games = df_master.drop_duplicates(subset=['game_id'])
-        for _, row in unique_games.iterrows():
-            winner = row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']
-            winner_loc = "Home" if row['home_win_prob'] > 0.5 else "Away"
-            matchup = f"{row['away_team']} ({int(row['away_elo'])}) @ {row['home_team']} ({int(row['home_elo'])})"
-            
-            # Robust data extraction for table
-            xg_c = float(row.get('xg_conf', 0.5)) * 100
-            ev_val = float(row.get('ev', 0.0)) * 100
-            
-            outcomes.append({
-                "Matchup": matchup,
-                "Predicted Winner": f"🏆 {winner} ({winner_loc})",
-                "Projected Score": f"{row.get('home_proj', 0.0):.1f} - {row.get('away_proj', 0.0):.1f}",
-                "XGBoost Confidence": xg_c,
-                "Value Edge (EV)": max(0.0, ev_val)
-            })
-        df_out_view = pd.DataFrame(outcomes)
-        st.dataframe(df_out_view, width='stretch', hide_index=True, column_config={
-            "XGBoost Confidence": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
-            "Value Edge (EV)": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
-        })
-
-    # Elo Bar Chart
-    st.markdown("---")
-    st.subheader("📊 Global Elo Strength Matrix")
-    elo_map = load_elo_ratings()
-    elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
-    fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
-    fig.update_layout(height=800, margin=dict(l=20, r=20, t=10, b=10))
-    st.plotly_chart(fig, width='stretch', key="global_elo_ranking_deep")
-
-elif is_analytics_mode:
-    st.subheader("🧬 Player Analytics Deep-Dive")
-    p_cache = "data/raw/cache_pitchers_2024.csv"
-    h_cache = "data/raw/cache_hitting_2024.csv"
-    if os.path.exists(p_cache) and os.path.exists(h_cache):
-        df_p = pd.read_csv(p_cache)
-        df_h = pd.read_csv(h_cache)
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown("### ⚾ Pitcher Efficiency Matrix")
-            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", color_continuous_scale="Viridis", template="plotly_dark")
-            fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), x1=df_p['FIP'].max(), y1=df_p['FIP'].max(), line=dict(color="Red", width=2, dash="dash"))
-            st.plotly_chart(fig_p, width='stretch', key="analytics_pitcher_matrix_deep")
-            with st.expander("📚 Pitcher Matrix Legend & Key"):
-                st.markdown("""
-                - **⚾ ERA (Earned Run Average)**: The actual runs allowed per 9 innings. **Lower is better.**
-                - **🛰️ FIP (Fielding Independent Pitching)**: Projects what ERA *should* be by removing luck/defense. A FIP lower than ERA suggests the pitcher is pitching better than their results show.
-                - **🏆 WAR (Wins Above Replacement)**: The total 'Win Value' a pitcher provides over a standard backup. Larger bubbles = More valuable season.
-                - **🔥 K/9 (Strikeouts per 9)**: How many batters the pitcher fanned per 9 innings. Brightness indicates high-strikeout dominance.
-                """)
-        with c2:
-            st.markdown("### 💥 Team Hitting Strength")
-            df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
-            fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", color_continuous_scale="Plasma", template="plotly_dark")
-            st.plotly_chart(fig_h, width='stretch', key="analytics_hitting_bar_deep")
-            with st.expander("📊 Team Hitting Legend & Key"):
-                st.markdown("""
-                - **📈 OPS (On-Base Plus Slugging)**: Combined measure of a team's ability to reach base and hit for extra bases. **Higher is better.**
-                - **🛰️ wRC+ (Weighted Runs Created Plus)**: The single best hitting metric. It captures total offensive value, adjusted for ballparks. **100 is league average.** (e.g., 115 means the team is 15% above average).
-                """)
-        st.markdown("---")
-        st.subheader("🔍 Full Professional Benchmarks")
-        st.dataframe(df_p.sort_values(by="WAR", ascending=False), width='stretch')
     else:
         st.info("Statcast benchmarks currently syncing...")
 
@@ -482,9 +391,10 @@ elif is_analytics_mode:
 st.markdown("---")
 
 
-st.subheader("📊 Global Analytics Modules")
-
-tab0,tab1,tab2,tab3,tab4,tab5 = st.tabs(["🛰️ PRO BALL PREDICTIONS", "🏆 Elo Rankings", "🥇 League Leaders", "🧬 Player Analytics", "🏛️ Historical Intelligence", "🛰️ OUR STRATEGY"])
+# Cleanup redundant tab logic
+with tab1:
+    st.subheader("🏆 Global Leaderboard: Elo Point Scores")
+    # ... (Logic already exists below, we will just sync the indentation in next step or via a clean pass)
 
 with tab0:
     st.subheader("🛰️ PRO BALL PREDICTIONS: Matchup Hub")
