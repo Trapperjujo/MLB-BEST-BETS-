@@ -26,6 +26,15 @@ def calculate_implied_probability(american_odds: int) -> float:
     else:
         return abs(american_odds) / (abs(american_odds) + 100.0)
 
+def calculate_elo_probability(home_elo: int, away_elo: int, hfa: int = 24) -> float:
+    """
+    Calculates the home win probability using the Elo formula.
+    P(Home Win) = 1 / (1 + 10^((AwayElo - (HomeElo + HFA)) / 400))
+    """
+    elo_diff = away_elo - (home_elo + hfa)
+    probability = 1.0 / (1.0 + math.pow(10.0, elo_diff / 400.0))
+    return probability
+
 def calculate_ev(model_prob: float, decimal_odds: float) -> float:
     """Calculates Expected Value (EV) percentage."""
     return (model_prob * decimal_odds) - 1.0
