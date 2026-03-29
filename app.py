@@ -97,7 +97,17 @@ def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
     w_adj = calculate_war_elo_adjustment(h_war, a_war)
     h_ps = h_p_stats[h_p_stats['Name'] == h_p_name].iloc[0].to_dict() if not h_p_stats.empty and not h_p_stats[h_p_stats['Name'] == h_p_name].empty else None
     a_ps = a_p_stats[a_p_stats['Name'] == a_p_name].iloc[0].to_dict() if not a_p_stats.empty and not a_p_stats[a_p_stats['Name'] == a_p_name].empty else None
-    mc = run_monte_carlo_simulation(h_elo=int(h_elo), away_elo=int(a_elo), adjustments={'home': -h_fat, 'away': -a_fat, 'lineup_war_diff': w_adj})
+    # 📡 Hybrid Elo Alignment (Institutional Weighing)
+    # Applying fatigue and lineage (WAR) adjustments directly to Elo baselines
+    h_elo_adj = int(h_elo or 1500) - int(h_fat or 0) + (max(0, w_adj) if w_adj else 0)
+    a_elo_adj = int(a_elo or 1500) - int(a_fat or 0) + (abs(min(0, w_adj)) if w_adj else 0)
+
+    # 🛰️ Execute Monte Carlo Simulation Core
+    mc = run_monte_carlo_simulation(
+        home_elo=int(h_elo_adj), 
+        away_elo=int(a_elo_adj), 
+        iterations=10000
+    )
     xg_p, xg_c = predict_xgboost_v3(h_team, a_team)
     return {
         'home_win_prob': mc['home_win_prob'], 'away_win_prob': mc['away_win_prob'], 'home_elo': h_elo, 'away_elo': a_elo,
