@@ -349,12 +349,12 @@ if is_feed_mode:
                         'Home': row['home_scores_sample']
                     })
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width='stretch')
                     
                 game_odds = df_master[df_master["game_id"] == row["game_id"]]
                 game_odds = game_odds[game_odds["odds"].notnull()]
                 if not game_odds.empty:
-                    st.dataframe(game_odds[["bookmaker", "outcome", "odds", "ev", "implied_prob"]], use_container_width=True)
+                    st.dataframe(game_odds[["bookmaker", "outcome", "odds", "ev", "implied_prob"]], width='stretch')
 
 # 2. Focused Analytics Deep-Dives
 if is_standings_mode:
@@ -377,13 +377,13 @@ if is_standings_mode:
                     
                     st.dataframe(df_div[[
                         "Team", "W", "L", "PCT", "GB", "DIFF", "STRK"
-                    ]], hide_index=True, use_container_width=True)
+                    ]], hide_index=True, width='stretch')
                     st.markdown(" <br> ", unsafe_allow_html=True) # Separator
         
         st.markdown("---")
         st.subheader("📈 Performance Analysis: Wins vs ATS")
         fig_s = px.scatter(df_s_final, x="W", y="ATS_W", text="Team", color="League", title="League-Wide Profitability Analysis (2026)", template="plotly_dark")
-        st.plotly_chart(fig_s, use_container_width=True)
+        st.plotly_chart(fig_s, width='stretch')
         with st.expander("📈 Performance Legend & Profitability Hub"):
             st.markdown("""
             - **🏆 W (Wins)**: Raw regular season victories. Measures overall team strength.
@@ -420,7 +420,7 @@ elif is_ranking_mode:
                 "Value Edge (EV)": max(0.0, ev_val)
             })
         df_out_view = pd.DataFrame(outcomes)
-        st.dataframe(df_out_view, use_container_width=True, hide_index=True, column_config={
+        st.dataframe(df_out_view, width='stretch', hide_index=True, column_config={
             "XGBoost Confidence": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=100),
             "Value Edge (EV)": st.column_config.ProgressColumn(format="%.1f%%", min_value=0, max_value=20)
         })
@@ -432,7 +432,7 @@ elif is_ranking_mode:
     elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
     fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
     fig.update_layout(height=800, margin=dict(l=20, r=20, t=10, b=10))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch', key="global_elo_ranking_deep")
 
 elif is_analytics_mode:
     st.subheader("🧬 Player Analytics Deep-Dive")
@@ -446,7 +446,7 @@ elif is_analytics_mode:
             st.markdown("### ⚾ Pitcher Efficiency Matrix")
             fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", color_continuous_scale="Viridis", template="plotly_dark")
             fig_p.add_shape(type="line", x0=df_p['FIP'].min(), y0=df_p['FIP'].min(), x1=df_p['FIP'].max(), y1=df_p['FIP'].max(), line=dict(color="Red", width=2, dash="dash"))
-            st.plotly_chart(fig_p, use_container_width=True)
+            st.plotly_chart(fig_p, width='stretch', key="analytics_pitcher_matrix_deep")
             with st.expander("📚 Pitcher Matrix Legend & Key"):
                 st.markdown("""
                 - **⚾ ERA (Earned Run Average)**: The actual runs allowed per 9 innings. **Lower is better.**
@@ -458,7 +458,7 @@ elif is_analytics_mode:
             st.markdown("### 💥 Team Hitting Strength")
             df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
             fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", color_continuous_scale="Plasma", template="plotly_dark")
-            st.plotly_chart(fig_h, use_container_width=True)
+            st.plotly_chart(fig_h, width='stretch', key="analytics_hitting_bar_deep")
             with st.expander("📊 Team Hitting Legend & Key"):
                 st.markdown("""
                 - **📈 OPS (On-Base Plus Slugging)**: Combined measure of a team's ability to reach base and hit for extra bases. **Higher is better.**
@@ -466,7 +466,7 @@ elif is_analytics_mode:
                 """)
         st.markdown("---")
         st.subheader("🔍 Full Professional Benchmarks")
-        st.dataframe(df_p.sort_values(by="WAR", ascending=False), use_container_width=True)
+        st.dataframe(df_p.sort_values(by="WAR", ascending=False), width='stretch')
     else:
         st.info("Statcast benchmarks currently syncing...")
 
@@ -500,7 +500,7 @@ with tab0:
                 "Projected Score": f"{row.get('home_proj', 0.0):.1f} - {row.get('away_proj', 0.0):.1f}"
             })
         df_out_view = pd.DataFrame(outcomes)
-        st.dataframe(df_out_view, use_container_width=True, hide_index=True)
+        st.dataframe(df_out_view, width='stretch', hide_index=True)
     else:
         st.info("No active matchups found.")
 
@@ -529,7 +529,7 @@ with tab4:
                 | **avg_runs_scored** | Longitudinal average of runs scored per game. |
                 """)
             team_df = pd.DataFrame.from_dict(ref_data.get('team_matrix', {}), orient='index').reset_index().rename(columns={'index': 'Team'})
-            st.dataframe(team_df.sort_values(by='overall_win_rate', ascending=False), use_container_width=True, hide_index=True)
+            st.dataframe(team_df.sort_values(by='overall_win_rate', ascending=False), width='stretch', hide_index=True)
             
         with col2:
             st.markdown("#### 🧬 Elite Pitcher Benchmarks")
@@ -543,7 +543,7 @@ with tab4:
                 | **win_rate** | The frequency of wins achieved in their starts (2024-2026). |
                 """)
             p_df = pd.DataFrame(ref_data.get('elite_pitchers', []))
-            st.dataframe(p_df, use_container_width=True, hide_index=True)
+            st.dataframe(p_df, width='stretch', hide_index=True)
     else:
         st.info("Historical reference manual currently hydrating...")
 
@@ -561,9 +561,9 @@ with tab1:
         """)
     elo_map = load_elo_ratings()
     elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
-    st.dataframe(elo_df.reset_index(drop=True), use_container_width=True)
+    st.dataframe(elo_df.reset_index(drop=True), width='stretch')
     fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 with tab2:
     st.subheader("🥇 League Leaders")
@@ -636,7 +636,7 @@ with tab3:
             st.markdown("### ⚾ Pitcher Matrix")
             st.info("🎯 **Pitcher Performance Matrix**: High-density visualization comparing actual outcome (ERA) vs. underlying skill (FIP). Bubble size represents total Win Value (WAR).")
             fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", template="plotly_dark")
-            st.plotly_chart(fig_p, use_container_width=True)
+            st.plotly_chart(fig_p, width='stretch', key="global_pitcher_matrix_tab")
             with st.expander("📚 Pitcher Matrix Key"):
                 st.markdown("""
                 | Metric | Definition |
@@ -651,7 +651,7 @@ with tab3:
             st.info("📈 **Team Hitting Benchmarks**: League-wide comparison of offensive production, adjusted for ballpark factors and scoring environments.")
             df_h_sorted = df_h.sort_values(by="OPS", ascending=False)
             fig_h = px.bar(df_h_sorted, x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
-            st.plotly_chart(fig_h, use_container_width=True)
+            st.plotly_chart(fig_h, width='stretch', key="global_hitting_bar_tab")
             with st.expander("📊 Team Hitting Key"):
                 st.markdown("""
                 | Metric | Definition |
