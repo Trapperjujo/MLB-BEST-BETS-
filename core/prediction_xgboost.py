@@ -4,23 +4,26 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from core.elo_ratings import get_team_elo
 
+import os
+
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'xgboost_v2.json')
+
 def train_advanced_model():
     """
     Trains an advanced XGBoost model using historical outcomes + Pitcher/Team stats.
-    Features: Elo, Pitcher ERA (Baseline), Team OPS (Baseline).
+    Saves the model to disk for fast loading.
     """
     try:
+        # Ensure models directory exists
+        os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+        
         df = pd.read_csv("data/raw/mlb_official_2024.csv")
         df = df[df['status'] == 'Final'].copy()
-        
-        # In a real environment, we'd merge with actual 2024 pitcher stats here.
-        # For this execution, we'll use Elo as a proxy for 'Strength' and 
-        # add 'Normal Noise' to simulate Pitcher/Team features for the model logic.
         
         df['home_elo'] = df['home_team'].apply(get_team_elo)
         df['away_elo'] = df['away_team'].apply(get_team_elo)
         
-        # Synthetic Feature Simulation based on Elo (to establish non-linear relationships)
+        # Synthetic Feature Simulation based on Elo
         df['h_p_era'] = 4.5 - (df['home_elo'] - 1500) / 100 + np.random.normal(0, 0.5, len(df))
         df['a_p_era'] = 4.5 - (df['away_elo'] - 1500) / 100 + np.random.normal(0, 0.5, len(df))
         df['h_ops'] = 0.720 + (df['home_elo'] - 1500) / 2000 + np.random.normal(0, 0.05, len(df))
@@ -44,13 +47,27 @@ def train_advanced_model():
             eval_metric='logloss'
         )
         model.fit(X_train, y_train)
+        
+        # Save to disk
+        model.save_model(MODEL_PATH)
         return model
     except Exception as e:
         print(f"XGBoost Advanced Training Error: {e}")
         return None
 
+def load_advanced_model():
+    """Attempts to load a pre-trained model from disk."""
+    if os.path.exists(MODEL_PATH):
+        try:
+            model = xgb.XGBClassifier()
+            model.load_model(MODEL_PATH)
+            return model
+        except Exception:
+            pass
+    return train_advanced_model()
+
 # Singleton Model Instance
-_MODEL = train_advanced_model()
+_MODEL = load_advanced_model()
 
 def predict_xgboost_v2(home_team, away_team, h_p_stats=None, a_p_stats=None, h_t_stats=None, a_t_stats=None):
     """

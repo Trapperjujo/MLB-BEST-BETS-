@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import os
 from typing import Dict, List, Any
 
 # 2026 OddsShark Snapshot (Retrieved March 29, 2026)
@@ -100,24 +101,38 @@ def get_2026_leaders() -> Dict[str, pd.DataFrame]:
     return results
 
 def get_pitcher_stats(year: int = 2024) -> pd.DataFrame:
-    """Fetches pitcher season stats from pybaseball."""
+    """Fetches pitcher season stats from pybaseball with local caching."""
+    cache_path = f"data/raw/cache_pitchers_{year}.csv"
+    if os.path.exists(cache_path):
+        return pd.read_csv(cache_path)
+        
     from pybaseball import pitching_stats
     try:
         df = pitching_stats(year)
         # Select key features for XLS and UI
         cols = ['Name', 'Team', 'ERA', 'FIP', 'K/9', 'BB/9', 'WAR']
-        return df[cols].copy()
+        df_clean = df[cols].copy()
+        # Save to cache
+        df_clean.to_csv(cache_path, index=False)
+        return df_clean
     except Exception as e:
         print(f"Error fetching pitching stats: {e}")
         return pd.DataFrame()
 
 def get_team_hitting_stats(year: int = 2024) -> pd.DataFrame:
-    """Fetches team hitting stats (OPS, ISO, etc.)."""
+    """Fetches team hitting stats with local caching."""
+    cache_path = f"data/raw/cache_hitting_{year}.csv"
+    if os.path.exists(cache_path):
+        return pd.read_csv(cache_path)
+        
     from pybaseball import team_batting
     try:
         df = team_batting(year)
         # Sort or index by Team
-        return df[['Team', 'OPS', 'ISO', 'wRC+']].copy()
+        df_clean = df[['Team', 'OPS', 'ISO', 'wRC+']].copy()
+        # Save to cache
+        df_clean.to_csv(cache_path, index=False)
+        return df_clean
     except Exception as e:
         print(f"Error fetching team hitting stats: {e}")
         return pd.DataFrame()
