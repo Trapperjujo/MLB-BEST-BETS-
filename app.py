@@ -399,8 +399,41 @@ with tab1:
             | **💎 ATS_W** | Against The Spread Wins. Measures performance relative to the betting market. |
             | **Alpha Gap** | The vertical distance between W and ATS_W; higher indicates superior 'Value' for bettors. |
             """)
-        fig_s = px.scatter(df_s, x="W", y="ATS_W", text="Team", color="League", title="League-Wide Profitability Matrix (2026)", template="plotly_dark")
-        st.plotly_chart(fig_s, width='stretch')
+        fig_s = px.scatter(
+            df_s, 
+            x="W", 
+            y="ATS_W", 
+            text="Team", 
+            color="League", 
+            title="🎯 League-Wide Profitability Matrix (2026)",
+            labels={"W": "Outright Wins (Record)", "ATS_W": "Market Wins (Against Spread)"},
+            template="plotly_dark",
+            hover_data=["Division", "L", "ATS_L"]
+        )
+        
+        # 🛰️ THE ALPHA DIAGONAL (Market Parity)
+        max_val = max(df_s["W"].max(), df_s["ATS_W"].max())
+        fig_s.add_shape(
+            type="line", line=dict(dash="dash", color="#444"),
+            x0=0, y0=0, x1=max_val, y1=max_val
+        )
+        
+        # 🎯 QUADRANT ANNOTATIONS
+        mid_w = df_s["W"].median()
+        mid_ats = df_s["ATS_W"].median()
+        
+        fig_s.add_vline(x=mid_w, line_dash="dot", line_color="#333")
+        fig_s.add_hline(y=mid_ats, line_dash="dot", line_color="#333")
+        
+        # Quadrant Labels
+        fig_s.add_annotation(x=max_val*0.1, y=max_val*0.9, text="💎 SMART MONEY ALPHA", showarrow=False, font=dict(color=var_neon_green, size=10))
+        fig_s.add_annotation(x=max_val*0.9, y=max_val*0.9, text="👑 ELITE DOMINANCE", showarrow=False, font=dict(color=var_neon_blue, size=10))
+        fig_s.add_annotation(x=max_val*0.9, y=max_val*0.1, text="⚠️ MARKET TRAP", showarrow=False, font=dict(color="#f43f5e", size=10))
+        
+        fig_s.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey')))
+        fig_s.update_layout(height=700, margin=dict(l=20, r=20, t=60, b=20))
+        
+        st.plotly_chart(fig_s, use_container_width=True)
     else:
         st.info("Seasonal standings currently syncing. Refresh to hydrate.")
 
