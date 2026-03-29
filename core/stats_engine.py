@@ -40,7 +40,7 @@ ODDSSHARK_SNAPSHOT = {
 
 def get_2026_standings() -> pd.DataFrame:
     """Fetches official 2026 standings from MLB Stats API and merges with OddsShark ATS data."""
-    url = "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2026&standingsType=regularSeason"
+    url = "https://statsapi.mlb.com/api/v1/standings?leagueId=103,104&season=2026&standingsType=regularSeason&hydrate=division,league"
     try:
         r = requests.get(url)
         r.raise_for_status()
