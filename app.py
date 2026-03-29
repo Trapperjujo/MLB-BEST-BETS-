@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import json
 from dotenv import load_dotenv
+from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP
 from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule
 from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment
 from core.strategy import is_divisional_matchup
@@ -11,6 +12,11 @@ from core.status_fetcher import get_player_injuries, get_fatigue_penalty
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
+import logging
+
+# Configure Logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Page Configuration
 st.set_page_config(page_title="BEST BETS | MLB Analytics", page_icon="⚾", layout="wide")
@@ -34,10 +40,10 @@ st.markdown("""
 
 # Sidebar Configuration
 st.sidebar.markdown("### 🛠️ Configuration")
-bankroll = st.sidebar.number_input("Total Bankroll (CAD)", min_value=100.0, value=5000.0, step=100.0)
-std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, 1.5, 0.1, help="The percentage of your total bankroll you consider one 'unit'.")
-min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 100.0, 3.0, 0.5, help="Filter for the Intelligence Feed.") / 100
-fractional_kelly = st.sidebar.slider("Fractional Kelly multiplier", 0.1, 1.0, 0.25, 0.05)
+bankroll = st.sidebar.number_input("Total Bankroll (CAD)", min_value=100.0, value=BANKROLL_DEFAULT, step=100.0)
+std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, STD_BET_SIZE_DEFAULT, 0.1, help="The percentage of your total bankroll you consider one 'unit'.")
+min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 100.0, MIN_EDGE_DEFAULT, 0.5, help="Filter for the Intelligence Feed.") / 100
+fractional_kelly = st.sidebar.slider("Fractional Kelly multiplier", 0.1, 1.0, FRACTIONAL_KELLY, 0.05)
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🗺️ Navigation")
@@ -52,6 +58,26 @@ st.sidebar.markdown("### 📊 Strategies")
 enable_ss_mode = st.sidebar.toggle("🇨🇦 Sport Select Optimizer", value=False)
 reduction_factor = st.sidebar.slider("SS Reduction Factor", 0.70, 0.95, 0.91, 0.01) if enable_ss_mode else 0.91
 
+# WAR Data Loading
+@st.cache_data
+def load_team_war_map():
+    path = "data/raw/player_war_2024.csv"
+    if not os.path.exists(path):
+        return {}
+    df = pd.read_csv(path)
+    # Simplify Team mapping for WAR (e.g., NYY -> New York Yankees)
+    from core.elo_ratings import ABBR_MAP
+    # Reverse map ABBRs to full names
+    # Note: Some teams in CSV might be abbrs
+    team_war = df.groupby('Team')['WAR'].sum().to_dict()
+    full_team_war = {}
+    for team, war in team_war.items():
+        full_name = ABBR_MAP.get(team, team)
+        full_team_war[full_name] = war
+    return full_team_war
+
+team_war_map = load_team_war_map()
+
 # Elo Calculations Logic
 def get_prediction(row):
     h_team = normalize_team_name(row["home_team"])
@@ -62,13 +88,19 @@ def get_prediction(row):
     h_fatigue = get_fatigue_penalty(h_team)
     a_fatigue = get_fatigue_penalty(a_team)
     
-    adjustments = {'home': -h_fatigue, 'away': -a_fatigue, 'lineup_war_diff': 0.0}
+    # WAR Adjustment
+    h_war = team_war_map.get(h_team, 0.0)
+    a_war = team_war_map.get(a_team, 0.0)
+    war_diff_adj = calculate_war_elo_adjustment(h_war, a_war) # Home - Away
+    
+    adjustments = {'home': -h_fatigue, 'away': -a_fatigue, 'lineup_war_diff': war_diff_adj}
+    # calculate_elo_probability handles hfa internaly if passed or defaults if not.
+    # We pass adjustments which include the war_diff_adj
     h_win_prob = calculate_elo_probability(h_elo, a_elo, adjustments=adjustments)
     
     h_proj = calculate_expected_runs(h_elo, a_elo)
     a_proj = calculate_expected_runs(a_elo, h_elo)
     
-    # Return probabilities for both outcomes
     return {
         'home_win_prob': h_win_prob,
         'away_win_prob': 1.0 - h_win_prob,
@@ -172,6 +204,11 @@ def fetch_master_data():
         
         # Kelly only for real odds or for high-confidence simulations
         df_final.loc[has_odds, "kelly_stake"] = df_final[has_odds].apply(lambda row: kelly_criterion(row["model_prob"], row["decimal_odds"], fractional_kelly) * bankroll, axis=1)
+        
+        # Apply Max Stake Cap (3% as per Qwen strategy)
+        cap_val = bankroll * MAX_STAKE_CAP
+        df_final.loc[has_odds, "kelly_stake"] = df_final.loc[has_odds, "kelly_stake"].clip(upper=cap_val)
+        
         df_final.loc[has_odds, "potential_profit"] = df_final["kelly_stake"] * (df_final["decimal_odds"] - 1.0)
         
         # Upset Score: High model prob for teams with low implied prob (underdogs)
@@ -237,8 +274,10 @@ st.markdown("---")
 # Main Dashboard Routing (Unified Feed)
 st.subheader(f"⚾ MLB Predictions Master Feed ({total_count} Games)")
 
-# Sort the master view
+# Sort the master view to favor best bets
+df_master = df_master.sort_values(by="ev", ascending=False)
 df_sched_view = df_master.drop_duplicates(subset=["game_id"])
+
 if sort_mode == "🔥 Highest +EV":
     df_sched_view = df_sched_view.sort_values(by="ev", ascending=False)
 elif sort_mode == "🏆 Most Likely to Win":
@@ -257,6 +296,9 @@ for idx, row in df_sched_view.iterrows():
     
     # Enhanced Label: [Date] [Teams] [Value Badge]
     display_date = pd.to_datetime(row["commence_time"]).dt.strftime("%a, %b %d").iloc[0] if isinstance(row["commence_time"], pd.Series) else pd.to_datetime(row["commence_time"]).strftime("%a, %b %d")
+    
+    badge_color = "#818cf8" if best_bet["data_type"] == "💎 Market Alpha" else "#64748b"
+    title_suffix = f" | EV: {best_bet['ev']*100:+.1f}%" if best_bet['ev'] > 0 else ""
     
     expander_label = f"📅 {display_date} | ⚾ {row['away_team']} @ {row['home_team']}{title_suffix}"
     
@@ -289,17 +331,45 @@ for idx, row in df_sched_view.iterrows():
         # Kelly and Value Bets section
         if best_bet["ev"] >= min_edge and best_bet["data_type"] == "💎 Market Alpha":
             st.markdown("---")
-            st.subheader(f"🎯 🎯 High Value Alert: {best_bet['outcome']}")
-            v1, v2, v3 = st.columns(3)
-            with v1:
-                st.write(f"**+EV Rating:** {best_bet['ev']*100:+.1f}%")
-                st.write(f"**Marker Alpha:** {best_bet['bookmaker']}")
-            with v2:
-                st.write(f"**Kelly Stake:** {kelly_criterion(best_bet['model_prob'], best_bet['decimal_odds'], fractional_kelly)*100:.2f}%")
-                st.write(f"**CAD Wager:** ${best_bet['kelly_stake']:,.2f}")
-            with v3:
-                st.write(f"**Implied Prob:** {best_bet['implied_prob']*100:.1f}%")
-                st.write(f"**Yield Potential:** ${best_bet['potential_profit']:,.2f}")
+            # Using custom CSS class if available in styles/main.css, or raw HTML for reliability
+            st.markdown(f"""
+                <div style='background: rgba(129, 140, 248, 0.1); border: 1px solid #818cf8; padding: 15px; border-radius: 8px; margin-top: 10px;'>
+                    <div style='display: flex; justify-content: space-between; align-items: center;'>
+                        <h4 style='margin: 0; color: #818cf8;'>🎯 High Value Alert: {best_bet['outcome']}</h4>
+                        <span style='background: #818cf8; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;'>+{best_bet['ev']*100:.1f}% Edge</span>
+                    </div>
+                    <div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px;'>
+                        <div>
+                            <div style='color: #94a3b8; font-size: 0.7rem; text-transform: uppercase;'>Market Source</div>
+                            <div style='font-weight: 700;'>{best_bet['bookmaker']}</div>
+                        </div>
+                        <div>
+                            <div style='color: #94a3b8; font-size: 0.7rem; text-transform: uppercase;'>Kelly Stake ({fractional_kelly}x)</div>
+                            <div style='font-weight: 700; color: #818cf8;'>${best_bet['kelly_stake']:,.2f} CAD</div>
+                        </div>
+                        <div>
+                            <div style='color: #94a3b8; font-size: 0.7rem; text-transform: uppercase;'>Yield Potential</div>
+                            <div style='font-weight: 700; color: #10b981;'>+${best_bet['potential_profit']:,.2f}</div>
+                        </div>
+                    </div>
+                    <div style='margin-top: 10px; font-size: 0.75rem; color: #64748b;'>
+                        Implied Prob: {best_bet['implied_prob']*100:.1f}% | Model Prob: {best_bet['model_prob']*100:.1f}%
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+        elif best_bet["data_type"] == "🧪 Simulation Mode":
+            # Show "Theoretical Value" for simulations
+            st.markdown(f"""
+                <div style='background: rgba(100, 116, 139, 0.05); border: 1px dashed #64748b; padding: 10px; border-radius: 8px; margin-top: 10px;'>
+                    <div style='display: flex; justify-content: space-between;'>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>🔬 Simulation Guidance (1.0u Base)</span>
+                        <span style='color: #94a3b8; font-size: 0.8rem;'>Est. Value: {best_bet['ev']*100:+.1f}%</span>
+                    </div>
+                    <div style='margin-top: 5px; font-weight: 600; color: #cbd5e1;'>
+                        Suggested Allocation: ${flat_staking(bankroll, std_bet_size):,.2f} CAD
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
         
         # Odds market explorer
         game_odds = df_master[df_master["game_id"] == row["game_id"]]

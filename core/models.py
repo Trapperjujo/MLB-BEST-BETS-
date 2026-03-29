@@ -60,15 +60,16 @@ def calculate_sport_select_ev(model_prob: float, market_decimal_odds: float, red
     ss_odds = market_decimal_odds * reduction
     return (model_prob * ss_odds) - 1.0
 
-def calculate_expected_runs(elo: int, opp_elo: int, base_runs: float = 4.48) -> float:
+def calculate_expected_runs(elo: int, opp_elo: int, base_runs: float = 4.40) -> float:
     """
     Predicts expected runs for a team based on Elo ratings.
-    Uses the 1500 baseline (average) as base_runs.
+    MLB Average runs per game is ~4.4-4.5.
+    Every 100 Elo points is roughly +0.6 runs per 9 innings.
     """
     elo_diff = elo - opp_elo
-    # Every 100 Elo points ~ 10-15% run variation
-    run_multiplier = 10**(elo_diff / 800.0)
-    return base_runs * run_multiplier
+    # Using a linear adjustment for better MLB alignment
+    # 100 diff / 167 (approx factor) -> 0.6 run boost
+    return max(1.0, base_runs + (elo_diff / 167.0))
 
 def calculate_ev(model_prob: float, decimal_odds: float) -> float:
     """Calculates Expected Value (EV) percentage."""

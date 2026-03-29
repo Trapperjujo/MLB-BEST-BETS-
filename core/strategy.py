@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime
+from core.elo_ratings import normalize_team_name
 
 # MLB Divisions mapping
 MLB_DIVISIONS = {
@@ -12,9 +13,11 @@ MLB_DIVISIONS = {
 }
 
 def is_divisional_matchup(home_team: str, away_team: str) -> bool:
-    """Checks if a matchup is within the same division."""
+    """Checks if a matchup is within the same division, after normalization."""
+    h = normalize_team_name(home_team)
+    a = normalize_team_name(away_team)
     for division, teams in MLB_DIVISIONS.items():
-        if home_team in teams and away_team in teams:
+        if h in teams and a in teams:
             return True
     return False
 
@@ -57,11 +60,11 @@ def strategy_scorer(matchup_data, model_prob, market_odds):
     """
     score = 0
     # +1 for Divisional Underdog
-    if matchup_data["is_underdog"] and matchup_data["is_divisional"]:
+    if matchup_data["is_underdog"] and matchup_data.get("is_divisional", False):
         score += 1
         
     # +1 for F5 (First 5 innings) focus
-    if matchup_data["strategy_type"] == "F5":
+    if matchup_data.get("strategy_type") == "F5":
         score += 1
 
     return score

@@ -1,7 +1,9 @@
 import os
 import requests
 import pandas as pd
+from typing import List, Dict, Optional, Any
 from dotenv import load_dotenv
+from core.config import CURRENT_SEASON
 
 load_dotenv()
 
@@ -13,7 +15,7 @@ ODDS_BASE_URL = "https://api.the-odds-api.com/v4"
 BDL_BASE_URL = "https://api.balldontlie.io/v1/mlb"
 SPORTS_BASE_URL = "https://v1.baseball.api-sports.io"
 
-def get_mlb_odds(regions="us,uk,eu,au", markets="h2h"):
+def get_mlb_odds(regions: str = "us,uk,eu,au", markets: str = "h2h") -> List[Dict[str, Any]]:
     """Fetches real-time MLB odds from The Odds API across multiple regions."""
     url = f"{ODDS_BASE_URL}/sports/baseball_mlb/odds/"
     params = {
@@ -22,14 +24,15 @@ def get_mlb_odds(regions="us,uk,eu,au", markets="h2h"):
         "markets": markets,
         "oddsFormat": "american"
     }
-    response = requests.get(url, params=params)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
         return response.json()
-    else:
-        print(f"Error fetching odds: {response.status_code}")
+    except Exception as e:
+        print(f"Error fetching odds: {e}")
         return []
 
-def get_mlb_schedule(date_str):
+def get_mlb_schedule(date_str: str) -> List[Dict[str, Any]]:
     """Fetches official MLB schedule and probable pitchers from Stats API."""
     url = f"https://statsapi.mlb.com/api/v1/schedule?sportId=1&date={date_str}&hydrate=probablePitcher"
     try:
@@ -53,7 +56,7 @@ def get_mlb_schedule(date_str):
         print(f"Error fetching schedule: {e}")
         return []
 
-def get_mlb_games(date=None):
+def get_mlb_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
     """Fetches MLB games from balldontlie."""
     url = f"{BDL_BASE_URL}/games"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
@@ -61,14 +64,15 @@ def get_mlb_games(date=None):
     if date:
         params["dates[]"] = date
         
-    response = requests.get(url, headers=headers, params=params)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
         return response.json().get("data", [])
-    else:
-        print(f"Error fetching games: {response.status_code}")
+    except Exception as e:
+        print(f"Error fetching BDL games: {e}")
         return []
 
-def get_player_stats(player_id, season=2026):
+def get_player_stats(player_id: int, season: int = CURRENT_SEASON) -> List[Dict[str, Any]]:
     """Fetches player season stats from balldontlie."""
     url = f"{BDL_BASE_URL}/season_stats"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
@@ -76,44 +80,47 @@ def get_player_stats(player_id, season=2026):
         "season": season,
         "player_ids[]": player_id
     }
-    response = requests.get(url, headers=headers, params=params)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
         return response.json().get("data", [])
-    else:
-        print(f"Error fetching player stats: {response.status_code}")
+    except Exception as e:
+        print(f"Error fetching player stats: {e}")
         return []
 
-def get_team_standings(season=2026):
+def get_team_standings(season: int = CURRENT_SEASON) -> List[Dict[str, Any]]:
     """Fetches team standings from balldontlie."""
     url = f"{BDL_BASE_URL}/standings"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
     params = {"season": season}
-    response = requests.get(url, headers=headers, params=params)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
         return response.json().get("data", [])
-    else:
-        print(f"Error fetching standings: {response.status_code}")
+    except Exception as e:
+        print(f"Error fetching standings: {e}")
         return []
 
-def get_api_sports_games(date=None):
+def get_api_sports_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
     """Fetches MLB games from API-Sports."""
     url = f"{SPORTS_BASE_URL}/games"
     headers = {
         "x-rapidapi-key": API_SPORTS_KEY,
         "x-rapidapi-host": "v1.baseball.api-sports.io"
     }
-    params = {"league": "1", "season": "2026"} # MLB is usually league 1
+    params = {"league": "1", "season": str(CURRENT_SEASON)}
     if date:
         params["date"] = date
         
-    response = requests.get(url, headers=headers, params=params)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
         return response.json().get("response", [])
-    else:
-        print(f"Error fetching API-Sports games: {response.status_code}")
+    except Exception as e:
+        print(f"Error fetching API-Sports games: {e}")
         return []
 
-def process_odds_data(odds_json):
+def process_odds_data(odds_json: List[Dict[str, Any]]) -> pd.DataFrame:
     """Processes raw Odds API JSON into a flat DataFrame."""
     processed_data = []
     for game in odds_json:
