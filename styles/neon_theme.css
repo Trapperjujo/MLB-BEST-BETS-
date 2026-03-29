@@ -99,6 +99,7 @@ h1, h2, h3, h4 {
     color: var(--neon-green) !important;
     border: 1px solid var(--neon-green) !important;
     transition: all 0.3s !important;
+    border-radius: 8px !important;
 }
 
 .stButton>button:hover {
@@ -107,16 +108,43 @@ h1, h2, h3, h4 {
     box-shadow: 0 0 15px var(--neon-green-glow) !important;
 }
 
+/* Sidebar Inputs & Radio Styling */
+div[data-baseweb="input"], [data-baseweb="select"] > div {
+    background-color: #0a0a0f !important; /* Card-like bluish dark */
+    color: white !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Radio Button Labels (Remove green background) */
+[data-testid="stRadio"] label {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+/* Radio Group Container */
+[data-testid="stRadio"] [role="radiogroup"] {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Sliders - Precision Styling */
+.stSlider [data-baseweb="slider"] > div:first-child > div:nth-child(2) {
+    background-color: var(--neon-green) !important; /* Active Track */
+}
+
+.stSlider [data-baseweb="slider"] [role="slider"] {
+    background-color: var(--neon-green) !important; /* Thumb */
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 0 10px var(--neon-green-glow) !important;
+}
+
 /* Expander Styling */
 .stExpander {
     background-color: var(--card-bg) !important;
     border: 1px solid var(--border-color) !important;
     border-radius: 8px !important;
-}
-
-/* Progress Bar / Slider */
-.st-dg, .st-bj {
-    background-color: var(--neon-green) !important;
 }
 
 /* Glassmorphism Tabs */
