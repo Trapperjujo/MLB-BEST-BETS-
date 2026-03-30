@@ -530,15 +530,35 @@ with tab0:
                     
                     with st.expander("📚 What is the Statcast Situational Matrix?"):
                         st.markdown("""
-                        <div class='audit-disclaimer-text' style='font-size: 0.8rem;'>
-                            <b>Institutional Alpha:</b> The Statcast Situational Matrix is a high-fidelity 'Reality Check' layer that moves beyond pre-game simulations. 
-                            <br><br>
-                            <b>Key Differentials:</b>
-                            <ul>
-                                <li><b>📡 Real-Time Sync:</b> Ingests live data (Exit Velocity, Launch Angle, Pitch Movement) to generate 'In-Game Drift' probabilities.</li>
-                                <li><b>🏟️ Venue Factor:</b> Adjusts probabilities based on specific 'Park Factors' and stadium-specific run environments.</li>
-                                <li><b>💎 Market Comparison:</b> Use this matrix to see how the 'Ground Truth' of the game matches up against the 'Market Odds' in real-time.</li>
-                            </ul>
+                        <div class='performance-metric-box' style='background: rgba(255, 255, 255, 0.03); padding: 20px; border: 1px solid rgba(255,255,255,0.05);'>
+                            <div style='font-size: 1.1rem; font-weight: 900; color: var(--neon-blue); margin-bottom: 10px;'>🛰️ STATCAST SITUATIONAL ALPHA</div>
+                            <div style='font-size: 0.85rem; color: #94a3b8; line-height: 1.5;'>
+                                The Statcast Situational Matrix represents a granular, contextual analysis of baseball events. It synchronizes real-time performance data with game-state variables to provide a high-fidelity 'Reality Check' for every matchup.
+                            </div>
+                            
+                            <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;'>
+                                <div>
+                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>🏟️ GAME CONTEXT</div>
+                                    <div style='font-size: 0.75rem; color: #64748b;'>Filters by Inning, Score Differential, Outs, and Base State to generate situational win probabilities.</div>
+                                </div>
+                                <div>
+                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>💎 QUALITY OF CONTACT</div>
+                                    <div style='font-size: 0.75rem; color: #64748b;'>Analyzes Launch Angle & Exit Velocity (Barrels, Solid Contact) to evaluate expected outcomes (xwOBA/xBA).</div>
+                                </div>
+                                <div>
+                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>🛰️ FIELDER POSITIONING</div>
+                                    <div style='font-size: 0.75rem; color: #64748b;'>Tracks real-time shift usage and OAA (Outs Above Average) based on fielder range and success rates.</div>
+                                </div>
+                                <div>
+                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>⚡ BAT TRACKING (2024+)</div>
+                                    <div style='font-size: 0.75rem; color: #64748b;'>Ingests 2026 'Blasts' data—combining Swing Speed and Squared-Up rate for situational power analysis.</div>
+                                </div>
+                            </div>
+                            
+                            <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; color: #475569;'>
+                                <b>Source:</b> Institutional Statcast / Baseball Savant (2015-Present). 
+                                <br><i>Note: High-Fidelity bat tracking (Swing Speed) available for all active 2026 rosters.</i>
+                            </div>
                         </div>
                         """, unsafe_allow_html=True)
 
