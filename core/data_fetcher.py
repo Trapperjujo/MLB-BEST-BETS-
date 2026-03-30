@@ -48,7 +48,8 @@ def get_mlb_schedule(date_str: Optional[str] = None, start_date: Optional[str] =
             game_date = date_info.get("date")
             for game in date_info.get("games", []):
                 games.append({
-                    "game_id": game.get("gamePk"),
+                    "gamePk": game.get("gamePk"),
+                    "game_id": f"{game_date}_{game.get('gamePk')}",
                     "home_team": game.get("teams", {}).get("home", {}).get("team", {}).get("name"),
                     "away_team": game.get("teams", {}).get("away", {}).get("team", {}).get("name"),
                     "commence_time": game.get("gameDate"),
