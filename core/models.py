@@ -93,19 +93,14 @@ def kelly_criterion(model_prob: float, decimal_odds: float, fractional: float = 
     # Scale by fractional Kelly to reduce variance
     return max(0.0, f * fractional)
 
-def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 10000, adjustments: dict = None) -> dict:
+def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 10000, adjustments: dict = None, hfa: int = 24) -> dict:
     """
     Runs a Monte Carlo simulation for an MLB game.
-    Returns: {
-        'home_win_prob': float,
-        'away_win_prob': float,
-        'home_avg_runs': float,
-        'away_avg_runs': float,
-        'over_total_prob': dict # (e.g. {7.5: 0.55})
-    }
+    Includes hfa (Home Field Advantage) buffer in projected runs.
     """
-    h_proj = calculate_expected_runs(home_elo, away_elo)
-    a_proj = calculate_expected_runs(away_elo, home_elo)
+    # 📏 Project runs using Effective Elo (Home Elo + 24 point buffer)
+    h_proj = calculate_expected_runs(home_elo + hfa, away_elo)
+    a_proj = calculate_expected_runs(away_elo, home_elo + hfa)
     
     # Apply adjustments to the base projections if provided
     if adjustments:
@@ -116,10 +111,7 @@ def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 1
     home_scores = np.random.poisson(h_proj, iterations)
     away_scores = np.random.poisson(a_proj, iterations)
     
-    # Calculate wins (handling ties as push/half-win depending on model, 
-    # but in MLB games don't end in ties, so we simulate until a winner)
-    # For simulation purposes, if tied, we give 0.5 to each or re-simulate.
-    # Here we use the direct comparison:
+    # Calculate wins
     home_wins = np.sum(home_scores > away_scores)
     away_wins = np.sum(away_scores > home_scores)
     ties = np.sum(home_scores == away_scores)
@@ -131,7 +123,6 @@ def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 1
         home_wins += ties * h_win_share
         away_wins += ties * (1 - h_win_share)
     else:
-        # Extreme edge case: project 50/50
         home_wins += ties * 0.5
         away_wins += ties * 0.5
 

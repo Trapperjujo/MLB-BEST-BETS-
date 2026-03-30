@@ -159,7 +159,8 @@ def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
     mc = run_monte_carlo_simulation(
         home_elo=int(h_elo_adj), 
         away_elo=int(a_elo_adj), 
-        iterations=10000
+        iterations=MC_ITERATIONS,
+        hfa=MLB_HFA
     )
     xg_p, xg_c = predict_xgboost_v3(h_team, a_team)
     return {
