@@ -79,6 +79,8 @@ class PredictionService:
         xg_p, xg_c = predict_xgboost_v3(h_team, a_team)
         
         return {
+            'home_team': h_team,
+            'away_team': a_team,
             'home_win_prob': mc['home_win_prob'], 
             'away_win_prob': mc['away_win_prob'], 
             'home_elo': h_elo_adj, 
