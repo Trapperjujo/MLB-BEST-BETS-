@@ -495,6 +495,20 @@ with tab0:
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
+                    
+                    with st.expander("📚 What is the Statcast Situational Matrix?"):
+                        st.markdown("""
+                        <div class='audit-disclaimer-text' style='font-size: 0.8rem;'>
+                            <b>Institutional Alpha:</b> The Statcast Situational Matrix is a high-fidelity 'Reality Check' layer that moves beyond pre-game simulations. 
+                            <br><br>
+                            <b>Key Differentials:</b>
+                            <ul>
+                                <li><b>📡 Real-Time Sync:</b> Ingests live data (Exit Velocity, Launch Angle, Pitch Movement) to generate 'In-Game Drift' probabilities.</li>
+                                <li><b>🏟️ Venue Factor:</b> Adjusts probabilities based on specific 'Park Factors' and stadium-specific run environments.</li>
+                                <li><b>💎 Market Comparison:</b> Use this matrix to see how the 'Ground Truth' of the game matches up against the 'Market Odds' in real-time.</li>
+                            </ul>
+                        </div>
+                        """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------
 # TAB 1: 2026 STANDINGS HUB
