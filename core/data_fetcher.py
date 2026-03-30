@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 from typing import List, Dict, Optional, Any
 from dotenv import load_dotenv
-from core.config import CURRENT_SEASON
+import core.unified_config as config
 from core.logger import terminal_logger as logger
 
 load_dotenv()
@@ -109,8 +109,10 @@ def get_mlb_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
         logger.error(f"Error fetching BDL games: {e}")
         return []
 
-def get_player_stats(player_id: int, season: int = CURRENT_SEASON) -> List[Dict[str, Any]]:
+def get_player_stats(player_id: int, season: int = None) -> List[Dict[str, Any]]:
     """Fetches player season stats from balldontlie."""
+    if season is None:
+        season = config.SEASON
     url = f"{BDL_BASE_URL}/season_stats"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
     params = {
@@ -125,8 +127,10 @@ def get_player_stats(player_id: int, season: int = CURRENT_SEASON) -> List[Dict[
         logger.error(f"Error fetching player stats: {e}")
         return []
 
-def get_team_standings(season: int = CURRENT_SEASON) -> List[Dict[str, Any]]:
+def get_team_standings(season: int = None) -> List[Dict[str, Any]]:
     """Fetches team standings from balldontlie."""
+    if season is None:
+        season = config.SEASON
     url = f"{BDL_BASE_URL}/standings"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
     params = {"season": season}
@@ -145,7 +149,7 @@ def get_api_sports_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
         "x-rapidapi-key": API_SPORTS_KEY,
         "x-rapidapi-host": "v1.baseball.api-sports.io"
     }
-    params = {"league": "1", "season": str(CURRENT_SEASON)}
+    params = {"league": "1", "season": str(config.SEASON)}
     if date:
         params["date"] = date
         

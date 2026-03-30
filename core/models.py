@@ -6,7 +6,7 @@ from typing import Dict, Any, List
 from scipy.stats import nbinom
 from core.logger import terminal_logger as logger
 from core.schemas import MLBPrediction
-from core.config import MLB_PARK_FACTORS, LEAGUE_GUTS_2026, MC_ITERATIONS
+import core.unified_config as config
 
 def american_to_decimal(american_odds: int) -> float:
     """Converts American odds to Decimal odds."""
@@ -75,7 +75,7 @@ def calculate_expected_runs(elo: int, opp_elo: int, base_runs: float = None) -> 
     Every 100 Elo points is roughly +0.6 runs per 9 innings.
     """
     if base_runs is None:
-        base_runs = LEAGUE_GUTS_2026["base_runs_pg"]
+        base_runs = config.LEAGUE_GUTS["base_runs_pg"]
     
     elo_diff = elo - opp_elo
     # 100 diff / 167 (approx factor) -> 0.6 run boost
@@ -109,7 +109,7 @@ def calculate_situational_drift(row: pd.Series, park_factor: float = 1.0) -> flo
     """
     drift = 0.0
     # 🛰️ Venue Alpha Correction (Park Factors)
-    # Adjusts run environment expectations based on c:/Users/clear/MLB/core/config.py
+    # Adjusts run environment expectations based on UnifiedConfig
     if park_factor != 1.0:
         drift += (park_factor - 1.0) * 0.05 # Conservative 5% sensitivity multiplier
         
@@ -150,7 +150,7 @@ def run_monte_carlo_simulation(home_elo, away_elo, iterations=None, hfa=24, home
     Integrates situational 'Cover %' weighting and 2026 Park Factors.
     """
     if iterations is None:
-        iterations = MC_ITERATIONS
+        iterations = config.MC_ITERATIONS
 
     # 📉 Alpha Momentum: Adjust ELO based on 2026 Covering Performance
     h_alpha_adj = (cover_pct - 50.0) * 0.3 if cover_pct is not None else 0.0
@@ -162,7 +162,7 @@ def run_monte_carlo_simulation(home_elo, away_elo, iterations=None, hfa=24, home
     a_proj = calculate_expected_runs(away_elo_cal, home_elo_cal)
     
     # 🛰️ Situational & Park Adjustments
-    mu_multiplier = (MLB_PARK_FACTORS.get(home_team, MLB_PARK_FACTORS["Default"]).get('run', 100.0) / 100.0)
+    mu_multiplier = (config.PARK_FACTORS.get(home_team, config.PARK_FACTORS["Default"]).get('run', 100.0) / 100.0)
     if adjustments:
         logger.info(f"Applying model adjustments: {adjustments}")
         mu_multiplier *= (1.0 + (adjustments.get('mu_delta', 0.0) / 100.0))

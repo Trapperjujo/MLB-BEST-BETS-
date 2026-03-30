@@ -1,7 +1,7 @@
 import json
 import os
 
-from core.config import MLB_HFA
+import core.unified_config as config
 
 # 2026 MLB Opening Day Elo Ratings (Baseline)
 # Calibrated for March 29, 2026 based on 2025 seasonal performance.
