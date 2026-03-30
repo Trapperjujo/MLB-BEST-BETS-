@@ -60,7 +60,13 @@ def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, status_callback=
             preds_list.append(pred_service.predict_matchup(row, df_hist))
         except Exception as e:
             logger.error(f"Prediction Error for Game {row.get('game_id')}: {e}")
-            preds_list.append({}) 
+            # Institutional Fallback: Provide zero-alpha defaults to prevent downstream KeyError
+            preds_list.append({
+                'home_win_prob': 0.5, 'away_win_prob': 0.5, 
+                'home_elo_adj': 1500.0, 'away_elo_adj': 1500.0,
+                'home_proj': 4.56, 'away_proj': 4.56, 
+                'xg_prob': 0.5, 'xg_conf': 0.5
+            }) 
             
     df_preds = pd.DataFrame(preds_list)
     df_full = pd.concat([df_sched.reset_index(drop=True), df_preds.reset_index(drop=True)], axis=1)

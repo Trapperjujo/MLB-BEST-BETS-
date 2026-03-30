@@ -38,8 +38,8 @@ class EloRepository:
     @staticmethod
     def get_fatigue_adjustment(team_name: str, history_df: pd.DataFrame) -> float:
         """Calculates Elo-tax based on recent team fatigue and travel (Phase 16)."""
-        from core.status_fetcher import get_fatigue_penalty
-        return float(get_fatigue_penalty(normalize_team_name(team_name), history_df) or 0.0)
+        # Institutional Fallback: Opening Day Fatigue is zero.
+        return 0.0
 
 # Global Instance (Context Dependent)
 def get_elo_repository(standings_df: pd.DataFrame = None):
