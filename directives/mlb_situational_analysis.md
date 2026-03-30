@@ -1,5 +1,9 @@
 # 🛰️ SOP: MLB Situational Analysis & Profitability (2026 Season)
 
+# Season Metadata
+DEPLOYMENT_VERSION = "2026.03.30.03" # Incremental version to force cache invalidation
+CURRENT_SEASON = 2026
+
 This Standard Operating Procedure (SOP) governs the probabilistic and analytical decision-making for the PRO BALL PREDICTOR 2026. You MUST follow these protocols to ensure 100% logic fidelity.
 
 ## 🎯 Phase 1: Institutional Calibration (10k Simulations)
