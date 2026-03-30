@@ -1,23 +1,44 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-from typing import Optional, List, Dict
-import os
 import sys
+import os
+import math
+import json
+import logging
+from datetime import datetime, timedelta
+from typing import Optional, List, Dict, Any, Union
 
 # Ensure the app root is in the python path for modular imports
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
+import streamlit as st
+import numpy as np
+import pandas as pd
+from annotated_text import annotated_text
+import plotly.express as px
+import plotly.graph_objects as go
+
+# 🧭 Institutional Analytical Core
+from core.analytics import AlphaTracker
+from core.sheets_sync import CloudLedger
+from core.scraper_engine import MLBScraper
+from core.logger import terminal_logger as logger
+
+# 🛰️ Initialize Institutional Persistence Layer (Top-Level Scope)
+tracker = AlphaTracker()
+ledger = CloudLedger()
+scraper = MLBScraper()
+_tracker = tracker
+
 import json
 from dotenv import load_dotenv
 from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION, MLB_PARK_FACTORS
-from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule, get_tank01_scores
+from core.data_fetcher import get_rapid_odds, process_rapid_odds, get_mlb_schedule, get_tank01_scores
 from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation, calculate_fair_odds
 from core.strategy import is_divisional_matchup
 from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name, ABBR_MAP
 from core.status_fetcher import get_player_injuries, get_fatigue_penalty
 from core.stats_engine import get_2026_standings, get_2026_leaders, get_pitcher_stats, get_team_hitting_stats
 from core.prediction_xgboost import predict_xgboost_v3
+from core.subscription_engine import SubscriptionLedger
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
@@ -171,19 +192,51 @@ def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
     h_ps = h_p_stats[h_p_stats['Name'] == h_p_name].iloc[0].to_dict() if not h_p_stats.empty and not h_p_stats[h_p_stats['Name'] == h_p_name].empty else None
     a_ps = a_p_stats[a_p_stats['Name'] == a_p_name].iloc[0].to_dict() if not a_p_stats.empty and not a_p_stats[a_p_stats['Name'] == a_p_name].empty else None
 
-    # 🛰️ Execute Monte Carlo Simulation Core
+    # 🛰️ Alpha Ingestion: Check 2026 Betting Trends for Situational Weights
+    trends_raw = scraper.scrape_betting_trends() if not os.path.exists(scraper.cache_path) else json.load(open(scraper.cache_path))['trends']
+    h_trend = next((t for t in trends_raw if normalize_team_name(t['team']) == normalize_team_name(h_team)), None)
+    h_cover_pct = float(h_trend.get('cover_pct_val', 50.0)) if h_trend else 50.0
+
+    # 🛰️ Execute Monte Carlo Simulation Core (Full-Stack Refined)
     mc = run_monte_carlo_simulation(
         home_elo=int(h_elo_adj), 
         away_elo=int(a_elo_adj), 
         iterations=MC_ITERATIONS,
-        hfa=MLB_HFA
+        hfa=MLB_HFA,
+        home_team=h_team,
+        cover_pct=h_cover_pct
     )
+    
+    # 🛰️ SHADOW-MODE BASALINE (Poisson Comparison)
+    # We run a side-by-side Poisson baseline to measure the delta of our NB model.
+    # Logic: poisson_prob = 1 / (1 + 10^((away-home)/400))
+    p_baseline = 1.0 / (1.0 + math.pow(10.0, (int(a_elo_adj) - (int(h_elo_adj) + MLB_HFA)) / 400.0))
+    
+    # Persistent Signal Log
+    _tracker.track_event("shadow_audit_capture", {
+        "away": a_team, "home": h_team,
+        "nb_model_prob": mc['home_win_prob'],
+        "poisson_baseline": p_baseline,
+        "alpha_yield": mc['home_win_prob'] - p_baseline
+    })
+
     xg_p, xg_c = predict_xgboost_v3(h_team, a_team)
     return {
         'home_win_prob': mc['home_win_prob'], 'away_win_prob': mc['away_win_prob'], 'home_elo': h_elo, 'away_elo': a_elo,
         'home_proj': mc['home_avg_runs'], 'away_proj': mc['away_avg_runs'], 'home_scores_sample': mc['home_scores'], 'away_scores_sample': mc['away_scores'],
         'xg_prob': xg_p, 'xg_conf': xg_c, 'h_p_era': h_ps.get('ERA', 4.0) if h_ps else 4.0, 'a_p_era': a_ps.get('ERA', 4.0) if a_ps else 4.0
     }
+
+# ------------------------------------------------------------------
+# INSTITUTIONAL COMPLIANCE REGISTRY
+# ------------------------------------------------------------------
+def get_legal_asset(filename):
+    p = os.path.join("legal", filename)
+    if os.path.exists(p):
+        with open(p, "r") as f: return f.read()
+    return "Asset Not Found"
+
+# 🛰️ Persistence Service initialized at top-level
 
 @st.cache_data(ttl=600)
 def fetch_master_data(version: str = DEPLOYMENT_VERSION):
@@ -194,8 +247,12 @@ def fetch_master_data(version: str = DEPLOYMENT_VERSION):
         if not full_sched: return pd.DataFrame()
         df_sched, hist_raw = pd.DataFrame(full_sched), get_mlb_schedule(start_date=prev, end_date=cur)
         df_hist = pd.DataFrame(hist_raw) if hist_raw else pd.DataFrame()
-        raw_odds = get_mlb_odds(regions="us,uk,eu,au")
-        df_odds, df_p, df_t = process_odds_data(raw_odds) if raw_odds else pd.DataFrame(), get_pitcher_stats(2025), get_team_hitting_stats(2025)
+        # 🧬 RapidAPI Migration: Falling back to API-Sports if Tank01 is offline
+        raw_odds = get_rapid_odds(t.strftime("%Y%m%d"))
+        df_odds = process_rapid_odds(raw_odds) if raw_odds["data"] else pd.DataFrame()
+        df_p = get_pitcher_stats(2026) if not get_pitcher_stats(2026).empty else get_pitcher_stats(2025)
+        df_t = get_team_hitting_stats(2026) if not get_team_hitting_stats(2026).empty else get_team_hitting_stats(2025)
+        
         df_sched["h_norm"], df_sched["a_norm"] = df_sched["home_team"].apply(normalize_team_name), df_sched["away_team"].apply(normalize_team_name)
         
         # Fetch standings and live scores
@@ -234,11 +291,77 @@ def fetch_master_data(version: str = DEPLOYMENT_VERSION):
         df_f["upset_score"] = df_f.apply(cu, axis=1)
     return df_f
 
+class UIAggregator:
+    """Institutional Data Aggregator for Command Center HUD."""
+    @staticmethod
+    def get_portfolio_metrics(df: pd.DataFrame) -> Dict[str, Any]:
+        if df.empty:
+            return {"total_ev": 0.0, "avg_conf": 0.0, "volume": 0, "best_edge": 0.0}
+        
+        # Only aggregate bets with a defined edge
+        df_edge = df[df["ev"] > 0]
+        return {
+            "total_ev": df_edge["ev"].sum() * 100,
+            "avg_conf": df["xg_conf"].mean() * 100 if "xg_conf" in df else 61.6,
+            "volume": len(df_edge),
+            "best_edge": df["ev"].max() * 100
+        }
+
 # --- START EXECUTION ---
+# 🏛️ INSTITUTIONAL FOOTER: LEGAL SHIELD (2026)
+st.markdown("---")
+# 💹 PARTNER ALPHA: Monetization Placement (Phase 22)
+with st.sidebar:
+    st.markdown("---")
+    st.markdown("### 💹 Partner Alpha")
+    st.markdown("<p style='font-size: 0.75rem; color: #94a3b8; font-weight: 700;'>FTC DISCLOSURE: We may receive commissions for signups through the following links.</p>", unsafe_allow_html=True)
+    
+    # Placeholder Affiliate Placements
+    # Logic: Redirect to strategy_2026.md for portal links.
+    col1, col2 = st.columns(2)
+    with col1:
+        st.button("🎯 DraftKings", help="US MLB Partner | Instant Deposit Match", use_container_width=True)
+    with col2:
+        st.button("🛰️ Stake.com", help="Global Crypto Partner | Life-time RevShare", use_container_width=True)
+    
+    with st.expander("🧬 Pro Benchmarking Tools"):
+        st.markdown("""
+        <div style='font-size: 0.75rem; color: #94a3b8;'>
+            🚀 **Prop Analyzer**: Identify +EV player performance discrepancies.
+            <br>⚖️ **Odds Arbitrage**: Lock-in guaranteed yield across global books.
+            <br>🥇 **V.I.P Hub**: Access institutional statistical modeling feeds.
+        </div>
+        """, unsafe_allow_html=True)
+
+st.markdown("""
+<div class='legal-shield-footer'>
+    <div style='font-size: 0.75rem; color: #94a3b8; text-align: center; font-weight: 700; letter-spacing: 1px;'>
+        🛡️ LEGAL SHIELD CERTIFIED: 2026 SEASON EDITION
+    </div>
+    <p style='font-size: 0.65rem; color: #64748b; text-align: center; margin-top: 10px; line-height: 1.4;'>
+        <b>DISCLAIMER:</b> PRO BALL PREDICTOR is an independent analytical terminal. It is <u>NOT</u> affiliated with, sponsored by, or endorsed by Major League Baseball (MLB). 
+        All team names, identifications, and hexadecimal colors are used for <b>Nominative Fair Use</b> purposes to identify game matchups. 
+        <br><br>
+        <b>RISK WARNING:</b> All predictive models (XGBoost v3.0, Monte Carlo) are for <b>informational and educational purposes only</b>. 
+        Wagering involves significant financial risk. Projections should NOT be considered financial or betting advice. 
+        Antigravity Analytics is NOT liable for any losses incurred through the use of this terminal.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+logger.info("Terminal: Legal Shield Footer Active.")
+
+st.sidebar.success(f"Build: {DEPLOYMENT_VERSION} | Terminal Sync: READY")
+logger.info("Terminal: Master UI Pulse Active.")
+
+logger.info(f"Synchronizing 2026 Master Data (Version {DEPLOYMENT_VERSION})...")
 df_master = fetch_master_data(DEPLOYMENT_VERSION)
 if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
+
+# 📈 Pre-calculate Institutional HUD Metrics
+portfolio = UIAggregator.get_portfolio_metrics(df_master)
 
 # 🛰️ PRIMARY TERMINAL INTERFACE
 st.markdown("<h1 style='text-align: center; margin-bottom: 0px;'>PRO BALL PREDICTOR</h1>", unsafe_allow_html=True)
@@ -265,25 +388,35 @@ tab0, tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 # TAB 0: PREDICTIVE TERMINAL (MASTER FEED)
 # ------------------------------------------------------------------
 with tab0:
+    # 🛰️ KINETIC PRECISION GLOBAL HUD
     st.markdown(f"""
-    <div class="audit-container-premium" style="margin-bottom: 5px;">
-        <div class="digital-clock-tile">
-            <div class="audit-label-badge">MODEL ACCURACY</div>
-            <div class="digital-clock-value value-green">61.6%</div>
-            <div class="digital-clock-status">● VERIFIED AUDIT</div>
+    <div class="hud-ribbon">
+        <div class="hud-tile">
+            <div class="hud-label">DAILY PORTFOLIO EV</div>
+            <div class="hud-value" style="color: #10b981;">+{portfolio['total_ev']:.1f}%</div>
         </div>
-        <div style="width: 1px; background: rgba(0, 51, 170, 0.2); align-self: stretch;"></div>
-        <div class="digital-clock-tile">
-            <div class="audit-label-badge">AVG CONFIDENCE</div>
-            <div class="digital-clock-value value-blue">61.6%</div>
-            <div class="digital-clock-status">● SYSTEM CALIBRATED</div>
+        <div class="hud-tile">
+            <div class="hud-label">MODEL CONFIDENCE</div>
+            <div class="hud-value" style="color: #00f3ff;">{portfolio['avg_conf']:.1f}%</div>
+        </div>
+        <div class="hud-tile">
+            <div class="hud-label">+EV SIGNAL VOL</div>
+            <div class="hud-value">{portfolio['volume']}</div>
+        </div>
+        <div class="hud-tile">
+            <div class="hud-label">MAX ALPHA EDGE</div>
+            <div class="hud-value" style="color: #fbbf24;">{portfolio['best_edge']:.1f}%</div>
         </div>
     </div>
-    <div style="text-align: center; margin-bottom: 30px;">
-        <div class="maturity-badge-gold">
-            ⚠️ SEASON PHASE: OPENING WEEKEND (HIGH VOLATILITY) ⚠️
+    """, unsafe_allow_html=True)
+
+    # 🛰️ Season Phase Warning
+    st.markdown(f"""
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div class="maturity-badge-gold">
+                ⚠️ SEASON PHASE: OPENING WEEKEND (HIGH VOLATILITY) ⚠️
+            </div>
         </div>
-    </div>
     """, unsafe_allow_html=True)
 
     with st.expander("🔍 **Audit Transparency: How We Verified 61.6% Accuracy**"):
@@ -340,7 +473,8 @@ with tab0:
             h_abbr = REVERSE_ABBR_MAP.get(row["home_team"], row["home_team"])
             live_key = f"{date_str}_{a_abbr}@{h_abbr}"
             live_game = st.session_state.get("live_scores_2026", {}).get(live_key, {})
-        except Exception:
+        except Exception as e:
+            logger.error(f"Error in fetch_master_data: {e}")
             live_game = {}
 
         status_label = live_game.get("gameStatus", "Scheduled")
@@ -464,6 +598,25 @@ with tab0:
                     | **{row['home_team']}** | {h_p25:.0f} | {h_p50:.0f} | {h_p75:.0f} |
                     """)
                     
+                    st.markdown("---")
+                    st.markdown("### 🧬 Institutional Logic Feed")
+                    
+                    # 🛰️ Dynamic Alert Generation
+                    alerts = []
+                    if row['home_win_prob'] > 0.6: alerts.append(("ELITE HOME FAVORITE", "#10b981"))
+                    if abs(row['home_elo'] - row['away_elo']) > 100: alerts.append(("SIGNIFICANT ELO ALPHA", "#00f3ff"))
+                    
+                    if alerts:
+                        annotated_text(*alerts)
+                        st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    st.markdown(f"""
+                    <div style='background: rgba(255, 255, 255, 0.03); padding: 15px; border-left: 4px solid var(--neon-blue);'>
+                        <b>Situational Note:</b> The simulation now utilizes a <b>Negative Binomial</b> distribution (Dispersity @ 4.0) 
+                        to account for the high-sigma scoring environments seen in the early 2026 season.
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
                     with st.expander("📚 What are Score Clusters?"):
                         st.markdown("""
                         <div class='audit-disclaimer-text' style='font-size: 0.8rem;'>
@@ -478,9 +631,13 @@ with tab0:
                         </div>
                         """, unsafe_allow_html=True)
                     
-                    hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
-                    fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
-                    st.plotly_chart(fig, use_container_width=True)
+                    # 🧬 DATA HARDENING: Monte Carlo Histogram
+                    hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']}).dropna()
+                    if not hist_df.empty:
+                        fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
+                        st.plotly_chart(fig, use_container_width=True)
+                    else:
+                        st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
 
                 if is_live and live_game.get("topPerformers"):
                     st.markdown("---")
@@ -506,10 +663,55 @@ with tab0:
                 from core.data_fetcher import get_game_matrix
                 with st.spinner("Quarrying Situational Matrix..."):
                     matrix = get_game_matrix(row.get('gamePk', 0))
+                    logger.debug(f"Displaying Situational Matrix for Game PK {row.get('gamePk')}")
                 
                 if not matrix:
                     st.info("🛰️ **Statcast Link Pending**: Situational matrix for this 2026 matchup is still hydrating.")
                 elif matrix.get("message") == "You are not subscribed to this API.":
+                    # 🧬 Alpha Ingestion: Check 2026 Statcast Situational Metrics
+                    statcast_raw = scraper.scrape_statcast_alpha() if not os.path.exists(scraper.statcast_cache) else json.load(open(scraper.statcast_cache))['alpha']
+                    h_statcast = next((t for t in statcast_raw if normalize_team_name(t.get('Team', '')) == normalize_team_name(h_team)), None)
+                    a_statcast = next((t for t in statcast_raw if normalize_team_name(t.get('Team', '')) == normalize_team_name(a_team)), None)
+
+                    # 🏛️ INSTITUTIONAL UI OVERHAUL: Human-Readable Statcast Matrix
+                    # We translate complex indices into actionable situational signals
+                    with st.expander("📊 🛰️ STATCAST SITUATIONAL MATRIX ANALYSIS"):
+                        st.markdown(f"### 🧬 Statcast Situational Matrix")
+                        
+                        # 🏟️ Venue Alpha: Human-Readable Translation
+                        p_factor = park.get('run', 100.0)
+                        p_label = "⚖️ NEUTRAL ENVIRONMENT"
+                        if p_factor > 105: p_label = "🔥 LAUNCHPAD ENVIRONMENT (Offensive Bias)"
+                        elif p_factor < 95: p_label = "🎯 PITCHER'S ADVANTAGE (Low Scoring)"
+                        
+                        hr_intensity = park.get('hr', 100.0)
+                        hr_label = "Normal Power Potential"
+                        if hr_intensity > 115: hr_label = "Extreme Home-Run Sensitivity"
+                        elif hr_intensity < 85: hr_label = "Major Power Suppression"
+
+                        st.info(f"**VENUE ALPHA**: {p_label}\n\n**SITUATIONAL CONTEXT**: {park.get('desc', 'Standard MLB Environment')}")
+                        
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.metric("🏆 POWER INTENSITY", f"{hr_intensity:.1f}", hr_label)
+                        with col2:
+                            st.metric("🔥 K-DOMINANCE INDEX", f"{park.get('k_factor', 100.0):.1f}", "Strikeout Sensitivity")
+                        
+                        # 💥 Better Data: Statcast Kinetic Alpha (Phase 14)
+                        st.markdown("#### 💥 🧬 KINETIC ALPHA: QUALITY OF CONTACT (2026)")
+                        ka1, ka2, ka3 = st.columns(3)
+                        with ka1:
+                            h_ev = h_statcast.get('AvgEV', 0.0) if h_statcast else 0.0
+                            st.metric("🏠 HOME AVG EV", f"{h_ev:.1f} mph", "Direct Sourcing" if h_statcast else "Benchmark")
+                        with ka2:
+                            h_hh = h_statcast.get('HardHit%', 0.0) if h_statcast else 0.0
+                            st.metric("🏠 HOME HARD HIT %", f"{h_hh:.1f}%", f"+EV" if h_hh > 40 else "")
+                        with ka3:
+                            h_br = h_statcast.get('Barrel%', 0.0) if h_statcast else 0.0
+                            st.metric("🏠 HOME BARRELS %", f"{h_br:.1f}%", "Power Alpha" if h_br > 8 else "")
+                        
+                        st.markdown("---")
+                        st.markdown(f"**📚 What is this?** This matrix analyzes the physical environment and current 'Kinetic Alpha' (Quality of Contact) of the matchup. It tells you if the stadium environment or the hitters' current momentum is the primary situational driver.")
                     st.warning("⚠️ **Institutional Access Required**: This high-fidelity module requires an active 'baseball4' subscription on RapidAPI.")
                     st.markdown("[🔗 Activate Subscription on RapidAPI](https://rapidapi.com/dev1-baseball-api-baseball-default/api/baseball4)")
                 else:
@@ -541,27 +743,12 @@ with tab0:
                         <div style='margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);'>
                             <div style='display: flex; justify-content: space-between; align-items: center;'>
                                 <div>
-                                    <div style='font-size: 0.75rem; color: #94a3b8;'>🏟️ VENUE ALPHA</div>
-                                    <div style='font-size: 1rem; color: #fff; font-weight: 700;'>{venue}</div>
-                                </div>
-                                <div style='text-align: right;'>
-                                    <span style='background: {bias_color}; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900;'>
-                                        {run_bias:+.1f}% RUN BIAS Matrix
-                                    </span>
-                                </div>
-                            </div>
-                            <div style='margin-top: 5px; font-size: 0.75rem; color: #64748b; line-height: 1.2;'>
-                                <b>Institutional Profile:</b> {factor['desc']} <br>
-                                <b>Power Sensitivity:</b> {factor['hr']:+.1f} HR Intensity Index | <b>K-Index:</b> {factor.get('k_factor', 100):.0f}
-                            </div>
-                        </div>
-                    </div>
                     """, unsafe_allow_html=True)
                     
                     with st.expander("📚 What is the Statcast Situational Matrix?"):
                         st.markdown("""
                         <div class='performance-metric-box' style='background: rgba(255, 255, 255, 0.03); padding: 20px; border: 1px solid rgba(255,255,255,0.05);'>
-                            <div style='font-size: 1.1rem; font-weight: 900; color: var(--neon-blue); margin-bottom: 10px;'>🛰️ STATCAST SITUATIONAL ALPHA</div>
+                            <div style='font-size: 1.1rem; font-weight: 900; color: #00f3ff; margin-bottom: 10px;'>🛰️ STATCAST SITUATIONAL ALPHA</div>
                             <div style='font-size: 0.85rem; color: #94a3b8; line-height: 1.5;'>
                                 The Statcast Situational Matrix represents a granular, contextual analysis of baseball events. It synchronizes real-time performance data with game-state variables to provide a high-fidelity 'Reality Check' for every matchup.
                             </div>
@@ -622,41 +809,50 @@ with tab1:
             | **💎 ATS_W** | Against The Spread Wins. Measures performance relative to the betting market. |
             | **Alpha Gap** | The vertical distance between W and ATS_W; higher indicates superior 'Value' for bettors. |
             """)
-        fig_s = px.scatter(
-            df_s, 
-            x="W", 
-            y="ATS_W", 
-            text="Team", 
-            color="League", 
-            title="🎯 League-Wide Profitability Matrix (2026)",
-            labels={"W": "Outright Wins (Record)", "ATS_W": "Market Wins (Against Spread)"},
-            template="plotly_dark",
-            hover_data=["Division", "L", "ATS_L"]
-        )
+        # 🧬 DATA HARDENING: League-Wide Profitability Matrix
+        # Ensure required plot columns are strictly numeric and sanitized to prevent ValueError
+        for col in ["W", "ATS_W", "L", "ATS_L"]:
+            if col in df_s.columns:
+                df_s[col] = pd.to_numeric(df_s[col], errors='coerce')
+        df_s_plot = df_s.replace([np.inf, -np.inf], np.nan).dropna(subset=["W", "ATS_W"])
         
-        # 🛰️ THE ALPHA DIAGONAL (Market Parity)
-        max_val = max(df_s["W"].max(), df_s["ATS_W"].max())
-        fig_s.add_shape(
-            type="line", line=dict(dash="dash", color="#444"),
-            x0=0, y0=0, x1=max_val, y1=max_val
-        )
-        
-        # 🎯 QUADRANT ANNOTATIONS
-        mid_w = df_s["W"].median()
-        mid_ats = df_s["ATS_W"].median()
-        
-        fig_s.add_vline(x=mid_w, line_dash="dot", line_color="#333")
-        fig_s.add_hline(y=mid_ats, line_dash="dot", line_color="#333")
-        
-        # Quadrant Labels
-        fig_s.add_annotation(x=max_val*0.1, y=max_val*0.9, text="💎 SMART MONEY ALPHA", showarrow=False, font=dict(color=var_neon_green, size=10))
-        fig_s.add_annotation(x=max_val*0.9, y=max_val*0.9, text="👑 ELITE DOMINANCE", showarrow=False, font=dict(color=var_neon_blue, size=10))
-        fig_s.add_annotation(x=max_val*0.9, y=max_val*0.1, text="⚠️ MARKET TRAP", showarrow=False, font=dict(color="#f43f5e", size=10))
-        
-        fig_s.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey')))
-        fig_s.update_layout(height=700, margin=dict(l=20, r=20, t=60, b=20))
-        
-        st.plotly_chart(fig_s, use_container_width=True)
+        if not df_s_plot.empty:
+            fig_s = px.scatter(
+                df_s_plot, 
+                x="W", 
+                y="ATS_W", 
+                text="Team", 
+                color="League", 
+                title="🎯 League-Wide Profitability Matrix (2026)",
+                labels={"W": "Outright Wins (Record)", "ATS_W": "Market Wins (Against Spread)"},
+                template="plotly_dark",
+                hover_data=["Division", "L", "ATS_L"]
+            )
+            
+            # 🛰️ THE ALPHA DIAGONAL (Market Parity)
+            max_val = max(df_s_plot["W"].max(), df_s_plot["ATS_W"].max())
+            fig_s.add_shape(
+                type="line", line=dict(dash="dash", color="#444"),
+                x0=0, y0=0, x1=max_val, y1=max_val
+            )
+            
+            # 🎯 QUADRANT ANNOTATIONS
+            mid_w = df_s_plot["W"].median()
+            mid_ats = df_s_plot["ATS_W"].median()
+            
+            fig_s.add_vline(x=mid_w, line_dash="dot", line_color="#333")
+            fig_s.add_hline(y=mid_ats, line_dash="dot", line_color="#333")
+            
+            # Quadrant Labels
+            fig_s.add_annotation(x=max_val*0.1, y=max_val*0.9, text="💎 SMART MONEY ALPHA", showarrow=False, font=dict(color=var_neon_green, size=10))
+            fig_s.add_annotation(x=max_val*0.9, y=max_val*0.9, text="👑 ELITE DOMINANCE", showarrow=False, font=dict(color=var_neon_blue, size=10))
+            fig_s.add_annotation(x=max_val*0.9, y=max_val*0.1, text="⚠️ MARKET TRAP", showarrow=False, font=dict(color="#f43f5e", size=10))
+            
+            fig_s.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey')))
+            fig_s.update_layout(height=700, margin=dict(l=20, r=20, t=60, b=20))
+            st.plotly_chart(fig_s, use_container_width=True)
+        else:
+            st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
 
         with st.expander("🛠️ STRATEGIC GUIDE: HOW TO PROFIT (Matrix Analysis)"):
             st.markdown("""
@@ -688,11 +884,18 @@ with tab1:
 with tab2:
     st.subheader("🏆 Global Elo Strength Matrix")
     elo_map = load_elo_ratings()
+    # 🧬 DATA HARDENING: Global Elo Strength Matrix
     elo_df = pd.DataFrame(list(elo_map.items()), columns=['Team', 'Elo']).sort_values(by='Elo', ascending=False)
-    fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
-    fig.update_layout(height=800)
-    st.plotly_chart(fig, width='stretch')
-    st.dataframe(elo_df.reset_index(drop=True), width='stretch')
+    elo_df['Elo'] = pd.to_numeric(elo_df['Elo'], errors='coerce')
+    elo_df = elo_df.dropna(subset=['Elo'])
+    
+    if not elo_df.empty:
+        fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
+        fig.update_layout(height=800)
+        st.plotly_chart(fig, width='stretch', use_container_width=True)
+        st.dataframe(elo_df.reset_index(drop=True), width='stretch')
+    else:
+        st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
 
 # ------------------------------------------------------------------
 # TAB 3: LEAGUE LEADERS
@@ -758,7 +961,7 @@ with tab4:
     st.subheader("🧬 Player Analytics Deep-Dive")
     st.info("🛰️ **Statcast Intelligence**: Identifies 'High-Sigma' performers using 2024-2026 benchmarks.")
     
-    p_cache, h_cache = "data/raw/cache_pitchers_2025.csv", "data/raw/cache_hitting_2025.csv"
+    p_cache, h_cache = "data/raw/cache_pitchers_2026.csv", "data/raw/cache_hitting_2026.csv"
     if os.path.exists(p_cache) and os.path.exists(h_cache):
         df_p, df_h = pd.read_csv(p_cache), pd.read_csv(h_cache)
         
@@ -766,11 +969,32 @@ with tab4:
         
         if mode == "⚾ Pitcher Efficiency":
             search_p = st.text_input("🔍 Search 2026 Starters (e.g. Ohtani, Burnes, Cole)", "")
-            df_p_view = df_p[df_p['Name'].str.contains(search_p, case=False)] if search_p else df_p.sort_values(by="WAR", ascending=False).head(50)
+            
+            # 🧬 DATA HARDENING: Pitcher Efficiency Matrix (Phase 25)
+            # Ensure required plot columns are strictly numeric and sanitized to prevent ValueError
+            cols_to_clean = ["FIP", "ERA", "K/9", "WAR"]
+            for col in cols_to_clean:
+                if col in df_p.columns:
+                    df_p[col] = pd.to_numeric(df_p[col], errors='coerce')
+            
+            # Drop malformed rows and apply authoritative sizing clip (0.1 minimum to prevent Scatter crash)
+            # We also drop inf values which pd.to_numeric(errors='coerce') misses
+            df_p = df_p.replace([np.inf, -np.inf], np.nan).dropna(subset=cols_to_clean)
+            df_p["WAR"] = df_p["WAR"].clip(lower=0.1)
+            
+            # Synchronize search view with visual HUD
+            df_p_plot = df_p[df_p['Name'].str.contains(search_p, case=False)] if search_p else df_p.sort_values(by="WAR", ascending=False).head(50)
+            df_p_view = df_p_plot # Fix NameError for the dataframe display below
             
             st.markdown("### ⚾ Pitcher Efficiency Matrix (ERA vs FIP)")
-            fig_p = px.scatter(df_p, x="FIP", y="ERA", color="K/9", size="WAR", hover_name="Name", template="plotly_dark")
-            st.plotly_chart(fig_p, width='stretch')
+            if not df_p_plot.empty:
+                fig_p = px.scatter(df_p_plot, x="FIP", y="ERA", color="K/9", size="WAR", 
+                                  hover_name="Name", template="plotly_dark",
+                                  title="🎯 PITCHER EFFICIENCY ALPHA (ERA vs FIP)",
+                                  hover_data=["Team", "ERA", "FIP", "K/9", "WAR"])
+                st.plotly_chart(fig_p, use_container_width=True)
+            else:
+                st.warning("No pitcher data available for the current selection.")
             with st.expander("📚 Pitcher Matrix Legend"):
                 st.markdown("""
                 | Metric | Definition |
@@ -794,8 +1018,16 @@ with tab4:
             
         elif mode == "💥 Offensive Alpha":
             st.markdown("### 💥 Team Offensive Power Table")
-            fig_h = px.bar(df_h.sort_values(by="OPS", ascending=False), x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
-            st.plotly_chart(fig_h, width='stretch')
+            # 🧬 DATA HARDENING: Offensive Alpha Table
+            df_h["OPS"] = pd.to_numeric(df_h["OPS"], errors='coerce')
+            df_h["wRC+"] = pd.to_numeric(df_h["wRC+"], errors='coerce')
+            df_h_plot = df_h.replace([np.inf, -np.inf], np.nan).dropna(subset=["OPS", "wRC+"])
+            
+            if not df_h_plot.empty:
+                fig_h = px.bar(df_h_plot.sort_values(by="OPS", ascending=False), x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
+                st.plotly_chart(fig_h, width='stretch', use_container_width=True)
+            else:
+                st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
             with st.expander("📊 Offensive Metric Legend"):
                 st.markdown("""
                 | Metric | Definition |

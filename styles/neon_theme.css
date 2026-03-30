@@ -347,6 +347,90 @@ div[data-baseweb="input"], [data-baseweb="select"] > div {
     line-height: 1.8;
 }
 
-.legal-footer-minimal b {
+/* KINETIC PRECISION Framework Extensions */
+.hud-ribbon {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(5, 5, 5, 0.9) 100%);
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.hud-tile {
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hud-tile:last-child {
+    border-right: none;
+}
+
+.hud-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
     color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.hud-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.kinetic-tile {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.kinetic-tile:hover {
+    border-color: #00f3ff;
+    background: rgba(0, 243, 255, 0.05);
+}
+
+.prob-meter-container {
+    background: rgba(0, 0, 0, 0.3);
+    height: 8px;
+    border-radius: 4px;
+    position: relative;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.prob-meter-away {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #00f3ff;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.prob-meter-home {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.strategy-badge-pill {
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
 }

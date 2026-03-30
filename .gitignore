@@ -5,3 +5,5 @@ styles/monaco-vendor.css
 hero.png
 .ipynb_checkpoints/
 .DS_Store
+
+.appdeploy

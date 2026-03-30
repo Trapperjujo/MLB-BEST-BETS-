@@ -1,0 +1,328 @@
+[
+  {
+    "timestamp": "2026-03-30T03:08:42.789027",
+    "event": "terminal_verified",
+    "properties": {
+      "status": "FINAL_HARDENING_COMPLETE"
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.414066",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Minnesota Twins",
+      "home": "Kansas City Royals",
+      "nb_model_prob": 0.6764414066806306,
+      "poisson_baseline": 0.7057813597120025,
+      "alpha_yield": -0.029339953031371935
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.470168",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Texas Rangers",
+      "home": "Baltimore Orioles",
+      "nb_model_prob": 0.4854129263913824,
+      "poisson_baseline": 0.48705085510713625,
+      "alpha_yield": -0.0016379287157538558
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.547117",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Pittsburgh Pirates",
+      "home": "Cincinnati Reds",
+      "nb_model_prob": 0.5964483906770255,
+      "poisson_baseline": 0.6035363185261781,
+      "alpha_yield": -0.0070879278491525755
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.597605",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Washington Nationals",
+      "home": "Philadelphia Phillies",
+      "nb_model_prob": 0.7938042403603207,
+      "poisson_baseline": 0.8153518152833006,
+      "alpha_yield": -0.021547574922979873
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.663422",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Chicago White Sox",
+      "home": "Miami Marlins",
+      "nb_model_prob": 0.6468690913135358,
+      "poisson_baseline": 0.6699690139034832,
+      "alpha_yield": -0.02309992258994742
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.723334",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Colorado Rockies",
+      "home": "Toronto Blue Jays",
+      "nb_model_prob": 0.6752685790231476,
+      "poisson_baseline": 0.7140789025853503,
+      "alpha_yield": -0.03881032356220271
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.771427",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Oakland Athletics",
+      "home": "Atlanta Braves",
+      "nb_model_prob": 0.5099721448467966,
+      "poisson_baseline": 0.5100724469274385,
+      "alpha_yield": -0.00010030208064182311
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.824354",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Los Angeles Angels",
+      "home": "Chicago Cubs",
+      "nb_model_prob": 0.7774373563847248,
+      "poisson_baseline": 0.8010809398289457,
+      "alpha_yield": -0.023643583444220906
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.873159",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Tampa Bay Rays",
+      "home": "Milwaukee Brewers",
+      "nb_model_prob": 0.6442264823896566,
+      "poisson_baseline": 0.6635740980412955,
+      "alpha_yield": -0.019347615651638894
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.932778",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "New York Mets",
+      "home": "St. Louis Cardinals",
+      "nb_model_prob": 0.42689732142857145,
+      "poisson_baseline": 0.4047569603484281,
+      "alpha_yield": 0.022140361080143334
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:41.961941",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Boston Red Sox",
+      "home": "Houston Astros",
+      "nb_model_prob": 0.5983450743598345,
+      "poisson_baseline": 0.6117705007810643,
+      "alpha_yield": -0.013425426421229791
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.016538",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "San Francisco Giants",
+      "home": "San Diego Padres",
+      "nb_model_prob": 0.661395244504262,
+      "poisson_baseline": 0.6825703854747719,
+      "alpha_yield": -0.021175140970509876
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.076928",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "New York Yankees",
+      "home": "Seattle Mariners",
+      "nb_model_prob": 0.4695988180475054,
+      "poisson_baseline": 0.46694860611555894,
+      "alpha_yield": 0.002650211931946478
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.152666",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Detroit Tigers",
+      "home": "Arizona Diamondbacks",
+      "nb_model_prob": 0.536035535813437,
+      "poisson_baseline": 0.5487743358597419,
+      "alpha_yield": -0.012738800046304899
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.203757",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Cleveland Guardians",
+      "home": "Los Angeles Dodgers",
+      "nb_model_prob": 0.6879009068790091,
+      "poisson_baseline": 0.7129021574054539,
+      "alpha_yield": -0.025001250526444863
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.257705",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Texas Rangers",
+      "home": "Baltimore Orioles",
+      "nb_model_prob": 0.49022018553705154,
+      "poisson_baseline": 0.48705085510713625,
+      "alpha_yield": 0.003169330429915296
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.311729",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Pittsburgh Pirates",
+      "home": "Cincinnati Reds",
+      "nb_model_prob": 0.5917710990351558,
+      "poisson_baseline": 0.6035363185261781,
+      "alpha_yield": -0.011765219491022272
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.380827",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Washington Nationals",
+      "home": "Philadelphia Phillies",
+      "nb_model_prob": 0.7855737704918033,
+      "poisson_baseline": 0.8153518152833006,
+      "alpha_yield": -0.02977804479149726
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.442698",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Chicago White Sox",
+      "home": "Miami Marlins",
+      "nb_model_prob": 0.6351864255414155,
+      "poisson_baseline": 0.6699690139034832,
+      "alpha_yield": -0.03478258836206771
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.486653",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Colorado Rockies",
+      "home": "Toronto Blue Jays",
+      "nb_model_prob": 0.6824242424242424,
+      "poisson_baseline": 0.7140789025853503,
+      "alpha_yield": -0.03165466016110796
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.542796",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Oakland Athletics",
+      "home": "Atlanta Braves",
+      "nb_model_prob": 0.5004468275245755,
+      "poisson_baseline": 0.5100724469274385,
+      "alpha_yield": -0.009625619402862995
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.589569",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Los Angeles Angels",
+      "home": "Chicago Cubs",
+      "nb_model_prob": 0.7672479982450368,
+      "poisson_baseline": 0.8010809398289457,
+      "alpha_yield": -0.033832941583908926
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.632435",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Tampa Bay Rays",
+      "home": "Milwaukee Brewers",
+      "nb_model_prob": 0.638922752964646,
+      "poisson_baseline": 0.6635740980412955,
+      "alpha_yield": -0.024651345076649567
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.697273",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "New York Mets",
+      "home": "St. Louis Cardinals",
+      "nb_model_prob": 0.4187842829956342,
+      "poisson_baseline": 0.4047569603484281,
+      "alpha_yield": 0.014027322647206075
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.765468",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Boston Red Sox",
+      "home": "Houston Astros",
+      "nb_model_prob": 0.5896808628933615,
+      "poisson_baseline": 0.6117705007810643,
+      "alpha_yield": -0.022089637887702795
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.830136",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Detroit Tigers",
+      "home": "Arizona Diamondbacks",
+      "nb_model_prob": 0.5321864594894561,
+      "poisson_baseline": 0.5487743358597419,
+      "alpha_yield": -0.016587876370285803
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.873135",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "San Francisco Giants",
+      "home": "San Diego Padres",
+      "nb_model_prob": 0.6531971580817051,
+      "poisson_baseline": 0.6825703854747719,
+      "alpha_yield": -0.029373227393066803
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.927556",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "New York Yankees",
+      "home": "Seattle Mariners",
+      "nb_model_prob": 0.4652605459057072,
+      "poisson_baseline": 0.46694860611555894,
+      "alpha_yield": -0.0016880602098517383
+    }
+  },
+  {
+    "timestamp": "2026-03-30T04:35:42.995145",
+    "event": "shadow_audit_capture",
+    "properties": {
+      "away": "Cleveland Guardians",
+      "home": "Los Angeles Dodgers",
+      "nb_model_prob": 0.6830028959679215,
+      "poisson_baseline": 0.7129021574054539,
+      "alpha_yield": -0.02989926143753241
+    }
+  }
+]

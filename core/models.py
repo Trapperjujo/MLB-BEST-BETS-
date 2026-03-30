@@ -2,7 +2,10 @@ import math
 import random
 import numpy as np
 import pandas as pd
-from typing import Dict, Any
+from typing import Dict, Any, List
+from scipy.stats import nbinom
+from core.logger import terminal_logger as logger
+from core.schemas import MLBPrediction
 
 def american_to_decimal(american_odds: int) -> float:
     """Converts American odds to Decimal odds."""
@@ -138,28 +141,61 @@ def calculate_fair_odds(away_odds: int, home_odds: int) -> Dict[str, Any]:
         "vig_percent": float((total_prob - 1.0) * 100)
     }
 
-def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 10000, hfa: int = 24, adjustments: Dict = None) -> Dict[str, Any]:
+def run_monte_carlo_simulation(home_elo, away_elo, iterations=1000, hfa=24, home_team=None, cover_pct=None, adjustments: Dict = None):
     """
-    Monte Carlo Engine: 10,000 simulations per matchup.
-    Utilizes Poisson distribution models for high-fidelity run projection.
+    Hardened Monte Carlo Engine: Negative Binomial Scoring Distribution.
+    Now integrates situational 'Cover %' weighting for 2026 Alpha.
     """
+    from core.config import MLB_PARK_FACTORS
+
+    # 📉 Alpha Weighting: Adjust ELO based on 2026 Covering Performance
+    # We apply a sigmoidal adjustment to provide a slight 'Momentum Alpha' 
+    # to teams that are consistently covering.
+    h_alpha_adj = 0.0
+    if cover_pct is not None:
+        # cover_pct expected as float (e.g. 66.7)
+        # Shift Elo by up to 15 points based on covering trend
+        h_alpha_adj = (cover_pct - 50.0) * 0.3
+        
+    home_elo_cal = home_elo + h_alpha_adj + hfa
+    away_elo_cal = away_elo
+
     # 📏 Project runs using Effective Elo (Home Elo + 24 point buffer)
-    h_proj = calculate_expected_runs(home_elo + hfa, away_elo)
-    a_proj = calculate_expected_runs(away_elo, home_elo + hfa)
+    h_proj = calculate_expected_runs(home_elo_cal, away_elo_cal)
+    a_proj = calculate_expected_runs(away_elo_cal, home_elo_cal)
     
     # 🛰️ Apply Situational Adjustments (Injuries, Fatigue, Weather)
     if adjustments:
-        h_proj += float(adjustments.get('home_runs_adj', 0))
-        a_proj += float(adjustments.get('away_runs_adj', 0))
+        logger.info(f"Applying model adjustments: {adjustments}")
+        mu_multiplier = 1.0 + (adjustments.get('mu_delta', 0.0) / 100.0)
+        h_proj *= mu_multiplier
+        a_proj *= mu_multiplier
 
-    # 🛡️ Safety Fallback: Ensure projections are positive and numeric
-    if pd.isna(h_proj) or h_proj < 1.0: h_proj = 4.4
-    if pd.isna(a_proj) or a_proj < 1.0: a_proj = 4.4
+    # 📏 Science-Hardened: Park-Adjusted Mean
+    park = MLB_PARK_FACTORS.get(home_team, MLB_PARK_FACTORS["Default"])
+    mu_multiplier = (park.get('run', 100.0) / 100.0)
+    h_proj *= mu_multiplier
+    a_proj *= mu_multiplier
 
-    # Simulate scores using Poisson distribution
-    # We use a large enough sample to stabilize the mean
-    home_scores = np.random.poisson(h_proj, iterations)
-    away_scores = np.random.poisson(a_proj, iterations)
+    # 🔬 Advanced Scoring Model: Dynamic Negative Binomial (NB)
+    # Dispersion (r) is calibrated based on the park environment:
+    # High-run parks (Coors) increase scoring dispersion/volatility (higher r).
+    # Suppression parks (T-Mobile) contract dispersion (lower r).
+    dispersion_r = 4.0 
+    if mu_multiplier > 1.10: dispersion_r = 5.2 # Coors/Cincy effect
+    if mu_multiplier < 0.90: dispersion_r = 3.4 # Seattle/Petco effect
+    
+    def get_nb_params(mu, r):
+        p = r / (r + mu)
+        return r, p
+
+    # Home Scoring Distribution
+    h_r, h_p = get_nb_params(h_proj, dispersion_r)
+    home_scores = nbinom.rvs(h_r, h_p, size=iterations)
+
+    # Away Scoring Distribution
+    a_r, a_p = get_nb_params(a_proj, dispersion_r)
+    away_scores = nbinom.rvs(a_r, a_p, size=iterations)
     
     home_wins = np.sum(home_scores > away_scores)
     away_wins = np.sum(away_scores > home_scores)
@@ -181,7 +217,8 @@ def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 1
         'home_avg_runs': float(np.mean(home_scores)),
         'away_avg_runs': float(np.mean(away_scores)),
         'home_scores': home_scores.tolist()[:100], 
-        'away_scores': away_scores.tolist()[:100]
+        'away_scores': away_scores.tolist()[:100],
+        'dispersion_r': float(dispersion_r) # Shadow-Mode reference
     }
 
 def flat_staking(bankroll: float, unit_percent: float = 1.5) -> float:

@@ -106,20 +106,27 @@ def predict_xgboost_v3(home_team, away_team):
     probs = _MODEL.predict_proba(features)[0]
     home_win_prob = probs[1]
     
-    # 🛰️ SITUATIONAL ALPHA: Venue Drift
-    # We apply a 'Venue Alpha' correction based on institutional park factors.
+    # 🛰️ SITUATIONAL ALPHA (Science-Hardened 2.0)
+    # Applying a 'Venue Alpha' correction based on institutional park factors.
     factor = MLB_PARK_FACTORS.get(home_team, MLB_PARK_FACTORS["Default"])
     
     # Run suppression factor (e.g., Mariners 81.0 -> 0.81)
-    # Pitcher-friendly parks slightly favor the home team in close matchups (defensive stability)
     run_suppression = factor['run'] / 100.0
     k_index = factor.get('k_factor', 100.0) / 100.0
     
-    # Logic: extreme run suppression (+ pitcher-friendly) favors lower variance, 
-    # slightly boosting the favorite's probability of a clean win.
+    # 🔬 High-Sigma Calibration:
+    # Pitcher-friendly parks (<0.95 run factor) reduce scoring variance, 
+    # slightly favoring the 'Reliability Favorite' (usually the higher ELO team).
     drift = 0.0
-    if run_suppression < 0.90: drift += 0.02 # Pitcher's park boost
-    if k_index > 1.10: drift += 0.015 # High-strikeout environment favor
+    if run_suppression < 0.92:
+        # Logistic sigmoid adjustment: favor the favorite in low-scoring environments
+        drift = 0.025 if home_win_prob > 0.52 else -0.015
+    elif run_suppression > 1.08:
+        # High-run environments (Coors) increase variance, compressing edge size
+        drift = -0.02 if home_win_prob > 0.55 else 0.01
+
+    if k_index > 1.10: 
+        drift += 0.012 # High-strikeout environment favor for pitcher consistency
     
     home_win_prob = np.clip(home_win_prob + drift, 0.01, 0.99)
     confidence = max(home_win_prob, 1 - home_win_prob)

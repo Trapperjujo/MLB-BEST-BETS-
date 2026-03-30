@@ -1,0 +1,246 @@
+{
+  "timestamp": "2026-03-30T04:33:12.100166",
+  "source": "https://www.teamrankings.com/mlb/trends/ats_trends/",
+  "trends": [
+    {
+      "team": "NY Yankees",
+      "record": "3-0-0",
+      "cover_pct": "100.0%",
+      "mov": 4.0,
+      "ats_plus_minus": 2.5,
+      "cover_pct_val": 100.0
+    },
+    {
+      "team": "Milwaukee",
+      "record": "3-0-0",
+      "cover_pct": "100.0%",
+      "mov": 6.3,
+      "ats_plus_minus": 4.8,
+      "cover_pct_val": 100.0
+    },
+    {
+      "team": "Colorado",
+      "record": "3-0-0",
+      "cover_pct": "100.0%",
+      "mov": -1.0,
+      "ats_plus_minus": 0.5,
+      "cover_pct_val": 100.0
+    },
+    {
+      "team": "Minnesota",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": 0.0,
+      "ats_plus_minus": 1.5,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Detroit",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": 2.0,
+      "ats_plus_minus": 1.5,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Sacramento",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": -1.7,
+      "ats_plus_minus": -0.2,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Texas",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": 1.3,
+      "ats_plus_minus": 2.8,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "NY Mets",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": 1.7,
+      "ats_plus_minus": 1.2,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Washington",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": 0.3,
+      "ats_plus_minus": 1.8,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Atlanta",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": 2.3,
+      "ats_plus_minus": 0.8,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "St. Louis",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": -0.3,
+      "ats_plus_minus": 1.2,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Cincinnati",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": -0.3,
+      "ats_plus_minus": 1.2,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Arizona",
+      "record": "2-1-0",
+      "cover_pct": "66.7%",
+      "mov": -2.7,
+      "ats_plus_minus": -1.2,
+      "cover_pct_val": 66.7
+    },
+    {
+      "team": "Cleveland",
+      "record": "2-2-0",
+      "cover_pct": "50.0%",
+      "mov": -2.3,
+      "ats_plus_minus": -0.8,
+      "cover_pct_val": 50.0
+    },
+    {
+      "team": "LA Angels",
+      "record": "2-2-0",
+      "cover_pct": "50.0%",
+      "mov": 0.8,
+      "ats_plus_minus": 2.3,
+      "cover_pct_val": 50.0
+    },
+    {
+      "team": "Seattle",
+      "record": "2-2-0",
+      "cover_pct": "50.0%",
+      "mov": 2.3,
+      "ats_plus_minus": 0.8,
+      "cover_pct_val": 50.0
+    },
+    {
+      "team": "Houston",
+      "record": "2-2-0",
+      "cover_pct": "50.0%",
+      "mov": -0.8,
+      "ats_plus_minus": -2.3,
+      "cover_pct_val": 50.0
+    },
+    {
+      "team": "Kansas City",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": -2.3,
+      "ats_plus_minus": -0.8,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Baltimore",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": 0.0,
+      "ats_plus_minus": -1.5,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Boston",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": 0.3,
+      "ats_plus_minus": -1.2,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Toronto",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": 1.7,
+      "ats_plus_minus": 0.2,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Tampa Bay",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": 0.3,
+      "ats_plus_minus": -1.2,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Philadelphia",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": -1.3,
+      "ats_plus_minus": -2.8,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Chi Cubs",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": -0.3,
+      "ats_plus_minus": -1.8,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Pittsburgh",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": -1.7,
+      "ats_plus_minus": -1.2,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "San Diego",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": -2.0,
+      "ats_plus_minus": -1.5,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "LA Dodgers",
+      "record": "1-2-0",
+      "cover_pct": "33.3%",
+      "mov": 2.7,
+      "ats_plus_minus": 1.2,
+      "cover_pct_val": 33.3
+    },
+    {
+      "team": "Chi Sox",
+      "record": "0-3-0",
+      "cover_pct": "0.0%",
+      "mov": -6.3,
+      "ats_plus_minus": -4.8,
+      "cover_pct_val": 0.0
+    },
+    {
+      "team": "Miami",
+      "record": "0-3-0",
+      "cover_pct": "0.0%",
+      "mov": 1.0,
+      "ats_plus_minus": -0.5,
+      "cover_pct_val": 0.0
+    },
+    {
+      "team": "SF Giants",
+      "record": "0-3-0",
+      "cover_pct": "0.0%",
+      "mov": -4.0,
+      "ats_plus_minus": -2.5,
+      "cover_pct_val": 0.0
+    }
+  ]
+}
