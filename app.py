@@ -28,6 +28,11 @@ ledger = CloudLedger()
 scraper = MLBScraper()
 _tracker = tracker
 
+# 🧬 Persistence Layer Paths
+DB_DIR = "data"
+DB_PATH = os.path.join(DB_DIR, "terminal_2026.duckdb")
+os.makedirs(DB_DIR, exist_ok=True)
+
 import json
 from dotenv import load_dotenv
 from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION, MLB_PARK_FACTORS
