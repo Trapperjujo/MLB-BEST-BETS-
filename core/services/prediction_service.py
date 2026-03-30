@@ -88,7 +88,9 @@ class PredictionService:
             'home_proj': mc['home_avg_runs'], 
             'away_proj': mc['away_avg_runs'], 
             'xg_prob': xg_p, 
-            'xg_conf': xg_c
+            'xg_conf': xg_c,
+            'h_p_era': 4.5, # Defaults for 2026 Opening
+            'a_p_era': 4.5
         }
 
 # Global Service (Factory)
