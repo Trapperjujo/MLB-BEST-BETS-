@@ -26,6 +26,8 @@ from core.scraper_engine import MLBScraper
 from core.logger import terminal_logger as logger
 from core.services.orchestrator import sync_mlb_data
 from core.elo_ratings import ABBR_MAP, normalize_team_name
+from core.models import flat_staking, calculate_fair_odds
+from core.services.analytics_service import AnalyticsService
 
 # 🛰️ Initialize Institutional Persistence Layer (Top-Level Scope)
 tracker = AlphaTracker()
@@ -199,11 +201,11 @@ st.markdown("""
 
 logger.info("Terminal: Legal Shield Footer Active.")
 
-st.sidebar.success(f"Build: {DEPLOYMENT_VERSION} | Terminal Sync: READY")
+st.sidebar.success(f"Build: {config.DEPLOYMENT_VERSION} | Terminal Sync: READY")
 logger.info("Terminal: Master UI Pulse Active.")
 
 # 🏛️ START EXECUTION
-logger.info(f"Synchronizing 2026 Master Data (Version {DEPLOYMENT_VERSION})...")
+logger.info(f"Synchronizing 2026 Master Data (Version {config.DEPLOYMENT_VERSION})...")
 df_master = get_master_data_feed(bankroll, fractional_kelly, reduction_factor)
 
 if df_master.empty:
@@ -562,7 +564,7 @@ with tab0:
                         st.markdown(f"### 🧬 Statcast Situational Matrix")
                         
                         # 🏟️ Venue Alpha: Human-Readable Translation
-                        park = MLB_PARK_FACTORS.get(row['home_team'], MLB_PARK_FACTORS['Default'])
+                        park = config.PARK_FACTORS.get(row['home_team'], config.PARK_FACTORS['Default'])
                         p_factor = park.get('run', 100.0)
                         p_label = "⚖️ NEUTRAL ENVIRONMENT"
                         if p_factor > 105: p_label = "🔥 LAUNCHPAD ENVIRONMENT (Offensive Bias)"
