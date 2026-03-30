@@ -320,6 +320,14 @@ with tab0:
             a_rec_str = f"{a_rec['W']}-{a_rec['L']}" if a_rec is not None else "0-0"
     
             synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Confidence: {row['xg_conf']*100:.1f}%</span>" if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5) else ""
+            wager_html = f"""
+                <div style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
+                <div style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>
+            """ if best_bet['kelly_stake'] > 0 else """
+                <div style='font-size: 0.7rem; color: #94a3b8; font-weight: 700; margin-top: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;'>🧬 MARKET EFFICIENCY: PASS</div>
+                <div style='font-size: 0.6rem; color: #64748b; margin-top: 2px;'>No institutional edge identified</div>
+            """
+
             card_html = f"""
             <div class='neon-card'>
                 <div class='neon-card-header'>
@@ -328,35 +336,34 @@ with tab0:
                         <span class='alpha-badge'>{best_bet['data_type']}</span>
                         {synergy_badge}
                     </div>
-                    {f"<div class='ev-badge'>+{best_bet['ev']*100:.1f}% EV</div>" if best_bet['ev'] > 0 else ""}
+                    {f"<div class='ev-badge'>+{best_bet['ev']*100:.1f}% EV</div>" if best_bet['ev'] > 0 else "<div class='ev-badge' style='background: rgba(148,163,184,0.1); color: #94a3b8;'>EFFICIENT</div>"}
                 </div>
-                <div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;'>
+                <div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center; align-items: center;'>
                     <div>
                         <div style='color: var(--text-secondary); font-size: 0.8rem;'>AWAY</div>
-                        <div style='font-size: 1.1rem; font-weight: 700;'>{row['away_team']}</div>
+                        <div style='font-size: 1.2rem; font-weight: 800; color: #fff;'>{row['away_team']}</div>
                         <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {a_rec_str}</div>
-                        <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['away_win_prob']*100:.1f}%</div>
-                        <div style='font-size: 0.9rem;'>Proj: {row['away_proj']:.1f} runs</div>
+                        <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 900;'>{row['away_win_prob']*100:.1f}%</div>
+                        <div style='font-size: 0.9rem; color: #94a3b8;'>Proj: {row['away_proj']:.1f} runs</div>
                     </div>
-                    <div style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
-                        <div style='font-size: 0.7rem; color: var(--text-secondary);'>PREDICTED WINNER</div>
-                        <div style='font-size: 1.2rem; font-weight: 900; color: #fff;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
-                        <div style='font-size: 0.7rem; color: var(--neon-blue); margin-top: 5px;'>ML confidence: {row['xg_conf']*100:.1f}%</div>
-                        <div style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
-                        <div style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>
+                    <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; border-left: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); padding: 0 10px;'>
+                        <div style='font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;'>Winner</div>
+                        <div style='font-size: 1.3rem; font-weight: 900; color: #fff; line-height: 1.1; margin: 4px 0;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
+                        <div style='font-size: 0.7rem; color: var(--neon-blue); font-weight: 700;'>Confidence: {row['xg_conf']*100:.1f}%</div>
+                        {wager_html}
                     </div>
                     <div>
                         <div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
-                        <div style='font-size: 1.1rem; font-weight: 700;'>{row['home_team']}</div>
+                        <div style='font-size: 1.2rem; font-weight: 800; color: #fff;'>{row['home_team']}</div>
                         <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {h_rec_str}</div>
-                        <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 800;'>{row['home_win_prob']*100:.1f}%</div>
-                        <div style='font-size: 0.9rem;'>Proj: {row['home_proj']:.1f} runs</div>
+                        <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 900;'>{row['home_win_prob']*100:.1f}%</div>
+                        <div style='font-size: 0.9rem; color: #94a3b8;'>Proj: {row['home_proj']:.1f} runs</div>
                     </div>
                 </div>
-                <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid #222; text-align: center;'>
-                    <div style='font-size: 0.8rem; color: var(--text-secondary);'>PITCHER DUEL</div>
-                    <div style='font-size: 0.9rem; font-weight: 600; color: #fff;'>
-                        {row.get('away_pitcher', 'TBD')} ({row['a_p_era']:.2f} ERA) vs {row.get('home_pitcher', 'TBD')} ({row['h_p_era']:.2f} ERA)
+                <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;'>
+                    <div style='font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;'>PITCHER DUEL ARMED</div>
+                    <div style='font-size: 0.95rem; font-weight: 700; color: #fff;'>
+                        {row.get('away_pitcher', 'TBD')} <span style='color: var(--neon-blue);'>({row['a_p_era']:.2f})</span> vs {row.get('home_pitcher', 'TBD')} <span style='color: var(--neon-green);'>({row['h_p_era']:.2f})</span>
                     </div>
                 </div>
             </div>
