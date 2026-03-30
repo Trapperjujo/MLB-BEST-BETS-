@@ -461,7 +461,7 @@ with tab0:
             with st.expander("🛰️ Statcast Matchup Matrix Analysis"):
                 from core.data_fetcher import get_game_matrix
                 with st.spinner("Quarrying Situational Matrix..."):
-                    matrix = get_game_matrix(row['game_id'])
+                    matrix = get_game_matrix(row.get('gamePk', 0))
                 
                 if not matrix:
                     st.info("🛰️ **Statcast Link Pending**: Situational matrix for this 2026 matchup is still hydrating.")
