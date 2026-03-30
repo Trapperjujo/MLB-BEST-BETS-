@@ -1107,6 +1107,8 @@ with tab7:
     st.header("📊 Institutional Analytics Lab")
     st.info("🧬 **DNA Comparison Hub**: Synchronizing Layer 3 (DuckDB) Glossary Data.")
 
+    st.info("🧬 **DNA Comparison Hub**: Synchronizing Layer 3 (DuckDB) Glossary Data.")
+
     col1, col2 = st.columns([1, 2])
     with col1:
         st.subheader("🧬 Select DNA Profile")
@@ -1116,35 +1118,90 @@ with tab7:
             t1 = st.selectbox("Primary Team Focus", teams, index=teams.index("New York Yankees") if "New York Yankees" in teams else 0)
             t2 = st.selectbox("Comparison Profile (Optional)", ["None"] + teams)
             
+            dna_mode = st.radio("Select Active DNA Hub", ["💥 Power DNA", "🛡️ Shield DNA", "⚾ Ace DNA", "🧬 Full DNA"], horizontal=True)
+            
             st.markdown("### 📚 DNA Metric Key")
-            st.markdown("""
-            | Metric | Definition (Glossary) |
-            | :--- | :--- |
-            | **Power (ISO)** | Isolated Power. Measuring raw power potential. |
-            | **Contact (wRC+)** | Weighted Runs Created Plus. Overall offensive tool. (100 is Average). |
-            | **Defense (DRS)** | Defensive Runs Saved. Run suppression skill. |
-            | **Range (OAA)** | Outs Above Average. Fielding range/coverage based on Statcast. |
-            | **Pitching (SIERA)** | Skill-Interactive ERA. Advanced pitching quality metric. |
-            """)
+            if dna_mode == "💥 Power DNA":
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **ISO** | Isolated Power (Raw extra-base hits). |
+                | **SLG** | Slugging Percentage. |
+                | **Hard Hit%** | Total balls hit at 95+ MPH. |
+                | **wRC+** | Weighted Runs Created Plus (100 is Avg). |
+                """)
+            elif dna_mode == "🛡️ Shield DNA":
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **DRS** | Defensive Runs Saved. |
+                | **OAA** | Outs Above Average (Statcast). |
+                | **FPct** | Standard Fielding Percentage. |
+                | **Range** | Range Factor per Game. |
+                """)
+            else:
+                st.markdown("""
+                | Metric | Definition |
+                | :--- | :--- |
+                | **SIERA** | Skill-Interactive ERA (Best predictor). |
+                | **FIP** | Fielding Independent Pitching. |
+                | **K%** | Strikeout Percentage (Dominance). |
+                | **BB%** | Walk Percentage (Control). |
+                """)
         else:
             st.warning("Standings data missing (Reference manual hydrating...).")
 
     with col2:
-        chart = render_team_dna_chart(t1)
+        chart = render_team_dna_chart(t1, mode=dna_mode)
         if chart:
-            # 🧬 Add Comparison if selected
             if t2 != "None":
-                fig2 = render_team_dna_chart(t2)
+                fig2 = render_team_dna_chart(t2, mode=dna_mode)
                 if fig2:
                     chart.add_trace(fig2.data[0])
-                    # Style the comparison trace
                     chart.data[1].line.color = "#ff9900"
                     chart.data[1].fillcolor = "rgba(255, 153, 0, 0.2)"
                     chart.data[1].name = f"{t2} DNA"
                     chart.update_layout(showlegend=True)
             
             st.plotly_chart(chart, use_container_width=True)
-            st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'><i>* DNA Scale: Normalized Percentile Ranking (0-100)</i></p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'><i>* {dna_mode} Scale: Normalized Percentile Ranking (0-100)</i></p>", unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.subheader("📊 Institutional Alpha Leaderboard (Top 10)")
+    
+    # Generate Composite Alpha Rankings
+    try:
+        from core.database import terminal_db
+        # Weighted Ranking: 40% Hitting (wRC+), 40% Pitching (SIERA), 20% Fielding (OAA)
+        df_rank = terminal_db.conn.execute("""
+            SELECT b.Team, 
+                   (b."wRC+" * 0.4 + (10 - p.SIERA) * 10 * 0.4 + f.OAA * 5 * 0.2) as alpha_score
+            FROM glossary_batting_2026 b
+            JOIN glossary_pitching_2026 p ON b.Team = p.Team
+            JOIN glossary_fielding_2026 f ON b.Team = f.Team
+            ORDER BY alpha_score DESC LIMIT 10
+        """).fetchdf()
+        
+        if not df_rank.empty:
+            fig_lead = px.bar(df_rank, x="alpha_score", y="Team", orientation='h',
+                             color="alpha_score", color_continuous_scale="Viridis",
+                             template="plotly_dark", title="🏆 2026 COMPOSITE ALPHA LEADERS")
+            fig_lead.update_layout(showlegend=False, coloraxis_showscale=False)
+            st.plotly_chart(fig_lead, use_container_width=True)
+            
+            with st.expander("📚 Alpha Score Algorithm Key"):
+                st.markdown("""
+                | Weight | Source Metric | Intent |
+                | :--- | :--- | :--- |
+                | **40%** | **wRC+** | Offensive run creation efficiency calibrated to league average. |
+                | **40%** | **SIERA** | Skills-Interactive ERA (The most stable pitcher dominance metric). |
+                | **20%** | **OAA/DRS** | Composite run suppression and defensive range coverage. |
+                """)
+        else:
+            st.info("Alpha Rankings calibrating (DuckDB Layer 3 Hydrating)...")
+    except Exception as e:
+        logger.error(f"Alpha Leaderboard Error: {e}")
+        st.info("Leaderboard syncing...")
 
 # 🏛️ INSTITUTIONAL LEGAL FOOTER
 st.markdown("---")
