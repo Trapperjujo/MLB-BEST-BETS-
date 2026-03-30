@@ -469,8 +469,32 @@ with tab0:
                     st.warning("⚠️ **Institutional Access Required**: This high-fidelity module requires an active 'baseball4' subscription on RapidAPI.")
                     st.markdown("[🔗 Activate Subscription on RapidAPI](https://rapidapi.com/dev1-baseball-api-baseball-default/api/baseball4)")
                 else:
-                    st.write("### 🧬 Matchup Simulation Matrix")
-                    st.json(matrix) # Displaying raw matrix for initial structure audit
+                    st.markdown("### 🧬 Statcast Situational Matrix")
+                    body = matrix.get("body", {})
+                    game_data = body.get("game", {})
+                    h_prob = body.get("homeWinProbability", 50)
+                    a_prob = body.get("awayWinProbability", 50)
+                    venue = game_data.get("venue", {}).get("name", "Standard Stadium")
+                    
+                    st.markdown(f"""
+                    <div class='performance-metric-box' style='background: rgba(0, 243, 255, 0.05); padding: 15px;'>
+                        <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;'>
+                            <div>
+                                <div style='font-size: 0.75rem; color: #94a3b8;'>AWAY WIN %</div>
+                                <div style='font-size: 1.8rem; font-weight: 900; color: var(--neon-blue);'>{a_prob:.1f}%</div>
+                            </div>
+                            <div>
+                                <div style='font-size: 0.75rem; color: #94a3b8;'>HOME WIN %</div>
+                                <div style='font-size: 1.8rem; font-weight: 900; color: var(--neon-green);'>{h_prob:.1f}%</div>
+                            </div>
+                        </div>
+                        <div style='margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;'>
+                            <div style='font-size: 0.75rem; color: #94a3b8;'>🛰️ VENUE FACTOR</div>
+                            <div style='font-size: 1rem; color: #fff; font-weight: 700;'>{venue}</div>
+                            <div style='font-size: 0.65rem; color: #64748b;'>Statcast Source: {game_data.get('season', '2026')} Matrix Sync</div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------
 # TAB 1: 2026 STANDINGS HUB
