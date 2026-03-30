@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 import json
 from dotenv import load_dotenv
-from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION
+from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION, MLB_PARK_FACTORS
 from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule, get_tank01_scores
 from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation
 from core.strategy import is_divisional_matchup
@@ -490,6 +490,12 @@ with tab0:
                     a_prob = body.get("awayWinProbability", 50)
                     venue = game_data.get("venue", {}).get("name", "Standard Stadium")
                     
+                    # Venue Alpha Integration
+                    factor = MLB_PARK_FACTORS.get(row["home_team"], MLB_PARK_FACTORS["Default"])
+                    run_bias = factor["run"] - 100
+                    hr_bias = factor["hr"] - 100
+                    bias_color = "#f43f5e" if run_bias > 5 else ("#10b981" if run_bias < -5 else "#94a3b8")
+                    
                     st.markdown(f"""
                     <div class='performance-metric-box' style='background: rgba(0, 243, 255, 0.05); padding: 15px;'>
                         <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;'>
@@ -502,10 +508,22 @@ with tab0:
                                 <div style='font-size: 1.8rem; font-weight: 900; color: var(--neon-green);'>{h_prob:.1f}%</div>
                             </div>
                         </div>
-                        <div style='margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;'>
-                            <div style='font-size: 0.75rem; color: #94a3b8;'>🛰️ VENUE FACTOR</div>
-                            <div style='font-size: 1rem; color: #fff; font-weight: 700;'>{venue}</div>
-                            <div style='font-size: 0.65rem; color: #64748b;'>Statcast Source: {game_data.get('season', '2026')} Matrix Sync</div>
+                        <div style='margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);'>
+                            <div style='display: flex; justify-content: space-between; align-items: center;'>
+                                <div>
+                                    <div style='font-size: 0.75rem; color: #94a3b8;'>🏟️ VENUE ALPHA</div>
+                                    <div style='font-size: 1rem; color: #fff; font-weight: 700;'>{venue}</div>
+                                </div>
+                                <div style='text-align: right;'>
+                                    <span style='background: {bias_color}; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900;'>
+                                        {run_bias:+.1f}% RUN BIAS
+                                    </span>
+                                </div>
+                            </div>
+                            <div style='margin-top: 5px; font-size: 0.75rem; color: #64748b; line-height: 1.2;'>
+                                <b>Institutional Profile:</b> {factor['desc']} <br>
+                                <b>Power Sensitivity:</b> {factor['hr']:+.1f} HR Intensity Index
+                            </div>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
