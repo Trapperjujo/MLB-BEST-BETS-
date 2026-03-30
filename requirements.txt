@@ -7,3 +7,8 @@ plotly
 requests
 pybaseball
 python-dotenv
+pydantic
+duckdb
+loguru
+st-annotated-text
+scipy
