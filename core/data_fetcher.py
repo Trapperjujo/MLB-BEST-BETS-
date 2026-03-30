@@ -232,3 +232,21 @@ def process_odds_data(odds_json: List[Dict[str, Any]]) -> pd.DataFrame:
                         "odds": outcome.get("price")
                     })
     return pd.DataFrame(processed_data)
+
+def get_tank01_scores(game_date: str) -> Dict[str, Any]:
+    """
+    Fetches real-time scores and game status from Tank01.
+    game_date: YYYYMMDD
+    """
+    url = "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBGamesForDate"
+    headers = {
+        "x-rapidapi-key": os.getenv("API_SPORTS_KEY"),
+        "x-rapidapi-host": "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"
+    }
+    params = {"gameDate": game_date}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        return response.json()
+    except Exception as e:
+        logger.error(f"Tank01 Scores Error: {e}")
+        return {}

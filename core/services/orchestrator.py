@@ -1,4 +1,15 @@
+import pandas as pd
+from datetime import datetime, timedelta
 from core.database import terminal_db
+from core.logger import terminal_logger as logger
+from core.scraper_engine import MLBScraper
+from core.data_fetcher import get_mlb_schedule, get_rapid_odds, get_tank01_scores
+from core.stats_engine import get_2026_standings, get_2026_leaders
+from core.elo_ratings import normalize_team_name
+from core.models import american_to_decimal, calculate_ev, kelly_criterion
+from core.services.prediction_service import get_prediction_service
+from core.services.game_repository import get_game_repository
+from core.services.elo_repository import get_elo_repository
 
 def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, status_callback=None):
     """
