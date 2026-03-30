@@ -373,6 +373,14 @@ with tab0:
                     st.write(f"**Model Win%:** {row['home_win_prob']*100:.1f}%")
                     st.write(f"**Market Implied:** {best_bet.get('implied_prob', 0)*100:.1f}%")
                     st.write(f"**Alpha Gap:** {best_bet.get('ev', 0)*100:.1f}% +EV")
+                    with st.expander("📚 Market Alpha Logic Key"):
+                        st.markdown("""
+                        | Metric | Definition |
+                        | :--- | :--- |
+                        | **🎯 Model Win%** | The probability of victory calculated by our 10,000-simulation Monte Carlo engine. |
+                        | **📈 Market Implied** | The probability 'priced-in' by the house odds. (e.g., -110 odds = 52.3% implied). |
+                        | **💎 Alpha Gap (+EV)** | Your institutional 'Edge.' Calculated as the statistical expected value over the market. |
+                        """)
 
                 with c2:
                     st.markdown("#### ⚡ Monte Carlo Score Clusters")
