@@ -81,8 +81,8 @@ class PredictionService:
         return {
             'home_win_prob': mc['home_win_prob'], 
             'away_win_prob': mc['away_win_prob'], 
-            'home_elo_adj': h_elo_adj, 
-            'away_elo_adj': a_elo_adj,
+            'home_elo': h_elo_adj, 
+            'away_elo': a_elo_adj,
             'home_proj': mc['home_avg_runs'], 
             'away_proj': mc['away_avg_runs'], 
             'xg_prob': xg_p, 
