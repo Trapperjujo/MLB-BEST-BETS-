@@ -71,7 +71,16 @@ def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, status_callback=
             preds_list.append(pred_service.predict_matchup(row, df_hist))
         except Exception as e:
             logger.error(f"Sync Error: {e}")
-            preds_list.append({'home_win_prob': 0.5, 'away_win_prob': 0.5, 'home_proj': 4.5})
+            preds_list.append({
+                'home_team': normalize_team_name(row["home_team"]),
+                'away_team': normalize_team_name(row["away_team"]),
+                'home_win_prob': 0.5, 'away_win_prob': 0.5, 
+                'home_elo': 1500, 'away_elo': 1500,
+                'home_proj': 4.5, 'away_proj': 4.5,
+                'xg_prob': 0.5, 'xg_conf': 0.0,
+                'h_p_era': 4.5, 'a_p_era': 4.5,
+                'home_scores_sample': [4,5,4,5], 'away_scores_sample': [4,5,4,5]
+            })
             
     df_preds = pd.DataFrame(preds_list)
     df_full = pd.concat([df_sched.reset_index(drop=True), df_preds.reset_index(drop=True)], axis=1)
