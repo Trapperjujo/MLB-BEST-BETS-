@@ -434,6 +434,20 @@ with tab0:
                     | **{row['home_team']}** | {h_p25:.0f} | {h_p50:.0f} | {h_p75:.0f} |
                     """)
                     
+                    with st.expander("📚 What are Score Clusters?"):
+                        st.markdown("""
+                        <div class='audit-disclaimer-text' style='font-size: 0.8rem;'>
+                            <b>Institutional Variance Map:</b> These clusters represent the range of run-scoring outcomes across 10,000 Monte Carlo simulations.
+                            <br><br>
+                            <b>Key Metrics:</b>
+                            <ul>
+                                <li><b>📉 Floor (25%):</b> The conservative scoring outcome. In 75% of simulations, the team scores <i>at least</i> this many runs.</li>
+                                <li><b>⚖️ Mean (50%):</b> The median scoring outcome. The most likely central tendency for this specific pitching/hitting matchup.</li>
+                                <li><b>🚀 Ceiling (75%):</b> The high-variance scoring outcome. Represents the team's offensive breakout potential in this scenario.</li>
+                            </ul>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
                     st.plotly_chart(fig, use_container_width=True)
