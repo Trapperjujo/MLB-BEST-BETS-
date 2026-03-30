@@ -552,7 +552,7 @@ with tab4:
     st.subheader("🧬 Player Analytics Deep-Dive")
     st.info("🛰️ **Statcast Intelligence**: Identifies 'High-Sigma' performers using 2024-2026 benchmarks.")
     
-    p_cache, h_cache = "data/raw/cache_pitchers_2024.csv", "data/raw/cache_hitting_2024.csv"
+    p_cache, h_cache = "data/raw/cache_pitchers_2025.csv", "data/raw/cache_hitting_2025.csv"
     if os.path.exists(p_cache) and os.path.exists(h_cache):
         df_p, df_h = pd.read_csv(p_cache), pd.read_csv(h_cache)
         
