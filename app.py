@@ -1,4 +1,6 @@
 import sys
+DEPLOYMENT_VERSION = "2026.03.30.04"
+
 import os
 import math
 import json
