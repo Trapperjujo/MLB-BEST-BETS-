@@ -19,7 +19,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 # 🧭 Institutional Analytical Core (Phase 16)
-from core.unified_config import config
+import core.unified_config as config
 from core.analytics import AlphaTracker
 from core.sheets_sync import CloudLedger
 from core.scraper_engine import MLBScraper

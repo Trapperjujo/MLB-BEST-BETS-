@@ -2,7 +2,7 @@ import duckdb
 import os
 import pandas as pd
 from core.logger import terminal_logger as logger
-from core.unified_config import config
+import core.unified_config as config
 
 class GameRepository:
     """Institutional Game Persistence Layer powered by DuckDB (Phase 16)."""

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from typing import Dict, Any, List
 from core.logger import terminal_logger as logger
-from core.unified_config import config
+import core.unified_config as config
 from core.models import run_monte_carlo_simulation, calculate_war_elo_adjustment, calculate_ev
 from core.prediction_xgboost import predict_xgboost_v3
 from core.elo_ratings import normalize_team_name

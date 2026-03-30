@@ -2,7 +2,7 @@ import pandas as pd
 import os
 # from yaml import safe_load # REMOVED: Dependency Bloat Cleanup
 from core.logger import terminal_logger as logger
-from core.unified_config import config
+import core.unified_config as config
 from core.elo_ratings import get_team_elo, normalize_team_name
 
 class EloRepository:

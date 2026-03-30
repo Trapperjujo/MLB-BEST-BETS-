@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 from core.logger import terminal_logger as logger
-from core.unified_config import config
+import core.unified_config as config
 from core.data_fetcher import get_mlb_schedule, get_rapid_odds, process_rapid_odds, get_tank01_scores
 from core.stats_engine import get_2026_standings, get_2026_leaders, get_pitcher_stats, get_team_hitting_stats
 from core.elo_ratings import normalize_team_name
