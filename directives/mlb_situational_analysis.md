@@ -1,7 +1,7 @@
 # 🛰️ SOP: MLB Situational Analysis & Profitability (2026 Season)
 
 # Season Metadata
-DEPLOYMENT_VERSION = "2026.03.30.03" # Incremental version to force cache invalidation
+DEPLOYMENT_VERSION = "2026.03.30.04" # Incremental version for March 30 intelligence
 CURRENT_SEASON = 2026
 
 This Standard Operating Procedure (SOP) governs the probabilistic and analytical decision-making for the PRO BALL PREDICTOR 2026. You MUST follow these protocols to ensure 100% logic fidelity.
@@ -15,8 +15,9 @@ This Standard Operating Procedure (SOP) governs the probabilistic and analytical
 Analyze the **Statcast Matchup Matrix** for the following institutional alpha points:
 - **xwOBA Drift:** Compare real-time contact quality against season averages.
 - **Venue Alpha:** Ingest the **Park Factor** coefficient from `core/config.py`. Adjust projected run totals by the specified Run/HR bias.
-- **Weather Factor:** Wind Blowing In @ 5+ MPH? Unders hit 55.1%. Wind Blowing Out? Lean Over.
+- **Weather Factor:** Wind Blowing In @ 5+ MPH? Unders hit 55.1%. Wind Blowing Out? Lean Over. (Consult [Weather Context](file:///c:/Users/clear/MLB/directives/mlb_betting_foundations.md#🌤️-3.-Essential-Situational-Factors))
 - **Umpire Scoping:** Confirm umpire strike zone bias (Tight zones = more walks/Overs).
+- **Core Strategy Alignments**: Consult [MLB Betting Foundations](file:///c:/Users/clear/MLB/directives/mlb_betting_foundations.md) for 2026 Season betting trends, advanced metrics (RPI/Pythagorean), and situational research.
 
 ## 📊 Phase 3: Profitability & Staking (Non-Negotiables)
 Calculate wagers using the **Fractional Kelly (0.25)** or **Flat Staking** models:
@@ -29,6 +30,7 @@ Calculate wagers using the **Fractional Kelly (0.25)** or **Flat Staking** model
 - **Divisional Underdogs:** Prioritize +Money payouts in rivalry games (+51.34 Units historical alpha).
 - **First 5 Innings (F5):** Utilize when starting pitching advantage is high but bullpen variance is a risk.
 - **Reverse Line Movement (RLM):** Monitor for line movement opposite to public betting. Divisional underdogs with RLM are a Tier-1 "Sharp Money" signal.
+- **Japanese Ace Deployment (Sasaki Pulse):** High-velocity debutants can create market inefficiency. Monitor for public "Chase" on Sasaki strikeouts.
 
 ## 🍱 Phase 5: Master Feed Rendering
 Ensure every card reflects:

@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 from typing import Optional, List, Dict
 import os
 import sys
@@ -11,7 +12,7 @@ import json
 from dotenv import load_dotenv
 from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION, MLB_PARK_FACTORS
 from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule, get_tank01_scores
-from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation
+from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation, calculate_fair_odds
 from core.strategy import is_divisional_matchup
 from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name, ABBR_MAP
 from core.status_fetcher import get_player_injuries, get_fatigue_penalty
@@ -113,7 +114,7 @@ st.sidebar.markdown(f"""
 # 🧬 DATA ENGINE: sabermetric & Predictive Logic
 @st.cache_data
 def load_team_war_map():
-    path = "data/raw/player_war_2024.csv"
+    path = "data/raw/player_war_2025.csv"
     if not os.path.exists(path): return {}
     df = pd.read_csv(path)
     from core.elo_ratings import ABBR_MAP
@@ -147,13 +148,25 @@ def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
             h_mom = int((float(h_rec.iloc[0]['PCT']) - 0.500) * 10)
         if not a_rec.empty:
             a_mom = int((float(a_rec.iloc[0]['PCT']) - 0.500) * 10)
-
-    h_war, a_war = team_war_map.get(h_team, 0.0), team_war_map.get(a_team, 0.0)
+        h_war, a_war = float(team_war_map.get(h_team, 0.0)), float(team_war_map.get(a_team, 0.0))
     w_adj = calculate_war_elo_adjustment(h_war, a_war)
 
     # 📏 Final Calibration: (Base Elo + Momentum) - Fatigue + WAR
-    h_elo_adj = int(h_elo or 1500) + h_mom - int(h_fat or 0) + (max(0, w_adj) if w_adj else 0)
-    a_elo_adj = int(a_elo or 1500) + a_mom - int(a_fat or 0) + (abs(min(0, w_adj)) if w_adj else 0)
+    # Safety: Ensure all terms are numeric to prevent TypeError in int()
+    h_base = float(h_elo or 1500)
+    a_base = float(a_elo or 1500)
+    h_fat_val = float(h_fat or 0)
+    a_fat_val = float(a_fat or 0)
+    
+    # 🛡️ Structural Guard: Scalar conversion for w_adj
+    w_val = float(w_adj) if w_adj is not None and not pd.isna(w_adj) else 0.0
+    
+    h_elo_adj = h_base + float(h_mom) - h_fat_val + max(0.0, w_val)
+    a_elo_adj = a_base + float(a_mom) - a_fat_val + abs(min(0.0, w_val))
+
+    # Final Type Cast Check
+    if pd.isna(h_elo_adj) or np.isinf(h_elo_adj): h_elo_adj = 1500.0
+    if pd.isna(a_elo_adj) or np.isinf(a_elo_adj): a_elo_adj = 1500.0
 
     h_ps = h_p_stats[h_p_stats['Name'] == h_p_name].iloc[0].to_dict() if not h_p_stats.empty and not h_p_stats[h_p_stats['Name'] == h_p_name].empty else None
     a_ps = a_p_stats[a_p_stats['Name'] == a_p_name].iloc[0].to_dict() if not a_p_stats.empty and not a_p_stats[a_p_stats['Name'] == a_p_name].empty else None
@@ -182,7 +195,7 @@ def fetch_master_data(version: str = DEPLOYMENT_VERSION):
         df_sched, hist_raw = pd.DataFrame(full_sched), get_mlb_schedule(start_date=prev, end_date=cur)
         df_hist = pd.DataFrame(hist_raw) if hist_raw else pd.DataFrame()
         raw_odds = get_mlb_odds(regions="us,uk,eu,au")
-        df_odds, df_p, df_t = process_odds_data(raw_odds) if raw_odds else pd.DataFrame(), get_pitcher_stats(2024), get_team_hitting_stats(2024)
+        df_odds, df_p, df_t = process_odds_data(raw_odds) if raw_odds else pd.DataFrame(), get_pitcher_stats(2025), get_team_hitting_stats(2025)
         df_sched["h_norm"], df_sched["a_norm"] = df_sched["home_team"].apply(normalize_team_name), df_sched["away_team"].apply(normalize_team_name)
         
         # Fetch standings and live scores
@@ -408,6 +421,23 @@ with tab0:
                     st.write(f"**Elo Spread:** {int(row['home_elo'])} vs {int(row['away_elo'])}")
                     st.write(f"**Proj Score:** {row['home_proj']:.1f} - {row['away_proj']:.1f}")
                     
+                    # ⚖️ Fair Odds Analysis (No-Vig)
+                    # We calculate the 'True' probability by stripping the bookmaker's commission.
+                    if best_bet.get('odds') and not df_master[df_master['game_id'] == row['game_id']].empty:
+                        g_odds_df = df_master[df_master['game_id'] == row['game_id']]
+                        h_odds_row = g_odds_df[(g_odds_df['outcome'] == row['home_team']) & (g_odds_df['market'] == 'h2h')]
+                        a_odds_row = g_odds_df[(g_odds_df['outcome'] == row['away_team']) & (g_odds_df['market'] == 'h2h')]
+                        
+                        if not h_odds_row.empty and not a_odds_row.empty:
+                            h_o = h_odds_row.iloc[0]['odds']
+                            a_o = a_odds_row.iloc[0]['odds']
+                            if h_o and a_o:
+                                fair = calculate_fair_odds(a_o, h_o)
+                                st.markdown("#### ⚖️ Fair Odds (No-Vig)")
+                                st.write(f"**Vig/Juice:** {fair['vig_percent']:.2f}%")
+                                st.write(f"**Fair Win%:** {fair['home_fair_prob']*100:.1f}% Home | {fair['away_fair_prob']*100:.1f}% Away")
+                                st.write(f"**Fair Price:** {fair['home_fair_odds']:+} Home | {fair['away_fair_odds']:+} Away")
+
                     st.markdown("#### 🧬 Market Alpha Comparison")
                     st.write(f"**Model Win%:** {row['home_win_prob']*100:.1f}%")
                     st.write(f"**Market Implied:** {best_bet.get('implied_prob', 0)*100:.1f}%")
@@ -516,13 +546,13 @@ with tab0:
                                 </div>
                                 <div style='text-align: right;'>
                                     <span style='background: {bias_color}; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 900;'>
-                                        {run_bias:+.1f}% RUN BIAS
+                                        {run_bias:+.1f}% RUN BIAS Matrix
                                     </span>
                                 </div>
                             </div>
                             <div style='margin-top: 5px; font-size: 0.75rem; color: #64748b; line-height: 1.2;'>
                                 <b>Institutional Profile:</b> {factor['desc']} <br>
-                                <b>Power Sensitivity:</b> {factor['hr']:+.1f} HR Intensity Index
+                                <b>Power Sensitivity:</b> {factor['hr']:+.1f} HR Intensity Index | <b>K-Index:</b> {factor.get('k_factor', 100):.0f}
                             </div>
                         </div>
                     </div>
@@ -732,7 +762,7 @@ with tab4:
     if os.path.exists(p_cache) and os.path.exists(h_cache):
         df_p, df_h = pd.read_csv(p_cache), pd.read_csv(h_cache)
         
-        mode = st.radio("Select Analytics View", ["⚾ Pitcher Efficiency", "💥 Offensive Alpha"], horizontal=True)
+        mode = st.radio("Select Analytics View", ["⚾ Pitcher Efficiency", "💥 Offensive Alpha", "📉 Regression Monitoring"], horizontal=True)
         
         if mode == "⚾ Pitcher Efficiency":
             search_p = st.text_input("🔍 Search 2026 Starters (e.g. Ohtani, Burnes, Cole)", "")
@@ -762,7 +792,7 @@ with tab4:
                 """)
             st.dataframe(df_p_view[["Name", "Team", "ERA", "FIP", "K/9", "WAR"]], hide_index=True, width='stretch')
             
-        else:
+        elif mode == "💥 Offensive Alpha":
             st.markdown("### 💥 Team Offensive Power Table")
             fig_h = px.bar(df_h.sort_values(by="OPS", ascending=False), x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
             st.plotly_chart(fig_h, width='stretch')

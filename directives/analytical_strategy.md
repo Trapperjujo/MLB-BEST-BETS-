@@ -14,6 +14,7 @@ We prioritize high-fidelity, institutional data over volume.
 - **Pitching**: Focus on **ERA, FIP, WAR, and K/9**. These represent the true skill vs outcome delta.
 - **Hitting**: Focus on **OPS and wRC+** (Institutionally adjusted for park factors/100 average).
 - **Injury/Fatigue**: Ingest real-time lineup changes and secondary data (e.g., bullpens status).
+- **Strategic Foundations**: Consult [MLB Betting Foundations](file:///c:/Users/clear/MLB/directives/mlb_betting_foundations.md) for 2026 Season betting trends, advanced metrics (RPI/Pythagorean), and situational research.
 
 ### 2. Market Alpha Data
 - **Live Odds**: Continuous polling of **The Odds API** (30+ global books).
@@ -23,6 +24,12 @@ We prioritize high-fidelity, institutional data over volume.
 ---
 
 ## 🧠 Layer 2: Analytical Framework (The Engine)
+
+### 🏟️ CORE METHODOLOGY
+Our predictive engine utilizes **Elo Ratings**, **XGBoost v3.0**, and **Monte Carlo Simulations**.
+
+- **Elo Foundations**: See [elo_foundations.md](file:///c:/Users/clear/MLB/directives/elo_foundations.md) for theory and implementation.
+- **Sabermetrics Foundations**: See [sabermetrics_foundations.md](file:///c:/Users/clear/MLB/directives/sabermetrics_foundations.md) for historical context.
 
 ### 1. Predictive Synergy
 We use a 2-Layer simulation architecture:

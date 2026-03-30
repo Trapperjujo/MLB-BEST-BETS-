@@ -1,6 +1,8 @@
 import math
 import random
 import numpy as np
+import pandas as pd
+from typing import Dict, Any
 
 def american_to_decimal(american_odds: int) -> float:
     """Converts American odds to Decimal odds."""
@@ -107,7 +109,36 @@ def calculate_situational_drift(row: pd.Series, park_factor: float = 1.0) -> flo
         
     return drift
 
-def run_monte_carlo_simulation(avg_runs_home: float, avg_runs_away: float, iterations: int = 10000, hfa_elo: float = 24.0) -> Dict[str, Any]:
+def calculate_fair_odds(away_odds: int, home_odds: int) -> Dict[str, Any]:
+    """
+    Normalizes implied probabilities to remove the 'Vig' (Juice).
+    Returns fair implied probabilities and fair American odds.
+    """
+    p_a = calculate_implied_probability(away_odds)
+    p_h = calculate_implied_probability(home_odds)
+    
+    total_prob = p_a + p_h
+    if total_prob == 0: return {"away_fair_prob": 0.5, "home_fair_prob": 0.5}
+    
+    # Normalize
+    f_p_a = p_a / total_prob
+    f_p_h = p_h / total_prob
+    
+    def prob_to_american(p):
+        if p >= 0.5:
+            return int(-((p / (1 - p)) * 100))
+        else:
+            return int(((1 - p) / p) * 100)
+
+    return {
+        "away_fair_prob": float(f_p_a),
+        "home_fair_prob": float(f_p_h),
+        "away_fair_odds": prob_to_american(f_p_a),
+        "home_fair_odds": prob_to_american(f_p_h),
+        "vig_percent": float((total_prob - 1.0) * 100)
+    }
+
+def run_monte_carlo_simulation(home_elo: int, away_elo: int, iterations: int = 10000, hfa: int = 24, adjustments: Dict = None) -> Dict[str, Any]:
     """
     Monte Carlo Engine: 10,000 simulations per matchup.
     Utilizes Poisson distribution models for high-fidelity run projection.
@@ -116,21 +147,25 @@ def run_monte_carlo_simulation(avg_runs_home: float, avg_runs_away: float, itera
     h_proj = calculate_expected_runs(home_elo + hfa, away_elo)
     a_proj = calculate_expected_runs(away_elo, home_elo + hfa)
     
-    # Apply adjustments to the base projections if provided
+    # 🛰️ Apply Situational Adjustments (Injuries, Fatigue, Weather)
     if adjustments:
-        h_proj += adjustments.get('home_runs_adj', 0)
-        a_proj += adjustments.get('away_runs_adj', 0)
+        h_proj += float(adjustments.get('home_runs_adj', 0))
+        a_proj += float(adjustments.get('away_runs_adj', 0))
 
-    # Simulate scores using Poisson distribution (standard for baseball runs)
+    # 🛡️ Safety Fallback: Ensure projections are positive and numeric
+    if pd.isna(h_proj) or h_proj < 1.0: h_proj = 4.4
+    if pd.isna(a_proj) or a_proj < 1.0: a_proj = 4.4
+
+    # Simulate scores using Poisson distribution
+    # We use a large enough sample to stabilize the mean
     home_scores = np.random.poisson(h_proj, iterations)
     away_scores = np.random.poisson(a_proj, iterations)
     
-    # Calculate wins
     home_wins = np.sum(home_scores > away_scores)
     away_wins = np.sum(away_scores > home_scores)
     ties = np.sum(home_scores == away_scores)
     
-    # Resolve ties by distributing based on win probability (simulating extra innings)
+    # Resolve ties via fractional win sharing (simulating extra innings)
     total_non_ties = home_wins + away_wins
     if total_non_ties > 0:
         h_win_share = home_wins / total_non_ties
@@ -145,7 +180,7 @@ def run_monte_carlo_simulation(avg_runs_home: float, avg_runs_away: float, itera
         'away_win_prob': float(away_wins / iterations),
         'home_avg_runs': float(np.mean(home_scores)),
         'away_avg_runs': float(np.mean(away_scores)),
-        'home_scores': home_scores.tolist()[:100], # Sample for visualization
+        'home_scores': home_scores.tolist()[:100], 
         'away_scores': away_scores.tolist()[:100]
     }
 
