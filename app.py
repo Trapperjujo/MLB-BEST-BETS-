@@ -1,5 +1,5 @@
 import sys
-DEPLOYMENT_VERSION = "2026.03.30.04"
+# DEPLOYED VERSION managed via UnifiedConfig (Phase 16)
 
 import os
 import math
@@ -41,32 +41,27 @@ var_neon_green = "#39ff14"
 var_neon_blue = "#00f3ff"
 
 # Page Configuration
-st.set_page_config(page_title="PRO BALL PREDICTOR", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title=config.TERMINAL_NAME, layout="wide", initial_sidebar_state="expanded")
 
 # 🏛️ INSTITUTIONAL COMPLIANCE LAYER: Responsible Gaming Disclosure
-st.markdown("""
-<div class="responsible-gaming-alert">
-    🎯 <b>RESPONSIBLE GAMING NOTICE:</b> Must be 19+ to participate. If you or someone you know has a gambling problem, call 1-866-531-2600 (ConnexOntario). 
-    Predictions are for educational/informational purposes only. <b>NOT FINANCIAL ADVICE.</b>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(config.LEGAL_SHIELD, unsafe_allow_html=True)
 
 # 🧬 SEO POWER-UP: Meta-Tag Injection (Head Bridge)
 # This bypasses Streamlit limitations to ensure Google indexing for 2026.
 import streamlit.components.v1 as components
-components.html("""
+components.html(f"""
 <script>
     const metaDescription = document.createElement('meta');
     metaDescription.name = "description";
-    metaDescription.content = "Institutional-grade MLB predictive analytics terminal using XGBoost v3.0 and Monte Carlo simulations for 2026 season projections. Verified 61.6% accuracy audit.";
+    metaDescription.content = "{config.SEO['DESC']}";
     document.getElementsByTagName('head')[0].appendChild(metaDescription);
 
     const metaKeywords = document.createElement('meta');
     metaKeywords.name = "keywords";
-    metaKeywords.content = "MLB Predictions, 2026 World Series Odds, MLB Expert Picks, Statcast Data, Baseball Analytics, XGBoost MLB, MLB Betting Alpha, MLB Futures Bets, MLB Player Props, Shohei Ohtani Odds";
+    metaKeywords.content = "{config.SEO['KEYWORDS']}";
     document.getElementsByTagName('head')[0].appendChild(metaKeywords);
     
-    document.title = "PRO BALL PREDICTOR | MLB Analytics Terminal 2026";
+    document.title = "{config.SEO['TITLE']}";
 </script>
 """, height=0)
 
@@ -76,8 +71,9 @@ def load_css(file_path):
         with open(file_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-load_css("styles/main.css")
-load_css("styles/neon_theme.css")
+# Load CSS (Centralized via UnifiedConfig)
+for css_path in config.ASSETS['CSS']:
+    load_css(css_path)
 
 # --- SIDEBAR CONFIGURATION (Inputs first) ---
 st.sidebar.markdown("### 🛠️ Risk Management")
@@ -1037,8 +1033,8 @@ st.markdown("---")
 st.markdown("""
 <div class="legal-footer-minimal">
     <center>
-        <b>PRO BALL PREDICTOR v2026.1 Alpha</b><br>
-        Institutional Research Terminal for Canadian Sabermetrics Analysis.<br><br>
+        <b>{config.TERMINAL_NAME} v{config.VERSION} Alpha</b><br>
+        {config.TERMINAL_TAGLINE}<br><br>
         <b>LEGAL DISCLAIMER:</b> Educational purposes only. Not financial advice. 
         Always verify local regulations. <b>Do not wager more than you can afford to lose.</b>
     </center>

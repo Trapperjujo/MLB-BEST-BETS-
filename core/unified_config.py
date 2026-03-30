@@ -12,6 +12,8 @@ class UnifiedConfig:
     DEPLOYMENT_VERSION = VERSION # Institutional Alias for UI Coordination
     SEASON = 2026
     HISTORICAL_SEASONS = [2024, 2025, 2026]
+    TERMINAL_NAME = "PRO BALL PREDICTOR"
+    TERMINAL_TAGLINE = "Institutional Research Terminal for Canadian Sabermetrics Analysis."
     
     # 🛰️ Persistence Layer
     DB_DIR = "data"
@@ -32,6 +34,26 @@ class UnifiedConfig:
     MIN_EDGE_DEFAULT = 3.0 # %
     BANKROLL_DEFAULT = 5000.0
     CAD_USD_XRATE = 1.35
+    
+    # 🛰️ Asset Paths (Hardcoding Shield)
+    ASSETS = {
+        "CSS": ["styles/main.css", "styles/neon_theme.css"],
+        "LOGS": "logs/terminal_2026.log"
+    }
+    
+    # 🏛️ Compliance & SEO (Hardcoding Shield)
+    SEO = {
+        "TITLE": "PRO BALL PREDICTOR | MLB Analytics Terminal 2026",
+        "DESC": "Institutional-grade MLB predictive analytics terminal using XGBoost v3.0 and Monte Carlo simulations for 2026 season projections. Verified 61.6% accuracy audit.",
+        "KEYWORDS": "MLB Predictions, 2026 World Series Odds, MLB Expert Picks, Statcast Data, Baseball Analytics, XGBoost MLB, MLB Betting Alpha, MLB Futures Bets, MLB Player Props, Shohei Ohtani Odds"
+    }
+    
+    LEGAL_SHIELD = """
+    <div class="responsible-gaming-alert">
+        🎯 <b>RESPONSIBLE GAMING NOTICE:</b> Must be 19+ to participate. If you or someone you know has a gambling problem, call 1-866-531-2600 (ConnexOntario). 
+        Predictions are for educational/informational purposes only. <b>NOT FINANCIAL ADVICE.</b>
+    </div>
+    """
     
     # 📉 Algorithmic Constants (XGBoost / Monte Carlo)
     MC_ITERATIONS = 10000
