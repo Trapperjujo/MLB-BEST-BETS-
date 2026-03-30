@@ -277,34 +277,30 @@ class UIAggregator:
             "best_edge": df["ev"].max() * 100
         }
 
-def render_team_dna_chart(team_name: str):
+def render_team_dna_chart(team_name: str, mode: str = "💥 Power DNA"):
     """
-    🧬 Plots a team's Percentile Ranking across the Glossary DNA.
-    Metrics: Power (ISO), Discipline (Z-Contact%), Defense (DRS), Pitching (xFIP), Speed (SB%)
+    🧬 Plots a team's Institutional Percentile Ranking across specific DNA hubs.
+    Uses the DuckDB Layer 3 Percentile Engine for statistical accuracy.
     """
     from core.database import terminal_db
     import plotly.graph_objects as go
     
-    # 🧮 Data Hydration Logic: Fetch averages and team rankings
-    # For MVP: Using 2026 DuckDB glossary data
-    h_b = terminal_db.conn.execute("SELECT ISO, wRC+ FROM glossary_batting_2026 WHERE Team = ?", [team_name]).fetchdf()
-    h_f = terminal_db.conn.execute("SELECT DRS, OAA FROM glossary_fielding_2026 WHERE Team = ?", [team_name]).fetchdf()
-    h_p = terminal_db.conn.execute("SELECT ERA, SIERA FROM glossary_pitching_2026 WHERE Team = ?", [team_name]).fetchdf()
+    # 🧬 Define DNA Hubs & Their Composite Metrics
+    dna_configs = {
+        "💥 Power DNA": {"aspect": "batting", "metrics": ["ISO", "SLG", "HR", "Hard%", "wRC+"], "labels": ["ISO", "SLG", "HR Scale", "Hard Hit%", "wRC+"]},
+        "🛡️ Shield DNA": {"aspect": "fielding", "metrics": ["DRS", "OAA", "FPct", "RangeFactor"], "labels": ["DRS", "OAA", "Fielding%", "Range", "Coverage"]},
+        "⚾ Ace DNA": {"aspect": "pitching", "metrics": ["SIERA", "FIP", "K%", "BB%", "ERA"], "labels": ["SIERA", "FIP", "Strikeouts", "Control", "ERA"]},
+        "🧬 Full DNA": {"aspect": "batting", "metrics": ["wRC+", "WAR", "ISO", "OBP", "SLG"], "labels": ["wRC+", "WAR", "ISO", "OBP", "SLG"]}
+    }
     
-    # Normalized Percentile Mappings (Simplified for Visual MVP)
-    # We map metrics to a 0-100 scale for comparison.
-    categories = ['Power (ISO)', 'Contact (wRC+)', 'Defense (DRS)', 'Range (OAA)', 'Pitching (SIERA)']
+    config = dna_configs.get(mode, dna_configs["🧬 Full DNA"])
+    p_data = terminal_db.get_team_percentiles(team_name, config["aspect"], config["metrics"])
     
-    if h_b.empty or h_f.empty or h_p.empty:
+    if not p_data:
         return None
         
-    values = [
-        min(100, float(h_b.iloc[0].get('ISO', 0)) * 400), # ISO .250 = 100
-        min(100, float(h_b.iloc[0].get('wRC+', 100)) / 1.5), # wOBA/wRC+ scaling
-        min(100, (float(h_f.iloc[0].get('DRS', 0)) + 10) * 5), # DRS 10 = 100
-        min(100, (float(h_f.iloc[0].get('OAA', 0)) + 10) * 5),
-        max(0, min(100, (6.0 - float(h_p.iloc[0].get('SIERA', 4.5))) * 20)) # SIERA 1.0 = 100
-    ]
+    values = [p_data.get(m, 50.0) for m in config["metrics"]]
+    categories = config["labels"][:len(values)]
     
     fig = go.Figure()
     fig.add_trace(go.Scatterpolar(
@@ -318,15 +314,14 @@ def render_team_dna_chart(team_name: str):
     
     fig.update_layout(
         polar=dict(
-            radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.1)'),
-            angularaxis=dict(gridcolor='rgba(255,255,255,0.1)', linecolor='rgba(255,255,255,0.1)'),
-            bgcolor='rgba(0,0,0,0)'
+            radialaxis=dict(visible=True, range=[0, 100], gridcolor="#334155", color="#94a3b8"),
+            angularaxis=dict(gridcolor="#334155", linecolor="#334155")
         ),
+        showlegend=False,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='white'),
-        margin=dict(l=40, r=40, t=20, b=20),
-        showlegend=True
+        height=400,
+        margin=dict(l=40, r=40, t=20, b=20)
     )
     return fig
 

@@ -79,5 +79,47 @@ class MLBDatabase:
         except:
             return pd.DataFrame()
 
+    def get_team_percentiles(self, team_name: str, aspect: str, metrics: List[str]) -> Dict[str, float]:
+        """
+        🧬 Institutional Percentile Logic:
+        Calculates a team's percentile ranking (0-100) relative to all 30 MLB teams 
+        for a specific set of metrics.
+        """
+        table_name = f"glossary_{aspect}_2026"
+        results = {}
+        
+        try:
+            # Check if table exists
+            table_exists = self.conn.execute(f"SELECT count(*) FROM information_schema.tables WHERE table_name = '{table_name}'").fetchone()[0]
+            if not table_exists: return {}
+            
+            for metric in metrics:
+                # Direct SQL Percentile Rank (RANK() OVER ORDER BY)
+                sql = f"""
+                WITH Ranks AS (
+                    SELECT 
+                        Team, 
+                        {metric},
+                        PERCENT_RANK() OVER (ORDER BY {metric}) * 100 as p_rank
+                    FROM {table_name}
+                )
+                SELECT p_rank FROM Ranks WHERE Team = ?
+                """
+                # Handle inverse metrics (ERA, FIP, etc. where lower is better)
+                inverse_metrics = ["ERA", "FIP", "xFIP", "SIERA", "BB/9", "BB%", "K%_inv"]
+                
+                res = self.conn.execute(sql, [team_name]).fetchone()
+                if res:
+                    p_val = float(res[0])
+                    if metric in inverse_metrics: p_val = 100 - p_val
+                    results[metric] = p_val
+                else:
+                    results[metric] = 50.0 # Standard Baseline
+                    
+            return results
+        except Exception as e:
+            logger.error(f"Percentile Engine Error ({aspect}): {e}")
+            return {m: 50.0 for m in metrics}
+
 # Global DB Instance
 terminal_db = MLBDatabase()
