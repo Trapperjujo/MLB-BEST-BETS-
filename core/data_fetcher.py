@@ -136,8 +136,7 @@ def get_game_matrix(gamePk: int) -> Dict[str, Any]:
     params = {"gamePk": str(gamePk)}
     try:
         response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
+        return response.json() # Return JSON directly to allow UI-level error handling
     except Exception as e:
         print(f"Error fetching game matrix: {e}")
         return {}
