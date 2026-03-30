@@ -90,7 +90,9 @@ class PredictionService:
             'xg_prob': xg_p, 
             'xg_conf': xg_c,
             'h_p_era': 4.5, # Defaults for 2026 Opening
-            'a_p_era': 4.5
+            'a_p_era': 4.5,
+            'home_scores_sample': mc['home_scores'],
+            'away_scores_sample': mc['away_scores']
         }
 
 # Global Service (Factory)
