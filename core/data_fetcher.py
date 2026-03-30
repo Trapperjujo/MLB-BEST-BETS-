@@ -141,6 +141,27 @@ def get_game_matrix(gamePk: int) -> Dict[str, Any]:
         print(f"Error fetching game matrix: {e}")
         return {}
 
+def get_tank01_scores(game_date: str) -> dict:
+    """
+    Fetches live scores and top performers from tank01 API.
+    game_date: YYYYMMDD
+    """
+    url = "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBScoresOnly"
+    headers = {
+        "x-rapidapi-key": os.getenv("API_SPORTS_KEY"),
+        "x-rapidapi-host": "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"
+    }
+    params = {"gameDate": game_date, "topPerformers": "true"}
+    
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            return response.json()
+        return {}
+    except Exception as e:
+        print(f"Error fetching live scores: {e}")
+        return {}
+
 def process_odds_data(odds_json: List[Dict[str, Any]]) -> pd.DataFrame:
     """Processes raw Odds API JSON into a flat DataFrame."""
     processed_data = []

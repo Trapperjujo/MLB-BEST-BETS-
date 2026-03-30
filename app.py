@@ -10,10 +10,10 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import json
 from dotenv import load_dotenv
 from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE
-from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule
+from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule, get_tank01_scores
 from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation
 from core.strategy import is_divisional_matchup
-from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name
+from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name, ABBR_MAP
 from core.status_fetcher import get_player_injuries, get_fatigue_penalty
 from core.stats_engine import get_2026_standings, get_2026_leaders, get_pitcher_stats, get_team_hitting_stats
 from core.prediction_xgboost import predict_xgboost_v3
@@ -29,6 +29,9 @@ var_neon_blue = "#00f3ff"
 # Configure Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Reverse ABBR_MAP for tank01 matching (Full Name -> ABBR)
+REVERSE_ABBR_MAP = {v: k for k, v in ABBR_MAP.items()}
 
 # Page Configuration
 st.set_page_config(page_title="PRO BALL PREDICTOR", layout="wide", initial_sidebar_state="expanded")
@@ -182,8 +185,11 @@ def fetch_master_data():
         df_odds, df_p, df_t = process_odds_data(raw_odds) if raw_odds else pd.DataFrame(), get_pitcher_stats(2024), get_team_hitting_stats(2024)
         df_sched["h_norm"], df_sched["a_norm"] = df_sched["home_team"].apply(normalize_team_name), df_sched["away_team"].apply(normalize_team_name)
         
-        # Fetch standings for momentum
+        # Fetch standings and live scores
         df_standings = get_2026_standings()
+        live_data = get_tank01_scores(t.strftime("%Y%m%d"))
+        st.session_state["live_scores_2026"] = live_data.get("body", {}) if live_data else {}
+        
         preds = df_sched.apply(lambda r: pd.Series(get_prediction(r, df_hist, p_stats=df_p, t_stats=df_t, standings_df=df_standings)), axis=1)
         df_sched = pd.concat([df_sched, preds], axis=1)
         st.session_state["df_standings_2026"], st.session_state["df_leaders_2026"] = df_standings, get_2026_leaders()
@@ -311,7 +317,37 @@ with tab0:
     for idx, row in df_sched_view.iterrows():
         game_bets = df_master[df_master["game_id"] == row["game_id"]]
         best_bet = game_bets.sort_values(by="ev", ascending=False).iloc[0] if not game_bets.empty else row
-        display_date = pd.to_datetime(row["commence_time"]).strftime("%a, %b %d")
+        commence_dt = pd.to_datetime(row["commence_time"])
+        display_date = commence_dt.strftime("%a, %b %d")
+        
+        # 🛰️ LIVE SCORE SYNC (tank01 integration)
+        date_str = commence_dt.strftime("%Y%m%d")
+        try:
+            a_abbr = REVERSE_ABBR_MAP.get(row["away_team"], row["away_team"])
+            h_abbr = REVERSE_ABBR_MAP.get(row["home_team"], row["home_team"])
+            live_key = f"{date_str}_{a_abbr}@{h_abbr}"
+            live_game = st.session_state.get("live_scores_2026", {}).get(live_key, {})
+        except Exception:
+            live_game = {}
+
+        status_label = live_game.get("gameStatus", "Scheduled")
+        is_live = status_label not in ["Not Started Yet", "Scheduled"]
+        is_final = status_label == "Final"
+        
+        live_score_html = ""
+        if is_live:
+            h_runs = live_game.get("homePts", "0")
+            a_runs = live_game.get("awayPts", "0")
+            inning = live_game.get("gameStatus", "")
+            color = "#ff9900" if not is_final else "#94a3b8"
+            label = "🏆 FINAL" if is_final else "🛰️ LIVE"
+            live_score_html = f"""
+            <div style='margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid {color}; border-radius: 8px;'>
+                <div style='font-size: 0.7rem; color: {color}; font-weight: 800; letter-spacing: 1px;'>{label}</div>
+                <div style='font-size: 1.5rem; font-weight: 900; color: #fff;'>{a_runs} - {h_runs}</div>
+                <div style='font-size: 0.7rem; color: #94a3b8;'>{inning}</div>
+            </div>
+            """
         
         with st.container():
             df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
@@ -347,6 +383,7 @@ with tab0:
 <div style='font-size: 1.3rem; font-weight: 900; color: #fff; line-height: 1.1; margin: 4px 0;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
 <div style='font-size: 0.7rem; color: var(--neon-blue); font-weight: 700;'>Confidence: {row['xg_conf']*100:.1f}%</div>
 {wager_html}
+{live_score_html}
 </div>
 <div>
 <div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
@@ -400,6 +437,26 @@ with tab0:
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
                     st.plotly_chart(fig, use_container_width=True)
+
+                if is_live and live_game.get("topPerformers"):
+                    st.markdown("---")
+                    st.markdown("#### 🎯 Session Top Performers (In-Game)")
+                    tp = live_game["topPerformers"]
+                    left, right = st.columns(2)
+                    with left:
+                        hitting = tp.get("Hitting", {})
+                        if hitting:
+                            h_rbi = hitting.get("RBI", {}).get("total", "0")
+                            h_hr = hitting.get("HR", {}).get("total", "0")
+                            st.metric("Session RBI Leader", h_rbi, help="Highest individual RBI count in this game.")
+                            st.metric("Session HR Leader", h_hr)
+                    with right:
+                        pitching = tp.get("Pitching", {})
+                        if pitching:
+                            p_so = pitching.get("SO", {}).get("total", "0")
+                            p_er = pitching.get("ER", {}).get("total", "0")
+                            st.metric("Session SO Leader", p_so, help="Highest individual Strikeout count in this game.")
+                            st.metric("Session ER Allowed", p_er)
             
             with st.expander("🛰️ Statcast Matchup Matrix Analysis"):
                 from core.data_fetcher import get_game_matrix
