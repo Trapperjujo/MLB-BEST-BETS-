@@ -9,6 +9,7 @@ class UnifiedConfig:
     
     # Season & Deployment
     VERSION = "2026.03.30.04"
+    DEPLOYMENT_VERSION = VERSION # Institutional Alias for UI Coordination
     SEASON = 2026
     HISTORICAL_SEASONS = [2024, 2025, 2026]
     

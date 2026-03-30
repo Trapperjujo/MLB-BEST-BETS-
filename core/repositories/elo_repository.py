@@ -19,10 +19,15 @@ class EloRepository:
         # 🧪 Momentum Alpha: Calculate Win% deviation from .500 (2026 Season)
         momentum = 0.0
         if not self.standings.empty:
-            rec = self.standings[self.standings['Team'] == norm_name]
-            if not rec.empty:
-                # 0.500 baseline * phase weight (10)
-                momentum = (float(rec.iloc[0]['PCT']) - 0.500) * 10
+            # 🛡️ Data Resilience: Handle case-insensitive column names (Team/team, PCT/pct)
+            team_col = 'Team' if 'Team' in self.standings.columns else 'team'
+            pct_col = 'PCT' if 'PCT' in self.standings.columns else 'pct'
+            
+            if team_col in self.standings.columns:
+                rec = self.standings[self.standings[team_col] == norm_name]
+                if not rec.empty and pct_col in self.standings.columns:
+                    # 0.500 baseline * phase weight (10)
+                    momentum = (float(rec.iloc[0][pct_col]) - 0.500) * 10
         
         return {
             "base_elo": base_elo,
