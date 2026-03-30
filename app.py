@@ -365,12 +365,31 @@ with tab0:
             with st.expander("📊 Market Depth & Simulation Analysis"):
                 c1, c2 = st.columns(2)
                 with c1:
+                    st.markdown("#### 🏛️ Structural Baseline")
                     st.write(f"**Elo Spread:** {int(row['home_elo'])} vs {int(row['away_elo'])}")
                     st.write(f"**Proj Score:** {row['home_proj']:.1f} - {row['away_proj']:.1f}")
+                    
+                    st.markdown("#### 🧬 Market Alpha Comparison")
+                    st.write(f"**Model Win%:** {row['home_win_prob']*100:.1f}%")
+                    st.write(f"**Market Implied:** {best_bet.get('implied_prob', 0)*100:.1f}%")
+                    st.write(f"**Alpha Gap:** {best_bet.get('ev', 0)*100:.1f}% +EV")
+
                 with c2:
+                    st.markdown("#### ⚡ Monte Carlo Score Clusters")
+                    import numpy as np
+                    a_p25, a_p50, a_p75 = np.percentile(row['away_scores_sample'], [25, 50, 75])
+                    h_p25, h_p50, h_p75 = np.percentile(row['home_scores_sample'], [25, 50, 75])
+                    
+                    st.markdown(f"""
+                    | Team | Floor (25%) | Mean (50%) | Ceiling (75%) |
+                    | :--- | :--- | :--- | :--- |
+                    | **{row['away_team']}** | {a_p25:.0f} | {a_p50:.0f} | {a_p75:.0f} |
+                    | **{row['home_team']}** | {h_p25:.0f} | {h_p50:.0f} | {h_p75:.0f} |
+                    """)
+                    
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
-                    st.plotly_chart(fig, width='stretch')
+                    st.plotly_chart(fig, use_container_width=True)
             
             with st.expander("🛰️ Statcast Matchup Matrix Analysis"):
                 from core.data_fetcher import get_game_matrix
