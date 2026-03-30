@@ -644,26 +644,29 @@ with tab0:
                         from core.database import terminal_db
                         st.markdown("#### 🧬 Advanced Situational Metrics")
                         
-                        # Query DuckDB for live metrics
-                        h_g = terminal_db.conn.execute("SELECT * FROM glossary_batting_2026 WHERE Team = ?", [row['home_team']]).fetchdf()
-                        a_g = terminal_db.conn.execute("SELECT * FROM glossary_batting_2026 WHERE Team = ?", [row['away_team']]).fetchdf()
-                        
-                        if not h_g.empty and not a_g.empty:
-                            m1, m2, m3 = st.columns(3)
-                            with m1:
-                                st.metric("🏠 Home ISO", f"{h_g.iloc[0].get('ISO', 0):.3f}", delta=f"{h_g.iloc[0].get('BABIP', 0):.3f} BABIP")
-                            with m2:
-                                st.metric("🏠 Home wRC+", f"{h_g.iloc[0].get('wRC+', 100):.0f}", "OFF Momentum")
-                            with m3:
-                                # Fetch Fielding from separate table
-                                h_field = terminal_db.conn.execute("SELECT DRS, OAA FROM glossary_fielding_2026 WHERE Team = ?", [row['home_team']]).fetchdf()
-                                drs = h_field.iloc[0].get('DRS', 0) if not h_field.empty else 0
-                                st.metric("🏠 Home DRS", f"{drs:+.1f}", "Defensive Alpha")
-                                
-                            st.markdown("---")
-                            st.write("**Institutional Context:** These metrics are pulled from the Layer 3 (DuckDB) glossary cache, aligning with the official MLB Statistics Glossary.")
-                        else:
-                            st.info("🛰️ **Glossary Hydration Pending**: Deep situational peripherals for this 2026 matchup are being synchronized from Layer 2.")
+                        # Query DuckDB for live metrics (Defensive Sync)
+                        try:
+                            h_g = terminal_db.conn.execute("SELECT * FROM glossary_batting_2026 WHERE Team = ?", [row['home_team']]).fetchdf()
+                            a_g = terminal_db.conn.execute("SELECT * FROM glossary_batting_2026 WHERE Team = ?", [row['away_team']]).fetchdf()
+                            
+                            if not h_g.empty and not a_g.empty:
+                                m1, m2, m3 = st.columns(3)
+                                with m1:
+                                    st.metric("🏠 Home ISO", f"{h_g.iloc[0].get('ISO', 0):.3f}", delta=f"{h_g.iloc[0].get('BABIP', 0):.3f} BABIP")
+                                with m2:
+                                    st.metric("🏠 Home wRC+", f"{h_g.iloc[0].get('wRC+', 100):.0f}", "OFF Momentum")
+                                with m3:
+                                    # Fetch Fielding from separate table
+                                    h_field = terminal_db.conn.execute("SELECT DRS, OAA FROM glossary_fielding_2026 WHERE Team = ?", [row['home_team']]).fetchdf()
+                                    drs = h_field.iloc[0].get('DRS', 0) if not h_field.empty else 0
+                                    st.metric("🏠 Home DRS", f"{drs:+.1f}", "Defensive Alpha")
+                                    
+                                st.markdown("---")
+                                st.write("**Institutional Context:** These metrics are pulled from the Layer 3 (DuckDB) glossary cache, aligning with the official MLB Statistics Glossary.")
+                            else:
+                                st.info("🛰️ **Glossary Hydration Pending**: Deep situational peripherals for this 2026 matchup are being synchronized from Layer 2.")
+                        except Exception as e:
+                            st.info("🛰️ **Syncing Institutional Assets...** Layer 3 Hydration is in progress.")
                     
                     with st.expander("📚 What are Score Clusters?"):
                         st.markdown("""
