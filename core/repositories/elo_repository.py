@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from yaml import safe_load
+# from yaml import safe_load # REMOVED: Dependency Bloat Cleanup
 from core.logger import terminal_logger as logger
 from core.unified_config import config
 from core.elo_ratings import get_team_elo, normalize_team_name
