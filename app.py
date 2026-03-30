@@ -239,7 +239,7 @@ def get_legal_asset(filename):
 # 🛰️ Persistence Service initialized at top-level
 
 @st.cache_data(ttl=600)
-def fetch_master_data(version: str = DEPLOYMENT_VERSION):
+def fetch_master_data(version, bankroll, fractional_kelly, reduction_factor):
     """
     🚀 High-Fidelity Data Ingestion (Phase 17).
     Refactored to utilize the modular Triple-Source Orchestrator.
@@ -378,7 +378,7 @@ st.sidebar.success(f"Build: {DEPLOYMENT_VERSION} | Terminal Sync: READY")
 logger.info("Terminal: Master UI Pulse Active.")
 
 logger.info(f"Synchronizing 2026 Master Data (Version {DEPLOYMENT_VERSION})...")
-df_master = fetch_master_data(DEPLOYMENT_VERSION)
+df_master = fetch_master_data(DEPLOYMENT_VERSION, bankroll, fractional_kelly, reduction_factor)
 if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
