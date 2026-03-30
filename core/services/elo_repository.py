@@ -1,6 +1,7 @@
 from typing import Dict, Any, Optional
 import pandas as pd
-from core.elo_ratings import get_team_elo, normalize_team_name, get_fatigue_penalty
+from core.elo_ratings import get_team_elo, normalize_team_name
+from core.status_fetcher import get_fatigue_penalty
 
 class EloRepository:
     """Institutional Elo Strength Repository (Phase 17)."""
