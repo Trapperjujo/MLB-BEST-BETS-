@@ -126,6 +126,22 @@ def get_api_sports_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
         print(f"Error fetching API-Sports games: {e}")
         return []
 
+def get_game_matrix(gamePk: int) -> Dict[str, Any]:
+    """Fetches high-fidelity matchup matrix (Statcast) from baseball4.p.rapidapi.com."""
+    url = "https://baseball4.p.rapidapi.com/v1/mlb/games-matrix"
+    headers = {
+        "x-rapidapi-key": os.getenv("API_SPORTS_KEY"), # RapidAPI credential shared via .env
+        "x-rapidapi-host": "baseball4.p.rapidapi.com"
+    }
+    params = {"gamePk": str(gamePk)}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching game matrix: {e}")
+        return {}
+
 def process_odds_data(odds_json: List[Dict[str, Any]]) -> pd.DataFrame:
     """Processes raw Odds API JSON into a flat DataFrame."""
     processed_data = []

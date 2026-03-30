@@ -371,6 +371,20 @@ with tab0:
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
                     st.plotly_chart(fig, width='stretch')
+            
+            with st.expander("🛰️ Statcast Matchup Matrix Analysis"):
+                from core.data_fetcher import get_game_matrix
+                with st.spinner("Quarrying Situational Matrix..."):
+                    matrix = get_game_matrix(row['game_id'])
+                
+                if not matrix:
+                    st.info("🛰️ **Statcast Link Pending**: Situational matrix for this 2026 matchup is still hydrating.")
+                elif matrix.get("message") == "You are not subscribed to this API.":
+                    st.warning("⚠️ **Institutional Access Required**: This high-fidelity module requires an active 'baseball4' subscription on RapidAPI.")
+                    st.markdown("[🔗 Activate Subscription on RapidAPI](https://rapidapi.com/dev1-baseball-api-baseball-default/api/baseball4)")
+                else:
+                    st.write("### 🧬 Matchup Simulation Matrix")
+                    st.json(matrix) # Displaying raw matrix for initial structure audit
 
 # ------------------------------------------------------------------
 # TAB 1: 2026 STANDINGS HUB
