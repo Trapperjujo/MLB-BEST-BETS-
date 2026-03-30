@@ -320,9 +320,9 @@ with st.sidebar:
     # Logic: Redirect to strategy_2026.md for portal links.
     col1, col2 = st.columns(2)
     with col1:
-        st.button("🎯 DraftKings", help="US MLB Partner | Instant Deposit Match", use_container_width=True)
+        st.button("🎯 DraftKings", help="US MLB Partner | Instant Deposit Match", width='stretch')
     with col2:
-        st.button("🛰️ Stake.com", help="Global Crypto Partner | Life-time RevShare", use_container_width=True)
+        st.button("🛰️ Stake.com", help="Global Crypto Partner | Life-time RevShare", width='stretch')
     
     with st.expander("🧬 Pro Benchmarking Tools"):
         st.markdown("""
@@ -635,7 +635,7 @@ with tab0:
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']}).dropna()
                     if not hist_df.empty:
                         fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, width='stretch')
                     else:
                         st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
 
@@ -726,8 +726,8 @@ with tab0:
                     factor = MLB_PARK_FACTORS.get(row["home_team"], MLB_PARK_FACTORS["Default"])
                     run_bias = factor["run"] - 100
                     hr_bias = factor["hr"] - 100
-                    bias_color = "#f43f5e" if run_bias > 5 else ("#10b981" if run_bias < -5 else "#94a3b8")
-                    
+                    # Authoritative Data Hardening for situational display
+                    st.markdown(f"**📍 VENUE**: {venue}")
                     st.markdown(f"""
                     <div class='performance-metric-box' style='background: rgba(0, 243, 255, 0.05); padding: 15px;'>
                         <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;'>
@@ -743,41 +743,34 @@ with tab0:
                         <div style='margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);'>
                             <div style='display: flex; justify-content: space-between; align-items: center;'>
                                 <div>
-                    """, unsafe_allow_html=True)
-                    
-                    with st.expander("📚 What is the Statcast Situational Matrix?"):
-                        st.markdown("""
-                        <div class='performance-metric-box' style='background: rgba(255, 255, 255, 0.03); padding: 20px; border: 1px solid rgba(255,255,255,0.05);'>
-                            <div style='font-size: 1.1rem; font-weight: 900; color: #00f3ff; margin-bottom: 10px;'>🛰️ STATCAST SITUATIONAL ALPHA</div>
-                            <div style='font-size: 0.85rem; color: #94a3b8; line-height: 1.5;'>
-                                The Statcast Situational Matrix represents a granular, contextual analysis of baseball events. It synchronizes real-time performance data with game-state variables to provide a high-fidelity 'Reality Check' for every matchup.
-                            </div>
-                            
-                            <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;'>
-                                <div>
-                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>🏟️ GAME CONTEXT</div>
-                                    <div style='font-size: 0.75rem; color: #64748b;'>Filters by Inning, Score Differential, Outs, and Base State to generate situational win probabilities.</div>
+                                    <div style='font-size: 0.75rem; color: #94a3b8;'>🏟️ VENUE ALPHA</div>
+                                    <div style='font-size: 0.9rem; font-weight: 700; color: #f1f5f9;'>{venue}</div>
                                 </div>
-                                <div>
-                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>💎 QUALITY OF CONTACT</div>
-                                    <div style='font-size: 0.75rem; color: #64748b;'>Analyzes Launch Angle & Exit Velocity (Barrels, Solid Contact) to evaluate expected outcomes (xwOBA/xBA).</div>
+                                <div style='text-align: right;'>
+                                    <div style='font-size: 0.75rem; color: {bias_color}; font-weight: 800;'>
+                                        {"+" if run_bias > 0 else ""}{run_bias}% RUN BIAS
+                                    </div>
+                                    <div style='font-size: 0.65rem; color: #475569;'>
+                                        {"+" if hr_bias > 0 else ""}{hr_bias}% HR SENSITIVITY
+                                    </div>
                                 </div>
-                                <div>
-                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>🛰️ FIELDER POSITIONING</div>
-                                    <div style='font-size: 0.75rem; color: #64748b;'>Tracks real-time shift usage and OAA (Outs Above Average) based on fielder range and success rates.</div>
-                                </div>
-                                <div>
-                                    <div style='font-size: 0.8rem; font-weight: 800; color: #fff;'>⚡ BAT TRACKING (2024+)</div>
-                                    <div style='font-size: 0.75rem; color: #64748b;'>Ingests 2026 'Blasts' data—combining Swing Speed and Squared-Up rate for situational power analysis.</div>
-                                </div>
-                            </div>
-                            
-                            <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; color: #475569;'>
-                                <b>Source:</b> Institutional Statcast / Baseball Savant (2015-Present). 
-                                <br><i>Note: High-Fidelity bat tracking (Swing Speed) available for all active 2026 rosters.</i>
                             </div>
                         </div>
-                        """, unsafe_allow_html=True)
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    st.markdown(f"""
+                    <div style='background: rgba(0, 243, 255, 0.03); padding: 20px; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px;'>
+                        <div style='font-size: 1.1rem; font-weight: 900; color: #00f3ff; margin-bottom: 10px;'>🛰️ STATCAST SITUATIONAL ALPHA</div>
+                        <p style='font-size: 0.85rem; color: #94a3b8;'>Granular, contextual analysis synchronizing real-time performance data with game-state variables.</p>
+                        <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;'>
+                            <div><b style='color: #fff;'>🏟️ CONTEXT</b><br><small style='color: #64748b;'>Inning/Outs/Base State probabilities.</small></div>
+                            <div><b style='color: #fff;'>💎 QUALITY</b><br><small style='color: #64748b;'>Launch Angle & Exit Velocity (xwOBA).</small></div>
+                            <div><b style='color: #fff;'>🛰️ RANGE</b><br><small style='color: #64748b;'>Shift usage and OAA range tracking.</small></div>
+                            <div><b style='color: #fff;'>⚡ BAT</b><br><small style='color: #64748b;'>2026 Swing Speed & Squared-Up Rate.</small></div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------
 # TAB 1: 2026 STANDINGS HUB
@@ -850,7 +843,7 @@ with tab1:
             
             fig_s.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey')))
             fig_s.update_layout(height=700, margin=dict(l=20, r=20, t=60, b=20))
-            st.plotly_chart(fig_s, use_container_width=True)
+            st.plotly_chart(fig_s, width='stretch')
         else:
             st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
 
@@ -892,7 +885,7 @@ with tab2:
     if not elo_df.empty:
         fig = px.bar(elo_df, x='Elo', y='Team', orientation='h', color='Elo', text='Elo', color_continuous_scale='Viridis', template='plotly_dark')
         fig.update_layout(height=800)
-        st.plotly_chart(fig, width='stretch', use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         st.dataframe(elo_df.reset_index(drop=True), width='stretch')
     else:
         st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
@@ -982,8 +975,9 @@ with tab4:
             df_p = df_p.replace([np.inf, -np.inf], np.nan).dropna(subset=cols_to_clean)
             df_p["WAR"] = df_p["WAR"].clip(lower=0.1)
             
-            # Synchronize search view with visual HUD
-            df_p_plot = df_p[df_p['Name'].str.contains(search_p, case=False)] if search_p else df_p.sort_values(by="WAR", ascending=False).head(50)
+            # Synchronize search view with visual HUD and ensure strict non-negative sizing
+            df_p_plot = df_p[df_p['Name'].str.contains(search_p, case=False)].copy() if search_p else df_p.sort_values(by="WAR", ascending=False).head(50).copy()
+            df_p_plot["WAR"] = df_p_plot["WAR"].clip(lower=0.1)
             df_p_view = df_p_plot # Fix NameError for the dataframe display below
             
             st.markdown("### ⚾ Pitcher Efficiency Matrix (ERA vs FIP)")
@@ -992,7 +986,7 @@ with tab4:
                                   hover_name="Name", template="plotly_dark",
                                   title="🎯 PITCHER EFFICIENCY ALPHA (ERA vs FIP)",
                                   hover_data=["Team", "ERA", "FIP", "K/9", "WAR"])
-                st.plotly_chart(fig_p, use_container_width=True)
+                st.plotly_chart(fig_p, width='stretch')
             else:
                 st.warning("No pitcher data available for the current selection.")
             with st.expander("📚 Pitcher Matrix Legend"):
@@ -1025,7 +1019,7 @@ with tab4:
             
             if not df_h_plot.empty:
                 fig_h = px.bar(df_h_plot.sort_values(by="OPS", ascending=False), x="OPS", y="Team", orientation='h', color="wRC+", template="plotly_dark")
-                st.plotly_chart(fig_h, width='stretch', use_container_width=True)
+                st.plotly_chart(fig_h, width='stretch')
             else:
                 st.info("🛰️ **Data Hydrating...** Identifying seasonal benchmarks.")
             with st.expander("📊 Offensive Metric Legend"):
