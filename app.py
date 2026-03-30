@@ -30,6 +30,10 @@ var_neon_blue = "#00f3ff"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Institutional Model Constants
+MC_ITERATIONS = 10000 
+MLB_HFA = 24
+
 # Reverse ABBR_MAP for tank01 matching (Full Name -> ABBR)
 REVERSE_ABBR_MAP = {v: k for k, v in ABBR_MAP.items()}
 
