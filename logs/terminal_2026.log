@@ -67,3 +67,8 @@
 2026-03-30 11:19:39.030 | DEBUG    | core.database:_initialize_historical_data:30 - Ingested api_sports_2024.csv
 2026-03-30 11:19:39.041 | DEBUG    | core.database:_initialize_historical_data:36 - Ingested player_war_2025.csv
 2026-03-30 11:19:40.854 | INFO     | __main__:verify_upgrade:16 - Upgrade Verification Suite Started
+2026-03-30 11:29:36.872 | INFO     | core.database:_initialize_historical_data:18 - Initializing DuckDB Historical Layer...
+2026-03-30 11:29:36.925 | DEBUG    | core.database:_initialize_historical_data:24 - Ingested mlb_official_2024.csv
+2026-03-30 11:29:37.000 | DEBUG    | core.database:_initialize_historical_data:30 - Ingested api_sports_2024.csv
+2026-03-30 11:29:37.009 | DEBUG    | core.database:_initialize_historical_data:36 - Ingested player_war_2025.csv
+2026-03-30 11:29:38.144 | INFO     | __main__:verify_upgrade:16 - Upgrade Verification Suite Started
