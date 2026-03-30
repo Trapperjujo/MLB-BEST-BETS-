@@ -1,26 +1,34 @@
-# 🛰️ SOP: MLB Situational Analysis (2026 Season)
+# 🛰️ SOP: MLB Situational Analysis & Profitability (2026 Season)
 
 This Standard Operating Procedure (SOP) governs the probabilistic and analytical decision-making for the PRO BALL PREDICTOR 2026. You MUST follow these protocols to ensure 100% logic fidelity.
 
-## 🎯 Phase 1: Institutional Calibration
-- **Monte Carlo Engine:** 10,000 simulations per matchup. Do NOT deviate to lower iteration counts for "speed"—precision is the priority.
-- **HFA Buffer:** Always apply the +24 Elo Home Field Advantage buffer to the home team's run-line baseline.
-- **Momentum Alpha:** Starting from Game 10 of the 2026 season, scale the wRC+ momentum weight from 10% to 30%.
+## 🎯 Phase 1: Institutional Calibration (10k Simulations)
+- **Monte Carlo Engine:** 10,000 simulations per matchup using Poisson run-projection models.
+- **HFA Buffer:** Always apply +24 Elo Home Field Advantage to the home team's run-line baseline.
+- **Momentum Scaling:** Starting from Game 10, scale wRC+ momentum weighting from 10% to 30%.
 
 ## 💎 Phase 2: Situational Research (Statcast Matrix)
 Analyze the **Statcast Matchup Matrix** for the following institutional alpha points:
-- **xwOBA Drift:** If a hitter's xwOBA is > .360 against the specific pitcher's primary archetypes (e.g., High-Fastball, Sweeper), adjust win confidence by +2.5%.
+- **xwOBA Drift:** Compare real-time contact quality against season averages.
 - **Venue Alpha:** Ingest the **Park Factor** coefficient from `core/config.py`. Adjust projected run totals by the specified Run/HR bias.
-- **Bat Tracking:** If a starter's "Blasts" percentage (Swing Speed + Squared-Up) is significantly above the 2025 mean, prioritize the 'Ceiling (75%)' score cluster.
+- **Weather Factor:** Wind Blowing In @ 5+ MPH? Unders hit 55.1%. Wind Blowing Out? Lean Over.
+- **Umpire Scoping:** Confirm umpire strike zone bias (Tight zones = more walks/Overs).
 
-## 📈 Phase 3: Stake Optimization (Kelly Criterion)
-Calculate wagers using the **Fractional Kelly (0.25)** criterion:
-- **Bankroll Security:** Never allocate more than 3% of the total bankroll to a single outcome (Max Stake Cap).
-- **EV Threshold:** Only flag wagers with an Expected Value (+EV) of >3.5%.
+## 📊 Phase 3: Profitability & Staking (Non-Negotiables)
+Calculate wagers using the **Fractional Kelly (0.25)** or **Flat Staking** models:
+- **The Unit System:** 1 Unit = 1-2% of Total Bankroll.
+- **Max Stake Cap:** Never allocate more than 3% to a single outcome regardless of confidence.
+- **Stop-Loss Rule:** Pause/Review every 10 Units lost in a 7-day cycle.
+- **CLV Tracking:** Monitor Closing Line Value consistently to identify SKILL vs. LUCK.
 
-## 🍱 Phase 4: Master Feed Rendering
-Ensure that every card in the dashboard reflects:
-1. **Model Confidence (%)**
-2. **Implied Probability (%)**
-3. **Kelly Suggested Stake (CAD)**
-4. **Live Score Alignment (tank01 Sync)**
+## 📡 Phase 4: Market Intelligence (High-Value Angles)
+- **Divisional Underdogs:** Prioritize +Money payouts in rivalry games (+51.34 Units historical alpha).
+- **First 5 Innings (F5):** Utilize when starting pitching advantage is high but bullpen variance is a risk.
+- **Reverse Line Movement (RLM):** Monitor for line movement opposite to public betting. Divisional underdogs with RLM are a Tier-1 "Sharp Money" signal.
+
+## 🍱 Phase 5: Master Feed Rendering
+Ensure every card reflects:
+1. **Model Confidence (%)** vs. **Market Implied (%)**
+2. **Kelly Suggested Stake (CAD)** vs. **Flat Unit Stake (CAD)**
+3. **Live Score Alignment (tank01 Sync)**
+4. **Venue Alpha Status** (e.g., "+5.5% Run Bias")
