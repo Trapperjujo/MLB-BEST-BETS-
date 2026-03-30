@@ -1,6 +1,8 @@
 import os
+from dotenv import load_dotenv
 
 # Season Metadata
+DEPLOYMENT_VERSION = "2026.03.30.01" # Incremental version to force cache invalidation
 CURRENT_SEASON = 2026
 HISTORICAL_SEASONS = [2024, 2025, 2026]
 

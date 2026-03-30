@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 import json
 from dotenv import load_dotenv
-from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA
+from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION
 from core.data_fetcher import get_mlb_odds, process_odds_data, get_mlb_schedule, get_tank01_scores
 from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation
 from core.strategy import is_divisional_matchup
@@ -173,7 +173,7 @@ def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
     }
 
 @st.cache_data(ttl=600)
-def fetch_master_data():
+def fetch_master_data(version: str = DEPLOYMENT_VERSION):
     with st.status("📡 Initializing MLB Data Stream...", expanded=True) as status:
         t = datetime.now()
         cur, nxt, prev = t.strftime("%Y-%m-%d"), (t + timedelta(days=1)).strftime("%Y-%m-%d"), (t - timedelta(days=3)).strftime("%Y-%m-%d")
@@ -222,7 +222,7 @@ def fetch_master_data():
     return df_f
 
 # --- START EXECUTION ---
-df_master = fetch_master_data()
+df_master = fetch_master_data(DEPLOYMENT_VERSION)
 if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
