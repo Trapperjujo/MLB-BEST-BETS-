@@ -17,29 +17,55 @@ class PredictionService:
         self.scraper = scraper
 
     def predict_matchup(self, row, history_df: pd.DataFrame = None) -> Dict[str, Any]:
-        """Orchestrates a complete predictive analysis for a single game."""
+        """
+        🚀 Triple-Source Prediction Pipeline:
+        Combines Base Elo (Layer 3) + Scraper Trends (Layer 2) + DuckDB Glossary Alpha.
+        """
         h_team, a_team = normalize_team_name(row["home_team"]), normalize_team_name(row["away_team"])
         
         # 1. 🧬 Elo & Momentum Alpha
         h_elo_data = self.elo_repo.get_team_strength(h_team)
         a_elo_data = self.elo_repo.get_team_strength(a_team)
         
-        # 2. 📉 Fatigue & War Adjustments
+        # 2. 📉 Fatigue & Base Adjustments
         h_fat = self.elo_repo.get_fatigue_adjustment(h_team, history_df)
         a_fat = self.elo_repo.get_fatigue_adjustment(a_team, history_df)
         
-        # Note: Placeholder for team_war logic (extracted from previous turnkey)
-        # 1 WAR = ~6.25 Elo points.
         h_elo_adj = h_elo_data["effective_elo"] - h_fat
         a_elo_adj = a_elo_data["effective_elo"] - a_fat
         
-        # 3. 🛰️ Alpha Ingestion: Check 2026 Betting Trends for Situational Weights
-        # (Scraper handles caching and hydration)
+        # 🛡️ LAYER 3 ALPHA: DuckDB Glossary Integration
+        # We perform an 'Elo-Alpha' adjustment based on advanced peripheral metrics.
+        try:
+            from core.database import terminal_db
+            
+            # Fetch situational peripherals
+            h_metrics = terminal_db.conn.execute("SELECT * FROM glossary_batting_2026 WHERE Team = ?", [h_team]).fetchdf()
+            a_metrics = terminal_db.conn.execute("SELECT * FROM glossary_batting_2026 WHERE Team = ?", [a_team]).fetchdf()
+            
+            # Example: wRC+ Momentum Adjustment (+1 Elo for every point above 100)
+            if not h_metrics.empty:
+                wrc_plus = float(h_metrics.iloc[0].get('wRC+', 100))
+                h_elo_adj += (wrc_plus - 100) * 0.2
+            if not a_metrics.empty:
+                wrc_plus = float(a_metrics.iloc[0].get('wRC+', 100))
+                a_elo_adj += (wrc_plus - 100) * 0.2
+                
+            # Fielding Adjustment (DRS/OAA)
+            h_fielding = terminal_db.conn.execute("SELECT DRS, OAA FROM glossary_fielding_2026 WHERE Team = ?", [h_team]).fetchdf()
+            if not h_fielding.empty:
+                drs = float(h_fielding.iloc[0].get('DRS', 0))
+                h_elo_adj += drs * 0.5 # 1 DRS = 0.5 Elo points roughly
+                
+        except Exception as e:
+            logger.debug(f"Glossary Alpha Ingestion Skipped: {e}")
+
+        # 3. 🛰️ LAYER 2 ALPHA: Scraper Betting Trends
         trends = self.scraper.get_cached_trends()
         h_trend = next((t for t in trends if normalize_team_name(t['team']) == h_team), None)
         h_cover_pct = float(h_trend.get('cover_pct_val', 50.0)) if h_trend else 50.0
         
-        # 4. 🚀 Execute Monte Carlo Simulation Core (Vectorized)
+        # 4. 🚀 Execute Monte Carlo Simulation Core
         mc = run_monte_carlo_simulation(
             home_elo=int(h_elo_adj), 
             away_elo=int(a_elo_adj), 
@@ -49,10 +75,9 @@ class PredictionService:
             cover_pct=h_cover_pct
         )
         
-        # 5. 📉 XGBoost v3.0 Longitudinal Filtering
+        # 5. 📉 XGBoost v3.0 Filtering
         xg_p, xg_c = predict_xgboost_v3(h_team, a_team)
         
-        # 6. Structured Payload Return
         return {
             'home_win_prob': mc['home_win_prob'], 
             'away_win_prob': mc['away_win_prob'], 

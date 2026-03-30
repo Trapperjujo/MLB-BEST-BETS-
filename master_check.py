@@ -6,9 +6,9 @@ from datetime import datetime, timedelta
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 try:
-    import core.unified_config as config
+    from core.config import MC_ITERATIONS, MLB_HFA
     from core.data_fetcher import get_mlb_schedule, get_game_matrix
-    print(f"Simulation Constants: MC_ITERATIONS={config.MC_ITERATIONS}, MLB_HFA={config.MLB_HFA}")
+    print(f"Simulation Constants: MC_ITERATIONS={MC_ITERATIONS}, MLB_HFA={MLB_HFA}")
 except Exception as e:
     print(f"Constant Failure: {e}")
     sys.exit(1)

@@ -7,3 +7,8 @@ hero.png
 .DS_Store
 
 .appdeploy
+
+*.duckdb
+*.log
+.gemini/
+.tmp/

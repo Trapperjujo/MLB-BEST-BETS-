@@ -33,7 +33,7 @@ def verify_upgrade():
     assert p.name == "Aaron Judge", "Pydantic validation failed!"
     print("OK Pydantic Schemas: PASSED")
     
-    print("\n[SUCCESS] All Institutional Components Verified.")
+    print("\n🚀 All Institutional Components Verified.")
 
 if __name__ == "__main__":
     verify_upgrade()

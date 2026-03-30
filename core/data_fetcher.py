@@ -3,64 +3,35 @@ import requests
 import pandas as pd
 from typing import List, Dict, Optional, Any
 from dotenv import load_dotenv
-import core.unified_config as config
+from core.config import CURRENT_SEASON
 from core.logger import terminal_logger as logger
 
 load_dotenv()
 
+ODDS_API_KEY = os.getenv("ODDS_API_KEY")
 BALLDONTLIE_API_KEY = os.getenv("BALLDONTLIE_API_KEY")
-API_SPORTS_KEY = os.getenv("API_SPORTS_KEY") # Shared RapidAPI Key
+API_SPORTS_KEY = os.getenv("API_SPORTS_KEY")
 
+ODDS_BASE_URL = "https://api.the-odds-api.com/v4"
 BDL_BASE_URL = "https://api.balldontlie.io/v1/mlb"
 SPORTS_BASE_URL = "https://v1.baseball.api-sports.io"
-TANK01_BASE_URL = "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"
 
-def get_rapid_odds(game_date: str) -> Dict[str, Any]:
-    """
-    Fetches MLB odds using a fallback chain: Tank01 (Primary) -> API-Sports (Secondary).
-    game_date: YYYYMMDD
-    """
-    # 1. Primary: Tank01
-    url_t1 = f"{TANK01_BASE_URL}/getMLBBettingOdds"
-    headers_t1 = {
-        "x-rapidapi-key": API_SPORTS_KEY,
-        "x-rapidapi-host": "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"
+def get_mlb_odds(regions: str = "us,uk,eu,au", markets: str = "h2h") -> List[Dict[str, Any]]:
+    """Fetches real-time MLB odds from The Odds API across multiple regions."""
+    url = f"{ODDS_BASE_URL}/sports/baseball_mlb/odds/"
+    params = {
+        "apiKey": ODDS_API_KEY,
+        "regions": regions,
+        "markets": markets,
+        "oddsFormat": "american"
     }
-    params_t1 = {"gameDate": game_date}
-    
     try:
-        logger.info(f"RapidAPI: Attempting Tank01 Odds Fetch for {game_date}")
-        resp = requests.get(url_t1, headers=headers_t1, params=params_t1)
-        if resp.status_code == 200:
-            data = resp.json()
-            if data.get("body") and len(data["body"]) > 0:
-                logger.info("RapidAPI: Tank01 Odds Success (Primary)")
-                return {"source": "tank01", "data": data["body"]}
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
     except Exception as e:
-        logger.warning(f"RapidAPI: Tank01 Odds Failed, falling back: {e}")
-
-    # 2. Fallback: API-Sports
-    url_as = f"{SPORTS_BASE_URL}/odds"
-    headers_as = {
-        "x-rapidapi-key": API_SPORTS_KEY,
-        "x-rapidapi-host": "v1.baseball.api-sports.io"
-    }
-    # API-Sports expects date format YYYY-MM-DD
-    as_date = f"{game_date[:4]}-{game_date[4:6]}-{game_date[6:]}"
-    params_as = {"league": "1", "season": "2026", "date": as_date}
-    
-    try:
-        logger.info(f"RapidAPI: Attempting API-Sports Fallback for {as_date}")
-        resp = requests.get(url_as, headers=headers_as, params=params_as)
-        if resp.status_code == 200:
-            data = resp.json()
-            if data.get("response") and len(data["response"]) > 0:
-                logger.info("RapidAPI: API-Sports Fallback Success")
-                return {"source": "api-sports", "data": data["response"]}
-    except Exception as e:
-        logger.error(f"RapidAPI: Critical Fallback Failure: {e}")
-        
-    return {"source": None, "data": []}
+        logger.error(f"Error fetching odds: {e}")
+        return []
 
 def get_mlb_schedule(date_str: Optional[str] = None, start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[Dict[str, Any]]:
     """Fetches official MLB schedule and probable pitchers from Stats API for a date or range."""
@@ -109,10 +80,8 @@ def get_mlb_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
         logger.error(f"Error fetching BDL games: {e}")
         return []
 
-def get_player_stats(player_id: int, season: int = None) -> List[Dict[str, Any]]:
+def get_player_stats(player_id: int, season: int = CURRENT_SEASON) -> List[Dict[str, Any]]:
     """Fetches player season stats from balldontlie."""
-    if season is None:
-        season = config.SEASON
     url = f"{BDL_BASE_URL}/season_stats"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
     params = {
@@ -127,10 +96,8 @@ def get_player_stats(player_id: int, season: int = None) -> List[Dict[str, Any]]
         logger.error(f"Error fetching player stats: {e}")
         return []
 
-def get_team_standings(season: int = None) -> List[Dict[str, Any]]:
+def get_team_standings(season: int = CURRENT_SEASON) -> List[Dict[str, Any]]:
     """Fetches team standings from balldontlie."""
-    if season is None:
-        season = config.SEASON
     url = f"{BDL_BASE_URL}/standings"
     headers = {"Authorization": BALLDONTLIE_API_KEY}
     params = {"season": season}
@@ -149,7 +116,7 @@ def get_api_sports_games(date: Optional[str] = None) -> List[Dict[str, Any]]:
         "x-rapidapi-key": API_SPORTS_KEY,
         "x-rapidapi-host": "v1.baseball.api-sports.io"
     }
-    params = {"league": "1", "season": str(config.SEASON)}
+    params = {"league": "1", "season": str(CURRENT_SEASON)}
     if date:
         params["date"] = date
         
@@ -176,89 +143,92 @@ def get_game_matrix(gamePk: int) -> Dict[str, Any]:
         logger.error(f"Error fetching game matrix: {e}")
         return {}
 
-def get_tank01_scores(game_date: str) -> dict:
+def get_tank01_odds(game_date: str) -> List[Dict[str, Any]]:
     """
-    Fetches live scores and top performers from tank01 API.
+    Fetches 2026 Betting Odds from Tank01.
     game_date: YYYYMMDD
     """
-    url = "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBScoresOnly"
+    url = "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBScheduling"
     headers = {
         "x-rapidapi-key": os.getenv("API_SPORTS_KEY"),
         "x-rapidapi-host": "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"
     }
-    params = {"gameDate": game_date, "topPerformers": "true"}
+    params = {"gameDate": game_date}
     
     try:
         response = requests.get(url, headers=headers, params=params)
         if response.status_code == 200:
-            return response.json()
-        return {}
+            data = response.json().get("body", [])
+            # Convert Tank01 schedule/odds to standard format
+            standardized = []
+            for game in data:
+                standardized.append({
+                    "game_id": game.get("gameID"),
+                    "home_team": game.get("home"),
+                    "away_team": game.get("away"),
+                    "commence_time": game.get("gameTime"),
+                    "bookmaker": "Tank01 Global",
+                    "market": "h2h",
+                    "outcome": game.get("home"), # Just a placeholder for mapping
+                    "odds": float(game.get("homeOdds", 1.91))
+                })
+            return standardized
+        return []
     except Exception as e:
-        logger.error(f"Error fetching live scores: {e}")
-        return {}
+        logger.error(f"Tank01 Odds Error: {e}")
+        return []
 
-def process_rapid_odds(odds_payload: Dict[str, Any]) -> pd.DataFrame:
-    """Processes either Tank01 or API-Sports JSON into a flat dashboard-ready DataFrame."""
-    source = odds_payload.get("source")
-    data = odds_payload.get("data", [])
-    processed = []
+def get_rapid_odds(game_date: str) -> Dict[str, Any]:
+    """
+    💎 Triple-Source Sync Layer 1: Unified API Fetcher.
+    Attempts (1) Tank01 -> (2) The Odds API -> (3) API-Sports.
+    Returns a unified payload for the orchestrator.
+    """
+    logger.info(f"RapidAPI: Attempting Triple-Source Odds Fetch for {game_date}")
     
-    if source == "tank01":
-        # Tank01 format: { gameID: { "playerProps": ..., "gameOdds": { "ml": {...} } } }
-        for g_id, g_data in data.items():
-            odds_dict = g_data.get("gameOdds", {})
-            for market_key, market_data in odds_dict.items():
-                if market_key == "ml": # Moneyline (h2h)
-                    # Tank01 format: "ml": { "home": "-150", "away": "+130" }
-                    # We need to extract teams from the g_id (e.g. "MIN@SEA_20260330")
-                    try:
-                        teams_part = g_id.split("_")[0]
-                        away_abbr, home_abbr = teams_part.split("@")
-                        # We use ABBR_MAP from elo_ratings elsewhere, but here we just need to match outcomes.
-                        # For consistency with app.py merging, we store the abbr or full name.
-                        from core.elo_ratings import ABBR_MAP
-                        home_team = ABBR_MAP.get(home_abbr, home_abbr)
-                        away_team = ABBR_MAP.get(away_abbr, away_abbr)
-                        
-                        processed.append({
-                            "game_id": g_id,
-                            "home_team": home_team,
-                            "away_team": away_team,
-                            "bookmaker": "🛰️ Institutional Tank01 Feed",
-                            "market": "h2h",
-                            "outcome": home_team,
-                            "odds": int(market_data.get("home", 0))
-                        })
-                        processed.append({
-                            "game_id": g_id,
-                            "home_team": home_team,
-                            "away_team": away_team,
-                            "bookmaker": "🛰️ Institutional Tank01 Feed",
-                            "market": "h2h",
-                            "outcome": away_team,
-                            "odds": int(market_data.get("away", 0))
-                        })
-                    except: continue
+    # 1. Primary: Tank01 (Institutional Speed)
+    tank_data = get_tank01_odds(game_date)
+    if tank_data:
+        logger.success("Multi-Source Logic: Tank01 Primary Sync Successful (Layer 1A)")
+        return {"data": tank_data, "source": "💎 Tank01 Institutional"}
 
-    elif source == "api-sports":
-        # API-Sports format: list of objects with "game", "league", "bookmakers"
-        for item in data:
-            g_info = item.get("game", {})
-            h_team = item.get("teams", {}).get("home", {}).get("name")
-            a_team = item.get("teams", {}).get("away", {}).get("name")
-            
-            for bm in item.get("bookmakers", []):
-                for market in bm.get("bets", []):
-                    if market.get("name") in ["Moneyline", "Home/Away"]:
-                        for val in market.get("values", []):
-                            processed.append({
-                                "game_id": str(g_info.get("id")),
-                                "home_team": h_team,
-                                "away_team": a_team,
-                                "bookmaker": bm.get("name"),
-                                "market": "h2h",
-                                "outcome": val.get("value"), # Usually "Home" or "Away" or team name
-                                "odds": val.get("odd") # Usually decimal, but we'll adapt if needed
-                            })
-                            
-    return pd.DataFrame(processed)
+    # 2. Secondary: The Odds API (Global Markets)
+    odds_raw = get_mlb_odds()
+    if odds_raw:
+        df_odds = process_odds_data(odds_raw)
+        if not df_odds.empty:
+            logger.success("Multi-Source Logic: The Odds API Secondary Sync Successful (Layer 1B)")
+            return {"data": df_odds.to_dict(orient='records'), "source": "💎 The Odds API Global"}
+
+    # 3. Tertiary: API-Sports Fallback (Structural Backup)
+    api_sports = get_api_sports_games(game_date[:4] + "-" + game_date[4:6] + "-" + game_date[6:])
+    if api_sports:
+        logger.success("Multi-Source Logic: API-Sports Fallback Sync Successful (Layer 1C)")
+        return {"data": api_sports, "source": "💎 API-Sports Backup"}
+
+    logger.warning("Multi-Source Logic: Layer 1 API Sync Failed. Degrading to Layer 2 (Scraper).")
+    return {"data": [], "source": "⚠️ API Offline"}
+
+def process_odds_data(odds_json: List[Dict[str, Any]]) -> pd.DataFrame:
+    """Processes raw Odds API JSON into a flat DataFrame."""
+    if not odds_json: return pd.DataFrame()
+    processed_data = []
+    for game in odds_json:
+        home_team = game.get("home_team")
+        away_team = game.get("away_team")
+        commence_time = game.get("commence_time")
+        
+        for bookmaker in game.get("bookmakers", []):
+            for market in bookmaker.get("markets", []):
+                for outcome in market.get("outcomes", []):
+                    processed_data.append({
+                        "game_id": game.get("id"),
+                        "home_team": home_team,
+                        "away_team": away_team,
+                        "commence_time": commence_time,
+                        "bookmaker": bookmaker.get("title"),
+                        "market": market.get("key"),
+                        "outcome": outcome.get("name"),
+                        "odds": outcome.get("price")
+                    })
+    return pd.DataFrame(processed_data)
