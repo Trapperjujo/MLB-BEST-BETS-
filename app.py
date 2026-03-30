@@ -339,7 +339,7 @@ with tab0:
 <div style='font-size: 1.2rem; font-weight: 800; color: #fff;'>{row['away_team']}</div>
 <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {a_rec_str}</div>
 <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 900;'>{row['away_win_prob']*100:.1f}%</div>
-<div style='font-size: 0.9rem; color: #94a3b8;'>Proj: {row['away_proj']:.1f} runs</div>
+<div style='font-size: 0.9rem; color: #94a3b8; font-weight: 500;'>Proj: {row['away_proj']:.1f} | Elo: {int(row['away_elo'])}</div>
 </div>
 <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; border-left: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); padding: 0 10px;'>
 <div style='font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;'>Winner</div>
@@ -352,7 +352,7 @@ with tab0:
 <div style='font-size: 1.2rem; font-weight: 800; color: #fff;'>{row['home_team']}</div>
 <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {h_rec_str}</div>
 <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 900;'>{row['home_win_prob']*100:.1f}%</div>
-<div style='font-size: 0.9rem; color: #94a3b8;'>Proj: {row['home_proj']:.1f} runs</div>
+<div style='font-size: 0.9rem; color: #94a3b8; font-weight: 500;'>Proj: {row['home_proj']:.1f} | Elo: {int(row['home_elo'])}</div>
 </div>
 </div>
 <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;'>
