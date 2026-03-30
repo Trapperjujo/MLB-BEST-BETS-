@@ -14,6 +14,7 @@ DEFAULT_KELLY_MODE = 'Quarter'
 MAX_STAKE_CAP = 0.03 # 3% Maximum bankroll allocation per bet
 
 # Model Constants
+MC_ITERATIONS = 10000 # Institutional baseline for Monte Carlo simulations
 MLB_HFA = 24 # Standard Home Field Advantage Elo Adjustment
 ELO_K_FACTOR = 4.0 # Sensitivity of predictions
 FRACTIONAL_KELLY = 0.25 # Risk reduction factor for Kelly Criterion (fallback)
