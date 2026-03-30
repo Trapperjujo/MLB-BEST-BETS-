@@ -72,3 +72,12 @@
 2026-03-30 11:29:37.000 | DEBUG    | core.database:_initialize_historical_data:30 - Ingested api_sports_2024.csv
 2026-03-30 11:29:37.009 | DEBUG    | core.database:_initialize_historical_data:36 - Ingested player_war_2025.csv
 2026-03-30 11:29:38.144 | INFO     | __main__:verify_upgrade:16 - Upgrade Verification Suite Started
+2026-03-30 11:34:14.925 | INFO     | core.database:_initialize_historical_data:18 - Initializing DuckDB Historical Layer...
+2026-03-30 11:34:14.971 | DEBUG    | core.database:_initialize_historical_data:24 - Ingested mlb_official_2024.csv
+2026-03-30 11:34:15.035 | DEBUG    | core.database:_initialize_historical_data:30 - Ingested api_sports_2024.csv
+2026-03-30 11:34:15.043 | DEBUG    | core.database:_initialize_historical_data:36 - Ingested player_war_2025.csv
+2026-03-30 11:34:15.043 | INFO     | core.database:_initialize_historical_data:39 - Applying B-Tree Indexes to Historical Layer...
+2026-03-30 11:34:15.053 | ERROR    | core.database:_initialize_historical_data:45 - DuckDB Initialization Error: Binder Error: Table "historical_games_2024" does not have a column named "venue"
+
+Candidate bindings: : "date"
+2026-03-30 11:34:16.193 | INFO     | __main__:verify_upgrade:16 - Upgrade Verification Suite Started

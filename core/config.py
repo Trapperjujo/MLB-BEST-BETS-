@@ -29,6 +29,7 @@ MLB_PARK_FACTORS = {
     "Los Angeles Dodgers": {"run": 99.0, "hr": 115.0, "k_factor": 106.0, "desc": "Warm air; seasonal power-hitting bias."},
     "Arizona Diamondbacks": {"run": 101.0, "hr": 98.0, "k_factor": 98.0, "desc": "Humidified air; stable scoring environment."},
     "San Francisco Giants": {"run": 94.0, "hr": 89.0, "k_factor": 110.0, "desc": "Cold air; extreme long-ball suppression."},
+    "Oakland Athletics": {"run": 108.0, "hr": 105.0, "k_factor": 102.0, "desc": "Sutter Health Park (Sacramento); high-offense volatility; low-altitude thermal."},
     "Default": {"run": 100.0, "hr": 100.0, "k_factor": 100.0, "desc": "Standard league-average environment."}
 }
 
@@ -53,3 +54,13 @@ MIN_EDGE_DEFAULT = 3.0 # % Edge needed for Intelligence Feed flags
 BANKROLL_DEFAULT = 5000.0 # CAD Baseline
 STD_BET_SIZE_DEFAULT = 1.5 # % of bankroll per unit
 CAD_USD_XRATE = 1.35 # Default CAD conversion factor
+
+# 🛰️ 2026 League Environment (Guts)
+# These constants define the mathematical baseline for XGBoost and Monte Carlo normalization.
+LEAGUE_GUTS_2026 = {
+    "wOBA": 0.310,
+    "wOBA_scale": 1.325,
+    "r_pa": 0.112,      # Runs per Plate Appearance
+    "cfip": 2.911,      # League Average FIP Constant
+    "base_runs_pg": 4.56 # Derived 2026 average runs per game
+}

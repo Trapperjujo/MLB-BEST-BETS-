@@ -38,9 +38,9 @@ def train_advanced_model():
         df['h_3y_winrate'] = df['home_team'].apply(lambda x: team_matrix.get(x, {}).get('overall_win_rate', 0.5))
         df['a_3y_winrate'] = df['away_team'].apply(lambda x: team_matrix.get(x, {}).get('overall_win_rate', 0.5))
         
-        # Scoring Benchmarks
-        df['h_avg_runs'] = df['home_team'].apply(lambda x: team_matrix.get(x, {}).get('avg_runs_scored', 4.4))
-        df['a_avg_runs'] = df['away_team'].apply(lambda x: team_matrix.get(x, {}).get('avg_runs_scored', 4.4))
+        # Scoring Benchmarks (2026 Guts Alignment)
+        df['h_avg_runs'] = df['home_team'].apply(lambda x: team_matrix.get(x, {}).get('avg_runs_scored', LEAGUE_GUTS_2026["base_runs_pg"]))
+        df['a_avg_runs'] = df['away_team'].apply(lambda x: team_matrix.get(x, {}).get('avg_runs_scored', LEAGUE_GUTS_2026["base_runs_pg"]))
         
         # Target
         df['target'] = (df['home_score'] > df['away_score']).astype(int)
@@ -81,7 +81,7 @@ def load_advanced_model():
 
 _MODEL = load_advanced_model()
 
-from core.config import MLB_PARK_FACTORS
+from core.config import MLB_PARK_FACTORS, LEAGUE_GUTS_2026
 
 def predict_xgboost_v3(home_team, away_team):
     """
@@ -97,8 +97,8 @@ def predict_xgboost_v3(home_team, away_team):
     a_elo = get_team_elo(away_team)
     h_3y = team_matrix.get(home_team, {}).get('overall_win_rate', 0.5)
     a_3y = team_matrix.get(away_team, {}).get('overall_win_rate', 0.5)
-    h_runs = team_matrix.get(home_team, {}).get('avg_runs_scored', 4.4)
-    a_runs = team_matrix.get(away_team, {}).get('avg_runs_scored', 4.4)
+    h_runs = team_matrix.get(home_team, {}).get('avg_runs_scored', LEAGUE_GUTS_2026["base_runs_pg"])
+    a_runs = team_matrix.get(away_team, {}).get('avg_runs_scored', LEAGUE_GUTS_2026["base_runs_pg"])
     
     features = pd.DataFrame([[h_elo, a_elo, h_3y, a_3y, h_runs, a_runs]], 
                             columns=['h_elo', 'a_elo', 'h_3y_winrate', 'a_3y_winrate', 'h_avg_runs', 'a_avg_runs'])

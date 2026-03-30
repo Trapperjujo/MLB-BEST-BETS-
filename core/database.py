@@ -35,21 +35,37 @@ class MLBDatabase:
                 self.conn.execute(f"CREATE OR REPLACE TABLE player_war_2025 AS SELECT * FROM read_csv_auto('{war_25}')")
                 logger.debug("Ingested player_war_2025.csv")
 
+            # 4. Institutional Indexing (Situational Alpha Acceleration)
+            logger.info("Applying B-Tree Indexes to Historical Layer...")
+            self.conn.execute("CREATE INDEX IF NOT EXISTS idx_hist_home ON historical_games_2024 (home_team)")
+            self.conn.execute("CREATE INDEX IF NOT EXISTS idx_hist_away ON historical_games_2024 (away_team)")
+            # 🧬 Shield Mode: 'venue' column does not exist in 2024 baseline. 
+            # We rely on home/away team identity for situational alpha.
+
         except Exception as e:
             logger.error(f"DuckDB Initialization Error: {e}")
 
     def query_situational_alpha(self, team_name: str, venue: str = None) -> pd.DataFrame:
         """Example situational query: Get team performance in specific environments."""
-        sql = """
-        SELECT * FROM historical_games_2024 
-        WHERE (home_team = ? OR away_team = ?)
-        """
-        params = [team_name, team_name]
-        if venue:
-            sql += " AND venue = ?"
-            params.append(venue)
-        
-        return self.conn.execute(sql, params).fetchdf()
+        try:
+            sql = """
+            SELECT * FROM historical_games_2024 
+            WHERE (home_team = ? OR away_team = ?)
+            """
+            params = [team_name, team_name]
+            
+            # 🛡️ Data Resilience: Only filter by venue if the column is detected (2026 Ready)
+            cols = self.conn.execute("PRAGMA table_info(historical_games_2024)").fetchall()
+            col_names = [c[1] for c in cols]
+            
+            if venue and "venue" in col_names:
+                sql += " AND venue = ?"
+                params.append(venue)
+            
+            return self.conn.execute(sql, params).fetchdf()
+        except Exception as e:
+            logger.warning(f"Situational Query Degradation: {e}")
+            return pd.DataFrame()
 
 # Global DB Instance
 terminal_db = MLBDatabase()

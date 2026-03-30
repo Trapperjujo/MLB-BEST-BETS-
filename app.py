@@ -16,11 +16,14 @@ from annotated_text import annotated_text
 import plotly.express as px
 import plotly.graph_objects as go
 
-# 🧭 Institutional Analytical Core
+# 🧭 Institutional Analytical Core (Phase 16)
+from core.unified_config import config
 from core.analytics import AlphaTracker
 from core.sheets_sync import CloudLedger
 from core.scraper_engine import MLBScraper
 from core.logger import terminal_logger as logger
+from core.services.orchestrator import sync_mlb_data
+from core.elo_ratings import ABBR_MAP, normalize_team_name
 
 # 🛰️ Initialize Institutional Persistence Layer (Top-Level Scope)
 tracker = AlphaTracker()
@@ -28,37 +31,12 @@ ledger = CloudLedger()
 scraper = MLBScraper()
 _tracker = tracker
 
-# 🧬 Persistence Layer Paths
-DB_DIR = "data"
-DB_PATH = os.path.join(DB_DIR, "terminal_2026.duckdb")
-os.makedirs(DB_DIR, exist_ok=True)
-
-import json
-from dotenv import load_dotenv
-from core.config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION, MLB_PARK_FACTORS
-from core.data_fetcher import get_rapid_odds, process_rapid_odds, get_mlb_schedule, get_tank01_scores
-from core.models import american_to_decimal, calculate_ev, calculate_implied_probability, flat_staking, kelly_criterion, calculate_elo_probability, calculate_sport_select_ev, calculate_expected_runs, calculate_war_elo_adjustment, run_monte_carlo_simulation, calculate_fair_odds
-from core.strategy import is_divisional_matchup
-from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name, ABBR_MAP
-from core.status_fetcher import get_player_injuries, get_fatigue_penalty
-from core.stats_engine import get_2026_standings, get_2026_leaders, get_pitcher_stats, get_team_hitting_stats
-from core.prediction_xgboost import predict_xgboost_v3
-from core.subscription_engine import SubscriptionLedger
-import plotly.express as px
-import plotly.graph_objects as go
-from datetime import datetime, timedelta
-import logging
-
-# Neon Colors for Charts
-var_neon_green = "#39ff14"
-var_neon_blue = "#00f3ff"
-
-# Configure Logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 # Reverse ABBR_MAP for tank01 matching (Full Name -> ABBR)
 REVERSE_ABBR_MAP = {v: k for k, v in ABBR_MAP.items()}
+
+# Design Tokens (Phase 16)
+var_neon_green = "#39ff14"
+var_neon_blue = "#00f3ff"
 
 # Page Configuration
 st.set_page_config(page_title="PRO BALL PREDICTOR", layout="wide", initial_sidebar_state="expanded")
@@ -101,16 +79,16 @@ load_css("styles/neon_theme.css")
 
 # --- SIDEBAR CONFIGURATION (Inputs first) ---
 st.sidebar.markdown("### 🛠️ Risk Management")
-bankroll = st.sidebar.number_input("Total Bankroll (CAD)", min_value=100.0, value=BANKROLL_DEFAULT, step=100.0)
-kelly_mode = st.sidebar.selectbox("Kelly Criterion Mode", list(KELLY_MODES.keys()), index=list(KELLY_MODES.keys()).index(DEFAULT_KELLY_MODE))
-fractional_kelly = KELLY_MODES[kelly_mode]
+bankroll = st.sidebar.number_input("Total Bankroll (CAD)", min_value=100.0, value=config.BANKROLL_DEFAULT, step=100.0)
+kelly_mode = st.sidebar.selectbox("Kelly Criterion Mode", list(config.KELLY_MODES.keys()), index=list(config.KELLY_MODES.keys()).index(config.DEFAULT_KELLY_MODE))
+fractional_kelly = config.KELLY_MODES[kelly_mode]
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### ⚙️ Engine Settings")
 sort_mode = st.sidebar.selectbox("Dashboard Sort Mode", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset", "📅 Earliest Game Time"])
-std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, STD_BET_SIZE_DEFAULT, 0.1)
-min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 10.0, MIN_EDGE_DEFAULT, 0.5) / 100
-cad_rate = st.sidebar.number_input("CAD/USD Rate", value=CAD_USD_XRATE, step=0.01)
+std_bet_size = st.sidebar.slider("Standard Bet Size (%)", 0.5, 5.0, config.STD_BET_SIZE_DEFAULT, 0.1)
+min_edge = st.sidebar.slider("Minimum Edge Needed (%)", 0.0, 10.0, config.MIN_EDGE_DEFAULT, 0.5) / 100
+cad_rate = st.sidebar.number_input("CAD/USD Rate", value=config.CAD_USD_XRATE, step=0.01)
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🗺️ Terminal Overview")
@@ -119,7 +97,7 @@ st.sidebar.info("🛰️ **Active Mode**: Command Center Navigation. Use the pri
 # 🏥 Data Stream Health Indicator (Institutional Audit)
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🧬 Data Stream Health")
-db_status = "🟢 ONLINE" if os.path.exists(DB_PATH) else "🔴 OFFLINE"
+db_status = "🟢 ONLINE" if os.path.exists(config.DB_PATH) else "🔴 OFFLINE"
 api_status = "🟢 ACTIVE" if "live_scores_2026" in st.session_state and st.session_state["live_scores_2026"] else "🟡 PENDING"
 st.sidebar.markdown(f"""
 <div style='display: flex; justify-content: space-between; font-size: 0.75rem; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);'>
@@ -153,183 +131,31 @@ st.sidebar.markdown(f"""
 
 # 🧬 DATA ENGINE: sabermetric & Predictive Logic
 @st.cache_data
-def load_team_war_map():
-    path = "data/raw/player_war_2025.csv"
-    if not os.path.exists(path): return {}
-    df = pd.read_csv(path)
-    from core.elo_ratings import ABBR_MAP
-    team_war = df.groupby('Team')['WAR'].sum().to_dict()
-    full_team_war = {}
-    for team, war in team_war.items():
-        full_name = ABBR_MAP.get(team, team)
-        full_team_war[full_name] = war
-    return full_team_war
+# 📈 DATA BRIDGE: Service Orchestration
+@st.cache_data(ttl=600)
+def get_master_data_feed(bankroll, fractional_kelly, reduction_factor):
+    """Bridge between UI and the Institutional Data Orchestrator."""
+    with st.status("📡 Initializing MLB Data Stream...", expanded=True) as status:
+        df, live, standings, leaders = sync_mlb_data(
+            bankroll=bankroll,
+            fractional_kelly=fractional_kelly,
+            reduction_factor=reduction_factor,
+            status_callback=lambda msg: status.update(label=msg)
+        )
+        
+        # Hydrate session state for top-level component access
+        st.session_state["live_scores_2026"] = live
+        st.session_state["df_standings_2026"] = standings
+        st.session_state["df_leaders_2026"] = leaders
+        
+        status.update(label="✅ Synchronization Complete", state="complete")
+        return df
 
-team_war_map = load_team_war_map()
-
-def get_prediction(row, history_df: pd.DataFrame = None, **kwargs):
-    h_p_stats, a_p_stats = kwargs.get('p_stats', pd.DataFrame()), kwargs.get('p_stats', pd.DataFrame())
-    h_p_name, a_p_name = row.get('home_pitcher', 'TBD'), row.get('away_pitcher', 'TBD')
-    h_team, a_team = normalize_team_name(row["home_team"]), normalize_team_name(row["away_team"])
-    
-    # 📡 Hybrid Elo Alignment & 2026 Momentum Alpha
-    # Injecting live season momentum (Win%) into the baseline Elo.
-    h_elo, a_elo = get_team_elo(h_team), get_team_elo(a_team)
-    h_fat, a_fat = get_fatigue_penalty(h_team, history_df), get_fatigue_penalty(a_team, history_df)
-    
-    # Live Standings Momentum Adjustment
-    standings = kwargs.get('standings_df', pd.DataFrame())
-    h_mom, a_mom = 0, 0
-    if not standings.empty:
-        h_rec = standings[standings['Team'] == h_team]
-        a_rec = standings[standings['Team'] == a_team]
-        if not h_rec.empty:
-            # Momentum Alpha: Win% deviation from .500 * March phase weight (10.0)
-            h_mom = int((float(h_rec.iloc[0]['PCT']) - 0.500) * 10)
-        if not a_rec.empty:
-            a_mom = int((float(a_rec.iloc[0]['PCT']) - 0.500) * 10)
-        h_war, a_war = float(team_war_map.get(h_team, 0.0)), float(team_war_map.get(a_team, 0.0))
-    w_adj = calculate_war_elo_adjustment(h_war, a_war)
-
-    # 📏 Final Calibration: (Base Elo + Momentum) - Fatigue + WAR
-    # Safety: Ensure all terms are numeric to prevent TypeError in int()
-    h_base = float(h_elo or 1500)
-    a_base = float(a_elo or 1500)
-    h_fat_val = float(h_fat or 0)
-    a_fat_val = float(a_fat or 0)
-    
-    # 🛡️ Structural Guard: Scalar conversion for w_adj
-    w_val = float(w_adj) if w_adj is not None and not pd.isna(w_adj) else 0.0
-    
-    h_elo_adj = h_base + float(h_mom) - h_fat_val + max(0.0, w_val)
-    a_elo_adj = a_base + float(a_mom) - a_fat_val + abs(min(0.0, w_val))
-
-    # Final Type Cast Check
-    if pd.isna(h_elo_adj) or np.isinf(h_elo_adj): h_elo_adj = 1500.0
-    if pd.isna(a_elo_adj) or np.isinf(a_elo_adj): a_elo_adj = 1500.0
-
-    h_ps = h_p_stats[h_p_stats['Name'] == h_p_name].iloc[0].to_dict() if not h_p_stats.empty and not h_p_stats[h_p_stats['Name'] == h_p_name].empty else None
-    a_ps = a_p_stats[a_p_stats['Name'] == a_p_name].iloc[0].to_dict() if not a_p_stats.empty and not a_p_stats[a_p_stats['Name'] == a_p_name].empty else None
-
-    # 🛰️ Alpha Ingestion: Check 2026 Betting Trends for Situational Weights
-    trends_raw = scraper.scrape_betting_trends() if not os.path.exists(scraper.cache_path) else json.load(open(scraper.cache_path))['trends']
-    h_trend = next((t for t in trends_raw if normalize_team_name(t['team']) == normalize_team_name(h_team)), None)
-    h_cover_pct = float(h_trend.get('cover_pct_val', 50.0)) if h_trend else 50.0
-
-    # 🛰️ Execute Monte Carlo Simulation Core (Full-Stack Refined)
-    mc = run_monte_carlo_simulation(
-        home_elo=int(h_elo_adj), 
-        away_elo=int(a_elo_adj), 
-        iterations=MC_ITERATIONS,
-        hfa=MLB_HFA,
-        home_team=h_team,
-        cover_pct=h_cover_pct
-    )
-    
-    # 🛰️ SHADOW-MODE BASALINE (Poisson Comparison)
-    # We run a side-by-side Poisson baseline to measure the delta of our NB model.
-    # Logic: poisson_prob = 1 / (1 + 10^((away-home)/400))
-    p_baseline = 1.0 / (1.0 + math.pow(10.0, (int(a_elo_adj) - (int(h_elo_adj) + MLB_HFA)) / 400.0))
-    
-    # Persistent Signal Log
-    _tracker.track_event("shadow_audit_capture", {
-        "away": a_team, "home": h_team,
-        "nb_model_prob": mc['home_win_prob'],
-        "poisson_baseline": p_baseline,
-        "alpha_yield": mc['home_win_prob'] - p_baseline
-    })
-
-    xg_p, xg_c = predict_xgboost_v3(h_team, a_team)
-    return {
-        'home_win_prob': mc['home_win_prob'], 'away_win_prob': mc['away_win_prob'], 'home_elo': h_elo, 'away_elo': a_elo,
-        'home_proj': mc['home_avg_runs'], 'away_proj': mc['away_avg_runs'], 'home_scores_sample': mc['home_scores'], 'away_scores_sample': mc['away_scores'],
-        'xg_prob': xg_p, 'xg_conf': xg_c, 'h_p_era': h_ps.get('ERA', 4.0) if h_ps else 4.0, 'a_p_era': a_ps.get('ERA', 4.0) if a_ps else 4.0
-    }
-
-# ------------------------------------------------------------------
-# INSTITUTIONAL COMPLIANCE REGISTRY
-# ------------------------------------------------------------------
 def get_legal_asset(filename):
     p = os.path.join("legal", filename)
     if os.path.exists(p):
         with open(p, "r") as f: return f.read()
     return "Asset Not Found"
-
-# 🛰️ Persistence Service initialized at top-level
-
-@st.cache_data(ttl=600)
-def fetch_master_data(version: str = DEPLOYMENT_VERSION):
-    with st.status("📡 Initializing MLB Data Stream...", expanded=True) as status:
-        t = datetime.now()
-        cur, nxt, prev = t.strftime("%Y-%m-%d"), (t + timedelta(days=1)).strftime("%Y-%m-%d"), (t - timedelta(days=3)).strftime("%Y-%m-%d")
-        full_sched = get_mlb_schedule(cur) + get_mlb_schedule(nxt)
-        if not full_sched: return pd.DataFrame()
-        df_sched, hist_raw = pd.DataFrame(full_sched), get_mlb_schedule(start_date=prev, end_date=cur)
-        df_hist = pd.DataFrame(hist_raw) if hist_raw else pd.DataFrame()
-        # 🧬 RapidAPI Migration: Falling back to API-Sports if Tank01 is offline
-        raw_odds = get_rapid_odds(t.strftime("%Y%m%d"))
-        df_odds = process_rapid_odds(raw_odds) if raw_odds["data"] else pd.DataFrame()
-        df_p = get_pitcher_stats(2026) if not get_pitcher_stats(2026).empty else get_pitcher_stats(2025)
-        df_t = get_team_hitting_stats(2026) if not get_team_hitting_stats(2026).empty else get_team_hitting_stats(2025)
-        
-        df_sched["h_norm"], df_sched["a_norm"] = df_sched["home_team"].apply(normalize_team_name), df_sched["away_team"].apply(normalize_team_name)
-        
-        # 🛰️ Institutional Caching: Standings & Multi-Source Leaders
-        @st.cache_data(ttl=3600)
-        def _cached_standings(): return get_2026_standings()
-        @st.cache_data(ttl=3600)
-        def _cached_leaders(): return get_2026_leaders()
-
-        df_standings = _cached_standings()
-        live_data = get_tank01_scores(t.strftime("%Y%m%d"))
-        st.session_state["live_scores_2026"] = live_data.get("body", {}) if live_data else {}
-        
-        preds = df_sched.apply(lambda r: pd.Series(get_prediction(r, df_hist, p_stats=df_p, t_stats=df_t, standings_df=df_standings)), axis=1)
-        df_sched = pd.concat([df_sched, preds], axis=1)
-        st.session_state["df_standings_2026"], st.session_state["df_leaders_2026"] = df_standings, _cached_leaders()
-        status.update(label="✅ Synchronization Complete", state="complete")
-    final = []
-    for _, g in df_sched.iterrows():
-        if not df_odds.empty:
-            match = df_odds[(df_odds["home_team"].apply(normalize_team_name) == g["h_norm"]) & (df_odds["away_team"].apply(normalize_team_name) == g["a_norm"])]
-            if not match.empty:
-                for _, o in match.iterrows():
-                    nr = g.to_dict(); nr.update({"bookmaker": o["bookmaker"], "outcome": o["outcome"], "odds": o["odds"], "market": o["market"]})
-                    ih = (normalize_team_name(o["outcome"]) == g["h_norm"])
-                    nr["model_prob"], nr["team_elo"], nr["opp_elo"], nr["team_proj"], nr["opp_proj"] = (g["home_win_prob"] if ih else g["away_win_prob"]), (g["home_elo"] if ih else g["away_elo"]), (g["away_elo"] if ih else g["home_elo"]), (g["home_proj"] if ih else g["away_proj"]), (g["away_proj"] if ih else g["home_proj"])
-                    final.append(nr)
-                continue
-        nr = g.to_dict(); nr.update({"bookmaker": "Pending", "outcome": g["home_team"], "odds": None, "market": "h2h", "model_prob": g["home_win_prob"], "team_elo": g["home_elo"], "opp_elo": g["away_elo"], "team_proj": g["home_proj"], "opp_proj": g["away_proj"]}); final.append(nr)
-    df_f = pd.DataFrame(final)
-    if not df_f.empty:
-        df_f["is_divisional"], df_f["formatted_time"] = df_f.apply(lambda r: is_divisional_matchup(r["home_team"], r["away_team"]), axis=1), pd.to_datetime(df_f["commence_time"]).dt.strftime("%a, %b %d @ %I:%M %p")
-        ho = df_f["odds"].notnull()
-        df_f.loc[ho, "implied_prob"], df_f.loc[ho, "decimal_odds"], df_f.loc[ho, "data_type"] = df_f.loc[ho, "odds"].apply(calculate_implied_probability), df_f.loc[ho, "odds"].apply(american_to_decimal), "💎 Multi-Source Alpha Yield"
-        no = df_f["odds"].isnull(); df_f.loc[no, "decimal_odds"], df_f.loc[no, "implied_prob"], df_f.loc[no, "data_type"] = 1.91, 0.523, "🛰️ Professional Intelligence Feed"
-        df_f["ev"], df_f["ss_ev"] = df_f.apply(lambda r: calculate_ev(r["model_prob"], r["decimal_odds"]), axis=1), df_f.apply(lambda r: calculate_sport_select_ev(r["model_prob"], r["decimal_odds"], reduction_factor), axis=1)
-        df_f["kelly_stake"] = df_f.apply(lambda r: kelly_criterion(r["model_prob"], r["decimal_odds"], fractional_kelly) * bankroll, axis=1)
-        cap = bankroll * MAX_STAKE_CAP; df_f["kelly_stake"] = df_f["kelly_stake"].clip(lower=0, upper=cap); df_f["potential_profit"] = df_f["kelly_stake"] * (df_f["decimal_odds"] - 1.0)
-        def cu(r):
-            if r["data_type"] == "💎 Multi-Source Alpha Yield": return r["model_prob"] - r["implied_prob"]
-            return (1000 / (abs(r["team_elo"] - r["opp_elo"]) + 1)) * r["model_prob"]
-        df_f["upset_score"] = df_f.apply(cu, axis=1)
-    return df_f
-
-class UIAggregator:
-    """Institutional Data Aggregator for Command Center HUD."""
-    @staticmethod
-    def get_portfolio_metrics(df: pd.DataFrame) -> Dict[str, Any]:
-        if df.empty:
-            return {"total_ev": 0.0, "avg_conf": 0.0, "volume": 0, "best_edge": 0.0}
-        
-        # Only aggregate bets with a defined edge
-        df_edge = df[df["ev"] > 0]
-        return {
-            "total_ev": df_edge["ev"].sum() * 100,
-            "avg_conf": df["xg_conf"].mean() * 100 if "xg_conf" in df else 61.6,
-            "volume": len(df_edge),
-            "best_edge": df["ev"].max() * 100
-        }
 
 # --- START EXECUTION ---
 # 🏛️ INSTITUTIONAL FOOTER: LEGAL SHIELD (2026)
@@ -378,14 +204,16 @@ logger.info("Terminal: Legal Shield Footer Active.")
 st.sidebar.success(f"Build: {DEPLOYMENT_VERSION} | Terminal Sync: READY")
 logger.info("Terminal: Master UI Pulse Active.")
 
+# 🏛️ START EXECUTION
 logger.info(f"Synchronizing 2026 Master Data (Version {DEPLOYMENT_VERSION})...")
-df_master = fetch_master_data(DEPLOYMENT_VERSION)
+df_master = get_master_data_feed(bankroll, fractional_kelly, reduction_factor)
+
 if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
 
 # 📈 Pre-calculate Institutional HUD Metrics
-portfolio = UIAggregator.get_portfolio_metrics(df_master)
+portfolio = AnalyticsService.get_portfolio_metrics(df_master)
 
 # 🛰️ PRIMARY TERMINAL INTERFACE
 st.markdown("<h1 style='text-align: center; margin-bottom: 0px;'>PRO BALL PREDICTOR</h1>", unsafe_allow_html=True)
