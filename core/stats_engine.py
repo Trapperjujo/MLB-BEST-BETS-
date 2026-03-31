@@ -114,7 +114,7 @@ def get_2026_leaders() -> Dict[str, pd.DataFrame]:
             continue
     return results
 
-def get_pitcher_stats(year: int = 2025) -> pd.DataFrame:
+def get_pitcher_stats(year: int = 2026) -> pd.DataFrame:
     """Fetches pitcher season stats from pybaseball with local caching."""
     cache_path = f"data/raw/cache_pitchers_{year}.csv"
     if os.path.exists(cache_path):
@@ -133,7 +133,7 @@ def get_pitcher_stats(year: int = 2025) -> pd.DataFrame:
         print(f"Error pitching stats: {e}")
         return pd.DataFrame()
 
-def get_team_hitting_stats(year: int = 2025) -> pd.DataFrame:
+def get_team_hitting_stats(year: int = 2026) -> pd.DataFrame:
     """Fetches team hitting stats with local caching."""
     cache_path = f"data/raw/cache_hitting_{year}.csv"
     if os.path.exists(cache_path):

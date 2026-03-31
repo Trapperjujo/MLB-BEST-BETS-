@@ -20,9 +20,9 @@ class MLBScraper:
         # 📚 INSTITUTIONAL GLOSSARY MAPPING
         # Maps mlb_statistics_glossary.md definitions to pybaseball/FanGraphs columns
         self.GLOSSARY_MAP = {
-            "batting": ["G", "PA", "AB", "H", "2B", "3B", "HR", "R", "RBI", "BB", "SO", "AVG", "OBP", "SLG", "OPS", "ISO", "BABIP", "wRC+", "wOBA"],
-            "pitching": ["W", "L", "ERA", "G", "GS", "IP", "H", "R", "ER", "HR", "BB", "SO", "WHIP", "FIP", "xFIP", "SIERA", "K/9", "BB/9"],
-            "fielding": ["Def", "DRS", "OAA", "FP", "E", "A", "PO"]
+            "batting": ["G", "PA", "AB", "HR", "AVG", "OBP", "SLG", "OPS", "ISO", "wRC+", "EV", "LA", "Barrel%", "HardHit%", "xBA", "xwOBA"],
+            "pitching": ["W", "L", "ERA", "FIP", "xFIP", "SIERA", "K/9", "BB/9", "K%", "WHIP", "WAR"],
+            "fielding": ["Def", "DRS", "OAA", "FP", "G", "Inn"]
         }
         
     def get_cached_trends(self):
@@ -133,17 +133,14 @@ class MLBScraper:
         try:
             from pybaseball import team_batting, team_pitching, team_fielding
             
-            # 1. 🏏 Batting Alpha (Expanded)
+            # 1. 🏏 Batting Alpha (2026 Mandatory)
             df_b = team_batting(year)
-            if df_b.empty and year == 2026: df_b = team_batting(2025)
             
-            # 2. 投手 Pitching Alpha (Expanded)
+            # 2. 投手 Pitching Alpha (2026 Mandatory)
             df_p = team_pitching(year)
-            if df_p.empty and year == 2026: df_p = team_pitching(2025)
             
-            # 3. 🛡️ Fielding Alpha (Expanded)
+            # 3. 🛡️ Fielding Alpha (2026 Mandatory)
             df_f = team_fielding(year)
-            if df_f.empty and year == 2026: df_f = team_fielding(2025)
             
             # Merge into unified Alpha Map
             # Simplified for brevity: In a production environment, we would join these on Team
