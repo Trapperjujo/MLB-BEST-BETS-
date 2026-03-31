@@ -399,8 +399,9 @@ st.markdown(f"""
 
 # 🛰️ COMMAND CENTER: PRIMARY NAVIGATION
 # Elevating research and analytics to the top level for institutional-grade access.
-tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+tab0, tab_academy, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
     "🛰️ Predictive Terminal", 
+    "🏛️ Strategic Academy",
     "📈 2026 Standings Hub", 
     "🏆 Elo Power Rankings", 
     "🥇 League Leaders", 
@@ -410,6 +411,60 @@ tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
     "📊 Analytics Lab"
 ])
 
+# Add Descriptive Guides to each tab
+with tab_academy: st.info("🏛️ **Strategic Academy**: Professional-grade mentoring on +EV betting, bankroll management, and institutional risk.")
+with tab1: st.info("📈 **Standings Hub**: Ground-truth divisional rankings from the Official MLB Stats API.")
+with tab2: st.info("🏆 **Elo Power Rankings**: Relative team strength calculated from historical longitudinal performance.")
+with tab3: st.info("🥇 **League Leaders**: Institutional performance metrics (WAR, OPS, ERA) for player-level research.")
+with tab4: st.info("🧬 **DNA Research**: Statcast quality-of-contact and defensive percentile visualizations.")
+with tab5: st.info("🏛️ **Historical Audit**: Backtesting logs and accuracy scores for the current 2026 season.")
+with tab6: st.info("🛡️ **Risk & Strategy**: Institutional Kelly Criterion guidelines and legal shield protocols.")
+with tab7: st.info("📊 **Analytics Lab**: Raw data quarrying for multi-season regression analysis.")
+
+# 🏛️ STRATEGIC ACADEMY CONTENT
+with tab_academy:
+    st.markdown("## 🏛️ The Institutional Academy (2026)")
+    st.markdown("#### *Mastering the Math of Profitable MLB Betting*")
+    
+    col_ev, col_kelly = st.columns(2)
+    with col_ev:
+        with st.expander("📐 **Module 1: The +EV Philosophy**"):
+            st.markdown("""
+            **Expected Value (+EV)** is the only way to win in the long run. 
+            - It means you are betting at a price better than the true probability.
+            - *Example*: If a coin flip pays +110, you have a +EV bet because you win more than you lose over time.
+            """)
+    with col_kelly:
+        with st.expander("🎲 **Module 2: Kelly Criterion Staking**"):
+            st.markdown("""
+            **Optimal Staking** prevents bankruptcy.
+            - We use **Fractional Kelly (0.25x)** to maximize growth while minimizing volatility.
+            - Never bet your whole bankroll. Follow the 'Wager' dollar amount in the matchup cards.
+            """)
+            
+    col_hybrid, col_sharp = st.columns(2)
+    with col_hybrid:
+        with st.expander("🧪 **Module 3: The 70/30 Hybrid Model**"):
+            st.markdown("""
+            **Calibration Logic**:
+            - **70% Process**: Advanced stats (Launch Angle, SIERA).
+            - **30% Results**: Real-world standings.
+            - This prevents 'Recency Bias' while respecting league-winning momentum.
+            """)
+    with col_sharp:
+        with st.expander("🛰️ **Module 4: Reading Sharp Markets**"):
+            st.markdown("""
+            **Sharp vs Square**:
+            - **Sharps**: Pinnacle/Bookmaker (Pro Money).
+            - **Squares**: Local Books (Public Money).
+            - Look for games where the model and Sharps agree but squares are lagging.
+            """)
+    
+    st.markdown("---")
+    st.markdown("### 🏛️ The 2026 Institutional Manual")
+    with open("directives/institutional_manual.md", "r") as f:
+        st.markdown(f.read())
+
 # ------------------------------------------------------------------
 # TAB 0: PREDICTIVE TERMINAL (MASTER FEED)
 # ------------------------------------------------------------------
@@ -417,19 +472,19 @@ with tab0:
     # 🛰️ KINETIC PRECISION GLOBAL HUD
     st.markdown(f"""
     <div class="hud-ribbon">
-        <div class="hud-tile">
+        <div class="hud-tile" title="The total mathematical growth of your daily bankroll IF all +EV signals are wagered correctly.">
             <div class="hud-label">DAILY PORTFOLIO EV</div>
             <div class="hud-value" style="color: #10b981;">+{portfolio['total_ev']:.1f}%</div>
         </div>
-        <div class="hud-tile">
+        <div class="hud-tile" title="The aggregate model certainty across the current slate. Based on historical backtesting accuracy.">
             <div class="hud-label">MODEL CONFIDENCE</div>
             <div class="hud-value" style="color: #00f3ff;">{portfolio['avg_conf']:.1f}%</div>
         </div>
-        <div class="hud-tile">
+        <div class="hud-tile" title="The number of active signals currently identifying a profitable discrepancy in the betting market.">
             <div class="hud-label">+EV SIGNAL VOL</div>
             <div class="hud-value">{portfolio['volume']}</div>
         </div>
-        <div class="hud-tile">
+        <div class="hud-tile" title="The single highest statistical edge currently available in the 2026 betting market.">
             <div class="hud-label">MAX ALPHA EDGE</div>
             <div class="hud-value" style="color: #fbbf24;">{portfolio['best_edge']:.1f}%</div>
         </div>

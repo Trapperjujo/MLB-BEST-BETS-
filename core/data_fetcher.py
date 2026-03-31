@@ -16,6 +16,9 @@ ODDS_BASE_URL = "https://api.the-odds-api.com/v4"
 BDL_BASE_URL = "https://api.balldontlie.io/v1/mlb"
 SPORTS_BASE_URL = "https://v1.baseball.api-sports.io"
 
+# 💎 Institutional Market Anchors
+SHARP_BOOKMAKERS = ["Pinnacle", "Bookmaker", "Circa Sports", "BetOnline.ag"]
+
 def get_mlb_odds(regions: str = "us,uk,eu,au", markets: str = "h2h") -> List[Dict[str, Any]]:
     """Fetches real-time MLB odds from The Odds API across multiple regions."""
     url = f"{ODDS_BASE_URL}/sports/baseball_mlb/odds/"
@@ -227,6 +230,7 @@ def process_odds_data(odds_json: List[Dict[str, Any]]) -> pd.DataFrame:
                         "away_team": away_team,
                         "commence_time": commence_time,
                         "bookmaker": bookmaker.get("title"),
+                        "is_sharp": bookmaker.get("title") in SHARP_BOOKMAKERS,
                         "market": market.get("key"),
                         "outcome": outcome.get("name"),
                         "odds": outcome.get("price")

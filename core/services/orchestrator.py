@@ -100,9 +100,24 @@ def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, status_callback=
             m = df_odds[(df_odds["home_team"].apply(normalize_team_name) == g["h_norm"]) & 
                        (df_odds["away_team"].apply(normalize_team_name) == g["a_norm"])]
             if not m.empty:
+                # 💎 Institutional Market Metrics
+                market_avg = m["odds"].mean()
+                sharp_m = m[m["is_sharp"] == True]
+                sharp_benchmark = sharp_m["odds"].mean() if not sharp_m.empty else None
+                sources_count = m["bookmaker"].nunique()
+                
                 for _, o in m.iterrows():
                     nr = g.to_dict()
-                    nr.update({"bookmaker": o["bookmaker"], "outcome": o["outcome"], "odds": o["odds"], "market": o["market"], "data_source": sync_source})
+                    nr.update({
+                        "bookmaker": o["bookmaker"], 
+                        "outcome": o["outcome"], 
+                        "odds": o["odds"], 
+                        "market": o["market"], 
+                        "data_source": sync_source,
+                        "market_avg": market_avg,
+                        "sharp_benchmark": sharp_benchmark,
+                        "sources_count": sources_count
+                    })
                     is_h = (normalize_team_name(o["outcome"]) == g["h_norm"])
                     nr["model_prob"] = g["home_win_prob"] if is_h else g["away_win_prob"]
                     final_payload.append(nr)
