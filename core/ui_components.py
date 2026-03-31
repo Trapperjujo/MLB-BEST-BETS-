@@ -205,13 +205,13 @@ def render_calibration_hud(row, off_pct, ground_truth=0.5):
     shift_icon = "📈" if elo_shift >= 0 else "📉"
     
     with c_model:
-        st.write(f"**Process (70%):** {int(raw_elo)} Elo", help="Pure analytical strength without standings anchor.")
-        st.write(f"**Results (30%):** {int((float(off_pct) - 0.5) * 1000 + 1500)} Elo", help="Strength based solely on current win/loss standings.")
-        st.write(f"**Reality (Long):** {ground_truth*100:.1f}% Win Rate", help="3-Season historical performance (2024-2026).")
+        st.markdown(f"<div title='Pure analytical strength without standings anchor.'>**Process (70%):** {int(raw_elo)} Elo</div>", unsafe_allow_html=True)
+        st.markdown(f"<div title='Strength based solely on current win/loss standings.'>**Results (30%):** {int((float(off_pct) - 0.5) * 1000 + 1500)} Elo</div>", unsafe_allow_html=True)
+        st.markdown(f"<div title='3-Season historical performance (2024-2026).'>**Reality (Long):** {ground_truth*100:.1f}% Win Rate</div>", unsafe_allow_html=True)
     
     with c_anchor:
-        st.write(f"**Hybrid Elo:** {int(hybrid_elo)}", help="The final weighted strength used by the Monte Carlo engine.")
-        st.write(f"**Anchor Shift:** {shift_icon} {abs(elo_shift):.1f} pts", help="The points difference added/removed by the 30% standings anchor.")
+        st.markdown(f"<div title='The final weighted strength used by the Monte Carlo engine.'>**Hybrid Elo:** {int(hybrid_elo)}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div title='The points difference added/removed by the 30% standings anchor.'>**Anchor Shift:** {shift_icon} {abs(elo_shift):.1f} pts</div>", unsafe_allow_html=True)
         
         # 🏛️ Calibration Health
         cal_diff = abs(row['home_win_prob'] - ground_truth)
