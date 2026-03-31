@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 from typing import List, Dict, Optional, Any
 from dotenv import load_dotenv
-from core.config import CURRENT_SEASON
+from core.unified_config import CURRENT_SEASON
 from core.logger import terminal_logger as logger
 
 load_dotenv()

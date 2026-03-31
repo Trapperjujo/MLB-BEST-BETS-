@@ -81,7 +81,7 @@ def load_advanced_model():
 
 _MODEL = load_advanced_model()
 
-from core.config import MLB_PARK_FACTORS
+from core.unified_config import MLB_PARK_FACTORS
 
 def predict_xgboost_v3(home_team, away_team):
     """

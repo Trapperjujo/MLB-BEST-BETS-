@@ -146,7 +146,7 @@ def run_monte_carlo_simulation(home_elo, away_elo, iterations=1000, hfa=24, home
     Hardened Monte Carlo Engine: Negative Binomial Scoring Distribution.
     🧬 70/30 Hybrid Calibration: Anchors Advanced Metrics to Official Standings.
     """
-    from core.config import MLB_PARK_FACTORS
+    from core.unified_config import MLB_PARK_FACTORS
 
     # 1. 🧬 Hybrid Calibration Anchor (70/30 Split)
     # Allows the model to respect 'Results' while remaining anchored in 'Process'.

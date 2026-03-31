@@ -9,6 +9,7 @@ load_dotenv()
 VERSION = "2026.03.30.05"
 DEPLOYMENT_VERSION = VERSION # Institutional Alias for UI Coordination
 SEASON = 2026
+CURRENT_SEASON = SEASON # Institutional Alias for Model Coordination
 HISTORICAL_SEASONS = [2024, 2025, 2026]
 TERMINAL_NAME = "PRO BALL PREDICTOR"
 TERMINAL_TAGLINE = "Institutional Research Terminal for Canadian Sabermetrics Analysis."
@@ -58,6 +59,14 @@ MC_ITERATIONS = 10000
 MLB_HFA = 24
 ELO_K_FACTOR = 4.0
 
+# --- APRIL WEATHER SITUATIONAL ALPHAS (2026) ---
+WEATHER_ALPHAS = {
+    "cold_temp_threshold": 50.0, # °F
+    "velocity_tax": -1.5, # mph loss on fastballs below threshold
+    "batted_ball_drag": -3.3, # feet lost per 10°F drop
+    "wind_under_signal": 8.0, # mph blowing IN triggers high-confidence Under
+}
+
 # --- LEAGUE ENVIRONMENT (2026 GUTS) ---
 LEAGUE_GUTS = {
     "wOBA": 0.310,
@@ -83,6 +92,7 @@ PARK_FACTORS = {
     "Oakland Athletics": {"run": 108.0, "hr": 105.0, "k_factor": 102.0},
     "Default": {"run": 100.0, "hr": 100.0, "k_factor": 100.0}
 }
+MLB_PARK_FACTORS = PARK_FACTORS # Institutional Alias for UI Coordination
 
 # --- SECURITY & KEYS ---
 def get_rapid_key():
