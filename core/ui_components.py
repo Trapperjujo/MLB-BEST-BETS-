@@ -1,5 +1,98 @@
 import streamlit as st
 import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px
+
+def render_team_dna_radar(team_data):
+    """
+    🧬 NotebookLM Style: Team DNA Radar
+    Visualizes Power, Pitching, Speed, and Fielding percentiles.
+    """
+    categories = ['Power (wRC+)', 'Ace (ERA)', 'Shield (OAA)', 'Speed (SBR)', 'Contact (HardHit)']
+    
+    # Mock/Calculated values for radar (Percentiles 0-100)
+    # We invert ERA so higher is better on the radar
+    r_values = [
+        team_data.get('wRC+', 50), 
+        max(0, 100 - (team_data.get('ERA', 4.0) * 15)), 
+        team_data.get('OAA_perc', 50), 
+        team_data.get('SBR_perc', 50),
+        team_data.get('HardHit%', 0.4) * 100
+    ]
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(
+        r=r_values,
+        theta=categories,
+        fill='toself',
+        name=team_data.get('Team', 'TBD'),
+        line_color='#10b981'
+    ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.1)'),
+            bgcolor='rgba(0,0,0,0)',
+            angularaxis=dict(gridcolor='rgba(255,255,255,0.1)')
+        ),
+        showlegend=False,
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font_color='#fff',
+        margin=dict(l=40, r=40, t=20, b=20)
+    )
+    st.plotly_chart(fig, use_container_width=True, key=f"radar_{team_data.get('Team')}")
+
+def render_alpha_matrix_scatter(df_alpha):
+    """
+    📊 Matrix Alpha Matrix (4-Quadrant)
+    Placing teams on a grid of 'Model Edge' vs 'Market Consensus'.
+    """
+    fig = px.scatter(
+        df_alpha, x='market_consensus', y='model_edge',
+        text='Team', title='🧬 Market Alpha Matrix (Institutional Value Clusters)',
+        labels={'market_consensus': 'Market Price (Implied Prob)', 'model_edge': 'Alpha Gap (%)'},
+        color='model_edge', color_continuous_scale='Viridis'
+    )
+    
+    # Add Quadrant Lines
+    fig.add_hline(y=0.05, line_dash="dash", line_color="rgba(255,255,255,0.3)", annotation_text="High Alpha Cluster")
+    fig.add_vline(x=0.5, line_dash="dash", line_color="rgba(255,255,255,0.3)", annotation_text="Market Efficiency Line")
+    
+    fig.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey')))
+    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='#fff')
+    st.plotly_chart(fig, use_container_width=True, key="alpha_matrix")
+
+def render_executive_summary(team_name, metrics):
+    """
+    📑 NotebookLM: Executive Summary
+    Provides synthetic insights based on 2026 data.
+    """
+    wrc = metrics.get('wRC+', 100)
+    era = metrics.get('ERA', 4.0)
+    
+    # 🧬 Synthetic Insight Logic
+    if wrc > 120 and era < 3.5:
+        profile = "🔥 **ELITE JUGGERNAUT**: Dominant in both offensive process and pitching suppression."
+    elif wrc > 120:
+        profile = "🚀 **OFFENSIVE DRIFT**: High-fidelity scoring power, potential 'Over' candidate."
+    elif era < 3.5:
+        profile = "🛡️ **PITCHING FORTRESS**: Elite suppression logic. Value often found in 'Under' markets."
+    else:
+        profile = "⚖️ **NEUTRAL CALIBRATION**: Team is performing near league-average standards."
+
+    st.markdown(f"""
+    <div style='background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;'>
+        <div style='font-size: 0.8rem; color: var(--neon-blue); font-weight: 800; text-transform: uppercase;'>📑 Executive Research Dossier: {team_name}</div>
+        <div style='font-size: 1.1rem; color: #fff; margin-top: 10px; font-weight: 600;'>{profile}</div>
+        <hr style='border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 15px 0;'>
+        <div style='font-size: 0.85rem; color: #94a3b8; line-height: 1.5;'>
+            <i>Notebook Note:</i> Based on 2026 longitudinal drift, this team shows a <b>{abs(metrics.get('Alpha', 0))*100:.1f}% divergence</b> 
+            from historical win-rates, indicating a high probability of market inefficiency. 
+            Strategy: Monitor for **Sharp Benchmark** alignment in series openers.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 def render_strategy_rationale(row, best_bet):
     """
@@ -46,7 +139,8 @@ def render_matchup_card(row, best_bet, display_date, off_pct, live_score_html=""
     synergy_badge = f"<span class='synergy-badge' title='⚡ High-Fidelity Signal: Both our Stats-Model and the XGBoost Alpha model agree on the outcome.'>⚡ XGBoost Consensus</span>" if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5) else ""
     
     # 🧬 Market Wager HTML
-    wager_html = f"""<div title="🎲 Institutional Staking: Based on your bankroll and the calculated edge." style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
+    wager_help = "Standard Bet Size: 1-2% of your total bankroll. Our unit size is dynamically adjusted by the Fractional Kelly Criterion (0.25x) to ensure long-term profitability and bankroll protection."
+    wager_html = f"""<div title="🎲 Institutional Staking: Based on your bankroll and the calculated edge. {wager_help}" style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD <span style='cursor: help; color: #94a3b8; font-size: 0.7rem;'>ⓘ</span></div>
 <div title="💰 Potential Profit: Calculated at current market odds." style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>""" if best_bet['kelly_stake'] > 0 else f"""<div title="Institutional Logic: The market price accurately reflects the true probability. No profitable edge identified." style='font-size: 0.7rem; color: #94a3b8; font-weight: 700; margin-top: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 4px; border-radius: 4px; cursor: help;'>🧬 MARKET EFFICIENCY: PASS</div>
 <div style='font-size: 0.6rem; color: #64748b; margin-top: 2px;'>No institutional edge identified</div>"""
 

@@ -11,7 +11,7 @@ from core.services.prediction_service import get_prediction_service
 from core.services.game_repository import get_game_repository
 from core.services.elo_repository import get_elo_repository
 
-def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, status_callback=None):
+def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, std_bet_size=1.0, status_callback=None):
     """
     💎 Unified Orchestrator: Triple-Source Synchronization (Phase 17).
     Primary: API | Secondary: Scraper Alpha | Tertiary: DuckDB Cache
