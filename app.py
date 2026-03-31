@@ -1228,9 +1228,65 @@ with tab4:
             st.dataframe(df_h.sort_values(by="OPS", ascending=False)[["Team", "OPS", "ISO", "wRC+"]], hide_index=True, width='stretch')
             
         elif mode == "📉 Regression Monitoring":
-            st.info("📉 **Regression Monitoring HUD**: Identifying performance outliers and luck-variance in 2026 outcomes.")
-            # Implementation of Regression HUD (Placeholder for Phase 25)
-            st.info("Hydrating regression models...")
+            st.info("📉 **2026 REGRESSION MONITORING**: Identifying performance outliers and 'Skill-Luck' variance.")
+            
+            # 🧬 LUCK DELTA CALCULATION: Actual (ERA) vs. Skill (FIP)
+            df_reg = df_p.copy()
+            cols = ["ERA", "FIP", "K/9", "WAR"]
+            for c in cols:
+                df_reg[c] = pd.to_numeric(df_reg[c], errors='coerce')
+            df_reg = df_reg.dropna(subset=["ERA", "FIP"])
+            
+            # ⚛️ Variance Calculation: Positive = Unlucky (ERA > FIP) | Negative = Lucky (FIP > ERA)
+            df_reg["Luck Factor"] = df_reg["ERA"] - df_reg["FIP"]
+            
+            # 🎯 Top Regression Metrics
+            unlucky = df_reg.sort_values(by="Luck Factor", ascending=False).head(5)
+            lucky = df_reg.sort_values(by="Luck Factor", ascending=True).head(5)
+            
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown("#### 🟢 VALUE OPPORTUNITIES (Positive Regression)")
+                st.write("Elite Skill (Low FIP) but Unlucky Outcomes (High ERA). **Buy Low Targets.**")
+                for _, p in unlucky.iterrows():
+                    st.success(f"**{p['Name']}** ({p['Team']}) - Δ {p['Luck Factor']:+.2f} ERA Gap")
+                    
+            with c2:
+                st.markdown("#### 🔴 REGRESSION WATCH (Negative Regression)")
+                st.write("Overachieving Outcome (Low ERA) relative to Skill (Higher FIP). **Fade Risks.**")
+                for _, p in lucky.iterrows():
+                    st.error(f"**{p['Name']}** ({p['Team']}) - Δ {p['Luck Factor']:.2f} ERA Gap")
+            
+            # 📈 High-Fidelity Skill-Parity Chart
+            fig_reg = px.scatter(
+                df_reg, 
+                x="FIP", 
+                y="ERA", 
+                size="WAR", 
+                color="Luck Factor",
+                color_continuous_scale="RdYlGn_r",
+                hover_name="Name",
+                labels={"FIP": "🛰️ SKILL (FIP)", "ERA": "📊 OUTCOME (ERA)"},
+                title="⚖️ SKILL-PARITY MATRIX: LUCK vs. OUTCOME (2026)",
+                template="plotly_dark"
+            )
+            
+            # 🏛️ Add Identity Line (Ground-Truth: ERA = FIP)
+            max_v = max(df_reg["ERA"].max(), df_reg["FIP"].max())
+            fig_reg.add_shape(
+                type="line", line=dict(dash="dash", color="rgba(255,255,255,0.3)"),
+                x0=0, y0=0, x1=max_v, y1=max_v
+            )
+            st.plotly_chart(fig_reg, width='stretch')
+            
+            with st.expander("📚 Institutional Regression Key"):
+                st.markdown("""
+                | Region | Alpha Definition | Actionable Insight |
+                | :--- | :--- | :--- |
+                | **Above Diagonal** | **Unlucky (ERA > FIP)** | Positive Regression Predicted. High-Value +EV Betting Target. |
+                | **Below Diagonal** | **Lucky (FIP > ERA)** | Negative Regression Predicted. High-Rate Fade Risk. |
+                | **On Diagonal** | **Skill Parity** | Outcome matches physical performance. Institutional Stability. |
+                """)
             
     else:
         st.header("🛰️ **STATCAST SITUATIONAL ALPHA** (2026 Pulse)")
