@@ -261,7 +261,7 @@ def render_market_depth_hud(best_bet):
     with m_consensus:
         # Liquidity logic based on Sharp/Public divergence
         is_stale = False
-        if sharp_price:
+        if sharp_price is not None:
             is_stale = abs(best_bet['odds'] - float(sharp_price)) > 10
             
         alpha_status = "STALE" if is_stale else "LIQUID"
