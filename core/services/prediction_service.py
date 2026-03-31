@@ -95,6 +95,8 @@ class PredictionService:
             'away_win_prob': mc['away_win_prob'], 
             'home_elo': h_elo_adj, 
             'away_elo': a_elo_adj,
+            'h_raw_elo': h_base, # Raw Process Metric (Advanced)
+            'h_official_win_pct': h_win_pct, # Results Metric (Official)
             'home_proj': mc['home_avg_runs'], 
             'away_proj': mc['away_avg_runs'], 
             'xg_prob': xg_p, 

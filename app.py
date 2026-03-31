@@ -521,6 +521,21 @@ with tab0:
             </div>
             """
         
+        # 🏛️ Institutional Risk Profiling (Phase 24)
+        # Compare Advanced Model (Process) vs Official Standings (Results)
+        h_prob = row['home_win_prob']
+        off_pct = float(row.get('h_official_win_pct', 0.5))
+        
+        # Divergence Alert: If Model Win% and Official Win% are far apart (>10%)
+        # Normal Calibration: .500 Win% -> 50% Win Prob roughly
+        abs_diff = abs(h_prob - off_pct)
+        if abs_diff < 0.05:
+            risk_badge = "<span class='risk-badge-low'>💎 LOW VOLATILITY</span>"
+        elif abs_diff < 0.15:
+            risk_badge = "<span class='risk-badge-med'>⚖️ BALANCED CALIBRATION</span>"
+        else:
+            risk_badge = f"<span class='risk-badge-high'>⚠️ DIVERGENCE: {abs_diff*100:.1f}%</span>"
+
         with st.container():
             df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
             h_rec = df_s[df_s["Team"] == row["home_team"]].iloc[0] if not df_s.empty and not df_s[df_s["Team"] == row["home_team"]].empty else None
@@ -528,7 +543,7 @@ with tab0:
             h_rec_str = f"{h_rec['W']}-{h_rec['L']}" if h_rec is not None else "0-0"
             a_rec_str = f"{a_rec['W']}-{a_rec['L']}" if a_rec is not None else "0-0"
     
-            synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Confidence: {row['xg_conf']*100:.1f}%</span>" if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5) else ""
+            synergy_badge = f"<span class='synergy-badge'>⚡ XGBoost Consensus</span>" if (row['home_win_prob'] > 0.5 and row['xg_prob'] > 0.5) or (row['home_win_prob'] < 0.5 and row['xg_prob'] < 0.5) else ""
             wager_html = f"""<div style='font-size: 0.8rem; color: var(--neon-green); font-weight: 700; margin-top: 5px;'>Wager: ${best_bet['kelly_stake']:,.2f} CAD</div>
 <div style='font-size: 0.7rem; color: #fff;'>Est. Profit: +${best_bet['potential_profit']:,.2f}</div>""" if best_bet['kelly_stake'] > 0 else f"""<div style='font-size: 0.7rem; color: #94a3b8; font-weight: 700; margin-top: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 4px; border-radius: 4px;'>🧬 MARKET EFFICIENCY: PASS</div>
 <div style='font-size: 0.6rem; color: #64748b; margin-top: 2px;'>No institutional edge identified</div>"""
@@ -539,78 +554,82 @@ with tab0:
             card_html = f"""<div class='neon-card'>
 <div class='neon-card-header'>
 <div style='display: flex; align-items: center; gap: 10px;'>
-<span style='font-size: 1.2rem;'>📅 {display_date}</span>
+<span style='font-size: 1.1rem;'>📅 {display_date}</span>
 <span class='alpha-badge'>{data_source}</span>
+{risk_badge}
 {synergy_badge}
 </div>
 {f"<div class='ev-badge'>+{best_bet['ev']*100:.1f}% EV</div>" if best_bet['ev'] > 0 else "<div class='ev-badge' style='background: rgba(148,163,184,0.1); color: #94a3b8;'>EFFICIENT</div>"}
 </div>
 <div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center; align-items: center;'>
 <div>
-<div style='color: var(--text-secondary); font-size: 0.8rem;'>AWAY</div>
-<div style='font-size: 1.2rem; font-weight: 800; color: #fff;'>{row['away_team']}</div>
+<div style='color: var(--text-secondary); font-size: 0.75rem;'>AWAY</div>
+<div style='font-size: 1.1rem; font-weight: 800; color: #fff;'>{row['away_team']}</div>
 <div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {a_rec_str}</div>
 <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 900;'>{row['away_win_prob']*100:.1f}%</div>
-<div style='font-size: 0.9rem; color: #94a3b8; font-weight: 500;'>Proj: {row['away_proj']:.1f} | Elo: {int(row['away_elo'])}</div>
+<div style='font-size: 0.8rem; color: #94a3b8; font-weight: 500;'>Hybrid Elo: {int(row['away_elo'])}</div>
 </div>
 <div style='display: flex; flex-direction: column; justify-content: center; align-items: center; border-left: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); padding: 0 10px;'>
-<div style='font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;'>Winner</div>
-<div style='font-size: 1.3rem; font-weight: 900; color: #fff; line-height: 1.1; margin: 4px 0;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
+<div style='font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;'>70/30 WINNER</div>
+<div style='font-size: 1.2rem; font-weight: 900; color: #fff; line-height: 1.1; margin: 4px 0;'>{row['home_team'] if row['home_win_prob'] > 0.5 else row['away_team']}</div>
 <div style='font-size: 0.7rem; color: var(--neon-blue); font-weight: 700;'>Confidence: {row['xg_conf']*100:.1f}%</div>
 {wager_html}
 {live_score_html}
 </div>
 <div>
-<div style='color: var(--text-secondary); font-size: 0.8rem;'>HOME</div>
-<div style='font-size: 1.2rem; font-weight: 800; color: #fff;'>{row['home_team']}</div>
-<div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>2026: {h_rec_str}</div>
+<div style='color: var(--text-secondary); font-size: 0.75rem;'>HOME</div>
+<div style='font-size: 1.1rem; font-weight: 800; color: #fff;'>{row['home_team']}</div>
+<div style='font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px;'>Official: .{int(off_pct*1000)}</div>
 <div style='color: var(--neon-green); font-size: 1.4rem; font-weight: 900;'>{row['home_win_prob']*100:.1f}%</div>
-<div style='font-size: 0.9rem; color: #94a3b8; font-weight: 500;'>Proj: {row['home_proj']:.1f} | Elo: {int(row['home_elo'])}</div>
+<div style='font-size: 0.8rem; color: #94a3b8; font-weight: 500;'>Hybrid Elo: {int(row['home_elo'])}</div>
 </div>
 </div>
 <div style='margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;'>
-<div style='font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;'>PITCHER DUEL ARMED</div>
-<div style='font-size: 0.95rem; font-weight: 700; color: #fff;'>
+<div style='font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 4px;'>INSTITUTIONAL PITCHER SNAPSHOT</div>
+<div style='font-size: 0.9rem; font-weight: 700; color: #fff;'>
 {row.get('away_pitcher', 'TBD')} <span style='color: var(--neon-blue);'>({row['a_p_era']:.2f})</span> vs {row.get('home_pitcher', 'TBD')} <span style='color: var(--neon-green);'>({row['h_p_era']:.2f})</span>
 </div>
 </div>
 </div>"""
             st.markdown(card_html, unsafe_allow_html=True)
-            with st.expander("📊 Market Depth & Simulation Analysis"):
+            with st.expander("📊 Market Depth & Institutional Calibration"):
                 c1, c2 = st.columns(2)
                 with c1:
-                    st.markdown("#### 🏛️ Structural Baseline")
-                    st.write(f"**Elo Spread:** {int(row['home_elo'])} vs {int(row['away_elo'])}")
-                    st.write(f"**Proj Score:** {row['home_proj']:.1f} - {row['away_proj']:.1f}")
+                    # 🏛️ Institutional Calibration HUD (Phase 24)
+                    st.markdown("#### ⚖️ Institutional Calibration")
+                    c_model, c_anchor = st.columns(2)
                     
-                    # ⚖️ Fair Odds Analysis (No-Vig)
-                    # We calculate the 'True' probability by stripping the bookmaker's commission.
-                    if best_bet.get('odds') and not df_master[df_master['game_id'] == row['game_id']].empty:
-                        g_odds_df = df_master[df_master['game_id'] == row['game_id']]
-                        h_odds_row = g_odds_df[(g_odds_df['outcome'] == row['home_team']) & (g_odds_df['market'] == 'h2h')]
-                        a_odds_row = g_odds_df[(g_odds_df['outcome'] == row['away_team']) & (g_odds_df['market'] == 'h2h')]
-                        
-                        if not h_odds_row.empty and not a_odds_row.empty:
-                            h_o = h_odds_row.iloc[0]['odds']
-                            a_o = a_odds_row.iloc[0]['odds']
-                            if h_o and a_o:
-                                fair = calculate_fair_odds(a_o, h_o)
-                                st.markdown("#### ⚖️ Fair Odds (No-Vig)")
-                                st.write(f"**Vig/Juice:** {fair['vig_percent']:.2f}%")
-                                st.write(f"**Fair Win%:** {fair['home_fair_prob']*100:.1f}% Home | {fair['away_fair_prob']*100:.1f}% Away")
-                                st.write(f"**Fair Price:** {fair['home_fair_odds']:+} Home | {fair['away_fair_odds']:+} Away")
+                    raw_elo = row.get('h_raw_elo', row['home_elo'])
+                    hybrid_elo = row['home_elo']
+                    elo_shift = hybrid_elo - raw_elo
+                    shift_icon = "📈" if elo_shift >= 0 else "📉"
+                    
+                    with c_model:
+                        st.write(f"**Process (70%):** {int(raw_elo)} Elo")
+                        st.write(f"**Results (30%):** {int((off_pct - 0.5) * 1000 + 1500)} Elo")
+                    
+                    with c_anchor:
+                        st.write(f"**Hybrid Elo:** {int(hybrid_elo)}")
+                        st.write(f"**Anchor Shift:** {shift_icon} {abs(elo_shift):.1f} pts")
 
-                    st.markdown("#### 🧬 Market Alpha Comparison")
-                    st.write(f"**Model Win%:** {row['home_win_prob']*100:.1f}%")
-                    st.write(f"**Market Implied:** {best_bet.get('implied_prob', 0)*100:.1f}%")
-                    st.write(f"**Alpha Gap:** {best_bet.get('ev', 0)*100:.1f}% +EV")
-                    with st.expander("📚 Market Alpha Logic Key"):
-                        st.markdown("""
+                    st.markdown("---")
+                    st.markdown("#### 💎 Profit Maximization")
+                    p_model, p_market = st.columns(2)
+                    
+                    with p_model:
+                        st.metric("Model Win%", f"{row['home_win_prob']*100:.1f}%", f"{elo_shift:+.1f} Shift")
+                    with p_market:
+                        market_implied = best_bet.get('implied_prob', 0)
+                        alpha_gap = (row['home_win_prob'] - market_implied) * 100
+                        st.metric("Alpha Gap", f"{alpha_gap:+.1f}%", "Relative to Market")
+
+                    with st.expander("📚 Institutional Logic Key"):
+                        st.markdown(f"""
                         | Metric | Definition |
                         | :--- | :--- |
-                        | **🎯 Model Win%** | The probability of victory calculated by our 10,000-simulation Monte Carlo engine. |
-                        | **📈 Market Implied** | The probability 'priced-in' by the house odds. (e.g., -110 odds = 52.3% implied). |
-                        | **💎 Alpha Gap (+EV)** | Your institutional 'Edge.' Calculated as the statistical expected value over the market. |
+                        | **🎯 Process (70%)** | Pure Statcast/FanGraphs advanced metrics. The 'Quality of Contact' baseline. |
+                        | **📈 Results (30%)** | Official Win/Loss standings anchor. Captures 'clutch' and 'intangibles.' |
+                        | **💎 Alpha Gap** | The institutional 'Edge.' If positive (+), the model believes the market is underpricing this outcome. |
                         """)
 
                 with c2:
@@ -689,7 +708,16 @@ with tab0:
                         """, unsafe_allow_html=True)
                     
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
-                    fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
+                    fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', 
+                                     color_discrete_sequence=[var_neon_blue, var_neon_green],
+                                     title="⚛️ MONTE CARLO SCORE DISTRIBUTION (10,000 RUNS)")
+                    
+                    # 🏛️ Add Ground-Truth Anchor Lines (Phase 24)
+                    h_anchor = 4.5 + (off_pct - 0.5) * 2.5
+                    fig.add_vline(x=h_anchor, line_dash="dash", line_color=var_neon_green, 
+                                 annotation_text="🏛️ HOME ANCHOR", annotation_position="top right")
+                    
+                    fig.update_layout(showlegend=True, legend_title_text="Team Clusters")
                     st.plotly_chart(fig, width='stretch')
 
                 if is_live and live_game.get("topPerformers"):
@@ -837,6 +865,15 @@ with tab0:
 # ------------------------------------------------------------------
 with tab1:
     st.subheader("📈 Official 2026 MLB Standings Hub")
+    st.markdown("""
+    <div style='background: rgba(0, 243, 255, 0.05); border: 1px solid var(--neon-blue); padding: 10px; border-radius: 8px; margin-bottom: 20px;'>
+        <div style='display: flex; align-items: center; gap: 10px;'>
+            <span style='color: var(--neon-blue); font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;'>🏛️ LAYER 4 OFFICIAL MLB DATA</span>
+            <span style='background: var(--neon-blue); color: black; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-weight: 900;'>GROUND TRUTH</span>
+        </div>
+        <div style='font-size: 0.65rem; color: #94a3b8; margin-top: 4px;'>Sync: statsapi.mlb.com | Real-Time Weighted Anchoring: Active</div>
+    </div>
+    """, unsafe_allow_html=True)
     df_s = st.session_state.get("df_standings_2026", pd.DataFrame())
     if not df_s.empty:
         l_tabs = st.tabs(["American League (AL)", "National League (NL)"])
