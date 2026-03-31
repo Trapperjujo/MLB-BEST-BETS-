@@ -114,6 +114,7 @@ kelly_mode = st.sidebar.selectbox(
     index=list(KELLY_MODES.keys()).index(DEFAULT_KELLY_MODE),
     help="Fractional Kelly (0.25x or 0.50x) scales your position size to protect against 'Gambler's Ruin' while capturing +EV growth."
 )
+fractional_kelly = KELLY_MODES[kelly_mode]
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### ⚙️ Engine Settings")
