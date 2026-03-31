@@ -21,6 +21,10 @@ SHARP_BOOKMAKERS = ["Pinnacle", "Bookmaker", "Circa Sports", "BetOnline.ag"]
 
 def get_mlb_odds(regions: str = "us,uk,eu,au", markets: str = "h2h") -> List[Dict[str, Any]]:
     """Fetches real-time MLB odds from The Odds API across multiple regions."""
+    if not ODDS_API_KEY:
+        logger.warning("Odds API: Key Missing (401 Hazard). Skipping Layer 1B.")
+        return []
+
     url = f"{ODDS_BASE_URL}/sports/baseball_mlb/odds/"
     params = {
         "apiKey": ODDS_API_KEY,
@@ -35,6 +39,29 @@ def get_mlb_odds(regions: str = "us,uk,eu,au", markets: str = "h2h") -> List[Dic
     except Exception as e:
         logger.error(f"Error fetching odds: {e}")
         return []
+
+# 💾 LAYER 0: PERSISTENT CACHE PROTOCOL
+CACHE_PATH = ".tmp/last_sync_master.json"
+
+def save_sync_cache(data: Dict[str, Any]):
+    """Saves a 'Last-Known-Good' (LKG) sync payload to the local system."""
+    try:
+        os.makedirs(os.path.dirname(CACHE_PATH), exist_ok=True)
+        with open(CACHE_PATH, "w") as f:
+            json.dump(data, f, default=str)
+        logger.success(f"Persistence Sync: Layer 0 Cache Updated ({CACHE_PATH})")
+    except Exception as e:
+        logger.error(f"Persistence Error: {e}")
+
+def load_sync_cache() -> Dict[str, Any]:
+    """Loads the last successful predictive slate from the local system."""
+    if os.path.exists(CACHE_PATH):
+        try:
+            with open(CACHE_PATH, "r") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"Persistence Read Error: {e}")
+    return {}
 
 def get_mlb_schedule(date_str: Optional[str] = None, start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[Dict[str, Any]]:
     """Fetches official MLB schedule and probable pitchers from Stats API for a date or range."""

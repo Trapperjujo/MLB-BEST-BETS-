@@ -132,6 +132,17 @@ kelly_mode = st.sidebar.selectbox(
 )
 fractional_kelly = KELLY_MODES[kelly_mode]
 
+# 🛰️ Proactive Sync Status Indicator
+from core.services.orchestrator import get_sync_status_color
+if "sync_status_pulse" not in st.session_state: st.session_state["sync_status_pulse"] = "💎 ACTIVE"
+pulse_color = get_sync_status_color(st.session_state["sync_status_pulse"])
+st.sidebar.markdown(f"""
+<div style="background: rgba(0,243,255,0.05); padding: 10px; border-radius: 8px; border-left: 4px solid {pulse_color}; margin-bottom: 20px;">
+    <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 800; letter-spacing: 1px;">TERMINAL SYNC HEALTH</div>
+    <div style="font-size: 0.9rem; font-weight: 900; color: {pulse_color};">{st.session_state["sync_status_pulse"]}</div>
+</div>
+""", unsafe_allow_html=True)
+
 st.sidebar.markdown("---")
 st.sidebar.markdown("### ⚙️ Engine Settings")
 sort_mode = st.sidebar.selectbox("Dashboard Sort Mode", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset", "📅 Earliest Game Time"])
@@ -275,12 +286,12 @@ def fetch_master_data(version, bankroll, fractional_kelly, reduction_factor, std
     from core.services.orchestrator import sync_mlb_data
     
     # Execute the Tiered Synchronization Logic
-    df_f, live_scores, standings, leaders = sync_mlb_data(
+    df_f, live_scores, standings, leaders, sync_status = sync_mlb_data(
         bankroll=bankroll,
         fractional_kelly=fractional_kelly,
         reduction_factor=reduction_factor,
         std_bet_size=std_bet_size,
-        status_callback=None # UI status updates handled outside cache in production
+        status_callback=None 
     )
     
     # Store session state for UI fragments
@@ -288,7 +299,7 @@ def fetch_master_data(version, bankroll, fractional_kelly, reduction_factor, std
     st.session_state["df_standings_2026"] = standings
     st.session_state["df_leaders_2026"] = leaders
     
-    return df_f
+    return df_f, sync_status
 
 class UIAggregator:
     """Institutional Data Aggregator for Command Center HUD."""
@@ -402,7 +413,9 @@ st.sidebar.success(f"Build: {DEPLOYMENT_VERSION} | Terminal Sync: READY")
 logger.info("Terminal: Master UI Pulse Active.")
 
 logger.info(f"Synchronizing 2026 Master Data (Version {DEPLOYMENT_VERSION})...")
-df_master = fetch_master_data(DEPLOYMENT_VERSION, bankroll, fractional_kelly, reduction_factor, std_bet_size)
+df_master, sync_status = fetch_master_data(DEPLOYMENT_VERSION, bankroll, fractional_kelly, reduction_factor, std_bet_size)
+st.session_state["sync_status_pulse"] = sync_status
+
 if df_master.empty:
     st.error("Critical Error: Unable to fetch MLB Schedule or Market Data. Check your API connections.")
     st.stop()
@@ -599,7 +612,7 @@ with tab0:
             <div class="hud-value" style="color: #00f3ff;">{portfolio['avg_conf']:.1f}%</div>
         </div>
         <div class="hud-tile" title="The number of active signals currently identifying a profitable discrepancy in the betting market.">
-            <div class="hud-label">+EV SIGNAL VOL</div>
+            <div class="hud-label" title="The count of games where the model win probability exceeds the market odds. 0 means market is currently efficient.">+EV SIGNAL VOL ⓘ</div>
             <div class="hud-value">{portfolio['volume']}</div>
         </div>
         <div class="hud-tile" title="The single highest statistical edge currently available in the 2026 betting market.">
