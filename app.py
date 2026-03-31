@@ -112,6 +112,11 @@ st.sidebar.markdown(f"""
 </div>
 <p style="font-size: 0.8rem; color: #94a3b8;">Today's volatility is <b>-36.6%</b> below the institutional mean. This is common during Opening Weekend stabilization.</p>
 """, unsafe_allow_html=True)
+
+if st.sidebar.button("🔄 Clear Cache & Refresh Data"):
+    st.cache_data.clear()
+    st.rerun()
+
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🛠️ Risk Management")
 bankroll = st.sidebar.number_input(
@@ -146,9 +151,7 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("### 🗺️ Terminal Overview")
 st.sidebar.info("🛰️ **Active Mode**: Command Center Navigation. Use the primary top-level tabs to switch between Live Predictions, Power Rankings, and Institutional Research.")
 
-if st.sidebar.button("🔄 Clear Cache & Refresh Data"):
-    st.cache_data.clear()
-    st.rerun()
+
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📊 Strategies")
