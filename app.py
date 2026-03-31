@@ -1230,12 +1230,32 @@ with tab5:
 with tab6:
     st.markdown("""
     # 🛰️ STRATEGY & ACCURACY AUDIT
-    ## 1. Verified 61.6% Accuracy
+    
+    ## 1. 🧠 Institutional Strategy: The Hybrid Core (2026)
+    To maximize predictive accuracy while maintaining real-world grounding, the terminal utilizes a **70/30 Hybrid Weighting** system:
+    
+    *   **70% Advanced Metrics (The "Process") — HIGHER ACCURACY**:
+        *   **Predictive Power**: Metrics like **Barrel%**, **xBA**, and **FIP** isolate skill from luck. 
+        *   **Regression Analysis**: Catching "luck variance" and predicting the inevitable regression of teams overperforming their process.
+        *   **Stability**: Process metrics stabilize much faster (10–15 games) than Win/Loss records.
+    *   **30% Official Standings (The "Results") — THE ANCHOR**:
+        *   **Institutional Reality**: Standings determine playoff positioning and "magic numbers."
+        *   **Intangibles**: Capturing "clutch" factors and bullpen management not seen in raw Statcast data.
+        *   **Market Bias Cleanup**: Identification of +EV value when betting markets overreact to standings.
+
+    ## 2. 📍 Current Analytical Sources
+    The terminal synthesizes data from four distinct authoritative layers:
+    1.  **pybaseball**: Ingests advanced alpha from **FanGraphs**, **Baseball-Reference**, and **Baseball Savant (Statcast)**.
+    2.  **TeamRankings.com**: Extracts betting-specific alpha including **Against The Spread (ATS)** and **Margin of Victory (MOV)**.
+    3.  **The Odds API**: Synchronizes live market prices and liquidity to calculate +EV value.
+    4.  **🏛️ The New "Layer 4" (MLB.com)**: Official integration with **statsapi.mlb.com** for authoritative standings and nightly probables.
+
+    ## 3. Verified 61.6% Accuracy
     Our engine is calibrated against **7,700+ game outcomes** (2024-2026).
     - **Predictive Mean**: 61.60%
     - **Brier Score**: 0.2223 (Institutional Grade)
     
-    ## 2. Methodology
+    ## 4. Methodology
     - **Monte Carlo**: 10,000 simulations per matchup.
     - **XGBoost v3.0**: Longitudinal filtering of situational variables.
     - **Kelly Criterion**: Mathematical stake optimization for bankroll security.

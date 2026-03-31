@@ -16,6 +16,7 @@ class MLBScraper:
         self.cache_path = "data/raw/live_2026_trends.json"
         self.statcast_cache = "data/raw/live_2026_statcast.json"
         self.glossary_cache = "data/raw/live_2026_glossary_alpha.json"
+        self.mlb_official_cache = "data/raw/live_2026_mlb_official.json"
         
         # 📚 INSTITUTIONAL GLOSSARY MAPPING
         # Maps mlb_statistics_glossary.md definitions to pybaseball/FanGraphs columns
@@ -39,6 +40,51 @@ class MLBScraper:
                 logger.error(f"Cache Ingestion Error: {e}")
         
         return self.scrape_betting_trends() or []
+
+    def scrape_mlb_official_standings(self, season=2026):
+        """
+        🏛️ Layer 4: Official MLB Ground Truth Ingestion.
+        Fetches authoritative standings and win percentages via statsapi.mlb.com.
+        """
+        logger.info(f"Ingesting {season} Official MLB Ground Truth...")
+        
+        try:
+            url = f"https://statsapi.mlb.com/api/v1/standings?season={season}&leagueId=103,104"
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            
+            data = response.json()
+            records = data.get('records', [])
+            
+            standings_output = []
+            for record in records:
+                for team_record in record.get('teamRecords', []):
+                    team_name = team_record['team']['name']
+                    win_pct = float(team_record.get('winningPercentage', 0.500))
+                    
+                    standings_output.append({
+                        "Team": team_name,
+                        "WinPct": win_pct,
+                        "W": team_record.get('wins', 0),
+                        "L": team_record.get('losses', 0),
+                        "RunDiff": team_record.get('runDifferential', 0)
+                    })
+            
+            # Cache the results
+            os.makedirs(os.path.dirname(self.mlb_official_cache), exist_ok=True)
+            with open(self.mlb_official_cache, 'w') as f:
+                json.dump({
+                    "timestamp": pd.Timestamp.now().isoformat(),
+                    "source": "statsapi.mlb.com",
+                    "standings": standings_output
+                }, f, indent=2)
+                
+            logger.success(f"MLB Officiality Synchronized: {len(standings_output)} teams cached.")
+            return standings_output
+            
+        except Exception as e:
+            logger.error(f"Official Standings Ingestion Error: {e}")
+            return None
 
     def scrape_betting_trends(self):
         """

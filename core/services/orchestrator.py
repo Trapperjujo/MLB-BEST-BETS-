@@ -44,6 +44,12 @@ def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, status_callback=
     scraper = MLBScraper()
     glossary_data = scraper.scrape_comprehensive_glossary_alpha(2026)
     
+    # 🏛️ NEW: LAYER 4: Official MLB Ground Truth Sync
+    if status_callback: status_callback("🏛️ Syncing Layer 4: Official MLB Ground Truth...")
+    official_data = scraper.scrape_mlb_official_standings(2026)
+    if official_data:
+        terminal_db.upsert_official_standings(official_data)
+    
     # 3. 💾 LAYER 3: Tertiary Cache Sync (DuckDB Persistence)
     if glossary_data:
         if status_callback: status_callback("💾 Syncing Layer 3: DuckDB Persistence...")

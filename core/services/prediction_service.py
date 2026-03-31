@@ -65,14 +65,24 @@ class PredictionService:
         h_trend = next((t for t in trends if normalize_team_name(t['team']) == h_team), None)
         h_cover_pct = float(h_trend.get('cover_pct_val', 50.0)) if h_trend else 50.0
         
-        # 4. 🚀 Execute Monte Carlo Simulation Core
+        # 🏛️ NEW: LAYER 4 ALPHA: Official MLB Ground Truth Anchor
+        h_win_pct = 0.500
+        try:
+            h_off = terminal_db.conn.execute("SELECT WinPct FROM official_standings_2026 WHERE Team = ?", [h_team]).fetchdf()
+            if not h_off.empty:
+                h_win_pct = float(h_off.iloc[0]['WinPct'])
+        except:
+            pass
+
+        # 4. 🚀 Execute Monte Carlo Simulation Core (70/30 Hybrid)
         mc = run_monte_carlo_simulation(
             home_elo=int(h_elo_adj), 
             away_elo=int(a_elo_adj), 
             iterations=config.MC_ITERATIONS,
             hfa=config.MLB_HFA,
             home_team=h_team,
-            cover_pct=h_cover_pct
+            cover_pct=h_cover_pct,
+            official_win_pct=h_win_pct
         )
         
         # 5. 📉 XGBoost v3.0 Filtering

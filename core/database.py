@@ -60,6 +60,25 @@ class MLBDatabase:
         except Exception as e:
             logger.error(f"Persistence Error ({aspect}): {e}")
 
+    def upsert_official_standings(self, data: List[Dict[str, Any]]):
+        """
+        🚀 Layer 4: Persistence of Official MLB Standings and Win Percentages.
+        Used to anchor the 70/30 Hybrid Monte Carlo engine.
+        """
+        if not data: return
+        
+        df = pd.DataFrame(data)
+        table_name = "official_standings_2026"
+        
+        try:
+            self.conn.register("temp_official", df)
+            self.conn.execute(f"CREATE OR REPLACE TABLE {table_name} AS SELECT * FROM temp_official")
+            self.conn.unregister("temp_official")
+            
+            logger.success(f"DuckDB Persistence: [OFFICIAL] {len(df)} teams anchored (Layer 4).")
+        except Exception as e:
+            logger.error(f"Official Persistence Error: {e}")
+
     def query_situational_alpha(self, team_name: str, venue: str = None) -> pd.DataFrame:
         """Example situational query: Get team performance in specific environments."""
         sql = """

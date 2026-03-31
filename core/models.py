@@ -141,23 +141,29 @@ def calculate_fair_odds(away_odds: int, home_odds: int) -> Dict[str, Any]:
         "vig_percent": float((total_prob - 1.0) * 100)
     }
 
-def run_monte_carlo_simulation(home_elo, away_elo, iterations=1000, hfa=24, home_team=None, cover_pct=None, adjustments: Dict = None):
+def run_monte_carlo_simulation(home_elo, away_elo, iterations=1000, hfa=24, home_team=None, cover_pct=None, official_win_pct=None, adjustments: Dict = None):
     """
     Hardened Monte Carlo Engine: Negative Binomial Scoring Distribution.
-    Now integrates situational 'Cover %' weighting for 2026 Alpha.
+    🧬 70/30 Hybrid Calibration: Anchors Advanced Metrics to Official Standings.
     """
     from core.config import MLB_PARK_FACTORS
 
-    # 📉 Alpha Weighting: Adjust ELO based on 2026 Covering Performance
-    # We apply a sigmoidal adjustment to provide a slight 'Momentum Alpha' 
-    # to teams that are consistently covering.
+    # 1. 🧬 Hybrid Calibration Anchor (70/30 Split)
+    # Allows the model to respect 'Results' while remaining anchored in 'Process'.
+    h_effective = home_elo
+    if official_win_pct is not None:
+        # Convert WinPct to Elo Equivalent: .500 = 1500, .600 = 1600, .400 = 1400
+        elo_s = 1500 + (official_win_pct - 0.5) * 1000
+        # Weighted Blend: 70% Advanced Elo, 30% Official Standings
+        h_effective = (home_elo * 0.7) + (elo_s * 0.3)
+        logger.info(f"MC Calibration (70/30): Home Effective Elo -> {h_effective:.1f}")
+
+    # 2. 📉 Momentum Alpha: Adjust ELO based on 2026 Covering Performance
     h_alpha_adj = 0.0
     if cover_pct is not None:
-        # cover_pct expected as float (e.g. 66.7)
-        # Shift Elo by up to 15 points based on covering trend
         h_alpha_adj = (cover_pct - 50.0) * 0.3
         
-    home_elo_cal = home_elo + h_alpha_adj + hfa
+    home_elo_cal = h_effective + h_alpha_adj + hfa
     away_elo_cal = away_elo
 
     # 📏 Project runs using Effective Elo (Home Elo + 24 point buffer)
