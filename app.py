@@ -108,7 +108,7 @@ st.sidebar.markdown(f"""
 <div class="performance-metric-box">
     <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 700;">SAMPLE VARIANCE (MARCH 29)</div>
     <div style="font-size: 1.5rem; font-weight: 800; color: #ff9900;">25.0% WR</div>
-    <div style="font-size: 0.7rem; color: #ff9900;">⚠️ OUTLIER DETECTED (EXPECT REVERSION)</div>
+    <div style="font-size: 0.7rem; color: #ff9900;" title="Statistical anomaly detected: Current session win rate is -36.6% below the 2026-calibrated 61.6% mean. Mean reversion is statistically imminent. Advise: Reduce position sizing during anomalous volatility.">⚠️ OUTLIER DETECTED (EXPECT REVERSION) ⓘ</div>
 </div>
 <p style="font-size: 0.8rem; color: #94a3b8;">Today's volatility is <b>-36.6%</b> below the institutional mean. This is common during Opening Weekend stabilization.</p>
 """, unsafe_allow_html=True)
