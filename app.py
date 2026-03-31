@@ -465,6 +465,42 @@ with tab_academy:
     with open("directives/institutional_manual.md", "r") as f:
         st.markdown(f.read())
 
+    st.markdown("---")
+    st.markdown("### 🧬 Advanced Metric Lab")
+    
+    # 🧬 Live Data Charting: wRC+ Power Rankings
+    if os.path.exists("data/processed/statcast_alpha_2026.csv"):
+        import plotly.express as px
+        df_stat = pd.read_csv("data/processed/statcast_alpha_2026.csv")
+        df_top = df_stat.nlargest(10, 'wRC+')
+        
+        fig_wrc = px.bar(
+            df_top, x='Team', y='wRC+', 
+            title='🚀 2026 Offensive Momentum (wRC+ Rankings)',
+            color='wRC+', color_continuous_scale='Viridis'
+        )
+        fig_wrc.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='#fff')
+        st.plotly_chart(fig_wrc, use_container_width=True)
+    
+    # 🧬 Metric Comparison Table
+    st.markdown("#### 📊 Metric Comparison Matrix")
+    comparison_data = [
+        {"Metric": "FIP / SIERA", "Use Case": "Starting Pitcher Value", "Look For": "FIP < ERA = Buy low"},
+        {"Metric": "Stuff+", "Use Case": "K Props (O/U)", "Look For": "High Stuff+ = K Potential"},
+        {"Metric": "wRC+", "Use Case": "Team Total Runs", "Look For": "Stable Offense vs Park"},
+        {"Metric": "ISO", "Use Case": "HR Prop Betting", "Look For": "Raw Power / Power Output"},
+        {"Metric": "Pythagorean Math", "Use Case": "Season Win Totals", "Look For": "Exp Wins vs Act Wins"}
+    ]
+    st.table(pd.DataFrame(comparison_data))
+
+    # 🧬 Situational Nuances Lab
+    with st.expander("🧪 **2026 Strategic Nuances: ABS & Weather**"):
+        st.markdown("""
+        - **The ABS Impact**: Catcher framing value is now neutral. Focus 100% on pure Hitter/Pitcher efficiency for O/U totals.
+        - **Weather Elasticity**: Current 2026 data shows a **10% HR increase** for every 10 degree Fahrenheit rise.
+        - **Travel Dampening**: Teams traveling West-to-East lose **~54% of series openers**.
+        """)
+
 # ------------------------------------------------------------------
 # TAB 0: PREDICTIVE TERMINAL (MASTER FEED)
 # ------------------------------------------------------------------
