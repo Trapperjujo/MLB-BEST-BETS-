@@ -31,8 +31,11 @@ class PredictionService:
         h_fat = self.elo_repo.get_fatigue_adjustment(h_team, history_df)
         a_fat = self.elo_repo.get_fatigue_adjustment(a_team, history_df)
         
-        h_elo_adj = h_elo_data["effective_elo"] - h_fat
-        a_elo_adj = a_elo_data["effective_elo"] - a_fat
+        h_base = h_elo_data["effective_elo"]
+        a_base = a_elo_data["effective_elo"]
+        
+        h_elo_adj = h_base - h_fat
+        a_elo_adj = a_base - a_fat
         
         # 🛡️ LAYER 3 ALPHA: DuckDB Glossary Integration
         # We perform an 'Elo-Alpha' adjustment based on advanced peripheral metrics.
