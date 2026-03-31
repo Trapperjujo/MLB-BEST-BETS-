@@ -241,8 +241,14 @@ def render_market_depth_hud(best_bet):
     m_info, m_consensus = st.columns(2)
     
     sources = best_bet.get('sources_count', 1)
-    consensus_price = best_bet.get('market_avg') or best_bet.get('odds') or 100
-    sharp_price = best_bet.get('sharp_benchmark')
+    
+    # 🛡️ Robust extraction for Pandas Series (Rows)
+    m_avg = best_bet.get('market_avg')
+    b_odds = best_bet.get('odds')
+    s_price = best_bet.get('sharp_benchmark')
+    
+    consensus_price = m_avg if pd.notna(m_avg) else (b_odds if pd.notna(b_odds) else 100)
+    sharp_price = s_price if pd.notna(s_price) else None
     
     with m_info:
         st.markdown(f"<div title='Cumulative number of sportsbooks currently active in the market.'>**Data Feeds:** {sources} Authorized</div>", unsafe_allow_html=True)
