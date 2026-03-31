@@ -121,14 +121,12 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("### 🛠️ Risk Management")
 bankroll = st.sidebar.number_input(
     "Total Bankroll (CAD)", 
-    min_value=100.0, value=BANKROLL_DEFAULT, step=100.0,
-    help="The master pool of capital available for the 2026 season. All wagers are calculated as a percentage of this total."
+    min_value=100.0, value=BANKROLL_DEFAULT, step=100.0
 )
 kelly_mode = st.sidebar.selectbox(
     "Kelly Criterion Mode", 
     list(KELLY_MODES.keys()), 
-    index=list(KELLY_MODES.keys()).index(DEFAULT_KELLY_MODE),
-    help="Fractional Kelly (0.25x or 0.50x) scales your position size to protect against 'Gambler's Ruin' while capturing +EV growth."
+    index=list(KELLY_MODES.keys()).index(DEFAULT_KELLY_MODE)
 )
 fractional_kelly = KELLY_MODES[kelly_mode]
 
@@ -148,13 +146,11 @@ st.sidebar.markdown("### ⚙️ Engine Settings")
 sort_mode = st.sidebar.selectbox("Dashboard Sort Mode", ["🔥 Highest +EV", "🏆 Most Likely to Win", "⚡ Likely Upset", "📅 Earliest Game Time"])
 std_bet_size = st.sidebar.slider(
     "Standard Bet Size (%)", 
-    0.5, 5.0, STD_BET_SIZE_DEFAULT, 0.1,
-    help="The 'Baseline' wager for a neutral-EV play. Institutional traders typically use 1-2% for long-term survival."
+    0.5, 5.0, STD_BET_SIZE_DEFAULT, 0.1
 )
 min_edge = st.sidebar.slider(
     "Minimum Edge Needed (%)", 
-    0.0, 10.0, MIN_EDGE_DEFAULT, 0.5,
-    help="Only show signals where the model's win probability exceeds the market price by at least this amount."
+    0.0, 10.0, MIN_EDGE_DEFAULT, 0.5
 ) / 100
 cad_rate = st.sidebar.number_input("CAD/USD Rate", value=CAD_USD_XRATE, step=0.01)
 
@@ -378,9 +374,9 @@ with st.sidebar:
     # Logic: Redirect to strategy_2026.md for portal links.
     col1, col2 = st.columns(2)
     with col1:
-        st.button("🎯 DraftKings", help="US MLB Partner | Instant Deposit Match", width='stretch')
+        st.button("🎯 DraftKings", width='stretch')
     with col2:
-        st.button("🛰️ Stake.com", help="Global Crypto Partner | Life-time RevShare", width='stretch')
+        st.button("🛰️ Stake.com", width='stretch')
     
     with st.expander("🧬 Pro Benchmarking Tools"):
         st.markdown("""
@@ -843,14 +839,14 @@ with tab0:
                         if hitting:
                             h_rbi = hitting.get("RBI", {}).get("total", "0")
                             h_hr = hitting.get("HR", {}).get("total", "0")
-                            st.metric("Session RBI Leader", h_rbi, help="Highest individual RBI count in this game.")
+                            st.metric("Session RBI Leader", h_rbi)
                             st.metric("Session HR Leader", h_hr)
                     with right:
                         pitching = tp.get("Pitching", {})
                         if pitching:
                             p_so = pitching.get("SO", {}).get("total", "0")
                             p_er = pitching.get("ER", {}).get("total", "0")
-                            st.metric("Session SO Leader", p_so, help="Highest individual Strikeout count in this game.")
+                            st.metric("Session SO Leader", p_so)
                             st.metric("Session ER Allowed", p_er)
             
             with st.expander("🛰️ Statcast Matchup Matrix Analysis"):

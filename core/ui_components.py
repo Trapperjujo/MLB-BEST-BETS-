@@ -216,11 +216,14 @@ def render_calibration_hud(row, off_pct, ground_truth=0.5):
         # 🏛️ Calibration Health
         cal_diff = abs(row['home_win_prob'] - ground_truth)
         if cal_diff < 0.03:
-            st.success("🎯 **GOLD CALIBRATION**", help="Excellent alignment with long-term historical trends.")
+            st.success("🎯 **GOLD CALIBRATION**")
+            st.caption("Excellent alignment with long-term historical trends.")
         elif cal_diff < 0.10:
-            st.warning("⚖️ **STABLE SIGNAL**", help="Normal seasonal variance. Proceed with baseline risk.")
+            st.warning("⚖️ **STABLE SIGNAL**")
+            st.caption("Normal seasonal variance. Proceed with baseline risk.")
         else:
-            st.error("⚠️ **HIGH DIVERGENCE**", help="Model is predicting a major outlier compared to history.")
+            st.error("⚠️ **HIGH DIVERGENCE**")
+            st.caption("Model is predicting a major outlier compared to history.")
 
 def render_market_depth_hud(best_bet):
     """
@@ -284,8 +287,8 @@ def render_profit_hud(row, best_bet, elo_shift):
     p_model, p_market = st.columns(2)
     
     with p_model:
-        st.metric("Model Win%", f"{row['home_win_prob']*100:.1f}%", f"{elo_shift:+.1f} Shift", help="The final win probability including and HFA and Hybrid anchors.")
+        st.metric("Model Win%", f"{row['home_win_prob']*100:.1f}%", f"{elo_shift:+.1f} Shift")
     with p_market:
         market_implied = best_bet.get('implied_prob', 0)
         alpha_gap = (row['home_win_prob'] - market_implied) * 100
-        st.metric("Alpha Gap", f"{alpha_gap:+.1f}%", "Relative to Market", help="The 'Edge' or 'Alpha' over the public market. Higher + gap = higher profit potential.")
+        st.metric("Alpha Gap", f"{alpha_gap:+.1f}%", "vs Market")
