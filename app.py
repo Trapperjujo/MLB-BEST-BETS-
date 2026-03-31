@@ -28,6 +28,9 @@ ledger = CloudLedger()
 scraper = MLBScraper()
 _tracker = tracker
 
+
+st.write("🛰️ **VAULT-SYNC: PHASE 27.28 GLOBAL RECOVERY PULSE ACTIVE**")
+
 import json
 from dotenv import load_dotenv
 from core.unified_config import CURRENT_SEASON, BANKROLL_DEFAULT, STD_BET_SIZE_DEFAULT, MIN_EDGE_DEFAULT, FRACTIONAL_KELLY, MAX_STAKE_CAP, KELLY_MODES, DEFAULT_KELLY_MODE, CAD_USD_XRATE, MC_ITERATIONS, MLB_HFA, DEPLOYMENT_VERSION, MLB_PARK_FACTORS
@@ -537,7 +540,7 @@ with tab_academy:
             color='wRC+', color_continuous_scale='Viridis'
         )
         fig_wrc.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font_color='#fff')
-        st.plotly_chart(fig_wrc, use_container_width=True)
+        st.plotly_chart(fig_wrc, width='stretch')
     
     # 🧬 Metric Comparison Table
     st.markdown("#### 📊 Metric Comparison Matrix")
@@ -841,7 +844,7 @@ with tab0:
                                  annotation_text="🏛️ HOME ANCHOR", annotation_position="top right")
                     
                     fig.update_layout(showlegend=True, legend_title_text="Team Clusters")
-                    st.plotly_chart(fig, use_container_width=True, key=f"mc_dist_{row.get('gamePk', idx)}")
+                    st.plotly_chart(fig, width='stretch', key=f"mc_dist_{row.get('gamePk', idx)}")
 
                 if is_live and live_game.get("topPerformers"):
                     st.markdown("---")
@@ -922,15 +925,19 @@ with tab0:
                     st.markdown("### 🧬 Statcast Situational Matrix")
                     body = matrix.get("body", {})
                     game_data = body.get("game", {})
-                    h_prob = body.get("homeWinProbability", 50)
-                    a_prob = body.get("awayWinProbability", 50)
+                    # 💥 QUALITY OF CONTACT (Vault Fallout Optimization)
+                    h_prob = body.get("homeWinProbability", row['home_win_prob'] * 100)
+                    a_prob = body.get("awayWinProbability", row['away_win_prob'] * 100)
                     venue = game_data.get("venue", {}).get("name", "Standard Stadium")
                     
-                    # Venue Alpha Integration
+                    # 🧬 Venue Alpha Integration (Institutional Calibration)
                     factor = MLB_PARK_FACTORS.get(row["home_team"], MLB_PARK_FACTORS["Default"])
                     run_bias = factor["run"] - 100
                     hr_bias = factor["hr"] - 100
                     bias_color = "#f43f5e" if run_bias > 5 else ("#10b981" if run_bias < -5 else "#94a3b8")
+                    
+                    st.markdown(f"#### 🧬 Statcast Situational Matrix: {venue}")
+                    st.info(f"**SITUATIONAL CONTEXT**: {factor.get('desc', 'Standard MLB Environment')}")
                     
                     st.markdown(f"""
                     <div class='performance-metric-box' style='background: rgba(0, 243, 255, 0.05); padding: 15px;'>
@@ -944,9 +951,7 @@ with tab0:
                                 <div style='font-size: 1.8rem; font-weight: 900; color: var(--neon-green);'>{h_prob:.1f}%</div>
                             </div>
                         </div>
-                        <div style='margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);'>
-                            <div style='display: flex; justify-content: space-between; align-items: center;'>
-                                <div>
+                    </div>
                     """, unsafe_allow_html=True)
                     
                     with st.expander("📚 What is the Statcast Situational Matrix?"):
@@ -1323,10 +1328,12 @@ with tab5:
         st.markdown("### ⚖️ **SIMULATION vs. REALITY** (Institutional Accuracy)")
         st.write("This audit compares the Monte Carlo engine's simulated win probabilities against the verified 3-season historical Ground Truth.")
         
-        with st.spinner("⚛️ Running Calibration Simulations..."):
+        with st.spinner("⚛️ Running High-Fidelity Calibration (1,000 runs/team)..."):
             from core.models import run_monte_carlo_simulation
             from core.repositories.elo_repository import EloRepository
-            repo = EloRepository()
+            # 🏛️ Hydrate Repository with 2026 Standings for Momentum Alpha
+            df_s_2026 = st.session_state.get("df_standings_2026", pd.DataFrame())
+            repo = EloRepository(df_s_2026)
             
             calibration_data = []
             for _, t_row in team_df.iterrows():
@@ -1337,12 +1344,12 @@ with tab5:
                 if actual_pct == 0.5 and "All-Star" in t_name: continue
                 if pd.isna(actual_pct): continue
                 
-                # Fetch Current Elo for Simulation
+                # Fetch Current Elo with 2026 Momentum
                 elo_data = repo.get_team_strength(t_name)
                 current_elo = elo_data['effective_elo']
                 
-                # Run Neutral Benchmarking Simulation (vs. 1500 Avg)
-                mc_res = run_monte_carlo_simulation(home_elo=current_elo, away_elo=1500, iterations=100)
+                # Run Institutional Neutral Benchmarking (vs. 1500 Avg)
+                mc_res = run_monte_carlo_simulation(home_elo=current_elo, away_elo=1500, iterations=1000)
                 sim_pct = mc_res['home_win_prob']
                 
                 calibration_data.append({
@@ -1362,19 +1369,40 @@ with tab5:
                 m1, m2, m3 = st.columns(3)
                 m1.metric("🎯 Calibration Accuracy (R²)", f"{r2:.3f}", "Institutional Gold")
                 m2.metric("📉 Mean Absolute Error (MAE)", f"{mae:.3f}", delta_color="inverse")
-                m3.metric("⚛️ Simulations Run", f"{len(df_cal)*100}", "Batch Audit")
+                m3.metric("⚛️ High-Fidelity Simulations", f"{len(df_cal)*1000:,}", "Global Audit")
                 
-                # 📈 High-Fidelity Scatter Chart
-                fig_cal = px.scatter(df_cal, x="Reality (True Data)", y="Simulation (Monte Carlo)", 
-                                    hover_name="Team", text="Team",
-                                    template="plotly_dark", title="⚖️ MODEL CALIBRATION: SIMULATION vs. GROUND TRUTH")
+                # 📈 High-Fidelity Scatter Chart (Institutional Hardening)
+                fig_cal = px.scatter(
+                    df_cal, 
+                    x="Reality (True Data)", 
+                    y="Simulation (Monte Carlo)", 
+                    hover_name="Team", 
+                    text="Team",
+                    color="Error",
+                    color_continuous_scale="RdYlGn_r",
+                    labels={
+                        "Reality (True Data)": "📊 REALITY (Historical Win %)",
+                        "Simulation (Monte Carlo)": "⚛️ SIMULATION (Engine Win %)",
+                        "Error": "🎯 Error Delta"
+                    },
+                    template="plotly_dark", 
+                    title="⚖️ MODEL CALIBRATION: SIMULATION vs. GROUND TRUTH (2026)"
+                )
                 
-                # Add Identity Line (Reality = Simulation)
-                fig_cal.add_shape(type="line", x0=0.3, y0=0.3, x1=0.7, y1=0.7, 
-                                 line=dict(color="rgba(255,255,255,0.2)", dash="dash"))
+                # 🏛️ Add Identity Line (Ground-Truth Anchor: Reality = Simulation)
+                fig_cal.add_shape(
+                    type="line", line=dict(dash="dash", color="rgba(255, 255, 255, 0.4)"),
+                    x0=0.3, y0=0.3, x1=0.7, y1=0.7
+                )
                 
-                fig_cal.update_traces(textposition='top center', marker=dict(size=10, color='#00f3ff', opacity=0.8))
+                fig_cal.update_traces(textposition='top center')
+                fig_cal.update_layout(
+                    xaxis=dict(range=[0.3, 0.7], gridcolor="rgba(255,255,255,0.05)"),
+                    yaxis=dict(range=[0.3, 0.7], gridcolor="rgba(255,255,255,0.05)"),
+                    showlegend=False
+                )
                 st.plotly_chart(fig_cal, width='stretch')
+                
                 
                 st.markdown("---")
                 st.write("**Institutional Context:** The tight clustering along the diagonal line proves that the Monte Carlo engine is correctly calibrated to the historical win distributions of the last 3 seasons.")
