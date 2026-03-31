@@ -241,13 +241,13 @@ def render_market_depth_hud(best_bet):
     m_info, m_consensus = st.columns(2)
     
     sources = best_bet.get('sources_count', 1)
-    consensus_price = best_bet.get('market_avg', best_bet['odds'])
+    consensus_price = best_bet.get('market_avg') or best_bet.get('odds') or 100
     sharp_price = best_bet.get('sharp_benchmark')
     
     with m_info:
         st.markdown(f"<div title='Cumulative number of sportsbooks currently active in the market.'>**Data Feeds:** {sources} Authorized</div>", unsafe_allow_html=True)
         st.markdown(f"<div title='Consensus price across recreational bookmakers.'>**Public Average:** {int(consensus_price):+d}</div>", unsafe_allow_html=True)
-        if sharp_price:
+        if sharp_price is not None:
             st.markdown(f"**Sharp Price:** <span style='color: #00f3ff; font-weight: 800;'>{int(sharp_price):+d}</span>", unsafe_allow_html=True)
         else:
             st.markdown(f"<div title='Searching for institutional Price action (Pinnacle/Bookmaker).'>**Sharp Price:** 🛰️ Tracking...</div>", unsafe_allow_html=True)
