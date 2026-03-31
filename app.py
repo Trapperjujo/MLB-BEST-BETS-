@@ -523,6 +523,7 @@ with tab0:
             """
         
         # 🏛️ Institutional UI Component Rendering (Phase 24 Refactor)
+        off_pct = float(row.get('h_official_win_pct', 0.5))
         with st.container():
             render_matchup_card(row, best_bet, display_date, off_pct, live_score_html)
             
