@@ -827,7 +827,7 @@ with tab0:
                                  annotation_text="🏛️ HOME ANCHOR", annotation_position="top right")
                     
                     fig.update_layout(showlegend=True, legend_title_text="Team Clusters")
-                    st.plotly_chart(fig, use_container_width=True, key=f"mc_dist_{row.get('gamePk', index)}")
+                    st.plotly_chart(fig, use_container_width=True, key=f"mc_dist_{row.get('gamePk', idx)}")
 
                 if is_live and live_game.get("topPerformers"):
                     st.markdown("---")
