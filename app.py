@@ -273,15 +273,24 @@ def get_legal_asset(filename):
 
 # 🛰️ Persistence Service initialized at top-level
 
-@st.cache_data(ttl=600)
-def fetch_master_data(version, bankroll, fractional_kelly, reduction_factor, std_bet_size):
+@st.cache_data(ttl=3600)
+def fetch_master_data(version, bankroll, fractional_kelly, reduction_factor, std_bet_size, force_refresh=False):
     """
-    🚀 High-Fidelity Data Ingestion (Phase 17).
-    Refactored to utilize the modular Triple-Source Orchestrator.
+    💎 Institutional Master Sync: Vault Mode (Phase 26)
+    Prioritizes Layer 0 Cache for "Old Data" while allowing API Sync for "New Data".
     """
-    from core.services.orchestrator import sync_mlb_data
+    from core.services.orchestrator import sync_mlb_data, load_sync_cache
     
-    # Execute the Tiered Synchronization Logic
+    # 1. Check for Vault Assets (Layer 0 Cache)
+    cached_data = load_sync_cache()
+    if cached_data and not force_refresh:
+        df_f = pd.DataFrame(cached_data.get("df_f", []))
+        st.session_state["live_scores_2026"] = cached_data.get("live_scores", {})
+        st.session_state["df_standings_2026"] = cached_data.get("standings", [])
+        st.session_state["df_leaders_2026"] = cached_data.get("leaders", [])
+        return df_f, "💎 VAULT MODE (CACHED)"
+    
+    # 2. Force Refresh: Execute API/Scraper Execution
     df_f, live_scores, standings, leaders, sync_status = sync_mlb_data(
         bankroll=bankroll,
         fractional_kelly=fractional_kelly,
@@ -290,7 +299,6 @@ def fetch_master_data(version, bankroll, fractional_kelly, reduction_factor, std
         status_callback=None 
     )
     
-    # Store session state for UI fragments
     st.session_state["live_scores_2026"] = live_scores
     st.session_state["df_standings_2026"] = standings
     st.session_state["df_leaders_2026"] = leaders
@@ -405,11 +413,13 @@ st.markdown("""
 
 logger.info("Terminal: Legal Shield Footer Active.")
 
-st.sidebar.success(f"Build: {DEPLOYMENT_VERSION} | Terminal Sync: READY")
-logger.info("Terminal: Master UI Pulse Active.")
+st.sidebar.markdown("---")
+if st.sidebar.button("🛰️ Synchronize 2026 Vault", width='stretch'):
+    st.cache_data.clear()
+    df_master, sync_status = fetch_master_data(DEPLOYMENT_VERSION, bankroll, fractional_kelly, reduction_factor, std_bet_size, force_refresh=True)
+else:
+    df_master, sync_status = fetch_master_data(DEPLOYMENT_VERSION, bankroll, fractional_kelly, reduction_factor, std_bet_size, force_refresh=False)
 
-logger.info(f"Synchronizing 2026 Master Data (Version {DEPLOYMENT_VERSION})...")
-df_master, sync_status = fetch_master_data(DEPLOYMENT_VERSION, bankroll, fractional_kelly, reduction_factor, std_bet_size)
 st.session_state["sync_status_pulse"] = sync_status
 
 if df_master.empty:
@@ -743,10 +753,14 @@ with tab0:
 
                 with c2:
                     st.markdown("#### ⚡ Monte Carlo Score Clusters")
-                    import numpy as np
-                    a_p25, a_p50, a_p75 = np.percentile(row['away_scores_sample'], [25, 50, 75])
-                    h_p25, h_p50, h_p75 = np.percentile(row['home_scores_sample'], [25, 50, 75])
-                    
+                    # 💎 Vault Mode: Prioritize Pre-computed High-Fidelity Stats
+                    a_p25 = row.get('a_p25', 0)
+                    a_p50 = row.get('a_p50', 0)
+                    a_p75 = row.get('a_p75', 0)
+                    h_p25 = row.get('h_p25', 0)
+                    h_p50 = row.get('h_p50', 0)
+                    h_p75 = row.get('h_p75', 0)
+
                     st.markdown(f"""
                     | Team | Floor (25%) | Mean (50%) | Ceiling (75%) |
                     | :--- | :--- | :--- | :--- |

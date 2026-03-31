@@ -136,8 +136,18 @@ def sync_mlb_data(bankroll, fractional_kelly, reduction_factor, std_bet_size=1.0
                 nr["model_prob"] = g.get("home_win_prob", 0.5)
                 final_payload.append(nr)
                 
+        import numpy as np
+        
         df_f = pd.DataFrame(final_payload)
         if not df_f.empty:
+            # 💎 Vault Mode: Pre-compute Chart Distributions for 100% Stability
+            df_f["a_p25"] = df_f["away_scores_sample"].apply(lambda x: np.percentile(x, 25) if isinstance(x, list) else 0)
+            df_f["a_p50"] = df_f["away_scores_sample"].apply(lambda x: np.percentile(x, 50) if isinstance(x, list) else 0)
+            df_f["a_p75"] = df_f["away_scores_sample"].apply(lambda x: np.percentile(x, 75) if isinstance(x, list) else 0)
+            df_f["h_p25"] = df_f["home_scores_sample"].apply(lambda x: np.percentile(x, 25) if isinstance(x, list) else 0)
+            df_f["h_p50"] = df_f["home_scores_sample"].apply(lambda x: np.percentile(x, 50) if isinstance(x, list) else 0)
+            df_f["h_p75"] = df_f["home_scores_sample"].apply(lambda x: np.percentile(x, 75) if isinstance(x, list) else 0)
+            
             df_f["ev"] = df_f.apply(lambda r: calculate_ev(r["model_prob"], american_to_decimal(r["odds"])) if r["odds"] else 0, axis=1)
             df_f["kelly_stake"] = df_f.apply(lambda r: kelly_criterion(r["model_prob"], american_to_decimal(r["odds"]), fractional_kelly) * bankroll if r["odds"] else 0, axis=1)
             df_f["formatted_time"] = pd.to_datetime(df_f["commence_time"]).dt.strftime("%a, %b %d @ %I:%M %p")
