@@ -1040,7 +1040,7 @@ with tab4:
                 | **🔥 K/9** | Mean Strikeouts per 9 innings. Indicator of pure dominance. |
                 | **🏆 WAR** | Wins Above Replacement. The institutional gold standard for total player value. |
                 """)
-            st.dataframe(df_p_view[["Name", "Team", "ERA", "FIP", "K/9", "WAR"]], hide_index=True, width='stretch')
+            st.dataframe(df_p_plot[["Name", "Team", "ERA", "FIP", "K/9", "WAR"]], hide_index=True, width='stretch')
             
         elif mode == "💥 Offensive Alpha":
             st.markdown("### 💥 Team Offensive Power Table")
