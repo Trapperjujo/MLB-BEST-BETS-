@@ -1325,8 +1325,8 @@ with tab5:
         
         with st.spinner("⚛️ Running Calibration Simulations..."):
             from core.models import run_monte_carlo_simulation
-            from core.repositories.elo_repository import ELORepository
-            repo = ELORepository()
+            from core.repositories.elo_repository import EloRepository
+            repo = EloRepository()
             
             calibration_data = []
             for _, t_row in team_df.iterrows():
