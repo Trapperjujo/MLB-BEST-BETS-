@@ -1405,9 +1405,19 @@ with tab6:
     - **Predictive Mean**: 61.60%
     - **Brier Score**: 0.2223 (Institutional Grade)
     
-    ## 4. Methodology
-    - **Monte Carlo**: 10,000 simulations per matchup.
-    - **XGBoost v3.0**: Longitudinal filtering of situational variables.
+    ## 5. ⚙️ Terminal Engine Configuration
+    To customize the terminal's predictive output, use the primary sidebar controls:
+    
+    *   **Dashboard Sort Mode**: 
+        *   **Highest +EV**: Prioritizes games with the maximum gap between model probability and market price. 
+        *   **Most Likely to Win**: Ranks games by raw win probability, regardless of market value.
+        *   **Likely Upset**: Highlights underdogs where the model sees a higher win probability than the implied market odds.
+    *   **Standard Bet Size (%)**: 
+        *   The baseline "Unit" for a neutral play. Institutional traders typically use **1–2%** of bankroll to ensure long-term survival through sample variance.
+    *   **Minimum Edge Needed (%)**: 
+        *   The "Statistical Filter." Settings this higher (e.g., 5%+) forces the terminal to only show the highest-conviction signals, effectively filtering out market "noise."
+    *   **CAD/USD Rate**: 
+        *   Ensures all Kelly Criterion stakes are accurately converted to your local bankroll currency for precise position sizing.
     - **Kelly Criterion**: Mathematical stake optimization for bankroll security.
     """)
 # ------------------------------------------------------------------
