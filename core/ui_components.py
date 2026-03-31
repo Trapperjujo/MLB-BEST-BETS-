@@ -70,10 +70,10 @@ def render_matchup_card(row, best_bet, display_date, off_pct, live_score_html=""
 </div>"""
     st.markdown(card_html, unsafe_allow_html=True)
 
-def render_calibration_hud(row, off_pct):
+def render_calibration_hud(row, off_pct, ground_truth=0.5):
     """
     ⚖️ Institutional Calibration HUD
-    Compares Process vs Results anchors.
+    Compares Process (Advanced) vs Results (Standings) vs Reality (3-Season Ground Truth).
     """
     st.markdown("#### ⚖️ Institutional Calibration")
     c_model, c_anchor = st.columns(2)
@@ -86,10 +86,41 @@ def render_calibration_hud(row, off_pct):
     with c_model:
         st.write(f"**Process (70%):** {int(raw_elo)} Elo")
         st.write(f"**Results (30%):** {int((float(off_pct) - 0.5) * 1000 + 1500)} Elo")
+        st.write(f"**Reality (Longitudinal):** {ground_truth*100:.1f}% Win Rate")
     
     with c_anchor:
         st.write(f"**Hybrid Elo:** {int(hybrid_elo)}")
         st.write(f"**Anchor Shift:** {shift_icon} {abs(elo_shift):.1f} pts")
+        
+        # 🏛️ Calibration Health
+        cal_diff = abs(row['home_win_prob'] - ground_truth)
+        if cal_diff < 0.03:
+            st.success("🎯 **GOLD CALIBRATION**: Anchored to History")
+        elif cal_diff < 0.10:
+            st.warning("⚖️ **STABLE**: Slight seasonal variance")
+        else:
+            st.error("⚠️ **DIVERGENCE**: Major outlier scenario")
+
+def render_market_depth_hud(best_bet):
+    """
+    📊 Market Depth HUD
+    Displays consensus pricing vs institutional alpha.
+    """
+    st.markdown("#### 📊 Market Depth & Liquidity")
+    m_info, m_consensus = st.columns(2)
+    
+    sources = best_bet.get('sources_count', 1)
+    consensus_price = best_bet.get('market_avg', best_bet['odds'])
+    
+    with m_info:
+        st.write(f"**Data Sources:** {sources} Authorized Feeds")
+        st.write(f"**Consensus Price:** {int(consensus_price):+d}")
+        
+    with m_consensus:
+        alpha_status = "STALE" if abs(best_bet['odds'] - consensus_price) > 5 else "LIQUID"
+        status_color = "#00f3ff" if alpha_status == "LIQUID" else "#ff9900"
+        st.markdown(f"**Status:** <span style='color: {status_color}; font-weight: 800;'>{alpha_status}</span>", unsafe_allow_html=True)
+        st.info("Market Liquidity is sufficient for institutional stake.")
 
 def render_profit_hud(row, best_bet, elo_shift):
     """

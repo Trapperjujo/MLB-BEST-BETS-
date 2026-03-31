@@ -45,7 +45,7 @@ except ImportError:
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
     from core.prediction_xgboost import predict_xgboost_v3
 from core.subscription_engine import SubscriptionLedger
-from core.ui_components import render_matchup_card, render_calibration_hud, render_profit_hud
+from core.ui_components import render_matchup_card, render_calibration_hud, render_profit_hud, render_market_depth_hud
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
@@ -524,13 +524,26 @@ with tab0:
         
         # 🏛️ Institutional UI Component Rendering (Phase 24 Refactor)
         off_pct = float(row.get('h_official_win_pct', 0.5))
+        
+        # 🧪 Ground-Truth Pre-Hydration
+        ground_truth = 0.5
+        if os.path.exists('data/processed/reference_manual.json'):
+            with open('data/processed/reference_manual.json', 'r') as f:
+                ref_json = json.load(f)
+                h_ref = ref_json.get('team_matrix', {}).get(row['home_team'], {})
+                ground_truth = h_ref.get('overall_win_rate', 0.5)
+
         with st.container():
             render_matchup_card(row, best_bet, display_date, off_pct, live_score_html)
             
             with st.expander("📊 Market Depth & Institutional Calibration"):
                 c1, c2 = st.columns(2)
                 with c1:
-                    render_calibration_hud(row, off_pct)
+                    render_market_depth_hud(best_bet)
+                    
+                    st.markdown("---")
+                    
+                    render_calibration_hud(row, off_pct, ground_truth)
                     
                     st.markdown("---")
                     
@@ -632,7 +645,7 @@ with tab0:
                                  annotation_text="🏛️ HOME ANCHOR", annotation_position="top right")
                     
                     fig.update_layout(showlegend=True, legend_title_text="Team Clusters")
-                    st.plotly_chart(fig, width='stretch')
+                    st.plotly_chart(fig, use_container_width=True, key=f"mc_dist_{row.get('gamePk', index)}")
 
                 if is_live and live_game.get("topPerformers"):
                     st.markdown("---")
