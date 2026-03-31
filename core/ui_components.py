@@ -245,12 +245,12 @@ def render_market_depth_hud(best_bet):
     sharp_price = best_bet.get('sharp_benchmark')
     
     with m_info:
-        st.write(f"**Data Feeds:** {sources} Authorized", help="Cumulative number of sportsbooks currently active in the market.")
-        st.write(f"**Public Average:** {int(consensus_price):+d}", help="Consensus price across recreational bookmakers.")
+        st.markdown(f"<div title='Cumulative number of sportsbooks currently active in the market.'>**Data Feeds:** {sources} Authorized</div>", unsafe_allow_html=True)
+        st.markdown(f"<div title='Consensus price across recreational bookmakers.'>**Public Average:** {int(consensus_price):+d}</div>", unsafe_allow_html=True)
         if sharp_price:
             st.markdown(f"**Sharp Price:** <span style='color: #00f3ff; font-weight: 800;'>{int(sharp_price):+d}</span>", unsafe_allow_html=True)
         else:
-            st.write("**Sharp Price:** 🛰️ Tracking...", help="Searching for institutional Price action (Pinnacle/Bookmaker).")
+            st.markdown(f"<div title='Searching for institutional Price action (Pinnacle/Bookmaker).'>**Sharp Price:** 🛰️ Tracking...</div>", unsafe_allow_html=True)
         
     with m_consensus:
         # Liquidity logic based on Sharp/Public divergence
@@ -263,9 +263,11 @@ def render_market_depth_hud(best_bet):
         st.markdown(f"**Market Status:** <span style='color: {status_color}; font-weight: 800;'>{alpha_status}</span>", unsafe_allow_html=True)
         
         if is_stale:
-            st.warning("⚠️ Market Divergence", help="Current local book odds are drifting away from sharp consensus. High volatility.")
+            st.warning("⚠️ Market Divergence")
+            st.caption("Drifting away from sharp consensus. High volatility.")
         else:
-            st.success("💎 Consolidated", help="Market is tight and consensus is high. Efficient pricing.")
+            st.success("💎 Consolidated")
+            st.caption("Market is tight and consensus is high. Efficient pricing.")
 
 def render_profit_hud(row, best_bet, elo_shift):
     """

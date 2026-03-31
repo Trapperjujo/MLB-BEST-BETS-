@@ -102,6 +102,17 @@ load_css("styles/main.css")
 load_css("styles/neon_theme.css")
 
 # --- SIDEBAR CONFIGURATION (Inputs first) ---
+st.sidebar.markdown("### 🎯 Session Alpha (Live Sample)")
+# Placeholder for live session check (e.g. 3-12 observed)
+st.sidebar.markdown(f"""
+<div class="performance-metric-box">
+    <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 700;">SAMPLE VARIANCE (MARCH 29)</div>
+    <div style="font-size: 1.5rem; font-weight: 800; color: #ff9900;">25.0% WR</div>
+    <div style="font-size: 0.7rem; color: #ff9900;">⚠️ OUTLIER DETECTED (EXPECT REVERSION)</div>
+</div>
+<p style="font-size: 0.8rem; color: #94a3b8;">Today's volatility is <b>-36.6%</b> below the institutional mean. This is common during Opening Weekend stabilization.</p>
+""", unsafe_allow_html=True)
+st.sidebar.markdown("---")
 st.sidebar.markdown("### 🛠️ Risk Management")
 bankroll = st.sidebar.number_input(
     "Total Bankroll (CAD)", 
@@ -144,17 +155,7 @@ st.sidebar.markdown("### 📊 Strategies")
 enable_ss_mode = st.sidebar.toggle("🇨🇦 Sport Select Optimizer", value=False)
 reduction_factor = st.sidebar.slider("SS Reduction Factor", 0.70, 0.95, 0.91, 0.01) if enable_ss_mode else 0.91
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 🎯 Session Alpha (Live Sample)")
-# Placeholder for live session check (e.g. 3-12 observed)
-st.sidebar.markdown(f"""
-<div class="performance-metric-box">
-    <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 700;">SAMPLE VARIANCE (MARCH 29)</div>
-    <div style="font-size: 1.5rem; font-weight: 800; color: #ff9900;">25.0% WR</div>
-    <div style="font-size: 0.7rem; color: #ff9900;">⚠️ OUTLIER DETECTED (EXPECT REVERSION)</div>
-</div>
-<p style="font-size: 0.8rem; color: #94a3b8;">Today's volatility is <b>-36.6%</b> below the institutional mean. This is common during Opening Weekend stabilization.</p>
-""", unsafe_allow_html=True)
+
 
 # 🧬 DATA ENGINE: sabermetric & Predictive Logic
 @st.cache_data
