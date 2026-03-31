@@ -42,7 +42,7 @@ class MLBDatabase:
     def upsert_team_metrics(self, aspect: str, data: List[Dict[str, Any]]):
         """
         🚀 Layer 3 (Tertiary Cache): UPSERT 130+ glossary metrics into DuckDB.
-        aspect: 'batting', 'pitching', or 'fielding'
+        Uses CREATE OR REPLACE to handle schema evolution gracefully.
         """
         if not data: return
         
@@ -50,20 +50,13 @@ class MLBDatabase:
         table_name = f"glossary_{aspect}_2026"
         
         try:
-            # Atomic Upsert using DuckDB's REGISTER functionality
+            # Atomic Replacement using DuckDB's REGISTER functionality
+            # This ensures the table schema ALWAYS matches the current scraper output.
             self.conn.register("temp_ingest", df)
-            self.conn.execute(f"CREATE TABLE IF NOT EXISTS {table_name} AS SELECT * FROM temp_ingest WHERE 1=0")
-            
-            # Efficient Merge Logic (Delete existing to avoid duplicates)
-            teams = [str(t) for t in df['Team'].tolist()] if 'Team' in df.columns else []
-            if teams:
-                team_list = ", ".join([f"'{t}'" for t in teams])
-                self.conn.execute(f"DELETE FROM {table_name} WHERE Team IN ({team_list})")
-            
-            self.conn.execute(f"INSERT INTO {table_name} SELECT * FROM temp_ingest")
+            self.conn.execute(f"CREATE OR REPLACE TABLE {table_name} AS SELECT * FROM temp_ingest")
             self.conn.unregister("temp_ingest")
             
-            logger.success(f"DuckDB Persistence: Synchronized {len(df)} records for {aspect} (Layer 3).")
+            logger.success(f"DuckDB Persistence: [REPLACED] {len(df)} records for {aspect} (Layer 3).")
         except Exception as e:
             logger.error(f"Persistence Error ({aspect}): {e}")
 

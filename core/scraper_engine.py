@@ -20,9 +20,9 @@ class MLBScraper:
         # 📚 INSTITUTIONAL GLOSSARY MAPPING
         # Maps mlb_statistics_glossary.md definitions to pybaseball/FanGraphs columns
         self.GLOSSARY_MAP = {
-            "batting": ["G", "PA", "AB", "HR", "AVG", "OBP", "SLG", "OPS", "ISO", "wRC+", "EV", "LA", "Barrel%", "HardHit%", "xBA", "xwOBA"],
-            "pitching": ["W", "L", "ERA", "FIP", "xFIP", "SIERA", "K/9", "BB/9", "K%", "WHIP", "WAR"],
-            "fielding": ["Def", "DRS", "OAA", "FP", "G", "Inn"]
+            "batting": ["Team", "G", "PA", "AB", "HR", "AVG", "OBP", "SLG", "OPS", "ISO", "wRC+", "EV", "LA", "Barrel%", "HardHit%", "xBA", "xwOBA"],
+            "pitching": ["Team", "W", "L", "ERA", "FIP", "xFIP", "SIERA", "K/9", "BB/9", "K%", "WHIP", "WAR"],
+            "fielding": ["Team", "Def", "DRS", "OAA", "FP", "G", "Inn"]
         }
         
     def get_cached_trends(self):

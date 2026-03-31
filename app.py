@@ -37,7 +37,13 @@ from core.strategy import is_divisional_matchup
 from core.elo_ratings import get_team_elo, load_elo_ratings, normalize_team_name, ABBR_MAP
 from core.status_fetcher import get_player_injuries, get_fatigue_penalty
 from core.stats_engine import get_2026_standings, get_2026_leaders, get_pitcher_stats, get_team_hitting_stats
-from core.prediction_xgboost import predict_xgboost_v3
+try:
+    from core.prediction_xgboost import predict_xgboost_v3
+except ImportError:
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from core.prediction_xgboost import predict_xgboost_v3
 from core.subscription_engine import SubscriptionLedger
 import plotly.express as px
 import plotly.graph_objects as go
@@ -338,9 +344,9 @@ with st.sidebar:
     # Logic: Redirect to strategy_2026.md for portal links.
     col1, col2 = st.columns(2)
     with col1:
-        st.button("🎯 DraftKings", help="US MLB Partner | Instant Deposit Match", use_container_width=True)
+        st.button("🎯 DraftKings", help="US MLB Partner | Instant Deposit Match", width='stretch')
     with col2:
-        st.button("🛰️ Stake.com", help="Global Crypto Partner | Life-time RevShare", use_container_width=True)
+        st.button("🛰️ Stake.com", help="Global Crypto Partner | Life-time RevShare", width='stretch')
     
     with st.expander("🧬 Pro Benchmarking Tools"):
         st.markdown("""
@@ -684,7 +690,7 @@ with tab0:
                     
                     hist_df = pd.DataFrame({'Away': row['away_scores_sample'], 'Home': row['home_scores_sample']})
                     fig = px.histogram(hist_df, barmode='overlay', template='plotly_dark', color_discrete_sequence=[var_neon_blue, var_neon_green])
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width='stretch')
 
                 if is_live and live_game.get("topPerformers"):
                     st.markdown("---")
@@ -890,7 +896,7 @@ with tab1:
         fig_s.update_traces(textposition='top center', marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey')))
         fig_s.update_layout(height=700, margin=dict(l=20, r=20, t=60, b=20))
         
-        st.plotly_chart(fig_s, use_container_width=True)
+        st.plotly_chart(fig_s, width='stretch')
 
         with st.expander("🛠️ STRATEGIC GUIDE: HOW TO PROFIT (Matrix Analysis)"):
             st.markdown("""
@@ -1020,7 +1026,7 @@ with tab4:
                               hover_name="Name", template="plotly_dark",
                               title="🎯 PITCHER EFFICIENCY ALPHA (ERA vs FIP)",
                               hover_data=["Team", "ERA", "FIP", "K/9", "WAR"])
-            st.plotly_chart(fig_p, use_container_width=True)
+            st.plotly_chart(fig_p, width='stretch')
             with st.expander("📚 Pitcher Matrix Legend"):
                 st.markdown("""
                 | Metric | Definition |
@@ -1110,8 +1116,7 @@ with tab4:
                 from core.database import terminal_db
                 df_bat_stat = terminal_db.conn.execute("SELECT Team, \"Barrel%\", \"maxEV\" as EV FROM glossary_batting_2026 ORDER BY \"Barrel%\" DESC LIMIT 10").fetchdf()
                 if not df_bat_stat.empty:
-                    fig_ev = px.bar(df_bat_stat, x="Barrel%", y="Team", orientation='h', color="EV", template="plotly_dark", title="🚀 TEAM BARREL ALPHA (2026)")
-                    st.plotly_chart(fig_ev, use_container_width=True)
+                    st.plotly_chart(fig_ev, width='stretch')
                 else:
                     st.info("Statcast Barrel maps hydrating...")
             except:
@@ -1123,7 +1128,7 @@ with tab4:
                 df_xba = terminal_db.conn.execute("SELECT Team, xBA, xwOBA FROM glossary_batting_2026 ORDER BY xBA DESC LIMIT 10").fetchdf()
                 if not df_xba.empty:
                     fig_xba = px.scatter(df_xba, x="xBA", y="xwOBA", hover_name="Team", size="xwOBA", color="xBA", template="plotly_dark", title="🧠 EXPECTED PERFORMANCE (2026)")
-                    st.plotly_chart(fig_xba, use_container_width=True)
+                    st.plotly_chart(fig_xba, width='stretch')
                 else:
                     st.info("Expected Performance models syncing...")
             except:
@@ -1209,7 +1214,7 @@ with tab5:
                                  line=dict(color="rgba(255,255,255,0.2)", dash="dash"))
                 
                 fig_cal.update_traces(textposition='top center', marker=dict(size=10, color='#00f3ff', opacity=0.8))
-                st.plotly_chart(fig_cal, use_container_width=True)
+                st.plotly_chart(fig_cal, width='stretch')
                 
                 st.markdown("---")
                 st.write("**Institutional Context:** The tight clustering along the diagonal line proves that the Monte Carlo engine is correctly calibrated to the historical win distributions of the last 3 seasons.")
@@ -1298,7 +1303,7 @@ with tab7:
                     chart.data[1].name = f"{t2} DNA"
                     chart.update_layout(showlegend=True)
             
-            st.plotly_chart(chart, use_container_width=True)
+            st.plotly_chart(chart, width='stretch')
             st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.8rem;'><i>* {dna_mode} Scale: Normalized Percentile Ranking (0-100)</i></p>", unsafe_allow_html=True)
 
     st.markdown("---")
@@ -1322,7 +1327,7 @@ with tab7:
                              color="alpha_score", color_continuous_scale="Viridis",
                              template="plotly_dark", title="🏆 2026 COMPOSITE ALPHA LEADERS")
             fig_lead.update_layout(showlegend=False, coloraxis_showscale=False)
-            st.plotly_chart(fig_lead, use_container_width=True)
+            st.plotly_chart(fig_lead, width='stretch')
             
             with st.expander("📚 Alpha Score Algorithm Key"):
                 st.markdown("""
