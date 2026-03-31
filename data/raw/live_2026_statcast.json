@@ -1,0 +1,186 @@
+{
+  "timestamp": "2026-03-30T19:41:58.684100",
+  "source": "pybaseball/Savant",
+  "alpha": [
+    {
+      "Team": "MIL",
+      "HardHit%": 0.415,
+      "Barrel%": 0.061,
+      "wRC+": 181
+    },
+    {
+      "Team": "LAA",
+      "HardHit%": 0.348,
+      "Barrel%": 0.079,
+      "wRC+": 145
+    },
+    {
+      "Team": "TBR",
+      "HardHit%": 0.381,
+      "Barrel%": 0.028999999999999998,
+      "wRC+": 130
+    },
+    {
+      "Team": "WSN",
+      "HardHit%": 0.5,
+      "Barrel%": 0.081,
+      "wRC+": 133
+    },
+    {
+      "Team": "SEA",
+      "HardHit%": 0.349,
+      "Barrel%": 0.128,
+      "wRC+": 129
+    },
+    {
+      "Team": "ATL",
+      "HardHit%": 0.4,
+      "Barrel%": 0.053,
+      "wRC+": 126
+    },
+    {
+      "Team": "STL",
+      "HardHit%": 0.45299999999999996,
+      "Barrel%": 0.063,
+      "wRC+": 129
+    },
+    {
+      "Team": "MIA",
+      "HardHit%": 0.41600000000000004,
+      "Barrel%": 0.052000000000000005,
+      "wRC+": 123
+    },
+    {
+      "Team": "TOR",
+      "HardHit%": 0.35600000000000004,
+      "Barrel%": 0.023,
+      "wRC+": 121
+    },
+    {
+      "Team": "LAD",
+      "HardHit%": 0.42700000000000005,
+      "Barrel%": 0.147,
+      "wRC+": 116
+    },
+    {
+      "Team": "NYM",
+      "HardHit%": 0.35100000000000003,
+      "Barrel%": 0.054000000000000006,
+      "wRC+": 118
+    },
+    {
+      "Team": "BOS",
+      "HardHit%": 0.4,
+      "Barrel%": 0.063,
+      "wRC+": 108
+    },
+    {
+      "Team": "CHW",
+      "HardHit%": 0.556,
+      "Barrel%": 0.07400000000000001,
+      "wRC+": 108
+    },
+    {
+      "Team": "PIT",
+      "HardHit%": 0.375,
+      "Barrel%": 0.011000000000000001,
+      "wRC+": 105
+    },
+    {
+      "Team": "HOU",
+      "HardHit%": 0.36700000000000005,
+      "Barrel%": 0.031,
+      "wRC+": 102
+    },
+    {
+      "Team": "CHC",
+      "HardHit%": 0.507,
+      "Barrel%": 0.08,
+      "wRC+": 103
+    },
+    {
+      "Team": "NYY",
+      "HardHit%": 0.37799999999999995,
+      "Barrel%": 0.149,
+      "wRC+": 98
+    },
+    {
+      "Team": "TEX",
+      "HardHit%": 0.45299999999999996,
+      "Barrel%": 0.08,
+      "wRC+": 98
+    },
+    {
+      "Team": "MIN",
+      "HardHit%": 0.433,
+      "Barrel%": 0.045,
+      "wRC+": 94
+    },
+    {
+      "Team": "BAL",
+      "HardHit%": 0.4,
+      "Barrel%": 0.015,
+      "wRC+": 94
+    },
+    {
+      "Team": "CIN",
+      "HardHit%": 0.32899999999999996,
+      "Barrel%": 0.071,
+      "wRC+": 83
+    },
+    {
+      "Team": "DET",
+      "HardHit%": 0.299,
+      "Barrel%": 0.06,
+      "wRC+": 77
+    },
+    {
+      "Team": "CLE",
+      "HardHit%": 0.36,
+      "Barrel%": 0.081,
+      "wRC+": 73
+    },
+    {
+      "Team": "PHI",
+      "HardHit%": 0.373,
+      "Barrel%": 0.045,
+      "wRC+": 70
+    },
+    {
+      "Team": "SDP",
+      "HardHit%": 0.425,
+      "Barrel%": 0.055,
+      "wRC+": 66
+    },
+    {
+      "Team": "ARI",
+      "HardHit%": 0.33299999999999996,
+      "Barrel%": 0.028999999999999998,
+      "wRC+": 59
+    },
+    {
+      "Team": "KCR",
+      "HardHit%": 0.306,
+      "Barrel%": 0.027999999999999997,
+      "wRC+": 49
+    },
+    {
+      "Team": "COL",
+      "HardHit%": 0.42,
+      "Barrel%": 0.043,
+      "wRC+": 41
+    },
+    {
+      "Team": "ATH",
+      "HardHit%": 0.40399999999999997,
+      "Barrel%": 0.077,
+      "wRC+": 44
+    },
+    {
+      "Team": "SFG",
+      "HardHit%": 0.344,
+      "Barrel%": 0.016,
+      "wRC+": 19
+    }
+  ]
+}

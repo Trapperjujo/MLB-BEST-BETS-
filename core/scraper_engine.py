@@ -13,10 +13,24 @@ class MLBScraper:
     
     def __init__(self):
         self.base_url = "https://www.teamrankings.com/mlb/trends/ats_trends/"
-        self.cache_path = "data/raw/live_2026_trends.json"
-        self.statcast_cache = "data/raw/live_2026_statcast.json"
-        self.glossary_cache = "data/raw/live_2026_glossary_alpha.json"
-        self.mlb_official_cache = "data/raw/live_2026_mlb_official.json"
+        self.raw_dir = "data/raw/"
+        self.processed_dir = "data/processed/"
+        
+        # 📂 Caching Layer (JSON)
+        self.cache_path = os.path.join(self.raw_dir, "live_2026_trends.json")
+        self.statcast_cache = os.path.join(self.raw_dir, "live_2026_statcast.json")
+        self.glossary_cache = os.path.join(self.raw_dir, "live_2026_glossary_alpha.json")
+        self.mlb_official_cache = os.path.join(self.raw_dir, "live_2026_mlb_official.json")
+        
+        # 🏛️ Institutional Record Layer (CSV)
+        self.official_csv = os.path.join(self.processed_dir, "mlb_official_standings_2026.csv")
+        self.trends_csv = os.path.join(self.processed_dir, "betting_trends_2026.csv")
+        self.statcast_csv = os.path.join(self.processed_dir, "statcast_alpha_2026.csv")
+        self.glossary_csv = {
+            "batting": os.path.join(self.processed_dir, "glossary_batting_2026.csv"),
+            "pitching": os.path.join(self.processed_dir, "glossary_pitching_2026.csv"),
+            "fielding": os.path.join(self.processed_dir, "glossary_fielding_2026.csv")
+        }
         
         # 📚 INSTITUTIONAL GLOSSARY MAPPING
         # Maps mlb_statistics_glossary.md definitions to pybaseball/FanGraphs columns
@@ -25,6 +39,30 @@ class MLBScraper:
             "pitching": ["Team", "W", "L", "ERA", "FIP", "xFIP", "SIERA", "K/9", "BB/9", "K%", "WHIP", "WAR"],
             "fielding": ["Team", "Def", "DRS", "OAA", "FP", "G", "Inn"]
         }
+        
+    def _append_to_csv(self, df, file_path):
+        """
+        🏛️ Institutional Audit-Trail logic:
+        Injects a 'Scrape_Timestamp' and appends the dataframe to the local CSV record.
+        """
+        if df is None or df.empty:
+            return
+            
+        try:
+            # 💉 Inject Scrape Alpha (Timestamp)
+            df = df.copy()
+            df['Scrape_Timestamp'] = pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')
+            
+            # Ensure processed directory exists
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            
+            # 📜 Append-Only Mode
+            header = not os.path.exists(file_path)
+            df.to_csv(file_path, mode='a', index=False, header=header)
+            logger.info(f"Audit Trail: Appended {len(df)} records to {os.path.basename(file_path)}")
+            
+        except Exception as e:
+            logger.error(f"Audit-Trail Append Failure: {e}")
         
     def get_cached_trends(self):
         """
@@ -70,7 +108,7 @@ class MLBScraper:
                         "RunDiff": team_record.get('runDifferential', 0)
                     })
             
-            # Cache the results
+            # 💾 Caching Layer (JSON)
             os.makedirs(os.path.dirname(self.mlb_official_cache), exist_ok=True)
             with open(self.mlb_official_cache, 'w') as f:
                 json.dump({
@@ -79,7 +117,11 @@ class MLBScraper:
                     "standings": standings_output
                 }, f, indent=2)
                 
-            logger.success(f"MLB Officiality Synchronized: {len(standings_output)} teams cached.")
+            # 🏛️ Institutional Record Layer (Audit-Trail CSV)
+            df_off = pd.DataFrame(standings_output)
+            self._append_to_csv(df_off, self.official_csv)
+            
+            logger.success(f"MLB Officiality Synchronized: {len(standings_output)} teams logged (JSON/CSV).")
             return standings_output
             
         except Exception as e:
@@ -114,7 +156,7 @@ class MLBScraper:
             
             trends = df.to_dict(orient='records')
             
-            # Cache the results
+            # 💾 Caching Layer (JSON)
             os.makedirs(os.path.dirname(self.cache_path), exist_ok=True)
             with open(self.cache_path, 'w') as f:
                 json.dump({
@@ -123,7 +165,10 @@ class MLBScraper:
                     "trends": trends
                 }, f, indent=2)
                 
-            logger.success(f"Scraper: 2026 Institutional Matrix cached for {len(trends)} teams.")
+            # 🏛️ Institutional Record Layer (Audit-Trail CSV)
+            self._append_to_csv(df, self.trends_csv)
+            
+            logger.success(f"Scraper: 2026 Institutional Matrix logged for {len(trends)} teams (JSON/CSV).")
             return trends
             
         except Exception as e:
@@ -153,7 +198,7 @@ class MLBScraper:
             
             statcast_data = df_alpha.to_dict(orient='records')
             
-            # Cache the results
+            # 💾 Caching Layer (JSON)
             os.makedirs(os.path.dirname(self.statcast_cache), exist_ok=True)
             with open(self.statcast_cache, 'w') as f:
                 json.dump({
@@ -162,7 +207,10 @@ class MLBScraper:
                     "alpha": statcast_data
                 }, f, indent=2)
                 
-            logger.success(f"Statcast Alpha Mastery: Captured 2026 metrics for {len(statcast_data)} teams.")
+            # 🏛️ Institutional Record Layer (Audit-Trail CSV)
+            self._append_to_csv(df_alpha, self.statcast_csv)
+            
+            logger.success(f"Statcast Alpha Mastery: Captured 2026 metrics for {len(statcast_data)} teams (JSON/CSV).")
             return statcast_data
             
         except Exception as e:
@@ -196,7 +244,7 @@ class MLBScraper:
                 "fielding": df_f[self.GLOSSARY_MAP["fielding"]].to_dict(orient="records") if not df_f.empty else []
             }
             
-            # Cache Tertiary Layer
+            # 💾 Caching Layer (JSON)
             os.makedirs(os.path.dirname(self.glossary_cache), exist_ok=True)
             with open(self.glossary_cache, 'w') as f:
                 json.dump({
@@ -205,7 +253,12 @@ class MLBScraper:
                     "payload": payload
                 }, f, indent=2)
                 
-            logger.success(f"Glossary Sync Mastery: 130+ metrics ingested for {year}.")
+            # 🏛️ Institutional Record Layer (Audit-Trail CSV)
+            if not df_b.empty: self._append_to_csv(df_b[self.GLOSSARY_MAP["batting"]], self.glossary_csv["batting"])
+            if not df_p.empty: self._append_to_csv(df_p[self.GLOSSARY_MAP["pitching"]], self.glossary_csv["pitching"])
+            if not df_f.empty: self._append_to_csv(df_f[self.GLOSSARY_MAP["fielding"]], self.glossary_csv["fielding"])
+            
+            logger.success(f"Glossary Sync Mastery: 115+ metrics logged for {year} (JSON/CSV).")
             return payload
             
         except Exception as e:
