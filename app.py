@@ -1160,7 +1160,7 @@ with tab5:
         
         with st.spinner("⚛️ Running Calibration Simulations..."):
             from core.models import run_monte_carlo_simulation
-            from core.elo_ratings import ELORepository
+            from core.repositories.elo_repository import ELORepository
             repo = ELORepository()
             
             calibration_data = []
